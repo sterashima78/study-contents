@@ -117,21 +117,83 @@ export const algebraUnits: AlgebraUnit[] = [
       },
       {
         key: "multiplication-formulas",
-        title: "乗法公式",
-        description: "よく現れる展開を公式として使い、計算を短く正確にします。",
+        title: "乗法公式：(a + b)²",
+        description: "和の二乗の公式を使い、中央の 2ab を含めて正確に展開します。",
         goals: [
-          "3つの基本的な乗法公式を使い分けられる。",
-          "公式に入れる a と b を式から読み取れる。",
+          "(a + b)² = a² + 2ab + b² を使える。",
+          "a と b に対応する式を読み取り、公式へ1段階ずつ代入できる。",
         ],
         concepts: [
           {
-            title: "よく使う3つの公式",
-            body: ["公式は分配法則を短くまとめたものです。形を見て、a と b に何を入れるかを確認してから使います。"],
-            formulas: [
-              "(a + b)² = a² + 2ab + b²",
-              "(a − b)² = a² − 2ab + b²",
-              "(a + b)(a − b) = a² − b²",
+            title: "和の二乗の公式",
+            body: [
+              "(a + b)² は (a + b)(a + b) を展開した形です。a² と b² の間に、2ab が入ります。",
+              "公式へ代入する前に、a と b にどの式が対応するかを先に書きます。",
             ],
+            formulas: ["(a + b)² = a² + 2ab + b²"],
+          },
+        ],
+        example: {
+          title: "例題: (2x + 3)² を展開する",
+          problem: "(2x + 3)²",
+          steps: [
+            {
+              expression: "a = 2x, b = 3",
+              note: "(a + b)² の形なので、a に 2x、b に 3 を対応させます。",
+            },
+            {
+              expression: "= (2x)² + 2·(2x)·3 + 3²",
+              note: "a² + 2ab + b² に、a = 2x、b = 3 をそのまま代入します。",
+            },
+            {
+              expression: "= 4x² + 12x + 9",
+              note: "(2x)² = 4x²、2·(2x)·3 = 12x、3² = 9 をそれぞれ計算します。",
+            },
+          ],
+        },
+        practice: {
+          title: "練習: 和の二乗の公式を使う",
+          problem: "(3x + 4)²",
+          steps: [
+            {
+              prompt: "a と b を書いてください。",
+              answers: ["a=3x,b=4", "a=3x，b=4"],
+              placeholder: "a=…, b=…",
+            },
+            {
+              prompt: "公式へ代入した式を書いてください。",
+              answers: ["(3x)²+2·(3x)·4+4²", "(3x)²+2*(3x)*4+4²"],
+              placeholder: "(3x)²+…",
+            },
+            {
+              prompt: "計算結果を書いてください。",
+              answers: ["9x²+24x+16"],
+              placeholder: "最終結果",
+            },
+          ],
+          hint: "(a + b)² = a² + 2ab + b² の中央の 2ab を忘れずに計算します。",
+        },
+        summary: [
+          "(a + b)² では、a²、2ab、b² の3項を順に作る。",
+          "先に a と b を決めてから公式へ代入する。",
+        ],
+      },
+      {
+        key: "multiplication-formula-difference-square",
+        title: "乗法公式：(a − b)²",
+        description: "差の二乗の公式を使い、中央の項の符号に注意して展開します。",
+        goals: [
+          "(a − b)² = a² − 2ab + b² を使える。",
+          "中央の項だけが負になることを確認しながら計算できる。",
+        ],
+        concepts: [
+          {
+            title: "差の二乗では中央が −2ab",
+            body: [
+              "(a − b)² でも最初と最後は a²、b² です。違いは中央が −2ab になることです。",
+              "b を負の数として代入するのではなく、b 自体は正の量として読み取り、公式のマイナスを使います。",
+            ],
+            formulas: ["(a − b)² = a² − 2ab + b²"],
           },
         ],
         example: {
@@ -148,35 +210,98 @@ export const algebraUnits: AlgebraUnit[] = [
             },
             {
               expression: "= 9x² − 12x + 4",
-              note: "各項を計算します。真ん中の −2ab を落とさないことが重要です。",
+              note: "各項を計算します。中央だけが負で、最後の 2² は正になります。",
             },
           ],
         },
         practice: {
-          title: "練習: 公式に当てはめる",
-          problem: "(2x + 5)²",
+          title: "練習: 差の二乗の公式を使う",
+          problem: "(2x − 5)²",
           steps: [
             {
               prompt: "a と b を書いてください。",
-              answers: ["a=2x,b=5", "a=2x，b=5", "a=2x,b=5"],
+              answers: ["a=2x,b=5", "a=2x，b=5"],
               placeholder: "a=…, b=…",
             },
             {
               prompt: "公式へ代入した式を書いてください。",
-              answers: ["(2x)²+2·(2x)·5+5²", "(2x)²+2*(2x)*5+5²"],
-              placeholder: "(2x)²+…",
+              answers: ["(2x)²-2·(2x)·5+5²", "(2x)²-2*(2x)*5+5²"],
+              placeholder: "(2x)²−…",
             },
             {
               prompt: "計算結果を書いてください。",
-              answers: ["4x²+20x+25"],
+              answers: ["4x²-20x+25"],
               placeholder: "最終結果",
             },
           ],
-          hint: "(a + b)² = a² + 2ab + b² を使います。",
+          hint: "(a − b)² = a² − 2ab + b² を使い、最後の b² は正になることを確認します。",
         },
         summary: [
-          "公式を使う前に、a と b に対応する式を確認する。",
-          "二乗の公式では中央の ±2ab を忘れない。",
+          "(a − b)² では中央が −2ab になる。",
+          "b² は正なので、最後の項までマイナスにしない。",
+        ],
+      },
+      {
+        key: "multiplication-formula-sum-difference",
+        title: "乗法公式：(a + b)(a − b)",
+        description: "和と差の積の公式を使い、中央の項が打ち消し合う展開を扱います。",
+        goals: [
+          "(a + b)(a − b) = a² − b² を使える。",
+          "2つのかっこで共通する a と b を読み取れる。",
+        ],
+        concepts: [
+          {
+            title: "和と差の積は二乗の差になる",
+            body: [
+              "(a + b)(a − b) を展開すると、−ab と +ab が打ち消し合うため a² − b² だけが残ります。",
+              "2つのかっこで同じ部分を a、符号だけが反対の部分を b と見ます。",
+            ],
+            formulas: ["(a + b)(a − b) = a² − b²"],
+          },
+        ],
+        example: {
+          title: "例題: (4x + 3)(4x − 3) を展開する",
+          problem: "(4x + 3)(4x − 3)",
+          steps: [
+            {
+              expression: "a = 4x, b = 3",
+              note: "2つのかっこに共通する 4x を a、符号だけが反対の 3 を b とします。",
+            },
+            {
+              expression: "= (4x)² − 3²",
+              note: "a² − b² に、a = 4x、b = 3 を代入します。",
+            },
+            {
+              expression: "= 16x² − 9",
+              note: "(4x)² = 16x²、3² = 9 を計算します。中央の x の項はありません。",
+            },
+          ],
+        },
+        practice: {
+          title: "練習: 和と差の積の公式を使う",
+          problem: "(5x + 2)(5x − 2)",
+          steps: [
+            {
+              prompt: "a と b を書いてください。",
+              answers: ["a=5x,b=2", "a=5x，b=2"],
+              placeholder: "a=…, b=…",
+            },
+            {
+              prompt: "公式へ代入した式を書いてください。",
+              answers: ["(5x)²-2²"],
+              placeholder: "(5x)²−…",
+            },
+            {
+              prompt: "計算結果を書いてください。",
+              answers: ["25x²-4"],
+              placeholder: "最終結果",
+            },
+          ],
+          hint: "2つのかっこで共通する 5x を a、+2 と −2 の 2 を b として考えます。",
+        },
+        summary: [
+          "(a + b)(a − b) は a² − b² になる。",
+          "同じ部分と符号だけが反対の部分を見つけて a と b を決める。",
         ],
       },
       {
