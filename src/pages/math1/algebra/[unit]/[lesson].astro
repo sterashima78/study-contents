@@ -1,5 +1,6 @@
 ---
-import _AlgebraLesson from "../../../../components/AlgebraLesson.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import AlgebraLesson from "../../../../components/AlgebraLesson.astro";
 import { type AlgebraUnit, algebraUnits, type Lesson } from "../../../../content/math1/algebra";
 
 export function getStaticPaths() {
@@ -19,4 +20,4 @@ type Props = {
 const { unit: _unit, lesson: _lesson } = Astro.props;
 ---
 
-<_AlgebraLesson unit={_unit} lesson={_lesson} />
+<AlgebraLesson unit={_unit} lesson={_lesson} />
