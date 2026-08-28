@@ -1,5 +1,6 @@
 ---
-import _AlgebraUnitIndex from "../../../../components/AlgebraUnitIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import AlgebraUnitIndex from "../../../../components/AlgebraUnitIndex.astro";
 import { type AlgebraUnit, algebraUnits } from "../../../../content/math1/algebra";
 
 export function getStaticPaths() {
@@ -16,4 +17,4 @@ type Props = {
 const { unit: _unit } = Astro.props;
 ---
 
-<_AlgebraUnitIndex unit={_unit} />
+<AlgebraUnitIndex unit={_unit} />
