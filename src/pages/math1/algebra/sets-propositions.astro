@@ -72,22 +72,22 @@ const _base = import.meta.env.BASE_URL;
 
         <article class="worked-example">
           <div class="example-label">例題 1</div>
-          <h3>U = {1,2,3,4,5,6}、A = {1,2,4}、B = {2,3,4,6} のとき各集合を求める</h3>
+          <h3>U = &#123;1,2,3,4,5,6&#125;、A = &#123;1,2,4&#125;、B = &#123;2,3,4,6&#125; のとき各集合を求める</h3>
           <ol class="solution-steps">
             <li>
               <span>A ∪ B</span>
               <div class="calculation">どちらか一方にでも入る要素を重複なく並べる</div>
-              <div class="calculation answer">{1,2,3,4,6}</div>
+              <div class="calculation answer">&#123;1,2,3,4,6&#125;</div>
             </li>
             <li>
               <span>A ∩ B</span>
               <div class="calculation">両方に共通する要素を選ぶ</div>
-              <div class="calculation answer">{2,4}</div>
+              <div class="calculation answer">&#123;2,4&#125;</div>
             </li>
             <li>
               <span>Aᶜ</span>
               <div class="calculation">U から A の要素を除く</div>
-              <div class="calculation answer">{3,5,6}</div>
+              <div class="calculation answer">&#123;3,5,6&#125;</div>
             </li>
           </ol>
         </article>
@@ -246,18 +246,18 @@ const _base = import.meta.env.BASE_URL;
             </div>
             <p class="practice-instruction">表示された集合の演算結果を、要素をカンマ区切りで入力してください。順番は問いません。</p>
             <div class="logic-question">
-              <p class="set-expression" id="set-a">A = {1,2,3}</p>
-              <p class="set-expression" id="set-b">B = {2,3,4}</p>
+              <p class="set-expression" id="set-a">A = &#123;1,2,3&#125;</p>
+              <p class="set-expression" id="set-b">B = &#123;2,3,4&#125;</p>
               <p class="set-expression" id="set-operation">A ∩ B を求める</p>
             </div>
             <form id="set-form" class="answer-form">
               <div class="answer-expression">
-                <span>{</span>
+                <span>&#123;</span>
                 <label>
                   <span class="sr-only">集合の要素</span>
                   <input id="set-answer" class="wide-input" type="text" inputmode="numeric" placeholder="例: 2, 3" required />
                 </label>
-                <span>}</span>
+                <span>&#125;</span>
               </div>
               <div class="practice-actions">
                 <button type="submit" class="primary-button">答え合わせ</button>
