@@ -15,5 +15,13 @@
     "rules": {
       "preset": "recommended"
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["src/content/math1/algebra.ts"],
+      "formatter": {
+        "enabled": false
+      }
+    }
+  ]
 }
