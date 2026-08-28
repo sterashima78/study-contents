@@ -1,6 +1,5 @@
 ---
 import type { AlgebraUnit, Lesson } from "../content/math1/algebra";
-import { getLessonNeighbors } from "../content/math1/algebra";
 import "../styles/global.css";
 import "../styles/lesson.css";
 
@@ -9,13 +8,14 @@ type Props = {
   lesson: Lesson;
 };
 
-const { unit, lesson } = Astro.props;
-const base = import.meta.env.BASE_URL;
-const lessonIndex = unit.lessons.findIndex((item) => item.key === lesson.key);
-const neighbors = getLessonNeighbors(unit.key, lesson.key);
-const unitHref = `${base}math1/algebra/${unit.key}/`;
-const lessonHref = (targetUnit: string, targetLesson: string) =>
-  `${base}math1/algebra/${targetUnit}/${targetLesson}/`;
+const { unit: _unit, lesson: _lesson } = Astro.props;
+const _base = import.meta.env.BASE_URL;
+const _lessonIndex = _unit.lessons.findIndex((item) => item.key === _lesson.key);
+const _previousLesson = _lessonIndex > 0 ? _unit.lessons[_lessonIndex - 1] : undefined;
+const _nextLesson =
+  _lessonIndex < _unit.lessons.length - 1 ? _unit.lessons[_lessonIndex + 1] : undefined;
+const _unitHref = `${_base}math1/algebra/${_unit.key}/`;
+const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
 ---
 
 <!doctype html>
@@ -23,30 +23,33 @@ const lessonHref = (targetUnit: string, targetLesson: string) =>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={`高校数学I「${lesson.title}」の教材。細かい途中式、例題直後の練習問題、まとめで学習します。`} />
-    <title>{lesson.title} | {unit.title} | 数学I</title>
+    <meta
+      name="description"
+      content={`高校数学I「${_lesson.title}」の教材。細かい途中式、例題直後の練習問題、まとめで学習します。`}
+    />
+    <title>{_lesson.title} | {_unit.title} | 数学I</title>
   </head>
   <body>
     <main class="lesson-shell">
       <nav class="breadcrumb" aria-label="パンくずリスト">
-        <a href={base}>数学I</a>
+        <a href={_base}>数学I</a>
         <span aria-hidden="true">/</span>
-        <a href={unitHref}>{unit.title}</a>
+        <a href={_unitHref}>{_unit.title}</a>
         <span aria-hidden="true">/</span>
-        <span aria-current="page">{lesson.title}</span>
+        <span aria-current="page">{_lesson.title}</span>
       </nav>
 
       <header class="lesson-hero compact-hero">
-        <p class="lesson-kicker">数と式 · {String(lessonIndex + 1).padStart(2, "0")}</p>
-        <h1>{lesson.title}</h1>
-        <p>{lesson.description}</p>
+        <p class="lesson-kicker">数と式 · {String(_lessonIndex + 1).padStart(2, "0")}</p>
+        <h1>{_lesson.title}</h1>
+        <p>{_lesson.description}</p>
       </header>
 
       <section class="lesson-section goal-section" aria-labelledby="goal-title">
         <p class="section-label">GOAL</p>
         <h2 id="goal-title">このページでできるようになること</h2>
         <ul class="goal-list">
-          {lesson.goals.map((goal) => <li>{goal}</li>)}
+          {_lesson.goals.map((goal) => <li>{goal}</li>)}
         </ul>
       </section>
 
@@ -61,7 +64,7 @@ const lessonHref = (targetUnit: string, targetLesson: string) =>
 
         <div class="concept-grid single-column-grid">
           {
-            lesson.concepts.map((concept) => (
+            _lesson.concepts.map((concept) => (
               <article class="concept-card">
                 <h3>{concept.title}</h3>
                 {concept.body.map((paragraph) => <p>{paragraph}</p>)}
@@ -78,13 +81,13 @@ const lessonHref = (targetUnit: string, targetLesson: string) =>
 
       <section class="lesson-section example-practice-section" aria-labelledby="example-title">
         <p class="section-label">EXAMPLE</p>
-        <h2 id="example-title">{lesson.example.title}</h2>
+        <h2 id="example-title">{_lesson.example.title}</h2>
 
         <article class="worked-example detailed-example">
-          <p class="question-expression example-question">{lesson.example.problem}</p>
+          <p class="question-expression example-question">{_lesson.example.problem}</p>
           <ol class="worked-steps">
             {
-              lesson.example.steps.map((step) => (
+              _lesson.example.steps.map((step) => (
                 <li>
                   <div class="calculation answer-line">{step.expression}</div>
                   <p>{step.note}</p>
@@ -98,16 +101,16 @@ const lessonHref = (targetUnit: string, targetLesson: string) =>
           <div class="practice-card-header">
             <div>
               <p class="practice-label">PRACTICE</p>
-              <h3>{lesson.practice.title}</h3>
+              <h3>{_lesson.practice.title}</h3>
             </div>
             <p class="practice-position">例題の直後に確認</p>
           </div>
 
-          <p class="question-expression">{lesson.practice.problem}</p>
+          <p class="question-expression">{_lesson.practice.problem}</p>
           <form class="guided-practice-form">
             <ol class="guided-fields">
               {
-                lesson.practice.steps.map((step, index) => (
+                _lesson.practice.steps.map((step, index) => (
                   <li>
                     <label>
                       <span>{step.prompt}</span>
@@ -131,7 +134,7 @@ const lessonHref = (targetUnit: string, targetLesson: string) =>
               <button type="reset" class="secondary-button">やり直す</button>
             </div>
           </form>
-          <p class="hint practice-hint" hidden>{lesson.practice.hint}</p>
+          <p class="hint practice-hint" hidden>{_lesson.practice.hint}</p>
           <p class="feedback practice-feedback" aria-live="polite"></p>
         </article>
       </section>
@@ -140,28 +143,24 @@ const lessonHref = (targetUnit: string, targetLesson: string) =>
         <p class="section-label">SUMMARY</p>
         <h2 id="summary-title">このページのポイント</h2>
         <ul class="summary-list">
-          {lesson.summary.map((item) => <li>{item}</li>)}
+          {_lesson.summary.map((item) => <li>{item}</li>)}
         </ul>
       </section>
 
       <nav class="lesson-navigation" aria-label="教材ナビゲーション">
         <div>
-          {neighbors.previous ? (
-            <a href={lessonHref(neighbors.previous.unit.key, neighbors.previous.lesson.key)}>
-              ← {neighbors.previous.lesson.title}
-            </a>
+          {_previousLesson ? (
+            <a href={_lessonHref(_previousLesson.key)}>← {_previousLesson.title}</a>
           ) : (
-            <a href={unitHref}>← {unit.title}の目次</a>
+            <a href={_unitHref}>← {_unit.title}の目次</a>
           )}
         </div>
-        <a class="unit-index-link" href={unitHref}>{unit.title}の小単元一覧</a>
+        <a class="unit-index-link" href={_unitHref}>{_unit.title}の小単元一覧</a>
         <div>
-          {neighbors.next ? (
-            <a href={lessonHref(neighbors.next.unit.key, neighbors.next.lesson.key)}>
-              {neighbors.next.lesson.title} →
-            </a>
+          {_nextLesson ? (
+            <a href={_lessonHref(_nextLesson.key)}>{_nextLesson.title} →</a>
           ) : (
-            <a href={base}>数学Iの目次へ →</a>
+            <a href={_unitHref}>{_unit.title}の目次へ →</a>
           )}
         </div>
       </nav>
