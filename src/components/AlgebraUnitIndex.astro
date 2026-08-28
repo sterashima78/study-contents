@@ -1,0 +1,90 @@
+---
+import type { AlgebraUnit } from "../content/math1/algebra";
+import "../styles/global.css";
+import "../styles/lesson.css";
+
+type Props = {
+  unit: AlgebraUnit;
+};
+
+const { unit } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const lessonHref = (lessonKey: string) =>
+  `${base}math1/algebra/${unit.key}/${lessonKey}/`;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={`高校数学I「${unit.title}」の小単元一覧。1ページ1技能で順番に学習します。`} />
+    <title>{unit.title} | 数学I</title>
+  </head>
+  <body>
+    <main class="lesson-shell">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <a href={base}>数学I</a>
+        <span aria-hidden="true">/</span>
+        <span>数と式</span>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{unit.title}</span>
+      </nav>
+
+      <header class="lesson-hero unit-hero">
+        <p class="lesson-kicker">数と式</p>
+        <h1>{unit.title}</h1>
+        <p>{unit.description}</p>
+      </header>
+
+      <section class="lesson-section unit-guide" aria-labelledby="guide-title">
+        <p class="section-label">LEARNING FLOW</p>
+        <h2 id="guide-title">小さく区切って順番に学ぶ</h2>
+        <p class="unit-guide-description">
+          各ページは1つの技能だけを扱います。考え方を確認し、細かい途中式の例題を見た直後に練習問題へ進みます。
+        </p>
+        <div class="learning-flow lesson-flow" aria-label="各小単元の流れ">
+          <span>考え方</span>
+          <span aria-hidden="true">→</span>
+          <span>例題</span>
+          <span aria-hidden="true">→</span>
+          <span>直後の練習</span>
+          <span aria-hidden="true">→</span>
+          <span>まとめ</span>
+        </div>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="lessons-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">LESSONS</p>
+            <h2 id="lessons-title">小単元</h2>
+          </div>
+          <p>上から順に進めると、前の技能を使いながら学べます。</p>
+        </div>
+
+        <ol class="lesson-index-list">
+          {
+            unit.lessons.map((lesson, index) => (
+              <li>
+                <a href={lessonHref(lesson.key)}>
+                  <span class="lesson-index-number">{String(index + 1).padStart(2, "0")}</span>
+                  <span class="lesson-index-content">
+                    <strong>{lesson.title}</strong>
+                    <span>{lesson.description}</span>
+                  </span>
+                  <span class="lesson-index-meta">5〜10分</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <nav class="lesson-navigation" aria-label="教材ナビゲーション">
+        <a href={base}>← 数学Iの目次へ</a>
+        <a href={lessonHref(unit.lessons[0].key)}>最初の小単元から始める →</a>
+      </nav>
+    </main>
+  </body>
+</html>
