@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 
-const units = [
+const _units = [
   {
     number: "01",
     title: "数と式",
@@ -24,7 +24,7 @@ const units = [
     number: "04",
     title: "データの分析",
     description: "データの散らばりや関係を数値とグラフで捉え、判断につなげます。",
-    topics: ["代表値と散らばり", "分散・標準偏差", "散布図・相関係数", "仮説検定の考え方"],
+    topics: ["データの散らばり", "分散・標準偏差", "散布図・相関係数", "仮説検定の考え方"],
   },
 ];
 ---
@@ -68,7 +68,7 @@ const units = [
 
         <ol class="unit-grid">
           {
-            units.map((unit) => (
+            _units.map((unit) => (
               <li class="unit-card">
                 <div class="unit-header">
                   <span class="unit-number" aria-hidden="true">{unit.number}</span>
