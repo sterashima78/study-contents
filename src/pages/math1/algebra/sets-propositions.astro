@@ -1,0 +1,533 @@
+---
+import "../../../styles/global.css";
+import "../../../styles/lesson.css";
+import "../../../styles/lesson-interactive.css";
+
+const _base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="高校数学I「集合と命題」の教材。集合の演算、必要条件・十分条件、逆・裏・対偶を例題とインタラクティブ練習で学びます。"
+    />
+    <title>集合と命題 | 数学I</title>
+  </head>
+  <body>
+    <main class="lesson-shell">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <a href={_base}>数学I</a>
+        <span aria-hidden="true">/</span>
+        <span>数と式</span>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">集合と命題</span>
+      </nav>
+
+      <header class="lesson-hero">
+        <p class="lesson-kicker">数と式 04</p>
+        <h1>集合と命題</h1>
+        <p>
+          集合は「条件を満たすものをひとまとまりとして扱う」ための道具です。命題では、条件どうしの関係を整理し、正しい推論や証明につなげます。
+        </p>
+      </header>
+
+      <section class="lesson-section goal-section" aria-labelledby="goal-title">
+        <p class="section-label">GOAL</p>
+        <h2 id="goal-title">このページのゴール</h2>
+        <ul class="goal-list">
+          <li>和集合・共通部分・補集合を記号と具体例の両方で扱える。</li>
+          <li>「PならばQ」という命題の真偽を、反例を使って判断できる。</li>
+          <li>必要条件・十分条件・必要十分条件を区別できる。</li>
+          <li>対偶を使うと証明しやすくなる場面を理解する。</li>
+        </ul>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="sets-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">01 SETS</p>
+            <h2 id="sets-title">集合を記号で表す</h2>
+          </div>
+          <p>集合 A, B に対し、「どちらかに入る」「両方に入る」「Aに入らない」を記号で表します。</p>
+        </div>
+
+        <div class="concept-grid">
+          <article class="concept-card">
+            <h3>和集合と共通部分</h3>
+            <ul class="formula-list">
+              <li>A ∪ B：A または B に属する要素</li>
+              <li>A ∩ B：A と B の両方に属する要素</li>
+            </ul>
+          </article>
+          <article class="concept-card">
+            <h3>補集合</h3>
+            <p class="formula">Aᶜ = U のうち A に属さない要素</p>
+            <p>補集合を考えるときは、全体集合 U が何かを明確にします。</p>
+          </article>
+        </div>
+
+        <article class="worked-example">
+          <div class="example-label">例題 1</div>
+          <h3>U = &#123;1,2,3,4,5,6&#125;、A = &#123;1,2,4&#125;、B = &#123;2,3,4,6&#125; のとき各集合を求める</h3>
+          <ol class="solution-steps">
+            <li>
+              <span>A ∪ B</span>
+              <div class="calculation">どちらか一方にでも入る要素を重複なく並べる</div>
+              <div class="calculation answer">&#123;1,2,3,4,6&#125;</div>
+            </li>
+            <li>
+              <span>A ∩ B</span>
+              <div class="calculation">両方に共通する要素を選ぶ</div>
+              <div class="calculation answer">&#123;2,4&#125;</div>
+            </li>
+            <li>
+              <span>Aᶜ</span>
+              <div class="calculation">U から A の要素を除く</div>
+              <div class="calculation answer">&#123;3,5,6&#125;</div>
+            </li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="proposition-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">02 PROPOSITIONS</p>
+            <h2 id="proposition-title">命題と反例</h2>
+          </div>
+          <p>命題「PならばQ」が偽であることを示すには、Pを満たすのにQを満たさない例を1つ見つければ十分です。</p>
+        </div>
+
+        <div class="concept-grid">
+          <article class="concept-card">
+            <h3>命題</h3>
+            <p class="formula">P ⇒ Q</p>
+            <p>P が成り立つすべての場合に Q も成り立てば、この命題は真です。</p>
+          </article>
+          <article class="concept-card">
+            <h3>反例</h3>
+            <p class="formula">P は真、Q は偽となる例</p>
+            <p>反例が1つでもあれば「P ⇒ Q」は偽です。すべての例を調べる必要はありません。</p>
+          </article>
+        </div>
+
+        <article class="worked-example">
+          <div class="example-label">例題 2</div>
+          <h3>「整数 n が 4 の倍数ならば、n は 8 の倍数である」は真か</h3>
+          <ol class="solution-steps">
+            <li>
+              <span>条件 P を満たす整数を探す</span>
+              <div class="calculation">n = 4 は 4 の倍数</div>
+            </li>
+            <li>
+              <span>結論 Q を確認する</span>
+              <div class="calculation">4 は 8 の倍数ではない</div>
+            </li>
+            <li>
+              <span>反例が見つかったので判断する</span>
+              <div class="calculation answer">命題は偽。反例は n = 4</div>
+            </li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="condition-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">03 CONDITIONS</p>
+            <h2 id="condition-title">必要条件と十分条件</h2>
+          </div>
+          <p>P ⇒ Q が真なら、P は Q の十分条件、Q は P の必要条件です。両方向が真なら必要十分条件です。</p>
+        </div>
+
+        <div class="factor-rule" role="note">
+          <div>
+            <span class="rule-caption">P ⇒ Q が真</span>
+            <div class="formula">P は Q の十分条件</div>
+          </div>
+          <div class="rule-arrow" aria-hidden="true">⇔</div>
+          <div>
+            <span class="rule-caption">同じ関係を逆側から見る</span>
+            <div class="formula">Q は P の必要条件</div>
+          </div>
+        </div>
+
+        <article class="worked-example">
+          <div class="example-label">例題 3</div>
+          <h3>実数 x について、P: x = 2、Q: x² = 4 の関係を調べる</h3>
+          <ol class="solution-steps">
+            <li>
+              <span>P ⇒ Q を確認する</span>
+              <div class="calculation">x = 2 なら x² = 4。したがって真</div>
+            </li>
+            <li>
+              <span>Q ⇒ P を確認する</span>
+              <div class="calculation">x = −2 でも x² = 4 だが x = 2 ではない。したがって偽</div>
+            </li>
+            <li>
+              <span>条件の関係を表す</span>
+              <div class="calculation answer">P は Q の十分条件だが、必要条件ではない</div>
+            </li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="contrapositive-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">04 CONTRAPOSITIVE</p>
+            <h2 id="contrapositive-title">対偶を使って証明する</h2>
+          </div>
+          <p>命題「P ⇒ Q」とその対偶「not Q ⇒ not P」は必ず同じ真偽になります。</p>
+        </div>
+
+        <div class="concept-grid">
+          <article class="concept-card">
+            <h3>逆・裏・対偶</h3>
+            <ul class="formula-list">
+              <li>元の命題：P ⇒ Q</li>
+              <li>逆：Q ⇒ P</li>
+              <li>裏：not P ⇒ not Q</li>
+              <li>対偶：not Q ⇒ not P</li>
+            </ul>
+          </article>
+          <article class="concept-card">
+            <h3>対偶の利点</h3>
+            <p class="formula">P ⇒ Q と対偶は同値</p>
+            <p>直接示しにくい命題でも、対偶にすると計算や因数分解で示しやすい場合があります。</p>
+          </article>
+        </div>
+
+        <article class="worked-example">
+          <div class="example-label">例題 4</div>
+          <h3>整数 n について「n² が偶数なら n は偶数」を対偶で考える</h3>
+          <ol class="solution-steps">
+            <li>
+              <span>対偶を書く</span>
+              <div class="calculation">「n が奇数なら n² は奇数」</div>
+            </li>
+            <li>
+              <span>奇数を式で表す</span>
+              <div class="calculation">n = 2k + 1　(k は整数)</div>
+            </li>
+            <li>
+              <span>二乗して整理する</span>
+              <div class="calculation">n² = (2k + 1)² = 2(2k² + 2k) + 1</div>
+            </li>
+            <li>
+              <span>奇数の形になったことを確認する</span>
+              <div class="calculation answer">対偶が真なので、元の命題も真</div>
+            </li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="lesson-section practice-section" aria-labelledby="practice-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">PRACTICE</p>
+            <h2 id="practice-title">インタラクティブ練習</h2>
+          </div>
+          <p>集合演算は要素を入力して採点し、条件問題では必要条件・十分条件の関係を選択します。</p>
+        </div>
+
+        <div class="practice-grid">
+          <article class="practice-card">
+            <div class="practice-card-header">
+              <div>
+                <p class="practice-label">集合チャレンジ</p>
+                <h3>和集合・共通部分を求めよう</h3>
+              </div>
+              <p class="score" id="set-score">正解 0 / 挑戦 0</p>
+            </div>
+            <p class="practice-instruction">表示された集合の演算結果を、要素をカンマ区切りで入力してください。順番は問いません。空集合は ∅ と入力できます。</p>
+            <div class="logic-question">
+              <p class="set-expression" id="set-a">A = &#123;1,2,3&#125;</p>
+              <p class="set-expression" id="set-b">B = &#123;2,3,4&#125;</p>
+              <p class="set-expression" id="set-operation">A ∩ B を求める</p>
+            </div>
+            <form id="set-form" class="answer-form">
+              <div class="answer-expression">
+                <span>&#123;</span>
+                <label>
+                  <span class="sr-only">集合の要素</span>
+                  <input id="set-answer" class="wide-input" type="text" inputmode="text" placeholder="例: 2, 3 / ∅" required />
+                </label>
+                <span>&#125;</span>
+              </div>
+              <div class="practice-actions">
+                <button type="submit" class="primary-button">答え合わせ</button>
+                <button type="button" class="secondary-button" id="set-hint-button">ヒント</button>
+                <button type="button" class="secondary-button" id="set-next">新しい問題</button>
+              </div>
+            </form>
+            <p class="hint" id="set-hint" hidden>∪ は「どちらかに入る」、∩ は「両方に入る」です。同じ要素は1回だけ書きます。</p>
+            <div class="feedback" id="set-feedback" aria-live="polite"></div>
+          </article>
+
+          <article class="practice-card">
+            <div class="practice-card-header">
+              <div>
+                <p class="practice-label">条件チャレンジ</p>
+                <h3>P は Q の何条件？</h3>
+              </div>
+              <p class="score" id="condition-score">正解 0 / 挑戦 0</p>
+            </div>
+            <p class="practice-instruction">指定された範囲で P と Q の関係を考え、P が Q のどの条件に当たるか選んでください。</p>
+            <div class="logic-question">
+              <p class="logic-domain" id="condition-domain">範囲：実数 x</p>
+              <p id="condition-p">P: x = 2</p>
+              <p id="condition-q">Q: x² = 4</p>
+            </div>
+            <form id="condition-form" class="answer-form">
+              <div class="answer-expression">
+                <label>
+                  <span class="sr-only">条件の関係</span>
+                  <select id="condition-answer" required>
+                    <option value="">選択してください</option>
+                    <option value="sufficient">十分条件だが必要条件ではない</option>
+                    <option value="necessary">必要条件だが十分条件ではない</option>
+                    <option value="equivalent">必要十分条件</option>
+                    <option value="neither">どちらでもない</option>
+                  </select>
+                </label>
+              </div>
+              <div class="practice-actions">
+                <button type="submit" class="primary-button">答え合わせ</button>
+                <button type="button" class="secondary-button" id="condition-hint-button">ヒント</button>
+                <button type="button" class="secondary-button" id="condition-next">新しい問題</button>
+              </div>
+            </form>
+            <p class="hint" id="condition-hint" hidden>P ⇒ Q と Q ⇒ P を別々に調べます。片方向だけ真なら、真になる向きから十分条件・必要条件を判断します。</p>
+            <div class="feedback" id="condition-feedback" aria-live="polite"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="detailed-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">DETAILED SOLUTIONS</p>
+            <h2 id="detailed-title">詳しい解答例</h2>
+          </div>
+          <p>条件問題は「両方向を別々に確認する」ことが最も確実です。</p>
+        </div>
+        <div class="details-grid">
+          <details>
+            <summary>実数 x について、x &gt; 3 は x &gt; 1 の何条件か</summary>
+            <div class="details-body">
+              <p>x &gt; 3 なら必ず x &gt; 1 なので、P ⇒ Q は真です。</p>
+              <p>一方、x = 2 は x &gt; 1 を満たしますが x &gt; 3 は満たさないため、Q ⇒ P は偽です。</p>
+              <div class="calculation answer">x &gt; 3 は x &gt; 1 の十分条件だが必要条件ではない</div>
+            </div>
+          </details>
+          <details>
+            <summary>ド・モルガンの法則を集合で確認する</summary>
+            <div class="details-body">
+              <p>「A または B に入る」の否定は「A にも B にも入らない」です。</p>
+              <div class="calculation">(A ∪ B)ᶜ = Aᶜ ∩ Bᶜ</div>
+              <p>同様に、「A と B の両方に入る」の否定は「A でない、または B でない」です。</p>
+              <div class="calculation answer">(A ∩ B)ᶜ = Aᶜ ∪ Bᶜ</div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="lesson-section summary-section" aria-labelledby="summary-title">
+        <p class="section-label">SUMMARY</p>
+        <h2 id="summary-title">まとめ</h2>
+        <div class="summary-grid">
+          <div><h3>集合</h3><p>∪ は和集合、∩ は共通部分。補集合では全体集合を明確にする。</p></div>
+          <div><h3>条件</h3><p>P ⇒ Q が真なら、P は Q の十分条件であり、Q は P の必要条件。</p></div>
+          <div><h3>証明</h3><p>元の命題と対偶は同じ真偽。偽を示すには反例を1つ見つければよい。</p></div>
+        </div>
+      </section>
+
+      <nav class="lesson-navigation" aria-label="教材ナビゲーション">
+        <a href={`${_base}math1/algebra/linear-inequalities/`}>← 一次不等式</a>
+        <a href={_base}>数学Iの目次へ →</a>
+      </nav>
+    </main>
+
+    <script>
+      const universe = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+      const conditionProblems = [
+        {
+          domain: "範囲：実数 x",
+          p: "P: x = 2",
+          q: "Q: x² = 4",
+          answer: "sufficient",
+          explanation: "x = 2 なら x² = 4 ですが、x = −2 でも x² = 4 なので、P は十分条件ですが必要条件ではありません。",
+        },
+        {
+          domain: "範囲：実数 x",
+          p: "P: x² = 4",
+          q: "Q: |x| = 2",
+          answer: "equivalent",
+          explanation: "x² = 4 と |x| = 2 はどちらも x = ±2 を表すため、両方向が成り立ちます。",
+        },
+        {
+          domain: "範囲：実数 x",
+          p: "P: x > 3",
+          q: "Q: x > 1",
+          answer: "sufficient",
+          explanation: "x > 3 なら x > 1 ですが、x = 2 は Q を満たして P を満たさないため、P は十分条件ですが必要条件ではありません。",
+        },
+        {
+          domain: "範囲：整数 n",
+          p: "P: n は 6 の倍数",
+          q: "Q: n は 3 の倍数",
+          answer: "sufficient",
+          explanation: "6 の倍数は必ず 3 の倍数ですが、3 は 3 の倍数であって 6 の倍数ではありません。",
+        },
+        {
+          domain: "範囲：整数 n",
+          p: "P: n は偶数",
+          q: "Q: n² は偶数",
+          answer: "equivalent",
+          explanation: "n が偶数なら n² も偶数で、n² が偶数なら n も偶数なので必要十分条件です。",
+        },
+        {
+          domain: "範囲：実数 x",
+          p: "P: x = 0",
+          q: "Q: x ≤ 0",
+          answer: "sufficient",
+          explanation: "x = 0 なら x ≤ 0 ですが、x = −1 も Q を満たすため、P は十分条件ですが必要条件ではありません。",
+        },
+      ];
+
+      let currentSet = null;
+      let setCorrect = 0;
+      let setAttempts = 0;
+      let conditionIndex = 0;
+      let conditionCorrect = 0;
+      let conditionAttempts = 0;
+
+      const setFeedback = (element, correct, message) => {
+        element.className = `feedback ${correct ? "is-correct" : "is-error"}`;
+        element.textContent = message;
+      };
+
+      const sameArray = (a, b) => a.length === b.length && a.every((value, index) => value === b[index]);
+      const formatSet = (values) => (values.length === 0 ? "∅" : `{${values.join(", ")}}`);
+      const randomSet = () => {
+        let values = [];
+        while (values.length < 2) values = universe.filter(() => Math.random() < 0.5);
+        return values;
+      };
+      const parseSetAnswer = (text) => {
+        const trimmed = text.trim();
+        if (trimmed === "∅") return [];
+        const normalized = trimmed.replace(/[{}]/g, "");
+        if (!normalized) return [];
+        const values = normalized
+          .split(/[\s,、]+/)
+          .filter(Boolean)
+          .map(Number);
+        if (values.some((value) => !Number.isInteger(value) || !universe.includes(value))) return null;
+        return [...new Set(values)].sort((a, b) => a - b);
+      };
+
+      const setA = document.getElementById("set-a");
+      const setB = document.getElementById("set-b");
+      const setOperation = document.getElementById("set-operation");
+      const setForm = document.getElementById("set-form");
+      const setAnswer = document.getElementById("set-answer");
+      const setFeedbackElement = document.getElementById("set-feedback");
+      const setScore = document.getElementById("set-score");
+      const setHint = document.getElementById("set-hint");
+
+      const newSetProblem = () => {
+        const a = randomSet();
+        const b = randomSet();
+        const operation = Math.random() < 0.5 ? "union" : "intersection";
+        const answer =
+          operation === "union"
+            ? [...new Set([...a, ...b])].sort((x, y) => x - y)
+            : a.filter((value) => b.includes(value)).sort((x, y) => x - y);
+        currentSet = { a, b, operation, answer };
+        setA.textContent = `A = ${formatSet(a)}`;
+        setB.textContent = `B = ${formatSet(b)}`;
+        setOperation.textContent = operation === "union" ? "A ∪ B を求める" : "A ∩ B を求める";
+        setAnswer.value = "";
+        setFeedbackElement.textContent = "";
+        setFeedbackElement.className = "feedback";
+        setHint.hidden = true;
+      };
+
+      setForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const parsed = parseSetAnswer(setAnswer.value);
+        if (parsed === null) {
+          setFeedback(setFeedbackElement, false, "1〜9の整数をカンマ区切りで入力するか、空集合なら ∅ を入力してください。");
+          return;
+        }
+        const correct = sameArray(parsed, currentSet.answer);
+        setAttempts += 1;
+        if (correct) setCorrect += 1;
+        setScore.textContent = `正解 ${setCorrect} / 挑戦 ${setAttempts}`;
+        const symbol = currentSet.operation === "union" ? "∪" : "∩";
+        setFeedback(
+          setFeedbackElement,
+          correct,
+          correct
+            ? `正解です。A ${symbol} B = ${formatSet(currentSet.answer)} です。`
+            : `答えは ${formatSet(currentSet.answer)} です。${currentSet.operation === "union" ? "どちらかに入る要素をすべて集めます。" : "両方に共通する要素だけを選びます。"}`,
+        );
+      });
+
+      document.getElementById("set-next").addEventListener("click", newSetProblem);
+      document.getElementById("set-hint-button").addEventListener("click", () => {
+        setHint.hidden = !setHint.hidden;
+      });
+
+      const conditionDomain = document.getElementById("condition-domain");
+      const conditionP = document.getElementById("condition-p");
+      const conditionQ = document.getElementById("condition-q");
+      const conditionForm = document.getElementById("condition-form");
+      const conditionAnswer = document.getElementById("condition-answer");
+      const conditionFeedback = document.getElementById("condition-feedback");
+      const conditionScore = document.getElementById("condition-score");
+      const conditionHint = document.getElementById("condition-hint");
+
+      const renderCondition = () => {
+        const problem = conditionProblems[conditionIndex];
+        conditionDomain.textContent = problem.domain;
+        conditionP.textContent = problem.p;
+        conditionQ.textContent = problem.q;
+        conditionAnswer.value = "";
+        conditionFeedback.textContent = "";
+        conditionFeedback.className = "feedback";
+        conditionHint.hidden = true;
+      };
+
+      conditionForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const problem = conditionProblems[conditionIndex];
+        const correct = conditionAnswer.value === problem.answer;
+        conditionAttempts += 1;
+        if (correct) conditionCorrect += 1;
+        conditionScore.textContent = `正解 ${conditionCorrect} / 挑戦 ${conditionAttempts}`;
+        setFeedback(conditionFeedback, correct, `${correct ? "正解です。" : "確認しましょう。"}${problem.explanation}`);
+      });
+
+      document.getElementById("condition-next").addEventListener("click", () => {
+        let next = conditionIndex;
+        while (next === conditionIndex) next = Math.floor(Math.random() * conditionProblems.length);
+        conditionIndex = next;
+        renderCondition();
+      });
+      document.getElementById("condition-hint-button").addEventListener("click", () => {
+        conditionHint.hidden = !conditionHint.hidden;
+      });
+
+      conditionIndex = Math.floor(Math.random() * conditionProblems.length);
+      newSetProblem();
+      renderCondition();
+    </script>
+  </body>
+</html>

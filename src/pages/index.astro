@@ -1,5 +1,57 @@
 ---
 import "../styles/global.css";
+
+const _base = import.meta.env.BASE_URL;
+const _units = [
+  {
+    number: "01",
+    title: "数と式",
+    description: "数や式の扱い方を整理し、数学Iの計算と論理の土台をつくります。",
+    topics: [
+      { label: "式の展開と因数分解", href: "math1/algebra/expansion-factorization/" },
+      { label: "実数", href: "math1/algebra/real-numbers/" },
+      { label: "一次不等式", href: "math1/algebra/linear-inequalities/" },
+      { label: "集合と命題", href: "math1/algebra/sets-propositions/" },
+    ],
+    status: "4教材公開",
+  },
+  {
+    number: "02",
+    title: "図形と計量",
+    description: "三角比を使って、角度・長さ・面積を数量として捉えます。",
+    topics: [
+      { label: "三角比" },
+      { label: "三角比の相互関係" },
+      { label: "正弦定理・余弦定理" },
+      { label: "図形の計量" },
+    ],
+    status: "教材を準備中",
+  },
+  {
+    number: "03",
+    title: "二次関数",
+    description: "グラフと式を行き来しながら、変化の特徴や条件を読み取ります。",
+    topics: [
+      { label: "二次関数とグラフ" },
+      { label: "最大・最小" },
+      { label: "二次方程式とグラフ" },
+      { label: "二次不等式" },
+    ],
+    status: "教材を準備中",
+  },
+  {
+    number: "04",
+    title: "データの分析",
+    description: "データの散らばりや関係を数値とグラフで捉え、判断につなげます。",
+    topics: [
+      { label: "データの散らばり" },
+      { label: "分散・標準偏差" },
+      { label: "散布図・相関係数" },
+      { label: "仮説検定の考え方" },
+    ],
+    status: "教材を準備中",
+  },
+];
 ---
 
 <!doctype html>
@@ -7,16 +59,71 @@ import "../styles/global.css";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="学習コンテンツサイトのサンプルページ" />
-    <title>学習コンテンツ</title>
+    <meta
+      name="description"
+      content="高校数学Iの学習コンテンツ。数と式、図形と計量、二次関数、データの分析を順に学べます。"
+    />
+    <title>数学I | 学習コンテンツ</title>
   </head>
   <body>
     <main class="page-shell">
-      <section class="card" aria-labelledby="page-title">
-        <p class="eyebrow">study-contents</p>
-        <h1 id="page-title">学習コンテンツ</h1>
-        <p>Astro と GitHub Pages で構成したサンプルページです。</p>
+      <header class="hero">
+        <p class="eyebrow">MATHEMATICS I</p>
+        <h1>数学I</h1>
+        <p class="lead">
+          基礎から順に、要点を理解し、問題を解き、解答の考え方まで確認するための学習コンテンツです。
+        </p>
+        <div class="learning-flow" aria-label="各単元の学習の流れ">
+          <span>要点</span>
+          <span aria-hidden="true">→</span>
+          <span>練習問題</span>
+          <span aria-hidden="true">→</span>
+          <span>詳しい解答</span>
+        </div>
+      </header>
+
+      <section class="curriculum" aria-labelledby="curriculum-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">CONTENTS</p>
+            <h2 id="curriculum-title">学習する4つの領域</h2>
+          </div>
+          <p>上から順に学習すると、前の内容を使いながら理解を積み重ねられます。</p>
+        </div>
+
+        <ol class="unit-grid">
+          {
+            _units.map((unit) => (
+              <li class="unit-card">
+                <div class="unit-header">
+                  <span class="unit-number" aria-hidden="true">{unit.number}</span>
+                  <h3>{unit.title}</h3>
+                </div>
+                <p class="unit-description">{unit.description}</p>
+                <ul class="topic-list">
+                  {unit.topics.map((topic) => (
+                    <li>
+                      {topic.href ? (
+                        <a href={`${_base}${topic.href}`}>{topic.label}</a>
+                      ) : (
+                        topic.label
+                      )}
+                    </li>
+                  ))}
+                </ul>
+                <p class:list={["preparing", { available: unit.status !== "教材を準備中" }]}>
+                  {unit.status}
+                </p>
+              </li>
+            ))
+          }
+        </ol>
       </section>
+
+      <footer class="page-footer">
+        <p>高校 数学I</p>
+        <p>学習指導要領の内容に沿って順次追加します。</p>
+      </footer>
     </main>
   </body>
 </html>

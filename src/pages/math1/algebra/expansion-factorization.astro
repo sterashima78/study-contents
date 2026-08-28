@@ -1,0 +1,469 @@
+---
+import "../../../styles/global.css";
+import "../../../styles/lesson.css";
+
+const _base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="高校数学I「式の展開と因数分解」の教材。公式、例題、詳しい解答、インタラクティブな練習問題で学習します。"
+    />
+    <title>式の展開と因数分解 | 数学I</title>
+  </head>
+  <body>
+    <main class="lesson-shell">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <a href={_base}>数学I</a>
+        <span aria-hidden="true">/</span>
+        <span>数と式</span>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">式の展開と因数分解</span>
+      </nav>
+
+      <header class="lesson-hero">
+        <p class="lesson-kicker">数と式 01</p>
+        <h1>式の展開と因数分解</h1>
+        <p>
+          展開と因数分解は互いに逆向きの操作です。公式を暗記するだけでなく、どの項どうしを掛け、どの2数を探しているのかを意識して使えるようにします。
+        </p>
+      </header>
+
+      <section class="lesson-section goal-section" aria-labelledby="goal-title">
+        <p class="section-label">GOAL</p>
+        <h2 id="goal-title">このページのゴール</h2>
+        <ul class="goal-list">
+          <li>2つの多項式を、分配法則を使って正確に展開できる。</li>
+          <li>乗法公式を使い、計算を短く整理できる。</li>
+          <li>二次式を見て、和と積から因数分解できる。</li>
+        </ul>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="expand-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">01 EXPANSION</p>
+            <h2 id="expand-title">展開：かっこを外して整理する</h2>
+          </div>
+          <p>基本は分配法則です。すべての項を掛け、最後に同類項をまとめます。</p>
+        </div>
+
+        <div class="concept-grid">
+          <article class="concept-card">
+            <h3>基本の形</h3>
+            <p class="formula">(ax + b)(cx + d)</p>
+            <p class="formula-result">= acx² + (ad + bc)x + bd</p>
+            <p>4回の掛け算を行い、x の一次の項をまとめます。</p>
+          </article>
+          <article class="concept-card">
+            <h3>よく使う乗法公式</h3>
+            <ul class="formula-list">
+              <li>(a + b)² = a² + 2ab + b²</li>
+              <li>(a − b)² = a² − 2ab + b²</li>
+              <li>(a + b)(a − b) = a² − b²</li>
+            </ul>
+          </article>
+        </div>
+
+        <article class="worked-example">
+          <div class="example-label">例題 1</div>
+          <h3>(2x + 3)(x − 4) を展開する</h3>
+          <ol class="solution-steps">
+            <li>
+              <span>それぞれの項を掛ける</span>
+              <div class="calculation">2x·x + 2x·(−4) + 3·x + 3·(−4)</div>
+            </li>
+            <li>
+              <span>掛け算を計算する</span>
+              <div class="calculation">2x² − 8x + 3x − 12</div>
+            </li>
+            <li>
+              <span>同類項をまとめる</span>
+              <div class="calculation answer">2x² − 5x − 12</div>
+            </li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="factor-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">02 FACTORIZATION</p>
+            <h2 id="factor-title">因数分解：積の形に戻す</h2>
+          </div>
+          <p>展開の逆を考えます。x² + px + q では「和が p、積が q」になる2数を探します。</p>
+        </div>
+
+        <div class="factor-rule" role="note">
+          <div>
+            <span class="rule-caption">探す2数を m, n とすると</span>
+            <div class="formula">m + n = p　かつ　mn = q</div>
+          </div>
+          <div class="rule-arrow" aria-hidden="true">→</div>
+          <div class="formula">x² + px + q = (x + m)(x + n)</div>
+        </div>
+
+        <article class="worked-example">
+          <div class="example-label">例題 2</div>
+          <h3>x² + 5x + 6 を因数分解する</h3>
+          <ol class="solution-steps">
+            <li>
+              <span>積が 6 になる整数の組を考える</span>
+              <div class="calculation">1 と 6、2 と 3</div>
+            </li>
+            <li>
+              <span>そのうち、和が 5 になる組を選ぶ</span>
+              <div class="calculation">2 + 3 = 5</div>
+            </li>
+            <li>
+              <span>積の形にする</span>
+              <div class="calculation answer">(x + 2)(x + 3)</div>
+            </li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="lesson-section practice-section" aria-labelledby="practice-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">PRACTICE</p>
+            <h2 id="practice-title">インタラクティブ練習</h2>
+          </div>
+          <p>問題は何度でも自動生成できます。入力後にその場で採点し、必要ならヒントを確認できます。</p>
+        </div>
+
+        <div class="practice-grid">
+          <article class="practice-card" data-practice="expand">
+            <div class="practice-card-header">
+              <div>
+                <p class="practice-label">展開チャレンジ</p>
+                <h3>係数を求めよう</h3>
+              </div>
+              <p class="score" id="expand-score">正解 0 / 挑戦 0</p>
+            </div>
+
+            <p class="practice-instruction">次の式を展開し、p と q を整数で入力してください。</p>
+            <div class="question-expression" id="expand-question">(x + 2)(x + 3)</div>
+            <form id="expand-form" class="answer-form">
+              <div class="answer-expression" aria-label="x二乗たすp xたすq">
+                <span>x² +</span>
+                <label>
+                  <span class="sr-only">p</span>
+                  <input id="expand-p" type="number" inputmode="numeric" step="1" required />
+                </label>
+                <span>x +</span>
+                <label>
+                  <span class="sr-only">q</span>
+                  <input id="expand-q" type="number" inputmode="numeric" step="1" required />
+                </label>
+              </div>
+              <div class="practice-actions">
+                <button type="submit" class="primary-button">答え合わせ</button>
+                <button type="button" class="secondary-button" id="expand-hint-button">ヒント</button>
+                <button type="button" class="secondary-button" id="expand-next">新しい問題</button>
+              </div>
+            </form>
+            <p class="hint" id="expand-hint" hidden>
+              x の係数は2つの定数の和、定数項は2つの定数の積になります。
+            </p>
+            <div class="feedback" id="expand-feedback" aria-live="polite"></div>
+          </article>
+
+          <article class="practice-card" data-practice="factor">
+            <div class="practice-card-header">
+              <div>
+                <p class="practice-label">因数分解チャレンジ</p>
+                <h3>2つの数を探そう</h3>
+              </div>
+              <p class="score" id="factor-score">正解 0 / 挑戦 0</p>
+            </div>
+
+            <p class="practice-instruction">次の式を因数分解し、2つの整数を入力してください。順番は問いません。</p>
+            <div class="question-expression" id="factor-question">x² + 5x + 6</div>
+            <form id="factor-form" class="answer-form">
+              <div class="answer-expression factor-inputs" aria-label="xたすm、xたすn">
+                <span>(x +</span>
+                <label>
+                  <span class="sr-only">1つ目の整数</span>
+                  <input id="factor-m" type="number" inputmode="numeric" step="1" required />
+                </label>
+                <span>)(x +</span>
+                <label>
+                  <span class="sr-only">2つ目の整数</span>
+                  <input id="factor-n" type="number" inputmode="numeric" step="1" required />
+                </label>
+                <span>)</span>
+              </div>
+              <div class="practice-actions">
+                <button type="submit" class="primary-button">答え合わせ</button>
+                <button type="button" class="secondary-button" id="factor-hint-button">ヒント</button>
+                <button type="button" class="secondary-button" id="factor-next">新しい問題</button>
+              </div>
+            </form>
+            <p class="hint" id="factor-hint" hidden>
+              定数項の約数の組を書き出し、その和が x の係数になる組を探します。
+            </p>
+            <div class="feedback" id="factor-feedback" aria-live="polite"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="detailed-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">DETAILED SOLUTIONS</p>
+            <h2 id="detailed-title">もう一段詳しい解答例</h2>
+          </div>
+          <p>答えだけでなく、なぜその変形になるのかを確認します。</p>
+        </div>
+
+        <div class="details-grid">
+          <details>
+            <summary>(3x − 2)² を展開する</summary>
+            <div class="details-body">
+              <p>(a − b)² = a² − 2ab + b² に a = 3x、b = 2 を代入します。</p>
+              <div class="calculation">(3x)² − 2·(3x)·2 + 2²</div>
+              <div class="calculation">= 9x² − 12x + 4</div>
+              <p>
+                真ん中の項は −2ab です。「3x − 2」をそれぞれ二乗して 9x² + 4 とするだけでは、交差して掛かる項 −12x が抜けます。
+              </p>
+            </div>
+          </details>
+          <details>
+            <summary>6x² + 7x + 2 を因数分解する</summary>
+            <div class="details-body">
+              <p>先頭が x² ではないので、(ax + b)(cx + d) の形を考えます。</p>
+              <div class="calculation">6x² = 2x·3x、2 = 1·2</div>
+              <p>組み合わせて展開したとき、一次の項が 7x になるものを探します。</p>
+              <div class="calculation">(2x + 1)(3x + 2)</div>
+              <div class="calculation">= 6x² + 4x + 3x + 2</div>
+              <div class="calculation answer">= 6x² + 7x + 2</div>
+              <p>したがって、6x² + 7x + 2 = (2x + 1)(3x + 2) です。</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="lesson-section summary-section" aria-labelledby="summary-title">
+        <p class="section-label">SUMMARY</p>
+        <h2 id="summary-title">まとめ</h2>
+        <div class="summary-grid">
+          <div>
+            <h3>展開</h3>
+            <p>すべての項を掛け、同類項をまとめる。公式はこの計算を短くしたもの。</p>
+          </div>
+          <div>
+            <h3>因数分解</h3>
+            <p>x² + px + q では、和が p、積が q になる2数を探して積の形に戻す。</p>
+          </div>
+          <div>
+            <h3>確認</h3>
+            <p>因数分解した式をもう一度展開し、元の式に戻れば計算を検算できる。</p>
+          </div>
+        </div>
+      </section>
+
+      <nav class="lesson-navigation" aria-label="教材ナビゲーション">
+        <a href={_base}>← 数学Iの目次へ</a>
+        <a href={`${_base}math1/algebra/real-numbers/`}>実数 →</a>
+      </nav>
+    </main>
+
+    <script>
+      const randomNonZeroInteger = () => {
+        let value = 0;
+        while (value === 0) {
+          value = Math.floor(Math.random() * 15) - 7;
+        }
+        return value;
+      };
+
+      const signedNumber = (value) => (value < 0 ? `− ${Math.abs(value)}` : `+ ${value}`);
+
+      const formatFactor = (value) => `(x ${signedNumber(value)})`;
+
+      const formatPolynomial = (p, q) => `x² ${signedNumber(p)}x ${signedNumber(q)}`;
+
+      const numberFromInput = (input) => {
+        const value = Number(input.value);
+        return Number.isInteger(value) ? value : null;
+      };
+
+      const setupExpansionPractice = () => {
+        const form = document.querySelector("#expand-form");
+        const question = document.querySelector("#expand-question");
+        const pInput = document.querySelector("#expand-p");
+        const qInput = document.querySelector("#expand-q");
+        const feedback = document.querySelector("#expand-feedback");
+        const score = document.querySelector("#expand-score");
+        const hint = document.querySelector("#expand-hint");
+        const hintButton = document.querySelector("#expand-hint-button");
+        const nextButton = document.querySelector("#expand-next");
+        const submitButton = form?.querySelector('button[type="submit"]');
+
+        if (
+          !(form instanceof HTMLFormElement) ||
+          !(question instanceof HTMLElement) ||
+          !(pInput instanceof HTMLInputElement) ||
+          !(qInput instanceof HTMLInputElement) ||
+          !(feedback instanceof HTMLElement) ||
+          !(score instanceof HTMLElement) ||
+          !(hint instanceof HTMLElement) ||
+          !(hintButton instanceof HTMLButtonElement) ||
+          !(nextButton instanceof HTMLButtonElement) ||
+          !(submitButton instanceof HTMLButtonElement)
+        ) {
+          return;
+        }
+
+        let a = 2;
+        let b = 3;
+        let correct = 0;
+        let attempts = 0;
+
+        const updateScore = () => {
+          score.textContent = `正解 ${correct} / 挑戦 ${attempts}`;
+        };
+
+        const newProblem = () => {
+          a = randomNonZeroInteger();
+          b = randomNonZeroInteger();
+          question.textContent = `${formatFactor(a)}${formatFactor(b)}`;
+          pInput.value = "";
+          qInput.value = "";
+          feedback.textContent = "";
+          feedback.className = "feedback";
+          hint.hidden = true;
+          submitButton.disabled = false;
+          pInput.focus();
+        };
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const p = numberFromInput(pInput);
+          const q = numberFromInput(qInput);
+
+          if (p === null || q === null) {
+            feedback.textContent = "p と q の両方に整数を入力してください。";
+            feedback.className = "feedback is-error";
+            return;
+          }
+
+          attempts += 1;
+          const expectedP = a + b;
+          const expectedQ = a * b;
+
+          if (p === expectedP && q === expectedQ) {
+            correct += 1;
+            feedback.textContent = `正解です。x の係数は ${a} + ${b} = ${expectedP}、定数項は ${a} × ${b} = ${expectedQ} です。`;
+            feedback.className = "feedback is-correct";
+            submitButton.disabled = true;
+          } else {
+            feedback.textContent = `もう一度確認しましょう。必要な係数は p = ${a} + ${b}、q = ${a} × ${b} から求めます。`;
+            feedback.className = "feedback is-error";
+          }
+          updateScore();
+        });
+
+        hintButton.addEventListener("click", () => {
+          hint.hidden = !hint.hidden;
+          hintButton.textContent = hint.hidden ? "ヒント" : "ヒントを閉じる";
+        });
+
+        nextButton.addEventListener("click", newProblem);
+      };
+
+      const setupFactorPractice = () => {
+        const form = document.querySelector("#factor-form");
+        const question = document.querySelector("#factor-question");
+        const mInput = document.querySelector("#factor-m");
+        const nInput = document.querySelector("#factor-n");
+        const feedback = document.querySelector("#factor-feedback");
+        const score = document.querySelector("#factor-score");
+        const hint = document.querySelector("#factor-hint");
+        const hintButton = document.querySelector("#factor-hint-button");
+        const nextButton = document.querySelector("#factor-next");
+        const submitButton = form?.querySelector('button[type="submit"]');
+
+        if (
+          !(form instanceof HTMLFormElement) ||
+          !(question instanceof HTMLElement) ||
+          !(mInput instanceof HTMLInputElement) ||
+          !(nInput instanceof HTMLInputElement) ||
+          !(feedback instanceof HTMLElement) ||
+          !(score instanceof HTMLElement) ||
+          !(hint instanceof HTMLElement) ||
+          !(hintButton instanceof HTMLButtonElement) ||
+          !(nextButton instanceof HTMLButtonElement) ||
+          !(submitButton instanceof HTMLButtonElement)
+        ) {
+          return;
+        }
+
+        let m = 2;
+        let n = 3;
+        let correct = 0;
+        let attempts = 0;
+
+        const updateScore = () => {
+          score.textContent = `正解 ${correct} / 挑戦 ${attempts}`;
+        };
+
+        const newProblem = () => {
+          m = randomNonZeroInteger();
+          n = randomNonZeroInteger();
+          question.textContent = formatPolynomial(m + n, m * n);
+          mInput.value = "";
+          nInput.value = "";
+          feedback.textContent = "";
+          feedback.className = "feedback";
+          hint.hidden = true;
+          submitButton.disabled = false;
+          mInput.focus();
+        };
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const first = numberFromInput(mInput);
+          const second = numberFromInput(nInput);
+
+          if (first === null || second === null) {
+            feedback.textContent = "2つの欄の両方に整数を入力してください。";
+            feedback.className = "feedback is-error";
+            return;
+          }
+
+          attempts += 1;
+          const matches =
+            (first === m && second === n) || (first === n && second === m);
+
+          if (matches) {
+            correct += 1;
+            feedback.textContent = `正解です。${first} + ${second} = ${m + n}、${first} × ${second} = ${m * n} なので、元の式に一致します。`;
+            feedback.className = "feedback is-correct";
+            submitButton.disabled = true;
+          } else {
+            feedback.textContent = `入力した2数の和は ${first + second}、積は ${first * second} です。必要なのは和が ${m + n}、積が ${m * n} になる組です。`;
+            feedback.className = "feedback is-error";
+          }
+          updateScore();
+        });
+
+        hintButton.addEventListener("click", () => {
+          hint.hidden = !hint.hidden;
+          hintButton.textContent = hint.hidden ? "ヒント" : "ヒントを閉じる";
+        });
+
+        nextButton.addEventListener("click", newProblem);
+      };
+
+      setupExpansionPractice();
+      setupFactorPractice();
+    </script>
+  </body>
+</html>
