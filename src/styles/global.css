@@ -184,6 +184,23 @@ h1 {
   content: "";
 }
 
+.topic-list a {
+  color: #245c37;
+  font-weight: 750;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.2em;
+}
+
+.topic-list a:hover {
+  color: #183f26;
+}
+
+.topic-list a:focus-visible {
+  border-radius: 0.2rem;
+  outline: 3px solid rgb(63 112 80 / 28%);
+  outline-offset: 0.2rem;
+}
+
 .preparing {
   width: fit-content;
   margin: auto 0 0;
@@ -192,6 +209,10 @@ h1 {
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+}
+
+.preparing.available {
+  color: #356746;
 }
 
 .page-footer {
