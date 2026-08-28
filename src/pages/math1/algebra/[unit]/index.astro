@@ -1,6 +1,6 @@
 ---
-import AlgebraUnitIndex from "../../../../components/AlgebraUnitIndex.astro";
-import { algebraUnits, type AlgebraUnit } from "../../../../content/math1/algebra";
+import _AlgebraUnitIndex from "../../../../components/AlgebraUnitIndex.astro";
+import { type AlgebraUnit, algebraUnits } from "../../../../content/math1/algebra";
 
 export function getStaticPaths() {
   return algebraUnits.map((unit) => ({
@@ -13,7 +13,7 @@ type Props = {
   unit: AlgebraUnit;
 };
 
-const { unit } = Astro.props;
+const { unit: _unit } = Astro.props;
 ---
 
-<AlgebraUnitIndex unit={unit} />
+<_AlgebraUnitIndex unit={_unit} />
