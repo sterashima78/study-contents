@@ -31,3 +31,6 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Verify generated HTML
+        run: node scripts/verify-build-output.mjs
