@@ -1,0 +1,26 @@
+---
+import AlgebraLesson from "../../../../components/AlgebraLesson.astro";
+import {
+  algebraUnits,
+  type AlgebraUnit,
+  type Lesson,
+} from "../../../../content/math1/algebra";
+
+export function getStaticPaths() {
+  return algebraUnits.flatMap((unit) =>
+    unit.lessons.map((lesson) => ({
+      params: { unit: unit.key, lesson: lesson.key },
+      props: { unit, lesson },
+    })),
+  );
+}
+
+type Props = {
+  unit: AlgebraUnit;
+  lesson: Lesson;
+};
+
+const { unit, lesson } = Astro.props;
+---
+
+<AlgebraLesson unit={unit} lesson={lesson} />
