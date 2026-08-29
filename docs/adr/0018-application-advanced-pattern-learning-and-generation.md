@@ -1,7 +1,8 @@
 # ADR 0018: 応用・発展教材を解法パターン単位で構成し安全に問題生成する
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-29
+- Superseded by: ADR 0019
 
 ## Context
 
