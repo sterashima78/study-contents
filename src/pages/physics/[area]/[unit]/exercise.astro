@@ -1,0 +1,31 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PhysicsUnitExercise from "../../../../components/PhysicsUnitExercise.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { physicsCourse } from "../../../../content/math-courses";
+import type { MathArea, MathUnit } from "../../../../content/math1/types";
+import { physicsAreas } from "../../../../content/physics/catalog";
+
+export function getStaticPaths() {
+  return physicsAreas.flatMap((area) =>
+    area.units.map((unit) => ({
+      params: { area: area.key, unit: unit.key },
+      props: { area, unit },
+    })),
+  );
+}
+
+type Props = {
+  area: MathArea;
+  unit: MathUnit;
+};
+
+const { area: _area, unit: _unit } = Astro.props;
+---
+
+<PhysicsUnitExercise
+  area={_area}
+  unit={_unit}
+  course={physicsCourse}
+  physicsLevel="physics"
+/>

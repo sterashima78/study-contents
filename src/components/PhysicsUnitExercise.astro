@@ -1,4 +1,5 @@
 ---
+import { type MathCourseInfo, physicsBasicsCourse } from "../content/math-courses";
 import type { MathArea, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PhysicsExerciseSet from "./PhysicsExerciseSet.astro";
@@ -8,11 +9,18 @@ import "../styles/lesson.css";
 type Props = {
   area: MathArea;
   unit: MathUnit;
+  course?: MathCourseInfo;
+  physicsLevel?: "basics" | "physics";
 };
 
-const { area: _area, unit: _unit } = Astro.props;
+const {
+  area: _area,
+  unit: _unit,
+  course: _course = physicsBasicsCourse,
+  physicsLevel: _physicsLevel = "basics",
+} = Astro.props;
 const _base = import.meta.env.BASE_URL;
-const _courseHomeHref = `${_base}physics-basics/`;
+const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_courseHomeHref}${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 ---
@@ -24,14 +32,14 @@ const _unitHref = `${_areaHref}${_unit.key}/`;
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content={`高校物理基礎「${_unit.title}」の単元末演習。基礎・応用・難問を採点し、小単元ごとの弱点を確認します。`}
+      content={`高校${_course.title}「${_unit.title}」の単元末演習。基礎・応用・難問を採点し、小単元ごとの弱点を確認します。`}
     />
-    <title>単元末演習 | {_unit.title} | 物理基礎</title>
+    <title>単元末演習 | {_unit.title} | {_course.title}</title>
   </head>
   <body>
     <main class="lesson-shell">
       <nav class="breadcrumb" aria-label="パンくずリスト">
-        <a href={_courseHomeHref}>物理基礎</a>
+        <a href={_courseHomeHref}>{_course.title}</a>
         <span aria-hidden="true">/</span>
         <a href={_areaHref}>{_area.title}</a>
         <span aria-hidden="true">/</span>
@@ -48,11 +56,17 @@ const _unitHref = `${_areaHref}${_unit.key}/`;
         </p>
       </header>
 
-      <PhysicsExerciseSet mode="unit" areaKey={_area.key} unitKey={_unit.key} />
+      <PhysicsExerciseSet
+        mode="unit"
+        areaKey={_area.key}
+        unitKey={_unit.key}
+        physicsLevel={_physicsLevel}
+        courseRoute={_course.routeBase}
+      />
 
       <nav class="lesson-navigation" aria-label="教材ナビゲーション">
         <a href={_unitHref}>← {_unit.title}の小単元一覧</a>
-        <a href={_courseHomeHref}>物理基礎の目次へ →</a>
+        <a href={_courseHomeHref}>{_course.title}の目次へ →</a>
       </nav>
     </main>
   </body>

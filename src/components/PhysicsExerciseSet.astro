@@ -6,9 +6,18 @@ type Props = {
   areaKey: string;
   unitKey: string;
   lessonKey?: string;
+  physicsLevel?: "basics" | "physics";
+  courseRoute?: "physics-basics" | "physics";
 };
 
-const { mode: _mode, areaKey: _areaKey, unitKey: _unitKey, lessonKey: _lessonKey } = Astro.props;
+const {
+  mode: _mode,
+  areaKey: _areaKey,
+  unitKey: _unitKey,
+  lessonKey: _lessonKey,
+  physicsLevel: _physicsLevel = "basics",
+  courseRoute: _courseRoute = "physics-basics",
+} = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _isUnit = _mode === "unit";
 ---
@@ -20,6 +29,8 @@ const _isUnit = _mode === "unit";
   data-area-key={_areaKey}
   data-unit-key={_unitKey}
   data-lesson-key={_lessonKey}
+  data-physics-level={_physicsLevel}
+  data-course-route={_courseRoute}
   data-base={_base}
   aria-labelledby={_isUnit ? "unit-exercise-title" : "lesson-check-title"}
 >
@@ -65,9 +76,13 @@ const _isUnit = _mode === "unit";
 <script>
   import type { GeneratedExercise } from "../content/math1/exercise-registry";
   import {
-    generateLessonExercises,
-    generateUnitExercises,
+    generateLessonExercises as generatePhysicsBasicsLessonExercises,
+    generateUnitExercises as generatePhysicsBasicsUnitExercises,
   } from "../content/physics-basics/exercise-registry";
+  import {
+    generateLessonExercises as generatePhysicsLessonExercises,
+    generateUnitExercises as generatePhysicsUnitExercises,
+  } from "../content/physics/exercise-registry";
 
   const normalizeAnswer = (value: string) =>
     value
@@ -108,6 +123,8 @@ const _isUnit = _mode === "unit";
     const areaKey = section.dataset.areaKey;
     const unitKey = section.dataset.unitKey;
     const lessonKey = section.dataset.lessonKey;
+    const physicsLevel = section.dataset.physicsLevel ?? "basics";
+    const courseRoute = section.dataset.courseRoute ?? "physics-basics";
     const base = section.dataset.base ?? "/";
     const form = section.querySelector<HTMLFormElement>(".exercise-form");
     const list = section.querySelector<HTMLElement>("[data-exercise-list]");
@@ -121,12 +138,19 @@ const _isUnit = _mode === "unit";
 
     let exercises: GeneratedExercise[] = [];
 
-    const makeExercises = () =>
-      mode === "unit"
-        ? generateUnitExercises(unitKey)
+    const makeExercises = () => {
+      const generateLesson =
+        physicsLevel === "physics"
+          ? generatePhysicsLessonExercises
+          : generatePhysicsBasicsLessonExercises;
+      const generateUnit =
+        physicsLevel === "physics" ? generatePhysicsUnitExercises : generatePhysicsBasicsUnitExercises;
+      return mode === "unit"
+        ? generateUnit(unitKey)
         : lessonKey
-          ? generateLessonExercises(unitKey, lessonKey)
+          ? generateLesson(unitKey, lessonKey)
           : [];
+    };
 
     const renderExercises = () => {
       exercises = makeExercises();
@@ -154,7 +178,7 @@ const _isUnit = _mode === "unit";
           `対応: ${exercise.lessonTitles.join(" / ")}`,
         );
         const answerBlock = createElement("div", "exercise-answer-label");
-        const answerId = `physics-answer-${index}`;
+        const answerId = `${courseRoute}-answer-${index}`;
         const label = createElement("label", undefined, "答え");
         label.htmlFor = answerId;
         const input = document.createElement("input");
@@ -191,7 +215,7 @@ const _isUnit = _mode === "unit";
         const item = createElement("article", "diagnostic-item");
         const ratio = result.total === 0 ? 0 : result.correct / result.total;
         const link = createElement("a", "diagnostic-link", "この小単元を復習する");
-        link.href = `${base}physics-basics/${areaKey}/${unitKey}/${key}/`;
+        link.href = `${base}${courseRoute}/${areaKey}/${unitKey}/${key}/`;
         item.append(
           createElement("h4", undefined, result.title),
           createElement("p", "diagnostic-score", `${result.correct}/${result.total} 正解`),
