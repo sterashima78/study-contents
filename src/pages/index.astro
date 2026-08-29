@@ -34,8 +34,7 @@ const _courses = [
     title: "数学B",
     kicker: "MATHEMATICS B",
     href: `${_base}mathb/`,
-    description:
-      "数列、統計的な推測、数学と社会生活を、1ページ1技能の小さな教材で学びます。",
+    description: "数列、統計的な推測、数学と社会生活を、1ページ1技能の小さな教材で学びます。",
     areas: mathBAreas.map((area) => area.title),
     lessonCount: mathBAreas.reduce(
       (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
