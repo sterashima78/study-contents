@@ -11,7 +11,7 @@ export const math1Course: MathCourseInfo = {
   title: "数学I",
   kicker: "MATHEMATICS I",
   routeBase: "math1",
-  homePath: "",
+  homePath: "math1/",
 };
 
 export const mathACourse: MathCourseInfo = {
