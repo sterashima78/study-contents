@@ -1,0 +1,23 @@
+---
+type Props = {
+  items: string[];
+};
+
+const { items: _items } = Astro.props;
+---
+
+<ul class="summary-points">
+  {_items.map((item) => <li>{item}</li>)}
+</ul>
+
+<style>
+  .summary-points {
+    display: grid;
+    gap: 0.8rem;
+    max-width: 56rem;
+    margin: 1.5rem 0 0;
+    padding-left: 1.4rem;
+    color: var(--color-text-soft);
+    line-height: 1.8;
+  }
+</style>
