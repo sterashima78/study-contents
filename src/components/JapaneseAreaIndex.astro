@@ -1,0 +1,64 @@
+---
+import type { JapaneseArea } from "../content/japanese/types";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "./ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageFooter from "./ui/PageFooter.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
+
+type Props = {
+  area: JapaneseArea;
+};
+
+const { area: _area } = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const _items = _area.units.map((unit, index) => ({
+  marker: String(index + 1).padStart(2, "0"),
+  title: unit.title,
+  href: `${_base}japanese/${_area.key}/${unit.key}/`,
+  description: unit.description,
+  links: unit.lessons.map((lesson) => ({
+    label: lesson.title,
+    href: `${_base}japanese/${_area.key}/${unit.key}/${lesson.key}/`,
+  })),
+  meta: `${unit.lessons.length}小教材`,
+}));
+const _lessonCount = _area.units.reduce((sum, unit) => sum + unit.lessons.length, 0);
+---
+
+<StudyPage
+  title={`${_area.title} | 国語 | 学習コンテンツ`}
+  description={_area.description}
+  width="wide"
+>
+  <BreadcrumbTrail
+    items={[
+      { label: "科目一覧", href: _base },
+      { label: "国語", href: `${_base}japanese/` },
+      { label: _area.title },
+    ]}
+  />
+
+  <ContentHero kicker={_area.kicker} title={_area.title} description={_area.description} variant="display" />
+
+  <ContentSection labelledby="area-units-title">
+    <SectionHeading
+      label="UNITS"
+      title={`${_area.title}の学習項目`}
+      id="area-units-title"
+      description={`全${_lessonCount}小教材。単元ごとに読み方・文法・句法の技能を分けて学びます。`}
+    />
+    <ContentIndex items={_items} variant="grid" />
+  </ContentSection>
+
+  <PageFooter items={[`高校 国語 / ${_area.title}`, "1ページ1技能の小教材"]} homeHref={_base} />
+</StudyPage>
