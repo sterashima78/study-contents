@@ -1,10 +1,10 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import MathAreaIndex from "../../../components/MathAreaIndex.astro";
-import { worldHistoryAreas } from "../../../content/world-history/catalog";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { worldHistoryCourse } from "../../../content/math-courses";
 import type { MathArea } from "../../../content/math1/types";
+import { worldHistoryAreas } from "../../../content/world-history/catalog";
 
 export function getStaticPaths() {
   return worldHistoryAreas.map((area) => ({

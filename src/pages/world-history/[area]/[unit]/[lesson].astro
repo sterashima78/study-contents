@@ -1,7 +1,6 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import MathLesson from "../../../../components/MathLesson.astro";
-import { worldHistoryAreas } from "../../../../content/world-history/catalog";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { worldHistoryCourse } from "../../../../content/math-courses";
 import type {
@@ -9,6 +8,7 @@ import type {
   MathLesson as MathLessonData,
   MathUnit,
 } from "../../../../content/math1/types";
+import { worldHistoryAreas } from "../../../../content/world-history/catalog";
 
 export function getStaticPaths() {
   return worldHistoryAreas.flatMap((area) =>
