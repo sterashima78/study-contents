@@ -8,7 +8,7 @@ const _patternSlug = (id: string) => id.replace(_patternPrefix, "");
 
 export function getStaticPaths() {
   return _problemSet.patterns.map((pattern, index) => ({
-    params: { pattern: _patternSlug(pattern.id) },
+    params: { pattern: pattern.id.replace("math1-quadratic-pattern-", "") },
     props: { pattern, index },
   }));
 }
