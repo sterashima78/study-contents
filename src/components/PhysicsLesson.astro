@@ -1,6 +1,7 @@
 ---
-import { physicsBasicsCourse } from "../content/math-courses";
+import { type MathCourseInfo, physicsBasicsCourse, physicsCourse } from "../content/math-courses";
 import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
+import { getPhysicsFormulaDerivation } from "../content/physics/formula-derivations";
 import { getPhysicsBasicsFormulaDerivation } from "../content/physics-basics/formula-derivations";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PhysicsExerciseSet from "./PhysicsExerciseSet.astro";
@@ -11,10 +12,17 @@ type Props = {
   area: MathArea;
   unit: MathUnit;
   lesson: MathLesson;
+  course?: MathCourseInfo;
+  physicsLevel?: "basics" | "physics";
 };
 
-const { area: _area, unit: _unit, lesson: _lesson } = Astro.props;
-const _course = physicsBasicsCourse;
+const {
+  area: _area,
+  unit: _unit,
+  lesson: _lesson,
+  course: _course = physicsBasicsCourse,
+  physicsLevel: _physicsLevel = "basics",
+} = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _courseHomeHref = `${_base}${_course.homePath}`;
 const _lessonIndex = _unit.lessons.findIndex((item) => item.key === _lesson.key);
@@ -25,7 +33,11 @@ const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
-const _formulaDerivation = getPhysicsBasicsFormulaDerivation(_lesson.key);
+const _formulaDerivation =
+  _physicsLevel === "physics"
+    ? getPhysicsFormulaDerivation(_lesson.key)
+    : getPhysicsBasicsFormulaDerivation(_lesson.key);
+const _resolvedCourse = _physicsLevel === "physics" ? physicsCourse : _course;
 ---
 
 <!doctype html>
@@ -35,14 +47,14 @@ const _formulaDerivation = getPhysicsBasicsFormulaDerivation(_lesson.key);
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content={`高校物理基礎「${_lesson.title}」の教材。考え方、式の根拠、例題、直後の練習、3問確認で学習します。`}
+      content={`高校${_resolvedCourse.title}「${_lesson.title}」の教材。考え方、式の根拠、例題、直後の練習、3問確認で学習します。`}
     />
-    <title>{_lesson.title} | {_unit.title} | 物理基礎</title>
+    <title>{_lesson.title} | {_unit.title} | {_resolvedCourse.title}</title>
   </head>
   <body>
     <main class="lesson-shell">
       <nav class="breadcrumb" aria-label="パンくずリスト">
-        <a href={_courseHomeHref}>物理基礎</a>
+        <a href={_courseHomeHref}>{_resolvedCourse.title}</a>
         <span aria-hidden="true">/</span>
         <a href={_areaHref}>{_area.title}</a>
         <span aria-hidden="true">/</span>
@@ -174,6 +186,8 @@ const _formulaDerivation = getPhysicsBasicsFormulaDerivation(_lesson.key);
         areaKey={_area.key}
         unitKey={_unit.key}
         lessonKey={_lesson.key}
+        physicsLevel={_physicsLevel}
+        courseRoute={_resolvedCourse.routeBase}
       />
 
       <section class="lesson-section summary-section" aria-labelledby="summary-title">
