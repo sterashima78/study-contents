@@ -20,7 +20,8 @@ const joinTerms = (...terms: string[]) =>
   terms
     .filter((term) => term !== "0")
     .join("+")
-    .replaceAll("+−", "−");
+    .replaceAll("+−", "−")
+    .replaceAll("+-", "−");
 
 const generateBoundedMinimum = (): GeneratedPractice => {
   const upper = pick([3, 4, 5] as const);
