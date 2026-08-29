@@ -1,7 +1,8 @@
 # ADR 0022: 教材表現をAstroコンポーネント化しスタイル所有範囲を限定する
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-29
+- Superseded by: ADR 0023
 - Related: ADR 0001, ADR 0004, ADR 0006, ADR 0007, ADR 0010, ADR 0013, ADR 0016, ADR 0019, ADR 0021
 - Updates: 教材UIのスタイル管理を共有クラス中心からコンポーネント所有へ移行する
 

@@ -3,9 +3,10 @@ import { fileURLToPath } from "node:url";
 
 const root = new URL("../", import.meta.url);
 const src = new URL("../src/", import.meta.url);
-const globalCssUrl = new URL("../src/styles/global.css", import.meta.url);
+const styles = new URL("../src/styles/", import.meta.url);
 const exerciseCssUrl = new URL("../src/styles/exercise.css", import.meta.url);
 const forbiddenStyleNames = [
+  "global.css",
   "lesson.css",
   "entrance.css",
   "entrance-index.css",
@@ -36,6 +37,11 @@ const requiredScopedComponents = [
 ];
 const issues = [];
 const astroFiles = await findFiles(src, ".astro");
+const styleEntries = await readdir(styles);
+
+if (styleEntries.includes("global.css")) {
+  issues.push("src/styles/global.css: グローバルCSSファイルは配置しないでください。");
+}
 
 for (const file of astroFiles) {
   const source = await readFile(file, "utf8");
@@ -45,10 +51,6 @@ for (const file of astroFiles) {
     if (source.includes(forbidden)) {
       issues.push(`${relative}: 廃止した共有CSS「${forbidden}」を参照しないでください。`);
     }
-  }
-
-  if (source.includes("styles/global.css") && relative !== "src/components/ui/StudyPage.astro") {
-    issues.push(`${relative}: global.css のimportは StudyPage.astro に集約してください。`);
   }
 
   if (
@@ -67,9 +69,19 @@ for (const file of astroFiles) {
   }
 }
 
-const globalCss = await readFile(globalCssUrl, "utf8");
-if (/^\s*\.[a-zA-Z_-]/m.test(globalCss)) {
-  issues.push("src/styles/global.css: 教材固有のクラスセレクタを置かないでください。");
+const studyPageSource = await readFile(
+  new URL("../src/components/ui/StudyPage.astro", import.meta.url),
+  "utf8",
+);
+if (!studyPageSource.includes(":global(body)")) {
+  issues.push(
+    "src/components/ui/StudyPage.astro: body の基本スタイルをレイアウト内で管理してください。",
+  );
+}
+if (!studyPageSource.includes("--color-text")) {
+  issues.push(
+    "src/components/ui/StudyPage.astro: デザイントークンをレイアウト内で管理してください。",
+  );
 }
 
 const exerciseCss = await readFile(exerciseCssUrl, "utf8");
