@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { biologyAreas } from "../../content/biology/catalog";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { biologyCourse } from "../../content/math-courses";
+---
+
+<CourseHome
+  course={biologyCourse}
+  areas={biologyAreas}
+  description="生物の進化、生命現象と物質、遺伝情報の発現と発生、生物の環境応答、生態と環境を、分子から生態系までつないで学びます。"
+  metaDescription="高校生物の学習コンテンツ。進化、生命現象と物質、遺伝情報と発生、環境応答、生態と環境を学べます。"
+  footerDescription="現行学習指導要領の5領域を、小単元・確認演習・単元末演習で学習できます。"
+/>
