@@ -27,7 +27,8 @@
         "src/content/chemistry-basic/**/*.ts",
         "src/content/chemistry/**/*.ts",
         "src/content/math3/**/*.ts",
-        "src/content/physics/**/*.ts"
+        "src/content/physics/**/*.ts",
+        "src/content/japanese/**/*.ts"
       ],
       "formatter": {
         "enabled": false
