@@ -1,5 +1,6 @@
 ---
 import { math1Areas } from "../content/math1/catalog";
+import { math2Areas } from "../content/math2/catalog";
 import { mathAAreas } from "../content/matha/catalog";
 import { mathBAreas } from "../content/mathb/catalog";
 import { mathCAreas } from "../content/mathc/catalog";
@@ -27,6 +28,18 @@ const _courses = [
       "場合の数と確率、図形の性質、数学と人間の活動を、1ページ1技能の小さな教材で学びます。",
     areas: mathAAreas.map((area) => area.title),
     lessonCount: mathAAreas.reduce(
+      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
+      0,
+    ),
+  },
+  {
+    title: "数学II",
+    kicker: "MATHEMATICS II",
+    href: `${_base}math2/`,
+    description:
+      "いろいろな式、図形と方程式、指数・対数、三角関数、微分・積分を、1ページ1技能で学びます。",
+    areas: math2Areas.map((area) => area.title),
+    lessonCount: math2Areas.reduce(
       (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
       0,
     ),
@@ -64,7 +77,7 @@ const _courses = [
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="高校数学の学習コンテンツ。数学I、数学A、数学B、数学Cから学びたい科目を選び、小単元ごとの教材と演習に進めます。"
+      content="高校数学の学習コンテンツ。数学I、数学A、数学II、数学B、数学Cから学びたい科目を選び、小単元ごとの教材と演習に進めます。"
     />
     <title>高校数学 | 学習コンテンツ</title>
   </head>
