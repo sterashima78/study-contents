@@ -42,15 +42,17 @@ const _items = _courses.map((course, index) => ({
 
 <StudyPage
   title="高校学習コンテンツ"
-  description="高校の数学・理科・英語・国語を、単元ごとの短い解説、例題、練習で学べる学習コンテンツです。"
+  description="生成AIを使って、高校範囲の学習コンテンツを構成・改善する実験です。"
   width="wide"
 >
   <ContentHero
-    kicker="HIGH SCHOOL STUDY NOTES"
-    title="高校の学びを、ひとつずつ。"
-    description="科目を選び、短い解説と例題・練習を順に進めます。必要なところから、ノートをめくるように学べます。"
+    kicker="EXPERIMENTAL HIGH SCHOOL STUDY CONTENTS"
+    title="高校学習コンテンツ"
+    description="生成AIを使って、高校範囲の学習コンテンツを構成・改善する実験です。教材は科目・領域・単元・小単元ごとに公開しています。"
     variant="display"
   />
+
+  <ExperimentalNotice />
 
   <ContentSection labelledby="courses-title" compact>
     <SectionHeading
@@ -62,7 +64,5 @@ const _items = _courses.map((course, index) => ({
     <ContentIndex items={_items} variant="grid" density="compact" />
   </ContentSection>
 
-  <ExperimentalNotice />
-
-  <PageFooter items={["高校学習コンテンツ", "短い解説と演習を、必要なところから。"]} />
+  <PageFooter items={["高校学習コンテンツ", "生成AIを使った実験的な学習コンテンツ"]} />
 </StudyPage>
