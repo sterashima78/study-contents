@@ -1,0 +1,72 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import JapaneseLesson from "../../../../components/JapaneseLesson.astro";
+import { japaneseAreas } from "../../../../content/japanese/catalog";
+import type {
+  JapaneseArea,
+  JapaneseLesson as JapaneseLessonData,
+  JapaneseUnit,
+} from "../../../../content/japanese/types";
+
+export function getStaticPaths() {
+  const basePath = import.meta.env.BASE_URL;
+
+  return japaneseAreas.flatMap((area) =>
+    area.units.flatMap((unit) =>
+      unit.lessons.map((lesson, index) => {
+        const previousLesson = unit.lessons[index - 1];
+        const nextLesson = unit.lessons[index + 1];
+        return {
+          params: { area: area.key, unit: unit.key, lesson: lesson.key },
+          props: {
+            area,
+            unit,
+            lesson,
+            previous: previousLesson
+              ? {
+                  label: `← ${previousLesson.title}`,
+                  href: `${basePath}japanese/${area.key}/${unit.key}/${previousLesson.key}/`,
+                }
+              : undefined,
+            next: nextLesson
+              ? {
+                  label: `${nextLesson.title} →`,
+                  href: `${basePath}japanese/${area.key}/${unit.key}/${nextLesson.key}/`,
+                }
+              : undefined,
+          },
+        };
+      }),
+    ),
+  );
+}
+
+type LessonLink = {
+  label: string;
+  href: string;
+};
+
+type Props = {
+  area: JapaneseArea;
+  unit: JapaneseUnit;
+  lesson: JapaneseLessonData;
+  previous?: LessonLink;
+  next?: LessonLink;
+};
+
+const {
+  area: _area,
+  unit: _unit,
+  lesson: _lesson,
+  previous: _previous,
+  next: _next,
+} = Astro.props as Props;
+---
+
+<JapaneseLesson
+  area={_area}
+  unit={_unit}
+  lesson={_lesson}
+  previous={_previous}
+  next={_next}
+/>

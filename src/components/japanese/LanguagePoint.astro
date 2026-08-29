@@ -1,0 +1,51 @@
+---
+type Props = {
+  title: string;
+  paragraphs: string[];
+  points: string[];
+};
+
+const { title: _title, paragraphs: _paragraphs, points: _points } = Astro.props;
+---
+
+<section class="language-point">
+  <h3>{_title}</h3>
+  {_paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  <ul>
+    {_points.map((point) => <li>{point}</li>)}
+  </ul>
+</section>
+
+<style>
+  .language-point {
+    padding: clamp(1.4rem, 3vw, 2rem);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 82%);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+
+  p {
+    margin: 0.75rem 0 0;
+    color: var(--color-muted-strong);
+    line-height: 1.85;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.65rem;
+    margin: 1rem 0 0;
+    padding-left: 1.4rem;
+  }
+
+  li {
+    color: var(--color-accent-strong);
+    font-weight: 700;
+    line-height: 1.7;
+  }
+</style>

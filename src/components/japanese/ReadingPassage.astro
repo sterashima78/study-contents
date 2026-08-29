@@ -1,0 +1,43 @@
+---
+type Props = {
+  text: string;
+  label?: string;
+  classical?: boolean;
+};
+
+const { text: _text, label: _label = "本文", classical: _classical = false } = Astro.props;
+---
+
+<figure class:list={["passage", _classical && "is-classical"]}>
+  <figcaption>{_label}</figcaption>
+  <blockquote>{_text}</blockquote>
+</figure>
+
+<style>
+  .passage {
+    margin: 1.2rem 0 0;
+    padding: clamp(1.3rem, 3vw, 2rem);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 1rem;
+    background: var(--surface-subtle);
+  }
+
+  figcaption {
+    margin-bottom: 0.8rem;
+    color: var(--color-accent);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  blockquote {
+    margin: 0;
+    color: var(--color-text-strong);
+    font-size: clamp(1.05rem, 2.4vw, 1.22rem);
+    line-height: 2;
+  }
+
+  .is-classical blockquote {
+    font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import type { JapaneseArea, JapaneseUnit } from "../content/japanese/types";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "./ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageFooter from "./ui/PageFooter.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
+
+type Props = {
+  area: JapaneseArea;
+  unit: JapaneseUnit;
+};
+
+const { area: _area, unit: _unit } = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const _items = _unit.lessons.map((lesson, index) => ({
+  marker: String(index + 1).padStart(2, "0"),
+  title: lesson.title,
+  href: `${_base}japanese/${_area.key}/${_unit.key}/${lesson.key}/`,
+  description: lesson.goal,
+  meta: "5〜10分",
+  action: "教材を開く",
+}));
+---
+
+<StudyPage
+  title={`${_unit.title} | ${_area.title} | 国語 | 学習コンテンツ`}
+  description={_unit.description}
+>
+  <BreadcrumbTrail
+    items={[
+      { label: "科目一覧", href: _base },
+      { label: "国語", href: `${_base}japanese/` },
+      { label: _area.title, href: `${_base}japanese/${_area.key}/` },
+      { label: _unit.title },
+    ]}
+  />
+
+  <ContentHero kicker={_area.kicker} title={_unit.title} description={_unit.description} />
+
+  <ContentSection labelledby="unit-lessons-title" compact>
+    <SectionHeading
+      label="LESSONS"
+      title="小教材"
+      id="unit-lessons-title"
+      description="一つのページでは一つの読み方・文法・句法だけを扱います。"
+    />
+    <ContentIndex items={_items} variant="rows" />
+  </ContentSection>
+
+  <PageFooter
+    items={[`高校 国語 / ${_area.title}`, _unit.title]}
+    homeHref={_base}
+  />
+</StudyPage>
