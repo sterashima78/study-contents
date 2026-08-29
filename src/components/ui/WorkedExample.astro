@@ -48,43 +48,46 @@ const {
 
 <style>
   .worked-example {
-    padding: clamp(1.4rem, 4vw, 2.4rem);
+    padding: clamp(1.25rem, 3vw, 1.9rem);
     border: 1px solid var(--color-border-soft);
-    border-radius: 1.15rem;
-    background: rgb(255 255 255 / 82%);
+    border-radius: 0.3rem;
+    background: var(--surface);
   }
 
   .label {
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.55rem;
     color: var(--color-accent);
-    font-size: 0.78rem;
-    font-weight: 800;
+    font-size: 0.7rem;
+    font-weight: 750;
     letter-spacing: 0.16em;
   }
 
   h3 {
-    margin: 0 0 0.8rem;
-    font-size: 1.15rem;
-    line-height: 1.5;
+    margin: 0 0 0.75rem;
+    color: var(--color-text-strong);
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", ui-serif, serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.55;
   }
 
   .introduction,
   .strategy {
     color: var(--color-muted-strong);
-    line-height: 1.8;
+    line-height: 1.85;
   }
 
   .problem {
-    margin: 0 0 1.3rem;
-    padding: 1.1rem;
-    border-radius: 0.8rem;
-    background: var(--surface-accent);
+    margin: 1rem 0 1.1rem;
+    padding: 0.95rem 1rem;
+    border-left: 2px solid var(--color-accent-light);
+    color: var(--color-text-strong);
+    background: var(--surface-subtle);
     font-family: "Times New Roman", "Yu Mincho", serif;
-    font-size: clamp(1.2rem, 3.5vw, 1.7rem);
+    font-size: clamp(1.12rem, 3vw, 1.5rem);
     font-variant-numeric: lining-nums tabular-nums;
     font-weight: 700;
     line-height: 1.7;
-    text-align: center;
     overflow-wrap: anywhere;
   }
 
@@ -100,24 +103,25 @@ const {
   .steps li {
     position: relative;
     display: grid;
-    grid-template-columns: 2rem minmax(0, 1fr);
-    gap: 0.7rem 1rem;
-    padding: 1.2rem 0;
+    grid-template-columns: 1.7rem minmax(0, 1fr);
+    gap: 0.65rem 0.9rem;
+    padding: 1rem 0;
     border-top: 1px solid var(--color-border-soft);
     counter-increment: worked-step;
   }
 
   .steps li::before {
     display: grid;
-    width: 2rem;
-    height: 2rem;
+    width: 1.55rem;
+    height: 1.55rem;
     place-items: center;
+    border: 1px solid var(--color-border-strong);
     border-radius: 50%;
-    color: #fff;
-    background: var(--color-accent-medium);
+    color: var(--color-accent-strong);
     content: counter(worked-step);
-    font-size: 0.78rem;
-    font-weight: 800;
+    font-family: "Times New Roman", serif;
+    font-size: 0.72rem;
+    font-weight: 700;
   }
 
   .steps li:first-child {
@@ -127,13 +131,11 @@ const {
   .expression,
   .text-step {
     align-self: center;
-    padding: 0.8rem 1rem;
-    border-radius: 0.65rem;
-    color: var(--color-accent-strong);
-    background: var(--surface-accent);
-    font-size: clamp(1.05rem, 2.8vw, 1.3rem);
+    padding: 0.35rem 0;
+    color: var(--color-text-strong);
+    font-size: clamp(1.02rem, 2.6vw, 1.24rem);
     font-weight: 700;
-    line-height: 1.55;
+    line-height: 1.6;
     overflow-wrap: anywhere;
   }
 
@@ -146,14 +148,14 @@ const {
     grid-column: 2;
     margin: 0;
     color: var(--color-muted-strong);
-    font-size: 0.92rem;
-    line-height: 1.75;
+    font-size: 0.88rem;
+    line-height: 1.8;
   }
 
   .answer {
     margin: 1rem 0 0;
-    padding: 1rem;
-    border-radius: 0.85rem;
+    padding: 0.85rem 1rem;
+    border-top: 1px solid var(--color-border-soft);
     color: var(--color-accent-strong);
     background: var(--surface-accent);
     font-weight: 700;
@@ -161,14 +163,13 @@ const {
   }
 
   @media (max-width: 520px) {
-    .steps li {
-      grid-template-columns: 1.8rem minmax(0, 1fr);
-      gap: 0.6rem 0.75rem;
+    .worked-example {
+      padding: 1.1rem;
     }
 
-    .steps li::before {
-      width: 1.8rem;
-      height: 1.8rem;
+    .problem {
+      font-size: 1.08rem;
+      text-align: left;
     }
   }
 </style>
