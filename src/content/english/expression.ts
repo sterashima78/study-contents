@@ -33,11 +33,13 @@ export const englishExpressionUnits: EnglishUnit[] = [
               note: "第1文で立場を明確にします。",
             },
             {
-              expression: "Some students cannot concentrate well in busy classrooms or shared halls.",
+              expression:
+                "Some students cannot concentrate well in busy classrooms or shared halls.",
               note: "第2文で理由を示します。",
             },
             {
-              expression: "A small silent room, for example, would give them a place to review difficult material between classes.",
+              expression:
+                "A small silent room, for example, would give them a place to review difficult material between classes.",
               note: "第3文で具体例を加え、理由を具体化します。",
             },
           ],
@@ -47,7 +49,8 @@ export const englishExpressionUnits: EnglishUnit[] = [
           problem: "School libraries should stay open later on weekdays.",
           steps: [
             {
-              prompt: "理由の文を英語で入力してください。例: 放課後に静かな場所が必要な生徒がいる。",
+              prompt:
+                "理由の文を英語で入力してください。例: 放課後に静かな場所が必要な生徒がいる。",
               answers: [
                 "Some students need a quiet place to study after school.",
                 "Students need a quiet place to study after school.",
@@ -88,11 +91,13 @@ export const englishExpressionUnits: EnglishUnit[] = [
               note: "比較軸を travel time に固定します。",
             },
             {
-              expression: "Riding a bicycle, however, may be quicker for a short trip because there is no waiting time.",
+              expression:
+                "Riding a bicycle, however, may be quicker for a short trip because there is no waiting time.",
               note: "同じ時間軸で、短距離では逆転する条件を示します。",
             },
             {
-              expression: "The faster choice therefore depends on the distance and the train schedule.",
+              expression:
+                "The faster choice therefore depends on the distance and the train schedule.",
               note: "比較した情報を条件付きの結論にまとめます。",
             },
           ],
@@ -129,10 +134,7 @@ export const englishExpressionUnits: EnglishUnit[] = [
         title: "具体例を落として要約する",
         description: "元の文章の中心内容を保ちながら、細部や重複を削って短い英文にまとめます。",
         rights: "original",
-        goals: [
-          "中心主張と支える情報を区別できる。",
-          "具体例を一般化して短く言い換えられる。",
-        ],
+        goals: ["中心主張と支える情報を区別できる。", "具体例を一般化して短く言い換えられる。"],
         concepts: [
           {
             title: "削る前に中心を決める",
@@ -160,7 +162,8 @@ export const englishExpressionUnits: EnglishUnit[] = [
               note: "三つの方法の細かな説明を、採用された二つの方法に圧縮します。",
             },
             {
-              expression: "The student council found that digital forms and reusable boards were effective ways to reduce paper waste at school events.",
+              expression:
+                "The student council found that digital forms and reusable boards were effective ways to reduce paper waste at school events.",
               note: "中心テーマと結論だけを残した要約です。",
             },
           ],
@@ -185,7 +188,8 @@ export const englishExpressionUnits: EnglishUnit[] = [
       {
         key: "email-request",
         title: "依頼メールを目的から組み立てる",
-        description: "相手が判断・行動するために必要な情報を、目的・背景・依頼内容・期限の順に整理します。",
+        description:
+          "相手が判断・行動するために必要な情報を、目的・背景・依頼内容・期限の順に整理します。",
         rights: "original",
         goals: [
           "依頼の目的を冒頭で明確にできる。",
