@@ -1,5 +1,6 @@
 ---
 import type { AlgebraUnit, Lesson } from "../content/math1/algebra";
+import { getFormulaDerivation } from "../content/math1/formula-derivations";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 import "../styles/global.css";
@@ -19,6 +20,7 @@ const _nextLesson =
 const _unitHref = `${_base}math1/algebra/${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _formulaDerivation = getFormulaDerivation(_lesson.key);
 ---
 
 <!doctype html>
@@ -80,6 +82,24 @@ const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
             ))
           }
         </div>
+
+        {
+          _formulaDerivation && (
+            <article class="worked-example detailed-example formula-derivation">
+              <p class="section-label">DERIVATION</p>
+              <h3>{_formulaDerivation.title}</h3>
+              <p>{_formulaDerivation.introduction}</p>
+              <ol class="worked-steps">
+                {_formulaDerivation.steps.map((step) => (
+                  <li>
+                    <div class="calculation answer-line">{step.expression}</div>
+                    <p>{step.note}</p>
+                  </li>
+                ))}
+              </ol>
+            </article>
+          )
+        }
       </section>
 
       <section class="lesson-section example-practice-section" aria-labelledby="example-title">
