@@ -1,0 +1,253 @@
+{
+  "copyrightPolicyVersion": 2,
+  "topicSets": [
+    {
+      "course": "math2",
+      "topic": "expressions",
+      "areaTitle": "いろいろな式",
+      "title": "いろいろな式 発展",
+      "description": "因数定理を係数決定へ使う発展パターンです。",
+      "patterns": [
+        {
+          "id": "math2-expressions-pattern-factor-coefficients",
+          "title": "複数の因数条件を係数の連立条件へ直す",
+          "level": "advanced",
+          "estimatedMinutes": 17,
+          "skills": ["因数定理", "整式", "連立方程式"],
+          "thinking": {
+            "title": "x−r が因数なら P(r)=0 と翻訳する",
+            "body": ["整式が複数の一次式で割り切れる条件は、対応する値を代入した式が0になる条件へ置き換えます。未知係数の数だけ独立な条件を作って連立します。"],
+            "checkpoints": ["因数から代入値を読む", "P(r)=0をそれぞれ作る", "未知係数について連立する"]
+          },
+          "example": {
+            "statement": ["P(x)=x³+ax+b が x−1 と x+2 の両方で割り切れる。"],
+            "question": "a,bを求めよ。",
+            "solution": {
+              "strategy": "P(1)=0、P(−2)=0を連立する。",
+              "steps": ["P(1)=1+a+b=0。", "P(−2)=−8−2a+b=0。", "2式の差から a=−3、さらに b=2。"],
+              "answer": "a=−3、b=2。"
+            }
+          },
+          "guidedPractice": {
+            "title": "2つの零点から係数を決める",
+            "statement": ["P(x)=x³+ax+b が x−2 と x+1 で割り切れる。"],
+            "question": "a,bを順に求めよう。",
+            "steps": [
+              {"prompt": "P(2)=0から得られる式を書いてください。", "answers": ["8+2a+b=0"]},
+              {"prompt": "P(-1)=0から得られる式を書いてください。", "answers": ["-1-a+b=0", "−1−a+b=0"]},
+              {"prompt": "a,bを順に書いてください。", "answers": ["-3,-2", "−3,−2"]}
+            ],
+            "hint": "2つの式を引いてaを先に消去します。"
+          },
+          "practice": {
+            "statement": ["P(x)=x³+ax+b が x−1 と x+3 で割り切れる。"],
+            "question": "a,bを求めよ。",
+            "solution": {
+              "steps": ["P(1)=1+a+b=0。", "P(−3)=−27−3a+b=0。", "連立して a=−7、b=6。"],
+              "answer": "a=−7、b=6。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "math2",
+      "topic": "geometry-equations",
+      "areaTitle": "図形と方程式",
+      "title": "図形と方程式 発展",
+      "description": "距離条件を方程式へ翻訳して軌跡を求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "math2-geometry-equations-pattern-equidistant-locus",
+          "title": "2点から等距離という条件を軌跡の方程式にする",
+          "level": "advanced",
+          "estimatedMinutes": 17,
+          "skills": ["2点間の距離", "軌跡", "方程式の整理"],
+          "thinking": {
+            "title": "文章の距離条件を平方した等式へ置き換える",
+            "body": ["動点P(x,y)が2点A,Bから等距離なら PA²=PB² と置くと平方根を使わず整理できます。二次項が消え、垂直二等分線の一次方程式になります。"],
+            "checkpoints": ["動点をP(x,y)と置く", "PA²=PB²を書く", "展開して不要な二次項を消す"]
+          },
+          "example": {
+            "statement": ["点A(2,0)、B(0,4)から等距離にある点P(x,y)を考える。"],
+            "question": "Pの軌跡の方程式を求めよ。",
+            "solution": {
+              "strategy": "PA²=PB²を座標で表す。",
+              "steps": ["(x−2)²+y²=x²+(y−4)²。", "展開して −4x+4=−8y+16。", "整理して x−2y+3=0。"],
+              "answer": "x−2y+3=0。"
+            }
+          },
+          "guidedPractice": {
+            "title": "距離の平方を等しく置く",
+            "statement": ["A(4,0)、B(0,2)から等距離にあるP(x,y)を考える。"],
+            "question": "軌跡を求めよう。",
+            "steps": [
+              {"prompt": "距離条件を平方した等式で書いてください。", "answers": ["(x-4)²+y²=x²+(y-2)²", "(x-4)^2+y^2=x^2+(y-2)^2"]},
+              {"prompt": "整理後の方程式を書いてください。", "answers": ["2x-y-3=0", "2x−y−3=0"]}
+            ],
+            "hint": "x²とy²は両辺で消えます。"
+          },
+          "practice": {
+            "statement": ["A(−2,0)、B(0,6)から等距離にある点P(x,y)の軌跡を考える。"],
+            "question": "軌跡の方程式を求めよ。",
+            "solution": {
+              "steps": ["(x+2)²+y²=x²+(y−6)²。", "4x+4=−12y+36。", "x+3y−8=0。"],
+              "answer": "x+3y−8=0。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "math2",
+      "topic": "exponential-logarithmic",
+      "areaTitle": "指数関数・対数関数",
+      "title": "指数関数・対数関数 発展",
+      "description": "対数方程式で定義域と代数解を同時に扱う発展パターンです。",
+      "patterns": [
+        {
+          "id": "math2-exponential-logarithmic-pattern-log-domain",
+          "title": "対数をまとめる前に定義域を固定する",
+          "level": "advanced",
+          "estimatedMinutes": 17,
+          "skills": ["対数", "方程式", "定義域"],
+          "thinking": {
+            "title": "真数条件を最初に書き、最後に不適解を除く",
+            "body": ["対数方程式では式変形だけで得た解が真数条件を満たさない場合があります。まず各真数が正という条件を取り、対数をまとめて代数方程式を解いた後に照合します。"],
+            "checkpoints": ["真数>0を先に書く", "対数の和を積へまとめる", "得た解を定義域で選別する"]
+          },
+          "example": {
+            "statement": ["log₂(x−1)+log₂(x−3)=3 を考える。"],
+            "question": "xを求めよ。",
+            "solution": {
+              "strategy": "定義域x>3を確定してから積の対数へまとめる。",
+              "steps": ["真数条件より x>3。", "log₂((x−1)(x−3))=3 より (x−1)(x−3)=8。", "x²−4x−5=0から x=5,−1。定義域より x=5。"],
+              "answer": "x=5。"
+            }
+          },
+          "guidedPractice": {
+            "title": "真数条件で解を絞る",
+            "statement": ["log₃(x−1)+log₃(x+1)=2 を考える。"],
+            "question": "定義域と解を求めよう。",
+            "steps": [
+              {"prompt": "定義域を書いてください。", "answers": ["x>1"]},
+              {"prompt": "対数をまとめた後の方程式を書いてください。", "answers": ["x²-1=9", "x^2-1=9"]},
+              {"prompt": "最終的な解を書いてください。", "answers": ["√10"]}
+            ],
+            "hint": "x=−√10は代数方程式の解でも真数条件を満たしません。"
+          },
+          "practice": {
+            "statement": ["log₂x+log₂(x−2)=3 を考える。"],
+            "question": "xを求めよ。",
+            "solution": {
+              "steps": ["定義域はx>2。", "x(x−2)=8より x²−2x−8=0。", "x=4,−2のうち定義域を満たすのは4。"],
+              "answer": "x=4。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "math2",
+      "topic": "trigonometric-functions",
+      "areaTitle": "三角関数",
+      "title": "三角関数 発展",
+      "description": "asinx+bcosxを1つの三角関数へ合成して方程式を解く発展パターンです。",
+      "patterns": [
+        {
+          "id": "math2-trigonometric-functions-pattern-harmonic-composition",
+          "title": "sinとcosの一次結合を合成して最大振幅を読む",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["三角関数の合成", "三角方程式", "一般角"],
+          "thinking": {
+            "title": "係数から振幅Rと位相を決める",
+            "body": ["a sinx+b cosxは R sin(x+α) の形へまとめられます。R=√(a²+b²)を先に求め、展開した係数が一致するαを選ぶと、方程式や最大・最小が基本形へ戻ります。"],
+            "checkpoints": ["R=√(a²+b²)を求める", "係数比較で位相を決める", "合成後の基本方程式を解く"]
+          },
+          "example": {
+            "statement": ["0°≤x<360°で sinx+√3 cosx=2 を考える。"],
+            "question": "xを求めよ。",
+            "solution": {
+              "strategy": "左辺を2sin(x+60°)へ合成する。",
+              "steps": ["sinx+√3cosx=2sin(x+60°)。", "2sin(x+60°)=2より sin(x+60°)=1。", "x+60°=90°+360°kより範囲内では x=30°。"],
+              "answer": "x=30°。"
+            }
+          },
+          "guidedPractice": {
+            "title": "係数から位相を決める",
+            "statement": ["0°≤x<360°で √3sinx+cosx=2 を考える。"],
+            "question": "合成してxを求めよう。",
+            "steps": [
+              {"prompt": "左辺を2sin(x+α)としたときαを求めてください。", "answers": ["30", "30°"]},
+              {"prompt": "xを求めてください。", "answers": ["60", "60°"]}
+            ],
+            "hint": "2sin(x+30°)=√3sinx+cosxです。"
+          },
+          "practice": {
+            "statement": ["0°≤x<360°で sinx−cosx=1 を考える。"],
+            "question": "xをすべて求めよ。",
+            "solution": {
+              "steps": ["sinx−cosx=√2sin(x−45°)。", "sin(x−45°)=1/√2。", "x−45°=45°,135°より x=90°,180°。"],
+              "answer": "x=90°、180°。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "math2",
+      "topic": "calculus",
+      "areaTitle": "微分・積分の考え",
+      "title": "微分・積分の考え 発展",
+      "description": "導関数の符号と端点を合わせて区間内の最大・最小を求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "math2-calculus-pattern-closed-interval-extrema",
+          "title": "閉区間では極値候補と端点をすべて比較する",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["微分", "増減", "最大・最小"],
+          "thinking": {
+            "title": "f'=0だけで終わらず端点も候補に入れる",
+            "body": ["閉区間の最大・最小は、区間内でf'(x)=0となる点と両端点の値を比較して決めます。極値点だけを見ると端点で最大・最小を取る場合を落とします。"],
+            "checkpoints": ["導関数を求める", "区間内のf'=0を列挙する", "臨界点と両端点の関数値を比較する"]
+          },
+          "example": {
+            "statement": ["f(x)=x³−3x²+2を0≤x≤3で考える。"],
+            "question": "最大値と最小値を求めよ。",
+            "solution": {
+              "strategy": "f'=0の点と端点0,3を比較する。",
+              "steps": ["f'(x)=3x(x−2)なので候補はx=0,2,3。", "f(0)=2、f(2)=−2、f(3)=2。", "最大値2、最小値−2。"],
+              "answer": "最大値2（x=0,3）、最小値−2（x=2）。"
+            }
+          },
+          "guidedPractice": {
+            "title": "臨界点と端点を一覧にする",
+            "statement": ["f(x)=x³−3xを−2≤x≤2で考える。"],
+            "question": "最大値と最小値を求めよう。",
+            "steps": [
+              {"prompt": "f'(x)=0となるxを小さい順に書いてください。", "answers": ["-1,1", "−1,1"]},
+              {"prompt": "最大値を求めてください。", "answers": ["2"]},
+              {"prompt": "最小値を求めてください。", "answers": ["-2", "−2"]}
+            ],
+            "hint": "x=−2,−1,1,2の4点で関数値を比較します。"
+          },
+          "practice": {
+            "statement": ["f(x)=x³−6x²+9xを0≤x≤4で考える。"],
+            "question": "最大値と最小値を求めよ。",
+            "solution": {
+              "steps": ["f'(x)=3(x−1)(x−3)。候補は0,1,3,4。", "f(0)=0、f(1)=4、f(3)=0、f(4)=4。", "最大値4、最小値0。"],
+              "answer": "最大値4（x=1,4）、最小値0（x=0,3）。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    }
+  ]
+}

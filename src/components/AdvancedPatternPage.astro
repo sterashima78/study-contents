@@ -1,4 +1,5 @@
 ---
+import { type MathCourseInfo, math1Course } from "../content/math-courses";
 import "../styles/global.css";
 import "../styles/entrance.css";
 
@@ -56,6 +57,7 @@ type Props = {
   areaTitle: string;
   pattern: Pattern;
   patternIndex: number;
+  course?: MathCourseInfo;
 };
 
 const {
@@ -63,16 +65,19 @@ const {
   areaTitle: _areaTitle,
   pattern: _pattern,
   patternIndex: _patternIndex,
+  course: _course = math1Course,
 } = Astro.props as Props;
 const _base = import.meta.env.BASE_URL;
 const _levelLabel = _pattern.level === "advanced" ? "発展" : "応用";
 const _patternSlug = (pattern: Pattern) =>
-  pattern.id.replace(`math1-${_topicSet.topic}-pattern-`, "");
+  pattern.id.replace(`${_course.key}-${_topicSet.topic}-pattern-`, "");
 const _previousPattern = _patternIndex > 0 ? _topicSet.patterns[_patternIndex - 1] : undefined;
 const _nextPattern =
   _patternIndex < _topicSet.patterns.length - 1 ? _topicSet.patterns[_patternIndex + 1] : undefined;
-const _patternHref = (pattern: Pattern) =>
-  `${_base}math1/entrance/${_topicSet.topic}/${_patternSlug(pattern)}/`;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _areaHref = `${_base}${_course.routeBase}/${_topicSet.topic}/`;
+const _topicHref = `${_base}${_course.routeBase}/entrance/${_topicSet.topic}/`;
+const _patternHref = (pattern: Pattern) => `${_topicHref}${_patternSlug(pattern)}/`;
 ---
 
 <!doctype html>
@@ -82,7 +87,7 @@ const _patternHref = (pattern: Pattern) =>
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content={`数学I「${_areaTitle}」の${_levelLabel}パターン「${_pattern.title}」。考え方、例題、ステップ練習、実践の順で学びます。`}
+      content={`${_course.title}「${_areaTitle}」の${_levelLabel}パターン「${_pattern.title}」。考え方、例題、ステップ練習、実践の順で学びます。`}
     />
     <title>{_pattern.title} | {_topicSet.title} | 学習コンテンツ</title>
   </head>
@@ -92,11 +97,11 @@ const _patternHref = (pattern: Pattern) =>
         <nav class="breadcrumbs" aria-label="パンくずリスト">
           <a href={_base}>科目一覧</a>
           <span aria-hidden="true">/</span>
-          <a href={`${_base}math1/`}>数学I</a>
+          <a href={_courseHomeHref}>{_course.title}</a>
           <span aria-hidden="true">/</span>
-          <a href={`${_base}math1/${_topicSet.topic}/`}>{_areaTitle}</a>
+          <a href={_areaHref}>{_areaTitle}</a>
           <span aria-hidden="true">/</span>
-          <a href={`${_base}math1/entrance/${_topicSet.topic}/`}>応用・発展</a>
+          <a href={_topicHref}>応用・発展</a>
           <span aria-hidden="true">/</span>
           <span>{_pattern.title}</span>
         </nav>
@@ -156,7 +161,11 @@ const _patternHref = (pattern: Pattern) =>
           </div>
         </section>
 
-        <section class="pattern-block guided-block" aria-labelledby="guided-title" data-guided-practice>
+        <section
+          class="pattern-block guided-block"
+          aria-labelledby="guided-title"
+          data-guided-practice
+        >
           <p class="pattern-section-label">STEP PRACTICE</p>
           <h2 id="guided-title">ステップバイステップの練習</h2>
           <h3>{_pattern.guidedPractice.title}</h3>
@@ -166,22 +175,24 @@ const _patternHref = (pattern: Pattern) =>
           </div>
           <form class="guided-practice-form">
             <ol class="guided-fields">
-              {_pattern.guidedPractice.steps.map((step, stepIndex) => (
-                <li>
-                  <label>
-                    <span>{step.prompt}</span>
-                    <input
-                      type="text"
-                      autocomplete="off"
-                      spellcheck="false"
-                      placeholder={step.placeholder}
-                      data-answers={JSON.stringify(step.answers)}
-                      aria-label={`${_pattern.title} ステップ${stepIndex + 1}: ${step.prompt}`}
-                      required
-                    />
-                  </label>
-                </li>
-              ))}
+              {
+                _pattern.guidedPractice.steps.map((step, stepIndex) => (
+                  <li>
+                    <label>
+                      <span>{step.prompt}</span>
+                      <input
+                        type="text"
+                        autocomplete="off"
+                        spellcheck="false"
+                        placeholder={step.placeholder}
+                        data-answers={JSON.stringify(step.answers)}
+                        aria-label={`${_pattern.title} ステップ${stepIndex + 1}: ${step.prompt}`}
+                        required
+                      />
+                    </label>
+                  </li>
+                ))
+              }
             </ol>
             <div class="practice-actions">
               <button type="submit" class="primary-button">答え合わせ</button>
@@ -212,21 +223,28 @@ const _patternHref = (pattern: Pattern) =>
         </section>
       </article>
 
-      <nav class="lesson-navigation entrance-pattern-navigation" aria-label="パターンナビゲーション">
+      <nav
+        class="lesson-navigation entrance-pattern-navigation"
+        aria-label="パターンナビゲーション"
+      >
         <div>
-          {_previousPattern ? (
-            <a href={_patternHref(_previousPattern)}>← {_previousPattern.title}</a>
-          ) : (
-            <a href={`${_base}math1/entrance/${_topicSet.topic}/`}>← パターン一覧</a>
-          )}
+          {
+            _previousPattern ? (
+              <a href={_patternHref(_previousPattern)}>← {_previousPattern.title}</a>
+            ) : (
+              <a href={_topicHref}>← パターン一覧</a>
+            )
+          }
         </div>
-        <a class="unit-index-link" href={`${_base}math1/entrance/${_topicSet.topic}/`}>パターン一覧</a>
+        <a class="unit-index-link" href={_topicHref}>パターン一覧</a>
         <div>
-          {_nextPattern ? (
-            <a href={_patternHref(_nextPattern)}>{_nextPattern.title} →</a>
-          ) : (
-            <a href={`${_base}math1/${_topicSet.topic}/`}>{_areaTitle}の基礎教材へ →</a>
-          )}
+          {
+            _nextPattern ? (
+              <a href={_patternHref(_nextPattern)}>{_nextPattern.title} →</a>
+            ) : (
+              <a href={_areaHref}>{_areaTitle}の基礎教材へ →</a>
+            )
+          }
         </div>
       </nav>
     </main>
@@ -258,7 +276,8 @@ const _patternHref = (pattern: Pattern) =>
           !(feedback instanceof HTMLElement) ||
           !(hint instanceof HTMLElement) ||
           !(hintButton instanceof HTMLButtonElement)
-        ) continue;
+        )
+          continue;
 
         hintButton.addEventListener("click", () => {
           hint.hidden = !hint.hidden;

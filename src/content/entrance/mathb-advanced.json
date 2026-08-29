@@ -1,0 +1,153 @@
+{
+  "copyrightPolicyVersion": 2,
+  "topicSets": [
+    {
+      "course": "mathb",
+      "topic": "sequences",
+      "areaTitle": "数列",
+      "title": "数列 発展",
+      "description": "差分型の漸化式を和へ直して一般項を求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "mathb-sequences-pattern-difference-sum",
+          "title": "aₙ₊₁−aₙを足し上げて一般項を作る",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["漸化式", "数列の和", "一般項"],
+          "thinking": {
+            "title": "隣接項の差が分かるなら差を1項目からn−1項目まで足す",
+            "body": ["aₙ₊₁=aₙ+f(n) の形では aₙ−a₁ を差の和として表せます。Σf(k)を計算し、初項を戻すと一般項が得られます。"],
+            "checkpoints": ["aₙ₊₁−aₙ=f(n)へ直す", "k=1からn−1まで和を取る", "初項を加えて整理する"]
+          },
+          "example": {
+            "statement": ["a₁=1、aₙ₊₁=aₙ+2n+1 とする。"],
+            "question": "aₙを求めよ。",
+            "solution": {
+              "strategy": "差2n+1を1からn−1まで足す。",
+              "steps": ["aₙ−a₁=Σ(k=1→n−1)(2k+1)。", "=n(n−1)+(n−1)=n²−1。", "a₁=1より aₙ=n²。"],
+              "answer": "aₙ=n²。"
+            }
+          },
+          "guidedPractice": {
+            "title": "差の和を一般項へ戻す",
+            "statement": ["a₁=2、aₙ₊₁=aₙ+3n とする。"],
+            "question": "aₙを求めよう。",
+            "steps": [
+              {"prompt": "aₙ−2をΣで表してください。", "answers": ["3Σk", "3sumk", "Σ3k"]},
+              {"prompt": "aₙをnの式で書いてください。", "answers": ["2+3n(n-1)/2", "3n(n-1)/2+2"]}
+            ],
+            "hint": "1+2+…+(n−1)=n(n−1)/2です。"
+          },
+          "practice": {
+            "statement": ["a₁=1、aₙ₊₁=aₙ+2n とする。"],
+            "question": "aₙを求めよ。",
+            "solution": {
+              "steps": ["aₙ−1=2Σ(k=1→n−1)k。", "=n(n−1)。", "aₙ=n²−n+1。"],
+              "answer": "aₙ=n²−n+1。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "mathb",
+      "topic": "statistical-inference",
+      "areaTitle": "統計的な推測",
+      "title": "統計的な推測 発展",
+      "description": "標本比率と標準誤差から信頼区間を解釈する発展パターンです。",
+      "patterns": [
+        {
+          "id": "mathb-statistical-inference-pattern-confidence-interval",
+          "title": "推定値±2×標準誤差で95%信頼区間を近似する",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["標本比率", "標準誤差", "信頼区間", "解釈"],
+          "thinking": {
+            "title": "点推定だけでなく不確かさの幅も一緒に示す",
+            "body": ["標本比率だけでは母比率の不確かさが分かりません。標準誤差が与えられたとき、十分大きな標本では95%信頼区間を概ね推定値±2×標準誤差として扱えます。"],
+            "checkpoints": ["中心は標本比率", "幅は約2×標準誤差", "区間を母比率の推定範囲として読む"]
+          },
+          "example": {
+            "statement": ["ある調査の標本比率が0.55、標準誤差が0.025である。95%信頼区間を『推定値±2×標準誤差』で近似する。"],
+            "question": "95%信頼区間を求めよ。",
+            "solution": {
+              "strategy": "0.55を中心に0.05の幅を取る。",
+              "steps": ["2×0.025=0.05。", "下端は0.55−0.05=0.50。", "上端は0.55+0.05=0.60。"],
+              "answer": "約0.50〜0.60。"
+            }
+          },
+          "guidedPractice": {
+            "title": "中心と幅を分けて計算する",
+            "statement": ["標本比率0.62、標準誤差0.02とする。"],
+            "question": "同じ近似で95%信頼区間を求めよう。",
+            "steps": [
+              {"prompt": "区間の半幅を求めてください。", "answers": ["0.04"]},
+              {"prompt": "下端を求めてください。", "answers": ["0.58"]},
+              {"prompt": "上端を求めてください。", "answers": ["0.66"]}
+            ],
+            "hint": "標準誤差を2倍します。"
+          },
+          "practice": {
+            "statement": ["標本比率0.48、標準誤差0.03である。"],
+            "question": "同じ近似で95%信頼区間を求めよ。",
+            "solution": {
+              "steps": ["半幅は2×0.03=0.06。", "0.48−0.06=0.42。", "0.48+0.06=0.54。"],
+              "answer": "約0.42〜0.54。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "mathb",
+      "topic": "social-life",
+      "areaTitle": "数学と社会生活",
+      "title": "数学と社会生活 発展",
+      "description": "複数の料金モデルを不等式で比較して意思決定する発展パターンです。",
+      "patterns": [
+        {
+          "id": "mathb-social-life-pattern-break-even",
+          "title": "固定費と従量費から損益分岐点を求める",
+          "level": "advanced",
+          "estimatedMinutes": 16,
+          "skills": ["一次関数", "不等式", "モデル化", "意思決定"],
+          "thinking": {
+            "title": "現実の条件を『固定費+単価×数量』へ翻訳する",
+            "body": ["2つの料金体系を比較するときは、数量xに対する総費用をそれぞれ一次式で表します。どちらが安いかは2式の大小関係を解き、境界値の意味を現実の数量へ戻して判断します。"],
+            "checkpoints": ["各案の総費用を式にする", "等しくなる境界を求める", "不等式の向きを数量の条件として解釈する"]
+          },
+          "example": {
+            "statement": ["A案は基本料1000円と1回50円、B案は基本料400円と1回80円である。利用回数をx回とする。"],
+            "question": "A案の方が安くなるのは何回を超えるときか。",
+            "solution": {
+              "strategy": "1000+50x<400+80xを解く。",
+              "steps": ["A=1000+50x、B=400+80x。", "1000+50x<400+80xより600<30x。", "x>20なので21回以上でAが安い。"],
+              "answer": "21回以上。"
+            }
+          },
+          "guidedPractice": {
+            "title": "2つの一次式を比較する",
+            "statement": ["A案は1200+40x円、B案は600+70x円。"],
+            "question": "A案が安い最小の整数回数を求めよう。",
+            "steps": [
+              {"prompt": "等しくなるxを求めてください。", "answers": ["20"]},
+              {"prompt": "A案が安い最小の整数回数を求めてください。", "answers": ["21"]}
+            ],
+            "hint": "境界では1200+40x=600+70xです。"
+          },
+          "practice": {
+            "statement": ["A案は1500+30x円、B案は300+90x円。"],
+            "question": "A案の方が安くなる最小の整数xを求めよ。",
+            "solution": {
+              "steps": ["1500+30x<300+90x。", "1200<60xよりx>20。", "整数なので最小は21。"],
+              "answer": "21。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    }
+  ]
+}

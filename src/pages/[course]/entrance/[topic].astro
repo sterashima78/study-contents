@@ -1,0 +1,26 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import AdvancedPatternIndex from "../../../components/AdvancedPatternIndex.astro";
+import {
+  advancedTopicSets,
+  findAdvancedCourse,
+} from "../../../content/entrance/advanced-topic-sets";
+
+export function getStaticPaths() {
+  return advancedTopicSets.map((topicSet) => {
+    const course = findAdvancedCourse(topicSet.course);
+    if (!course) {
+      throw new Error(`応用・発展教材の科目情報が見つかりません: ${topicSet.course}`);
+    }
+
+    return {
+      params: { course: course.routeBase, topic: topicSet.topic },
+      props: { topicSet, course },
+    };
+  });
+}
+
+const { topicSet: _topicSet, course: _course } = Astro.props;
+---
+
+<AdvancedPatternIndex topicSet={_topicSet} areaTitle={_topicSet.areaTitle} course={_course} />

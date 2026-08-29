@@ -1,0 +1,255 @@
+{
+  "copyrightPolicyVersion": 2,
+  "topicSets": [
+    {
+      "course": "physics-basics",
+      "topic": "motion",
+      "areaTitle": "運動の表し方",
+      "title": "運動の表し方 発展",
+      "description": "速度―時間グラフを複数区間に分け、面積から変位を求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "physics-basics-motion-pattern-piecewise-vt-area",
+          "title": "速度―時間グラフを区間ごとの面積に分ける",
+          "level": "advanced",
+          "estimatedMinutes": 16,
+          "skills": ["速度―時間グラフ", "等加速度運動", "変位"],
+          "thinking": {
+            "title": "変位は速度―時間グラフの符号付き面積",
+            "body": ["運動が途中で変化しても、速度―時間グラフと時間軸で囲まれた面積を区間ごとに求めて足せば変位を得られます。直線的に速度が変わる区間は三角形や台形、一定速度区間は長方形として扱います。"],
+            "checkpoints": ["運動が変わる時刻で区間を分ける", "各区間の面積を図形公式で求める", "向きが変わる場合は面積の符号にも注意する"]
+          },
+          "example": {
+            "statement": ["物体は静止から3.0 sかけて6.0 m/sまで等加速度で加速し、その後2.0 s間6.0 m/sで進んだ。速度は常に正向きとする。"],
+            "question": "5.0 s間の変位を求めよ。",
+            "solution": {
+              "strategy": "最初の3.0 sを三角形、後の2.0 sを長方形の面積として求める。",
+              "steps": ["加速区間の変位は (1/2)×3.0×6.0=9.0 m。", "等速区間の変位は2.0×6.0=12 m。", "合計は9.0+12=21 m。"],
+              "answer": "21 m。"
+            }
+          },
+          "guidedPractice": {
+            "title": "三角形と長方形に分ける",
+            "statement": ["静止から4.0 sで8.0 m/sまで等加速度で加速し、その後1.0 s間8.0 m/sで進む。"],
+            "question": "全変位を求めよう。",
+            "steps": [
+              {"prompt": "加速区間の変位を求めてください。", "answers": ["16", "16m", "16 m"]},
+              {"prompt": "等速区間の変位を求めてください。", "answers": ["8", "8m", "8 m"]},
+              {"prompt": "全変位を求めてください。", "answers": ["24", "24m", "24 m"]}
+            ],
+            "hint": "最初は底辺4、高さ8の三角形です。"
+          },
+          "practice": {
+            "statement": ["初速度2.0 m/sから2.0 sで6.0 m/sまで等加速度で加速し、その後3.0 s間6.0 m/sで進む。"],
+            "question": "全変位を求めよ。",
+            "solution": {
+              "steps": ["加速区間は台形なので ((2.0+6.0)/2)×2.0=8.0 m。", "等速区間は6.0×3.0=18 m。", "合計26 m。"],
+              "answer": "26 m。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "physics-basics",
+      "topic": "forces-energy",
+      "areaTitle": "力と力学的エネルギー",
+      "title": "力と力学的エネルギー 発展",
+      "description": "合力から加速度・速度・運動エネルギーまで連続して求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "physics-basics-forces-energy-pattern-force-to-energy",
+          "title": "合力から運動状態とエネルギーまでつなぐ",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["運動方程式", "等加速度運動", "運動エネルギー"],
+          "thinking": {
+            "title": "力→加速度→速度→エネルギーの順に因果を追う",
+            "body": ["一定の合力が働く問題では、まずF=maで加速度を求めます。初速度と時間から速度を出し、その速度をK=(1/2)mv²へ入れると、力学の複数単元を一続きで扱えます。"],
+            "checkpoints": ["力を同一直線上で合成する", "F=maで加速度を求める", "速度を求めてから運動エネルギーへ代入する"]
+          },
+          "example": {
+            "statement": ["質量2.0 kgの物体を水平面上で10 Nで引く。運動方向と逆向きに4.0 Nの摩擦力が働く。物体は静止から2.0 s運動する。"],
+            "question": "2.0 s後の速さと運動エネルギーを求めよ。",
+            "solution": {
+              "strategy": "合力6 Nから加速度を求め、等加速度運動と運動エネルギーへつなぐ。",
+              "steps": ["合力は10−4=6 N。a=6/2.0=3.0 m/s²。", "静止から2.0 s後の速さはv=at=6.0 m/s。", "K=(1/2)·2.0·6.0²=36 J。"],
+              "answer": "速さ6.0 m/s、運動エネルギー36 J。"
+            }
+          },
+          "guidedPractice": {
+            "title": "3段階の計算をつなぐ",
+            "statement": ["質量3.0 kg、引く力15 N、摩擦力6.0 N。静止から2.0 s運動する。"],
+            "question": "加速度、速さ、運動エネルギーを求めよう。",
+            "steps": [
+              {"prompt": "加速度を求めてください。", "answers": ["3", "3m/s²", "3 m/s²"]},
+              {"prompt": "2.0 s後の速さを求めてください。", "answers": ["6", "6m/s", "6 m/s"]},
+              {"prompt": "運動エネルギーを求めてください。", "answers": ["54", "54j", "54 J"]}
+            ],
+            "hint": "合力は9 Nです。"
+          },
+          "practice": {
+            "statement": ["質量4.0 kgの物体を20 Nで引き、逆向きに8.0 Nの摩擦力が働く。静止から3.0 s運動する。"],
+            "question": "3.0 s後の速さと運動エネルギーを求めよ。",
+            "solution": {
+              "steps": ["合力12 Nよりa=3.0 m/s²。", "v=3.0×3.0=9.0 m/s。", "K=(1/2)·4.0·9.0²=162 J。"],
+              "answer": "速さ9.0 m/s、運動エネルギー162 J。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "physics-basics",
+      "topic": "waves",
+      "areaTitle": "波",
+      "title": "波 発展",
+      "description": "片側閉管の共鳴条件と波の基本式を組み合わせる発展パターンです。",
+      "patterns": [
+        {
+          "id": "physics-basics-waves-pattern-closed-pipe-resonance",
+          "title": "閉管の基本振動から次の共鳴振動数まで求める",
+          "level": "advanced",
+          "estimatedMinutes": 17,
+          "skills": ["気柱の共鳴", "定常波", "v=fλ"],
+          "thinking": {
+            "title": "片側閉管では共鳴振動数が基本振動の奇数倍になる",
+            "body": ["片側閉管の基本振動ではL=λ/4です。次に現れる共鳴は管内に3/4波長が入る状態なので、振動数は基本振動の3倍になります。"],
+            "checkpoints": ["基本振動でλ=4Lを使う", "f=v/λで基本振動数を求める", "次の共鳴は3f₁と判断する"]
+          },
+          "example": {
+            "statement": ["長さ0.50 mの片側閉管がある。音速を340 m/sとする。"],
+            "question": "基本振動数と、その次に現れる共鳴振動数を求めよ。",
+            "solution": {
+              "strategy": "基本波長を4Lから求め、閉管の奇数倍共鳴を使う。",
+              "steps": ["基本波長はλ₁=4L=2.0 m。", "f₁=340/2.0=170 Hz。", "次の共鳴は3f₁=510 Hz。"],
+              "answer": "基本170 Hz、次の共鳴510 Hz。"
+            }
+          },
+          "guidedPractice": {
+            "title": "基本振動から3倍振動へ進む",
+            "statement": ["長さ0.85 mの片側閉管。音速340 m/s。"],
+            "question": "基本振動数と次の共鳴振動数を求めよう。",
+            "steps": [
+              {"prompt": "基本波長を求めてください。", "answers": ["3.4", "3.4m", "3.4 m"]},
+              {"prompt": "基本振動数を求めてください。", "answers": ["100", "100hz", "100 Hz"]},
+              {"prompt": "次の共鳴振動数を求めてください。", "answers": ["300", "300hz", "300 Hz"]}
+            ],
+            "hint": "λ₁=4×0.85=3.4 mです。"
+          },
+          "practice": {
+            "statement": ["長さ0.25 mの片側閉管で、音速を340 m/sとする。"],
+            "question": "基本振動数と次の共鳴振動数を求めよ。",
+            "solution": {
+              "steps": ["λ₁=4×0.25=1.0 m。", "f₁=340 Hz。", "次は3f₁=1020 Hz。"],
+              "answer": "基本340 Hz、次の共鳴1020 Hz。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "physics-basics",
+      "topic": "thermal-electricity",
+      "areaTitle": "熱と電気",
+      "title": "熱と電気 発展",
+      "description": "電力・効率・熱量を連結して温度上昇を求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "physics-basics-thermal-electricity-pattern-heater-efficiency",
+          "title": "電気エネルギーから有効熱量を取り出して温度変化へつなぐ",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["電力", "変換効率", "熱量", "比熱"],
+          "thinking": {
+            "title": "入力エネルギー→有効熱量→温度変化の順に変換する",
+            "body": ["ヒーターの入力電気エネルギーはE=Ptです。効率ηなら水へ伝わる熱量はηEで、その熱量をQ=mcΔTへ代入して温度上昇を求めます。"],
+            "checkpoints": ["Ptで入力エネルギーを求める", "効率を掛けて有効熱量にする", "Q=mcΔTをΔTについて解く"]
+          },
+          "example": {
+            "statement": ["100 Wのヒーターを120 s使って0.20 kgの水を温める。ヒーターから水へのエネルギー変換効率は80%、水の比熱は4.2×10³ J/(kg·K)とする。"],
+            "question": "水の温度上昇を求めよ。",
+            "solution": {
+              "strategy": "入力12000 Jの80%を熱量として使う。",
+              "steps": ["入力エネルギーE=100×120=12000 J。", "水が得る熱量Q=0.80×12000=9600 J。", "ΔT=9600/(0.20×4200)=80/7≈11.4 K。"],
+              "answer": "約11.4 K。"
+            }
+          },
+          "guidedPractice": {
+            "title": "効率を途中に挟む",
+            "statement": ["200 Wを60 s、効率70%、水0.20 kg、比熱4.2×10³ J/(kg·K)。"],
+            "question": "温度上昇を求めよう。",
+            "steps": [
+              {"prompt": "入力エネルギーを求めてください。", "answers": ["12000", "12000j", "12000 J"]},
+              {"prompt": "水が得る熱量を求めてください。", "answers": ["8400", "8400j", "8400 J"]},
+              {"prompt": "温度上昇を求めてください。", "answers": ["10", "10k", "10 K"]}
+            ],
+            "hint": "8400/(0.20×4200)=10です。"
+          },
+          "practice": {
+            "statement": ["300 Wのヒーターを100 s使う。効率84%、水0.30 kg、比熱4.2×10³ J/(kg·K)とする。"],
+            "question": "水の温度上昇を求めよ。",
+            "solution": {
+              "steps": ["入力は30000 J。", "有効熱量は0.84×30000=25200 J。", "ΔT=25200/(0.30×4200)=20 K。"],
+              "answer": "20 K。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "physics-basics",
+      "topic": "energy-world",
+      "areaTitle": "エネルギーと物理学が拓く世界",
+      "title": "エネルギーと物理学が拓く世界 発展",
+      "description": "複数段階のエネルギー変換効率をまとめて評価する発展パターンです。",
+      "patterns": [
+        {
+          "id": "physics-basics-energy-world-pattern-chained-efficiency",
+          "title": "複数段階の効率は割合を順に掛ける",
+          "level": "advanced",
+          "estimatedMinutes": 15,
+          "skills": ["エネルギー変換", "効率", "割合"],
+          "thinking": {
+            "title": "各段階で残る有効エネルギーを次の入力へ渡す",
+            "body": ["変換装置が直列につながると、最初の入力のうち第1段階で残った分だけが次の段階へ進みます。したがって総合効率は各段階の効率を小数で掛け合わせます。"],
+            "checkpoints": ["各効率を小数へ直す", "前段の出力を次段の入力にする", "総合効率は効率の積として確認する"]
+          },
+          "example": {
+            "statement": ["1000 Jのエネルギーが、効率20%の変換装置を通った後、効率75%のモーターへ送られる。"],
+            "question": "最終的な有効エネルギーと総合効率を求めよ。",
+            "solution": {
+              "strategy": "1000×0.20×0.75を計算する。",
+              "steps": ["第1段階の出力は1000×0.20=200 J。", "最終出力は200×0.75=150 J。", "総合効率は150/1000=0.15=15%。"],
+              "answer": "150 J、総合効率15%。"
+            }
+          },
+          "guidedPractice": {
+            "title": "効率を順に掛ける",
+            "statement": ["2000 Jを効率25%の装置、その後効率80%の装置へ通す。"],
+            "question": "最終出力と総合効率を求めよう。",
+            "steps": [
+              {"prompt": "第1段階の出力を求めてください。", "answers": ["500", "500j", "500 J"]},
+              {"prompt": "最終出力を求めてください。", "answers": ["400", "400j", "400 J"]},
+              {"prompt": "総合効率を求めてください。", "answers": ["20%", "20"]}
+            ],
+            "hint": "0.25×0.80=0.20です。"
+          },
+          "practice": {
+            "statement": ["1500 Jを効率30%の装置、その後効率60%の装置へ通す。"],
+            "question": "最終出力と総合効率を求めよ。",
+            "solution": {
+              "steps": ["1500×0.30=450 J。", "450×0.60=270 J。", "総合効率は0.30×0.60=0.18=18%。"],
+              "answer": "270 J、18%。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    }
+  ]
+}
