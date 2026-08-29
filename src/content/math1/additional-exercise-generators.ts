@@ -79,15 +79,32 @@ const unitLessonKeys: Record<string, string[]> = {
   ],
   "data-dispersion": ["range-and-outliers", "quartiles-boxplot", "deviations"],
   "variance-standard-deviation": ["variance", "standard-deviation", "compare-spread"],
-  "scatter-correlation": ["scatter-plot", "covariance", "correlation-coefficient", "correlation-causation"],
+  "scatter-correlation": [
+    "scatter-plot",
+    "covariance",
+    "correlation-coefficient",
+    "correlation-causation",
+  ],
   "hypothesis-testing": ["null-hypothesis", "random-fluctuation", "test-decision"],
 };
 
 const banks: Record<string, Template[]> = {
   "right-triangle-trig": [
-    { prompt: "斜辺10、角θの向かい側6の直角三角形で sin θ を求めてください。", answers: ["3/5", "6/10"], hint: "sin=向かい側/斜辺です。" },
-    { prompt: "斜辺13、角θのとなり側12の直角三角形で cos θ を求めてください。", answers: ["12/13"], hint: "cos=となり側/斜辺です。" },
-    { prompt: "角θの向かい側8、となり側15の直角三角形で tan θ を求めてください。", answers: ["8/15"], hint: "tan=向かい側/となり側です。" },
+    {
+      prompt: "斜辺10、角θの向かい側6の直角三角形で sin θ を求めてください。",
+      answers: ["3/5", "6/10"],
+      hint: "sin=向かい側/斜辺です。",
+    },
+    {
+      prompt: "斜辺13、角θのとなり側12の直角三角形で cos θ を求めてください。",
+      answers: ["12/13"],
+      hint: "cos=となり側/斜辺です。",
+    },
+    {
+      prompt: "角θの向かい側8、となり側15の直角三角形で tan θ を求めてください。",
+      answers: ["8/15"],
+      hint: "tan=向かい側/となり側です。",
+    },
   ],
   "special-angle-trig": [
     { prompt: "sin 30° を求めてください。", answers: ["1/2"] },
@@ -112,7 +129,10 @@ const banks: Record<string, Template[]> = {
   "trig-from-one-ratio": [
     { prompt: "90°<θ<180°、sin θ=3/5 のとき cos θ を求めてください。", answers: ["-4/5", "−4/5"] },
     { prompt: "90°<θ<180°、cos θ=−5/13 のとき sin θ を求めてください。", answers: ["12/13"] },
-    { prompt: "90°<θ<180°、sin θ=8/17 のとき tan θ を求めてください。", answers: ["-8/15", "−8/15"] },
+    {
+      prompt: "90°<θ<180°、sin θ=8/17 のとき tan θ を求めてください。",
+      answers: ["-8/15", "−8/15"],
+    },
   ],
   "sine-law": [
     { prompt: "A=30°、B=90°、a=4 の三角形で b を求めてください。", answers: ["8"] },
@@ -125,9 +145,21 @@ const banks: Record<string, Template[]> = {
     { prompt: "b=4、c=6、A=60° の三角形で a² を求めてください。", answers: ["28"] },
   ],
   "law-selection": [
-    { prompt: "A=30°、B=45°、a=5 から b を求めるとき、最初に使う定理を答えてください。", answers: ["正弦定理"], answerMode: "text" },
-    { prompt: "a=5、b=7、C=60° から c を求めるとき、最初に使う定理を答えてください。", answers: ["余弦定理"], answerMode: "text" },
-    { prompt: "3辺 a,b,c がすべて分かって角Aを求めるとき、最初に使う定理を答えてください。", answers: ["余弦定理"], answerMode: "text" },
+    {
+      prompt: "A=30°、B=45°、a=5 から b を求めるとき、最初に使う定理を答えてください。",
+      answers: ["正弦定理"],
+      answerMode: "text",
+    },
+    {
+      prompt: "a=5、b=7、C=60° から c を求めるとき、最初に使う定理を答えてください。",
+      answers: ["余弦定理"],
+      answerMode: "text",
+    },
+    {
+      prompt: "3辺 a,b,c がすべて分かって角Aを求めるとき、最初に使う定理を答えてください。",
+      answers: ["余弦定理"],
+      answerMode: "text",
+    },
   ],
   "triangle-area": [
     { prompt: "2辺が6,8、その間の角が30°の三角形の面積を求めてください。", answers: ["12"] },
@@ -140,9 +172,18 @@ const banks: Record<string, Template[]> = {
     { prompt: "A=30°、B=90°、a=3 の三角形で b を求めてください。", answers: ["6"] },
   ],
   "height-distance": [
-    { prompt: "塔までの水平距離が20m、仰角45°です。目の高さを無視すると塔の高さは何mですか。", answers: ["20", "20m"] },
-    { prompt: "木までの水平距離が10m、仰角60°です。目の高さを無視すると木の高さは何mですか。", answers: ["10√3", "10√3m"] },
-    { prompt: "高さ12mの建物の頂点への仰角が45°です。水平距離は何mですか。", answers: ["12", "12m"] },
+    {
+      prompt: "塔までの水平距離が20m、仰角45°です。目の高さを無視すると塔の高さは何mですか。",
+      answers: ["20", "20m"],
+    },
+    {
+      prompt: "木までの水平距離が10m、仰角60°です。目の高さを無視すると木の高さは何mですか。",
+      answers: ["10√3", "10√3m"],
+    },
+    {
+      prompt: "高さ12mの建物の頂点への仰角が45°です。水平距離は何mですか。",
+      answers: ["12", "12m"],
+    },
   ],
   "basic-parabola": [
     { prompt: "y=2x² で x=3 のとき y を求めてください。", answers: ["18"] },
@@ -175,14 +216,26 @@ const banks: Record<string, Template[]> = {
     { prompt: "0≤x≤8 で x(8−x) の最大値を求めてください。", answers: ["16"] },
   ],
   "quadratic-roots-graph": [
-    { prompt: "y=x²−7x+12 と x軸の交点の x 座標を小さい順に書いてください。", answers: ["3,4", "3，4"] },
-    { prompt: "y=x²−9 と x軸の交点の x 座標を小さい順に書いてください。", answers: ["-3,3", "−3,3"] },
-    { prompt: "y=x²+5x+6 と x軸の交点の x 座標を小さい順に書いてください。", answers: ["-3,-2", "−3,−2"] },
+    {
+      prompt: "y=x²−7x+12 と x軸の交点の x 座標を小さい順に書いてください。",
+      answers: ["3,4", "3，4"],
+    },
+    {
+      prompt: "y=x²−9 と x軸の交点の x 座標を小さい順に書いてください。",
+      answers: ["-3,3", "−3,3"],
+    },
+    {
+      prompt: "y=x²+5x+6 と x軸の交点の x 座標を小さい順に書いてください。",
+      answers: ["-3,-2", "−3,−2"],
+    },
   ],
   "quadratic-formula": [
     { prompt: "x²−2x−1=0 を解いてください。", answers: ["1±√2", "1+√2,1-√2", "1−√2,1+√2"] },
     { prompt: "x²−6x+1=0 を解いてください。", answers: ["3±2√2", "3+2√2,3-2√2", "3−2√2,3+2√2"] },
-    { prompt: "2x²−4x−1=0 を解いてください。", answers: ["1±√6/2", "1+√6/2,1-√6/2", "1−√6/2,1+√6/2"] },
+    {
+      prompt: "2x²−4x−1=0 を解いてください。",
+      answers: ["1±√6/2", "1+√6/2,1-√6/2", "1−√6/2,1+√6/2"],
+    },
   ],
   discriminant: [
     { prompt: "x²−4x+3=0 の判別式 D を求めてください。", answers: ["4"] },
@@ -191,13 +244,28 @@ const banks: Record<string, Template[]> = {
   ],
   "quadratic-inequality-two-roots": [
     { prompt: "x²−5x+6<0 を解いてください。", answers: ["2<x<3"] },
-    { prompt: "x²−x−6≥0 を解いてください。", answers: ["x≤-2またはx≥3", "x≤−2またはx≥3", "x≤-2,x≥3", "x≤−2,x≥3"] },
+    {
+      prompt: "x²−x−6≥0 を解いてください。",
+      answers: ["x≤-2またはx≥3", "x≤−2またはx≥3", "x≤-2,x≥3", "x≤−2,x≥3"],
+    },
     { prompt: "−x²+5x−6>0 を解いてください。", answers: ["2<x<3"] },
   ],
   "quadratic-inequality-special-cases": [
-    { prompt: "(x−2)²≥0 を満たす x の範囲を答えてください。", answers: ["すべての実数", "全実数"], answerMode: "text" },
-    { prompt: "x²+1>0 を満たす x の範囲を答えてください。", answers: ["すべての実数", "全実数"], answerMode: "text" },
-    { prompt: "−(x+1)²≤0 を満たす x の範囲を答えてください。", answers: ["すべての実数", "全実数"], answerMode: "text" },
+    {
+      prompt: "(x−2)²≥0 を満たす x の範囲を答えてください。",
+      answers: ["すべての実数", "全実数"],
+      answerMode: "text",
+    },
+    {
+      prompt: "x²+1>0 を満たす x の範囲を答えてください。",
+      answers: ["すべての実数", "全実数"],
+      answerMode: "text",
+    },
+    {
+      prompt: "−(x+1)²≤0 を満たす x の範囲を答えてください。",
+      answers: ["すべての実数", "全実数"],
+      answerMode: "text",
+    },
   ],
   "quadratic-inequality-application": [
     { prompt: "0<x<10 で x(10−x)≥21 を解いてください。", answers: ["3≤x≤7"] },
@@ -230,60 +298,195 @@ const banks: Record<string, Template[]> = {
     { prompt: "標準偏差が5のデータの分散を求めてください。", answers: ["25"] },
   ],
   "compare-spread": [
-    { prompt: "同じ尺度で、標準偏差が4のAと9のBでは、散らばりが大きいのはどちらですか。", answers: ["B", "b"], answerMode: "text" },
-    { prompt: "平均が同じで、分散が25のXと4のYでは、散らばりが小さいのはどちらですか。", answers: ["Y", "y"], answerMode: "text" },
-    { prompt: "平均は中心、標準偏差は何を表す指標ですか。", answers: ["散らばり", "ばらつき"], answerMode: "text" },
+    {
+      prompt: "同じ尺度で、標準偏差が4のAと9のBでは、散らばりが大きいのはどちらですか。",
+      answers: ["B", "b"],
+      answerMode: "text",
+    },
+    {
+      prompt: "平均が同じで、分散が25のXと4のYでは、散らばりが小さいのはどちらですか。",
+      answers: ["Y", "y"],
+      answerMode: "text",
+    },
+    {
+      prompt: "平均は中心、標準偏差は何を表す指標ですか。",
+      answers: ["散らばり", "ばらつき"],
+      answerMode: "text",
+    },
   ],
   "scatter-plot": [
-    { prompt: "xが増えるほどyも増える傾向を何の相関といいますか。", answers: ["正の相関", "正"], answerMode: "text" },
-    { prompt: "xが増えるほどyが減る傾向を何の相関といいますか。", answers: ["負の相関", "負"], answerMode: "text" },
-    { prompt: "散布図の1つの点は、同じ対象から得た何個の変量の組を表しますか。", answers: ["2", "2個", "2つ"], answerMode: "text" },
+    {
+      prompt: "xが増えるほどyも増える傾向を何の相関といいますか。",
+      answers: ["正の相関", "正"],
+      answerMode: "text",
+    },
+    {
+      prompt: "xが増えるほどyが減る傾向を何の相関といいますか。",
+      answers: ["負の相関", "負"],
+      answerMode: "text",
+    },
+    {
+      prompt: "散布図の1つの点は、同じ対象から得た何個の変量の組を表しますか。",
+      answers: ["2", "2個", "2つ"],
+      answerMode: "text",
+    },
   ],
   covariance: [
-    { prompt: "xの偏差が −1,0,1、yの偏差が −2,0,2 のとき共分散を求めてください。", answers: ["4/3"] },
+    {
+      prompt: "xの偏差が −1,0,1、yの偏差が −2,0,2 のとき共分散を求めてください。",
+      answers: ["4/3"],
+    },
     { prompt: "偏差の積の和が12、データ数が4のとき共分散を求めてください。", answers: ["3"] },
-    { prompt: "xの偏差が −2,2、yの偏差が 3,−3 のとき共分散を求めてください。", answers: ["-6", "−6"] },
+    {
+      prompt: "xの偏差が −2,2、yの偏差が 3,−3 のとき共分散を求めてください。",
+      answers: ["-6", "−6"],
+    },
   ],
   "correlation-coefficient": [
     { prompt: "共分散6、2変量の標準偏差が2と3のとき相関係数 r を求めてください。", answers: ["1"] },
-    { prompt: "共分散−4、標準偏差が2と4のとき相関係数 r を求めてください。", answers: ["-1/2", "−1/2", "-0.5", "−0.5"] },
-    { prompt: "共分散3、標準偏差が2と3のとき相関係数 r を求めてください。", answers: ["1/2", "0.5"] },
+    {
+      prompt: "共分散−4、標準偏差が2と4のとき相関係数 r を求めてください。",
+      answers: ["-1/2", "−1/2", "-0.5", "−0.5"],
+    },
+    {
+      prompt: "共分散3、標準偏差が2と3のとき相関係数 r を求めてください。",
+      answers: ["1/2", "0.5"],
+    },
   ],
   "correlation-causation": [
-    { prompt: "強い相関があれば、一方が他方の原因だと必ず言えますか。", answers: ["いいえ", "言えない", "いえない"], answerMode: "text" },
-    { prompt: "2変量の両方へ影響して見かけの相関を生む要因を何と考えますか。", answers: ["第三の要因", "第3の要因", "交絡要因"], answerMode: "text" },
-    { prompt: "相関係数が表すのは因果関係そのものではなく、主に何の関係ですか。", answers: ["直線的な関係", "直線関係", "相関"], answerMode: "text" },
+    {
+      prompt: "強い相関があれば、一方が他方の原因だと必ず言えますか。",
+      answers: ["いいえ", "言えない", "いえない"],
+      answerMode: "text",
+    },
+    {
+      prompt: "2変量の両方へ影響して見かけの相関を生む要因を何と考えますか。",
+      answers: ["第三の要因", "第3の要因", "交絡要因"],
+      answerMode: "text",
+    },
+    {
+      prompt: "相関係数が表すのは因果関係そのものではなく、主に何の関係ですか。",
+      answers: ["直線的な関係", "直線関係", "相関"],
+      answerMode: "text",
+    },
   ],
   "null-hypothesis": [
-    { prompt: "新しい方法に効果があるか調べるとき、最初に置く『効果がない』側の仮説を何といいますか。", answers: ["帰無仮説"], answerMode: "text" },
-    { prompt: "コインが公平か調べるときの帰無仮説として『表の確率は何分の何』と置きますか。", answers: ["1/2", "0.5"], answerMode: "text" },
-    { prompt: "2群の平均差を調べるとき、典型的な帰無仮説は『平均に何がない』ですか。", answers: ["差", "差がない"], answerMode: "text" },
+    {
+      prompt:
+        "新しい方法に効果があるか調べるとき、最初に置く『効果がない』側の仮説を何といいますか。",
+      answers: ["帰無仮説"],
+      answerMode: "text",
+    },
+    {
+      prompt: "コインが公平か調べるときの帰無仮説として『表の確率は何分の何』と置きますか。",
+      answers: ["1/2", "0.5"],
+      answerMode: "text",
+    },
+    {
+      prompt: "2群の平均差を調べるとき、典型的な帰無仮説は『平均に何がない』ですか。",
+      answers: ["差", "差がない"],
+      answerMode: "text",
+    },
   ],
   "random-fluctuation": [
-    { prompt: "公平なコイン100回で表52回と95回では、より極端なのはどちらですか。", answers: ["95", "95回", "表95回"], answerMode: "text" },
-    { prompt: "同じ条件の標本でも結果が少しずつ変わることを何の揺れと考えますか。", answers: ["偶然の揺れ", "偶然", "標本の揺れ"], answerMode: "text" },
-    { prompt: "帰無仮説のもとで結果が極端になるほど、その仮説を疑う材料は強くなりますか、弱くなりますか。", answers: ["強くなる", "強い"], answerMode: "text" },
+    {
+      prompt: "公平なコイン100回で表52回と95回では、より極端なのはどちらですか。",
+      answers: ["95", "95回", "表95回"],
+      answerMode: "text",
+    },
+    {
+      prompt: "同じ条件の標本でも結果が少しずつ変わることを何の揺れと考えますか。",
+      answers: ["偶然の揺れ", "偶然", "標本の揺れ"],
+      answerMode: "text",
+    },
+    {
+      prompt:
+        "帰無仮説のもとで結果が極端になるほど、その仮説を疑う材料は強くなりますか、弱くなりますか。",
+      answers: ["強くなる", "強い"],
+      answerMode: "text",
+    },
   ],
   "test-decision": [
-    { prompt: "帰無仮説のもとで十分起こりにくい結果なら、帰無仮説をどうしますか。", answers: ["棄却する", "棄却"], answerMode: "text" },
-    { prompt: "結果が珍しいとまでは言えないとき、帰無仮説をどう表現しますか。", answers: ["棄却できない"], answerMode: "text" },
-    { prompt: "『棄却できない』ことは帰無仮説が正しいと証明したことですか。", answers: ["いいえ", "違う", "ちがう"], answerMode: "text" },
+    {
+      prompt: "帰無仮説のもとで十分起こりにくい結果なら、帰無仮説をどうしますか。",
+      answers: ["棄却する", "棄却"],
+      answerMode: "text",
+    },
+    {
+      prompt: "結果が珍しいとまでは言えないとき、帰無仮説をどう表現しますか。",
+      answers: ["棄却できない"],
+      answerMode: "text",
+    },
+    {
+      prompt: "『棄却できない』ことは帰無仮説が正しいと証明したことですか。",
+      answers: ["いいえ", "違う", "ちがう"],
+      answerMode: "text",
+    },
   ],
 };
 
 const unitChallenges: Record<string, Template> = {
-  "trigonometric-ratios": { prompt: "sin150°+cos120°+tan135° を求めてください。", answers: ["-1", "−1"], lessonKeys: ["special-angle-trig", "obtuse-angle-trig"] },
-  "trigonometric-relations": { prompt: "90°<θ<180°、cosθ=−12/13 のとき tanθ を求めてください。", answers: ["-5/12", "−5/12"], lessonKeys: ["pythagorean-trig", "trig-from-one-ratio", "tan-from-sin-cos"] },
-  "sine-cosine-laws": { prompt: "b=5、c=7、A=60° の三角形で a² を求めてください。", answers: ["39"], lessonKeys: ["cosine-law", "law-selection"] },
-  "figure-measurement": { prompt: "2辺が8,10、その間の角60°の三角形の面積を求めてください。", answers: ["20√3"], lessonKeys: ["triangle-area", "solve-triangle"] },
-  "quadratic-graphs": { prompt: "y=2x²−8x+3 を平方完成し、頂点の y 座標を求めてください。", answers: ["-5", "−5"], lessonKeys: ["completing-square", "vertex-form"] },
-  "quadratic-extrema": { prompt: "0≤x≤10 で x(10−x) の最大値を求めてください。", answers: ["25"], lessonKeys: ["quadratic-extrema-interval", "quadratic-extrema-application"] },
-  "quadratic-equations-graphs": { prompt: "2x²−4x+3=0 の判別式 D を求め、数値だけ答えてください。", answers: ["-8", "−8"], lessonKeys: ["quadratic-formula", "discriminant", "quadratic-roots-graph"] },
-  "quadratic-inequalities": { prompt: "0<x<10 で x(10−x)>24 を解いてください。", answers: ["4<x<6"], lessonKeys: ["quadratic-inequality-two-roots", "quadratic-inequality-application"] },
-  "data-dispersion": { prompt: "Q1=4、Q3=15、最小値1、最大値20のデータについて四分位範囲を求めてください。", answers: ["11"], lessonKeys: ["quartiles-boxplot", "range-and-outliers"] },
-  "variance-standard-deviation": { prompt: "偏差平方の和が100、データ数4のとき標準偏差を求めてください。", answers: ["5"], lessonKeys: ["variance", "standard-deviation"] },
-  "scatter-correlation": { prompt: "共分散−6、2変量の標準偏差が2と3のとき相関係数を求めてください。", answers: ["-1", "−1"], lessonKeys: ["covariance", "correlation-coefficient"] },
-  "hypothesis-testing": { prompt: "結果が帰無仮説のもとで十分起こりにくいと判断されたときの結論を答えてください。", answers: ["帰無仮説を棄却する", "棄却する", "棄却"], answerMode: "text", lessonKeys: ["null-hypothesis", "random-fluctuation", "test-decision"] },
+  "trigonometric-ratios": {
+    prompt: "sin150°+cos120°+tan135° を求めてください。",
+    answers: ["-1", "−1"],
+    lessonKeys: ["special-angle-trig", "obtuse-angle-trig"],
+  },
+  "trigonometric-relations": {
+    prompt: "90°<θ<180°、cosθ=−12/13 のとき tanθ を求めてください。",
+    answers: ["-5/12", "−5/12"],
+    lessonKeys: ["pythagorean-trig", "trig-from-one-ratio", "tan-from-sin-cos"],
+  },
+  "sine-cosine-laws": {
+    prompt: "b=5、c=7、A=60° の三角形で a² を求めてください。",
+    answers: ["39"],
+    lessonKeys: ["cosine-law", "law-selection"],
+  },
+  "figure-measurement": {
+    prompt: "2辺が8,10、その間の角60°の三角形の面積を求めてください。",
+    answers: ["20√3"],
+    lessonKeys: ["triangle-area", "solve-triangle"],
+  },
+  "quadratic-graphs": {
+    prompt: "y=2x²−8x+3 を平方完成し、頂点の y 座標を求めてください。",
+    answers: ["-5", "−5"],
+    lessonKeys: ["completing-square", "vertex-form"],
+  },
+  "quadratic-extrema": {
+    prompt: "0≤x≤10 で x(10−x) の最大値を求めてください。",
+    answers: ["25"],
+    lessonKeys: ["quadratic-extrema-interval", "quadratic-extrema-application"],
+  },
+  "quadratic-equations-graphs": {
+    prompt: "2x²−4x+3=0 の判別式 D を求め、数値だけ答えてください。",
+    answers: ["-8", "−8"],
+    lessonKeys: ["quadratic-formula", "discriminant", "quadratic-roots-graph"],
+  },
+  "quadratic-inequalities": {
+    prompt: "0<x<10 で x(10−x)>24 を解いてください。",
+    answers: ["4<x<6"],
+    lessonKeys: ["quadratic-inequality-two-roots", "quadratic-inequality-application"],
+  },
+  "data-dispersion": {
+    prompt: "Q1=4、Q3=15、最小値1、最大値20のデータについて四分位範囲を求めてください。",
+    answers: ["11"],
+    lessonKeys: ["quartiles-boxplot", "range-and-outliers"],
+  },
+  "variance-standard-deviation": {
+    prompt: "偏差平方の和が100、データ数4のとき標準偏差を求めてください。",
+    answers: ["5"],
+    lessonKeys: ["variance", "standard-deviation"],
+  },
+  "scatter-correlation": {
+    prompt: "共分散−6、2変量の標準偏差が2と3のとき相関係数を求めてください。",
+    answers: ["-1", "−1"],
+    lessonKeys: ["covariance", "correlation-coefficient"],
+  },
+  "hypothesis-testing": {
+    prompt: "結果が帰無仮説のもとで十分起こりにくいと判断されたときの結論を答えてください。",
+    answers: ["帰無仮説を棄却する", "棄却する", "棄却"],
+    answerMode: "text",
+    lessonKeys: ["null-hypothesis", "random-fluctuation", "test-decision"],
+  },
 };
 
 const shuffle = <T>(values: readonly T[]) => {
@@ -314,7 +517,11 @@ const finalize = (
   };
 };
 
-export const generateAdditionalLessonExercises = (unitKey: string, lessonKey: string, count = 3) => {
+export const generateAdditionalLessonExercises = (
+  unitKey: string,
+  lessonKey: string,
+  count = 3,
+) => {
   if (!(unitLessonKeys[unitKey] ?? []).includes(lessonKey)) return [];
   const bank = banks[lessonKey] ?? [];
   if (bank.length === 0) return [];
@@ -342,9 +549,7 @@ export const generateAdditionalUnitExercises = (unitKey: string) => {
   });
 
   const challengeTemplate = unitChallenges[unitKey];
-  const challenge = challengeTemplate
-    ? [finalize(challengeTemplate, lessons, "challenge", 0)]
-    : [];
+  const challenge = challengeTemplate ? [finalize(challengeTemplate, lessons, "challenge", 0)] : [];
 
   return [...basic, ...applied, ...challenge];
 };

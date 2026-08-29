@@ -1,6 +1,6 @@
 ---
-import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
 import { getFormulaDerivation } from "../content/math1/formula-registry";
+import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 import "../styles/global.css";
@@ -16,7 +16,8 @@ const { area: _area, unit: _unit, lesson: _lesson } = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _lessonIndex = _unit.lessons.findIndex((item) => item.key === _lesson.key);
 const _previousLesson = _lessonIndex > 0 ? _unit.lessons[_lessonIndex - 1] : undefined;
-const _nextLesson = _lessonIndex < _unit.lessons.length - 1 ? _unit.lessons[_lessonIndex + 1] : undefined;
+const _nextLesson =
+  _lessonIndex < _unit.lessons.length - 1 ? _unit.lessons[_lessonIndex + 1] : undefined;
 const _areaHref = `${_base}math1/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;

@@ -1,13 +1,13 @@
 import {
-  generateLessonExercises as generateAlgebraLessonExercises,
-  generateUnitExercises as generateAlgebraUnitExercises,
-  type GeneratedExercise as AlgebraGeneratedExercise,
-} from "./exercise-generators";
-import {
+  type ExtraExerciseAnswerMode,
   generateAdditionalLessonExercises,
   generateAdditionalUnitExercises,
-  type ExtraExerciseAnswerMode,
 } from "./additional-exercise-generators";
+import {
+  type GeneratedExercise as AlgebraGeneratedExercise,
+  generateLessonExercises as generateAlgebraLessonExercises,
+  generateUnitExercises as generateAlgebraUnitExercises,
+} from "./exercise-generators";
 
 export type GeneratedExercise = AlgebraGeneratedExercise & {
   answerMode: ExtraExerciseAnswerMode;

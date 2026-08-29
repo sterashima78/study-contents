@@ -7,23 +7,38 @@ const checks = [
     markers: ["学習する4つの領域", "全55小教材"],
   },
   {
-    path: new URL("../dist/math1/algebra/expansion-factorization/expansion/index.html", import.meta.url),
+    path: new URL(
+      "../dist/math1/algebra/expansion-factorization/expansion/index.html",
+      import.meta.url,
+    ),
     markers: ["多項式の展開", "理解を確認する3問"],
   },
   {
-    path: new URL("../dist/math1/geometry/trigonometric-ratios/special-angle-trig/index.html", import.meta.url),
+    path: new URL(
+      "../dist/math1/geometry/trigonometric-ratios/special-angle-trig/index.html",
+      import.meta.url,
+    ),
     markers: ["30°・45°・60°の三角比", "特別な角の三角比を図形から作る"],
   },
   {
-    path: new URL("../dist/math1/quadratic/quadratic-equations-graphs/quadratic-formula/index.html", import.meta.url),
+    path: new URL(
+      "../dist/math1/quadratic/quadratic-equations-graphs/quadratic-formula/index.html",
+      import.meta.url,
+    ),
     markers: ["二次方程式の解の公式", "二次方程式の解の公式の導出"],
   },
   {
-    path: new URL("../dist/math1/data-analysis/hypothesis-testing/test-decision/index.html", import.meta.url),
+    path: new URL(
+      "../dist/math1/data-analysis/hypothesis-testing/test-decision/index.html",
+      import.meta.url,
+    ),
     markers: ["仮説検定の判断を言葉で表す", "理解を確認する3問"],
   },
   {
-    path: new URL("../dist/math1/data-analysis/scatter-correlation/exercise/index.html", import.meta.url),
+    path: new URL(
+      "../dist/math1/data-analysis/scatter-correlation/exercise/index.html",
+      import.meta.url,
+    ),
     markers: ["散布図・相関係数の単元末演習", "単元末演習"],
   },
 ];

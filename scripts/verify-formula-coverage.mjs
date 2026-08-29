@@ -58,7 +58,9 @@ for (const lessonKey of lessonsWithFormulas) {
   const hasDerivation = derivationKeys.has(lessonKey);
   const exemption = formulaExemptions.get(lessonKey);
   if (!hasDerivation && !exemption) {
-    errors.push(`${lessonKey}: formulas があるため、導出を追加するか定義・基本法則として分類してください。`);
+    errors.push(
+      `${lessonKey}: formulas があるため、導出を追加するか定義・基本法則として分類してください。`,
+    );
   }
   if (hasDerivation && exemption) {
     errors.push(`${lessonKey}: 導出対象と例外分類の両方に登録されています。`);
