@@ -29,7 +29,10 @@ const checks = [
       "../dist/english/expression/practical-expression/email-request/index.html",
       import.meta.url,
     ),
-    markers: ["依頼メールを目的から組み立てる", "Could you send me the updated schedule by Friday?"],
+    markers: [
+      "依頼メールを目的から組み立てる",
+      "Could you send me the updated schedule by Friday?",
+    ],
   },
 ];
 
