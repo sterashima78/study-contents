@@ -1,8 +1,21 @@
 ---
 import { type MathCourseInfo, math1Course } from "../content/math-courses";
-import "../styles/global.css";
-import "../styles/entrance.css";
-import "../styles/entrance-index.css";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "./ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MetricList from "./ui/MetricList.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "./ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
 
 type PatternSummary = {
   id: string;
@@ -10,9 +23,7 @@ type PatternSummary = {
   level: string;
   estimatedMinutes: number;
   skills: string[];
-  thinking: {
-    title: string;
-  };
+  thinking: { title: string };
 };
 
 type TopicSet = {
@@ -36,98 +47,63 @@ const {
 const _base = import.meta.env.BASE_URL;
 const _levelLabel = (level: string) => (level === "advanced" ? "発展" : "応用");
 const _patternSlug = (id: string) => id.replace(`${_course.key}-${_topicSet.topic}-pattern-`, "");
-const _applicationCount = _topicSet.patterns.filter(
-  (pattern) => pattern.level === "application",
-).length;
+const _applicationCount = _topicSet.patterns.filter((pattern) => pattern.level === "application").length;
 const _advancedCount = _topicSet.patterns.filter((pattern) => pattern.level === "advanced").length;
 const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_topicSet.topic}/`;
 const _topicHref = `${_base}${_course.routeBase}/entrance/${_topicSet.topic}/`;
+const _items = _topicSet.patterns.map((pattern, index) => ({
+  marker: String(index + 1).padStart(2, "0"),
+  title: pattern.title,
+  href: `${_topicHref}${_patternSlug(pattern.id)}/`,
+  description: pattern.thinking.title,
+  tags: pattern.skills,
+  badge: _levelLabel(pattern.level),
+  badgeTone: pattern.level === "advanced" ? ("advanced" as const) : ("default" as const),
+  meta: `目安 ${pattern.estimatedMinutes}分`,
+  action: "このパターンを学ぶ →",
+}));
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content={`${_course.title}「${_areaTitle}」の応用・発展教材。解法パターンごとに考え方、例題、ステップ練習、実践を学びます。`}
+<StudyPage
+  title={`${_topicSet.title} | 学習コンテンツ`}
+  description={`${_course.title}「${_areaTitle}」の応用・発展教材。解法パターンごとに考え方、例題、ステップ練習、実践を学びます。`}
+>
+  <BreadcrumbTrail
+    items={[
+      { label: "科目一覧", href: _base },
+      { label: _course.title, href: _courseHomeHref },
+      { label: _areaTitle, href: _areaHref },
+      { label: "応用・発展" },
+    ]}
+  />
+  <ContentHero
+    kicker="APPLICATION & ADVANCED"
+    title={_topicSet.title}
+    description={_topicSet.description}
+  >
+    <MetricList
+      ariaLabel="教材の概要"
+      items={[
+        { value: `${_topicSet.patterns.length}パターン`, label: "1パターン1ページで学習" },
+        { value: `応用 ${_applicationCount} / 発展 ${_advancedCount}`, label: "解法選択と条件整理を重視" },
+        { value: "完全独自作成", label: "外部問題本文を転載・軽微改変しない" },
+      ]}
     />
-    <title>{_topicSet.title} | 学習コンテンツ</title>
-  </head>
-  <body>
-    <main class="page-shell entrance-page entrance-index-page">
-      <header class="entrance-hero">
-        <nav class="breadcrumbs" aria-label="パンくずリスト">
-          <a href={_base}>科目一覧</a>
-          <span aria-hidden="true">/</span>
-          <a href={_courseHomeHref}>{_course.title}</a>
-          <span aria-hidden="true">/</span>
-          <a href={_areaHref}>{_areaTitle}</a>
-          <span aria-hidden="true">/</span>
-          <span>応用・発展</span>
-        </nav>
+  </ContentHero>
 
-        <p class="eyebrow">APPLICATION & ADVANCED</p>
-        <h1>{_topicSet.title}</h1>
-        <p class="lead">{_topicSet.description}</p>
+  <ContentSection labelledby="patterns-title">
+    <SectionHeading
+      label="PATTERNS"
+      title="解法パターンを選ぶ"
+      id="patterns-title"
+      description="各ページで「考え方・着眼点 → 例題 → ステップ練習 → 実践」の順に学びます。"
+    />
+    <ContentIndex items={_items} />
+  </ContentSection>
 
-        <ul class="entrance-summary" aria-label="教材の概要">
-          <li>
-            <strong>{_topicSet.patterns.length}パターン</strong>
-            <span>1パターン1ページで学習</span>
-          </li>
-          <li>
-            <strong>応用 {_applicationCount} / 発展 {_advancedCount}</strong>
-            <span>解法選択と条件整理を重視</span>
-          </li>
-          <li>
-            <strong>完全独自作成</strong>
-            <span>外部問題本文を転載・軽微改変しない</span>
-          </li>
-        </ul>
-      </header>
-
-      <section aria-labelledby="patterns-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-label">PATTERNS</p>
-            <h2 id="patterns-title">解法パターンを選ぶ</h2>
-          </div>
-          <p>各ページで「考え方・着眼点 → 例題 → ステップ練習 → 実践」の順に学びます。</p>
-        </div>
-
-        <ol class="application-pattern-index">
-          {
-            _topicSet.patterns.map((pattern, index) => (
-              <li>
-                <a href={`${_topicHref}${_patternSlug(pattern.id)}/`}>
-                  <div class="pattern-index-heading">
-                    <span class="pattern-index-number">
-                      PATTERN {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span class={`level-badge level-${pattern.level}`}>
-                      {_levelLabel(pattern.level)}
-                    </span>
-                  </div>
-                  <h3>{pattern.title}</h3>
-                  <p>{pattern.thinking.title}</p>
-                  <ul class="skill-list" aria-label="主な技能">
-                    {pattern.skills.map((skill) => <li>{skill}</li>)}
-                  </ul>
-                  <span class="pattern-index-meta">目安 {pattern.estimatedMinutes}分</span>
-                </a>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <nav class="entrance-footer-nav" aria-label="関連ページ">
-        <a href={_areaHref}>{_areaTitle}の基礎教材へ戻る</a>
-        <a href={_courseHomeHref}>{_course.title}トップへ</a>
-      </nav>
-    </main>
-  </body>
-</html>
+  <PageNavigation
+    previous={{ label: `← ${_areaTitle}の基礎教材へ戻る`, href: _areaHref }}
+    next={{ label: `${_course.title}トップへ →`, href: _courseHomeHref }}
+  />
+</StudyPage>
