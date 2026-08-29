@@ -1,6 +1,6 @@
 ---
 import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
-import { getFormulaDerivation } from "../content/math1/formula-derivations";
+import { getFormulaDerivation } from "../content/math1/formula-registry";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 import "../styles/global.css";
@@ -214,20 +214,16 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
 
       for (const card of document.querySelectorAll("[data-guided-practice]")) {
         if (!(card instanceof HTMLElement)) continue;
-
         const form = card.querySelector(".guided-practice-form");
         const feedback = card.querySelector(".practice-feedback");
         const hint = card.querySelector(".practice-hint");
         const hintButton = card.querySelector(".hint-button");
-
         if (
           !(form instanceof HTMLFormElement) ||
           !(feedback instanceof HTMLElement) ||
           !(hint instanceof HTMLElement) ||
           !(hintButton instanceof HTMLButtonElement)
-        ) {
-          continue;
-        }
+        ) continue;
 
         hintButton.addEventListener("click", () => {
           hint.hidden = !hint.hidden;
@@ -240,19 +236,16 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
             (input) => input instanceof HTMLInputElement,
           );
           let correctCount = 0;
-
           for (const input of inputs) {
             if (!(input instanceof HTMLInputElement)) continue;
             const rawAnswers = input.dataset.answers;
             if (!rawAnswers) continue;
-
             const answers = JSON.parse(rawAnswers).map(normalizeAnswer);
             const isCorrect = answers.includes(normalizeAnswer(input.value));
             input.classList.toggle("is-correct", isCorrect);
             input.classList.toggle("is-error", !isCorrect);
             if (isCorrect) correctCount += 1;
           }
-
           if (correctCount === inputs.length) {
             feedback.textContent = "すべて正解です。例題と同じ手順を自分で再現できています。";
             feedback.className = "feedback practice-feedback is-correct";
@@ -264,9 +257,7 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
 
         form.addEventListener("reset", () => {
           window.setTimeout(() => {
-            for (const input of form.querySelectorAll("input")) {
-              input.classList.remove("is-correct", "is-error");
-            }
+            for (const input of form.querySelectorAll("input")) input.classList.remove("is-correct", "is-error");
             feedback.textContent = "";
             feedback.className = "feedback practice-feedback";
             hint.hidden = true;
