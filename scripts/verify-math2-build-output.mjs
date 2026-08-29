@@ -25,10 +25,7 @@ const checks = [
     markers: ["三角関数の加法定理", "公式の導出: cosの差から加法定理へ"],
   },
   {
-    path: new URL(
-      "../dist/math2/calculus/integrals/area-by-integral/index.html",
-      import.meta.url,
-    ),
+    path: new URL("../dist/math2/calculus/integrals/area-by-integral/index.html", import.meta.url),
     markers: ["定積分と面積", "理解を確認する3問"],
   },
   {
