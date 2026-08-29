@@ -30,10 +30,7 @@ const requiredTopicsByCourse = new Map([
     new Set(["motion", "forces-energy", "waves", "thermal-electricity", "energy-world"]),
   ],
   ["physics", new Set(["motion", "waves", "electricity-magnetism", "atoms"])],
-  [
-    "chemistry-basic",
-    new Set(["chemistry-human-life", "matter-structure", "matter-change-use"]),
-  ],
+  ["chemistry-basic", new Set(["chemistry-human-life", "matter-structure", "matter-change-use"])],
   [
     "chemistry",
     new Set([
