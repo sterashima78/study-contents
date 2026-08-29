@@ -1,0 +1,117 @@
+---
+type CurriculumReferenceData = {
+  courseTitle: string;
+  subjectTitle: string;
+  curriculumCourse: string;
+  guidelineTitle: string;
+  guidelineUrl: string;
+  commentaryTitle: string;
+  commentaryUrl: string;
+  lastVerified: string;
+  note?: string;
+};
+
+type Props = {
+  reference: CurriculumReferenceData;
+};
+
+const { reference: _reference } = Astro.props as Props;
+---
+
+<aside
+  class="curriculum-reference"
+  data-curriculum-reference
+  data-curriculum-course={_reference.curriculumCourse}
+  aria-labelledby="curriculum-reference-title"
+>
+  <p class="reference-label">CURRICULUM REFERENCE</p>
+  <h2 id="curriculum-reference-title">学習指導要領との対応</h2>
+  <p class="reference-scope">
+    対応の確認先: {_reference.guidelineTitle} {_reference.subjectTitle}「{_reference.curriculumCourse}」
+  </p>
+  {
+    _reference.note && <p class="reference-note">{_reference.note}</p>
+  }
+  <p class="reference-note">
+    教材ページ名は学習指導要領の見出しをそのまま転記したものではありません。公式資料との照合先として示しています。
+  </p>
+  <nav class="reference-links" aria-label={`${_reference.courseTitle}の学習指導要領公式資料`}>
+    <a href={_reference.guidelineUrl} target="_blank" rel="noopener noreferrer">
+      学習指導要領（文部科学省）
+    </a>
+    <a href={_reference.commentaryUrl} target="_blank" rel="noopener noreferrer">
+      {_reference.commentaryTitle}
+    </a>
+  </nav>
+  <p class="verified-date">参照先確認日: {_reference.lastVerified}</p>
+</aside>
+
+<style>
+  .curriculum-reference {
+    margin-top: clamp(2rem, 5vw, 3.5rem);
+    padding: 1.25rem 1.35rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--surface-subtle);
+  }
+
+  .reference-label {
+    margin: 0 0 0.35rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  h2 {
+    margin: 0;
+    color: var(--color-text-strong);
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+  }
+
+  .reference-scope,
+  .reference-note,
+  .verified-date {
+    color: var(--color-text-soft);
+    line-height: 1.7;
+  }
+
+  .reference-scope {
+    margin: 0.7rem 0 0;
+    font-weight: 650;
+  }
+
+  .reference-note {
+    margin: 0.45rem 0 0;
+    font-size: 0.9rem;
+  }
+
+  .reference-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    margin-top: 0.9rem;
+  }
+
+  .reference-links a {
+    color: var(--color-link);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+
+  .reference-links a:hover {
+    color: var(--color-link-hover);
+  }
+
+  .reference-links a:focus-visible {
+    border-radius: 0.2rem;
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  .verified-date {
+    margin: 0.8rem 0 0;
+    color: var(--color-muted);
+    font-size: 0.78rem;
+  }
+</style>

@@ -22,6 +22,7 @@ const forbiddenLegacyClasses = [
 ];
 const requiredScopedComponents = [
   "src/components/ui/StudyPage.astro",
+  "src/components/ui/CurriculumReference.astro",
   "src/components/ui/BreadcrumbTrail.astro",
   "src/components/ui/ContentHero.astro",
   "src/components/ui/ContentSection.astro",
