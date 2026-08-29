@@ -23,7 +23,7 @@ const addAlgebraAnswerMode = (exercise: AlgebraGeneratedExercise): GeneratedExer
   ...exercise,
   answerMode:
     exercise.lessonKeys.length > 0 &&
-    exercise.lessonKeys.every((key) => algebraTextAnswerLessonKeys.has(key))
+    exercise.lessonKeys.some((key) => algebraTextAnswerLessonKeys.has(key))
       ? "text"
       : "math",
 });
