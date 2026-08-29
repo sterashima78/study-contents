@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: ["学習する科目", "数学I", "数学A", "科目の目次を見る"],
+    markers: ["学習する科目", "数学I", "数学A", "化学基礎", "科目の目次を見る"],
   },
   {
     path: new URL("../dist/math1/index.html", import.meta.url),
@@ -77,6 +77,24 @@ const checks = [
     ),
     markers: ["確率の基本の単元末演習", "単元末演習"],
   },
+  {
+    path: new URL("../dist/chemistry-basic/index.html", import.meta.url),
+    markers: ["化学基礎", "学習する3つの領域", "全14小教材", "科目一覧へ"],
+  },
+  {
+    path: new URL(
+      "../dist/chemistry-basic/matter-structure/constituent-particles/atomic-structure/index.html",
+      import.meta.url,
+    ),
+    markers: ["原子の構造", "理解を確認する3問", "原子番号 Z = 陽子数"],
+  },
+  {
+    path: new URL(
+      "../dist/chemistry-basic/matter-change-use/chemical-reactions/exercise/index.html",
+      import.meta.url,
+    ),
+    markers: ["化学反応の単元末演習", "全6問"],
+  },
 ];
 
 for (const check of checks) {
@@ -94,4 +112,4 @@ for (const check of checks) {
   }
 }
 
-console.log("Generated HTML rendering checks passed for the course index, Math I, and Math A.");
+console.log("Generated HTML rendering checks passed for the course index, Math I, Math A, and Basic Chemistry.");
