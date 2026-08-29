@@ -8,11 +8,13 @@ const contentPaths = [
   "../src/content/matha/counting-probability.ts",
   "../src/content/matha/geometry-properties.ts",
   "../src/content/matha/human-activity.ts",
+  "../src/content/physics-basics/catalog.ts",
 ];
 const derivationPaths = [
   "../src/content/math1/formula-derivations.ts",
   "../src/content/math1/additional-formula-derivations.ts",
   "../src/content/matha/formula-derivations.ts",
+  "../src/content/physics-basics/formula-derivations.ts",
 ];
 
 const formulaExemptions = new Map([
@@ -35,6 +37,15 @@ const formulaExemptions = new Map([
   ["triangle-centers", "重心の位置を表す基本定理をこの小単元の出発点として扱う"],
   ["ceva-menelaus", "チェバ・メネラウスの定理を辺の比を扱う小単元の出発点として扱う"],
   ["polyhedra-euler", "オイラーの多面体定理を凸多面体を扱う小単元の出発点として扱う"],
+  ["force-diagrams", "重力W=mgは重力加速度の定義と運動法則を前提にする基本関係"],
+  ["force-equilibrium", "ΣF=0は加速度0の場合の運動法則を表す基本条件"],
+  ["newton-law", "ΣF=maは実験に基づく運動の基本法則"],
+  ["work-power", "W=FxとP=W/tはこの範囲で用いる仕事・仕事率の定義"],
+  ["wave-superposition", "重ね合わせy=y₁+y₂は線形な波を扱う基本原理"],
+  ["heat-temperature", "Q=mcΔTは比熱の定義を含む熱量の基本関係"],
+  ["heat-balance", "Q失=Q得は断熱系のエネルギー保存を熱量で表した基本関係"],
+  ["ohms-law", "V=IRは金属導体で成り立つ実験法則、R=ρL/Aは抵抗率の基本関係"],
+  ["energy-resources-efficiency", "効率は入力に対する有効出力の割合として定義する量"],
 ]);
 
 const lessonsWithFormulas = new Set();
@@ -42,7 +53,7 @@ for (const relativePath of contentPaths) {
   const source = await readFile(new URL(relativePath, import.meta.url), "utf8");
   let currentLessonKey;
   for (const line of source.split("\n")) {
-    const keyMatch = line.match(/^\s{8}key: "([^"]+)",/);
+    const keyMatch = line.match(/^\s+key: "([^"]+)",/);
     if (keyMatch) currentLessonKey = keyMatch[1];
     if (line.includes("formulas:")) {
       if (!currentLessonKey) {
