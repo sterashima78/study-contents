@@ -2,6 +2,14 @@ import { readdir, readFile } from "node:fs/promises";
 
 const entranceDirectory = new URL("../src/content/entrance/", import.meta.url);
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+const allowedLevels = new Set(["application", "advanced"]);
+const allowedGeneratorKeys = new Set([
+  "bounded-minimum",
+  "parabola-tangent",
+  "triangle-rectangle",
+  "determine-quadratic",
+]);
+const allowedDiagramKinds = new Set(["parabola-tangent", "triangle-rectangle"]);
 const forbiddenOriginalFields = new Set([
   "sourceText",
   "sourceProblem",
@@ -28,48 +36,45 @@ for (const file of files) {
     continue;
   }
 
-  if (document.copyrightPolicyVersion !== 1) {
-    issues.push(`${relativeName}: copyrightPolicyVersion は 1 にしてください。`);
+  if (document.copyrightPolicyVersion !== 2) {
+    issues.push(`${relativeName}: copyrightPolicyVersion は 2 にしてください。`);
   }
 
-  if (!Array.isArray(document.problems) || document.problems.length === 0) {
-    issues.push(`${relativeName}: problems は1問以上の配列にしてください。`);
+  if (!Array.isArray(document.patterns) || document.patterns.length === 0) {
+    issues.push(`${relativeName}: patterns は1件以上の配列にしてください。`);
     continue;
   }
 
   const ids = new Set();
 
-  for (const [index, problem] of document.problems.entries()) {
-    const location = `${relativeName} problems[${index}]`;
+  for (const [index, pattern] of document.patterns.entries()) {
+    const location = `${relativeName} patterns[${index}]`;
 
-    if (typeof problem.id !== "string" || problem.id.length === 0) {
+    if (typeof pattern.id !== "string" || pattern.id.length === 0) {
       issues.push(`${location}: id が必要です。`);
-    } else if (ids.has(problem.id)) {
-      issues.push(`${location}: id「${problem.id}」が重複しています。`);
+    } else if (ids.has(pattern.id)) {
+      issues.push(`${location}: id「${pattern.id}」が重複しています。`);
     } else {
-      ids.add(problem.id);
+      ids.add(pattern.id);
     }
 
-    if (problem.rights?.origin !== "original") {
-      issues.push(`${location}: rights.origin は original のみ公開可能です。`);
+    if (!allowedLevels.has(pattern.level)) {
+      issues.push(`${location}: level は application または advanced にしてください。`);
     }
 
-    if (problem.rights?.reviewStatus !== "reviewed") {
-      issues.push(`${location}: rights.reviewStatus は reviewed にしてください。`);
+    if (pattern.level === "entrance-standard") {
+      issues.push(`${location}: entrance-standard は難易度ラベルとして使用しません。`);
     }
 
-    if (
-      typeof problem.rights?.reviewedAt !== "string" ||
-      !datePattern.test(problem.rights.reviewedAt) ||
-      !isValidDate(problem.rights.reviewedAt)
-    ) {
-      issues.push(`${location}: rights.reviewedAt は有効な YYYY-MM-DD 形式の日付にしてください。`);
-    }
+    validateLearningStructure(pattern, location);
+    validateGenerator(pattern, location);
+    validateDiagram(pattern, location);
+    validateRights(pattern, location);
 
     for (const field of forbiddenOriginalFields) {
-      if (hasOwnPropertyDeep(problem, field)) {
+      if (hasOwnPropertyDeep(pattern, field)) {
         issues.push(
-          `${location}: original 問題には外部問題本文等を保持するフィールド「${field}」を含めないでください。`,
+          `${location}: original 教材には外部問題本文等を保持するフィールド「${field}」を含めないでください。`,
         );
       }
     }
@@ -84,6 +89,82 @@ if (issues.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(`Entrance content verification passed: ${files.length} file(s).`);
+}
+
+function validateLearningStructure(pattern, location) {
+  if (!Array.isArray(pattern.thinking?.body) || pattern.thinking.body.length === 0) {
+    issues.push(`${location}: thinking.body に考え方の説明が必要です。`);
+  }
+  if (!Array.isArray(pattern.thinking?.checkpoints) || pattern.thinking.checkpoints.length === 0) {
+    issues.push(`${location}: thinking.checkpoints に着眼点が必要です。`);
+  }
+
+  if (!Array.isArray(pattern.example?.statement) || pattern.example.statement.length === 0) {
+    issues.push(`${location}: example.statement に例題が必要です。`);
+  }
+  if (
+    !Array.isArray(pattern.example?.solution?.steps) ||
+    pattern.example.solution.steps.length === 0
+  ) {
+    issues.push(`${location}: example.solution.steps に例題の解答過程が必要です。`);
+  }
+
+  if (!Array.isArray(pattern.guidedPractice?.steps) || pattern.guidedPractice.steps.length === 0) {
+    issues.push(`${location}: guidedPractice.steps にステップ練習が必要です。`);
+  } else {
+    for (const [stepIndex, step] of pattern.guidedPractice.steps.entries()) {
+      if (!Array.isArray(step.answers) || step.answers.length === 0) {
+        issues.push(`${location}: guidedPractice.steps[${stepIndex}].answers が必要です。`);
+      }
+    }
+  }
+
+  if (!Array.isArray(pattern.practice?.statement) || pattern.practice.statement.length === 0) {
+    issues.push(`${location}: practice.statement に実践問題が必要です。`);
+  }
+  if (
+    !Array.isArray(pattern.practice?.solution?.steps) ||
+    pattern.practice.solution.steps.length === 0
+  ) {
+    issues.push(`${location}: practice.solution.steps に実践問題の解答過程が必要です。`);
+  }
+}
+
+function validateGenerator(pattern, location) {
+  if (pattern.generatorKey === undefined) return;
+  if (!allowedGeneratorKeys.has(pattern.generatorKey)) {
+    issues.push(
+      `${location}: generatorKey「${pattern.generatorKey}」は許可済み生成器ではありません。`,
+    );
+  }
+}
+
+function validateDiagram(pattern, location) {
+  if (pattern.diagram === undefined) return;
+  if (!allowedDiagramKinds.has(pattern.diagram.kind)) {
+    issues.push(`${location}: diagram.kind「${pattern.diagram.kind}」は未対応です。`);
+  }
+  if (typeof pattern.diagram.caption !== "string" || pattern.diagram.caption.length === 0) {
+    issues.push(`${location}: diagram.caption が必要です。`);
+  }
+}
+
+function validateRights(pattern, location) {
+  if (pattern.rights?.origin !== "original") {
+    issues.push(`${location}: rights.origin は original のみ公開可能です。`);
+  }
+
+  if (pattern.rights?.reviewStatus !== "reviewed") {
+    issues.push(`${location}: rights.reviewStatus は reviewed にしてください。`);
+  }
+
+  if (
+    typeof pattern.rights?.reviewedAt !== "string" ||
+    !datePattern.test(pattern.rights.reviewedAt) ||
+    !isValidDate(pattern.rights.reviewedAt)
+  ) {
+    issues.push(`${location}: rights.reviewedAt は有効な YYYY-MM-DD 形式の日付にしてください。`);
+  }
 }
 
 async function findJsonFiles(directory) {

@@ -35,6 +35,9 @@ jobs:
       - name: Verify formula coverage
         run: pnpm check:formulas
 
+      - name: Verify application and advanced content
+        run: pnpm check:entrance-content
+
       - name: Build
         run: pnpm build
 

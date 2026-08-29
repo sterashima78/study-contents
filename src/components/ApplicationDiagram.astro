@@ -1,0 +1,73 @@
+---
+type Diagram =
+  | {
+      kind: "parabola-tangent";
+      caption: string;
+    }
+  | {
+      kind: "triangle-rectangle";
+      base: number;
+      height: number;
+      caption: string;
+    };
+
+type Props = {
+  diagram: Diagram;
+};
+
+const { diagram: _diagram } = Astro.props;
+---
+
+<figure class="application-diagram">
+  {
+    _diagram.kind === "parabola-tangent" ? (
+      <svg
+        viewBox="0 0 360 220"
+        role="img"
+        aria-label={_diagram.caption}
+        class="application-diagram-svg"
+      >
+        <line x1="32" y1="180" x2="330" y2="180" class="diagram-axis" />
+        <line x1="58" y1="198" x2="58" y2="22" class="diagram-axis" />
+        <polyline
+          points="60,180 90,125 120,85 150,60 180,52 210,60 240,85 270,125 300,180"
+          class="diagram-curve"
+        />
+        <line x1="160" y1="145" x2="320" y2="25" class="diagram-line" />
+        <circle cx="240" cy="85" r="5" class="diagram-point" />
+        <text x="247" y="78" class="diagram-label">接点</text>
+        <text x="298" y="43" class="diagram-label">直線</text>
+        <text x="92" y="108" class="diagram-label">放物線</text>
+        <text x="334" y="184" class="diagram-label">x</text>
+        <text x="50" y="18" class="diagram-label">y</text>
+      </svg>
+    ) : (
+      <svg
+        viewBox="0 0 360 230"
+        role="img"
+        aria-label={_diagram.caption}
+        class="application-diagram-svg"
+      >
+        <polygon points="180,25 40,190 320,190" class="diagram-shape" />
+        <rect x="116" y="115" width="128" height="75" class="diagram-rectangle" />
+        <line x1="40" y1="206" x2="320" y2="206" class="diagram-measure" />
+        <line x1="40" y1="201" x2="40" y2="211" class="diagram-measure" />
+        <line x1="320" y1="201" x2="320" y2="211" class="diagram-measure" />
+        <text x="180" y="222" text-anchor="middle" class="diagram-label">
+          底辺 {_diagram.base} cm
+        </text>
+        <line x1="336" y1="25" x2="336" y2="190" class="diagram-measure" />
+        <line x1="331" y1="25" x2="341" y2="25" class="diagram-measure" />
+        <line x1="331" y1="190" x2="341" y2="190" class="diagram-measure" />
+        <text x="327" y="108" text-anchor="end" class="diagram-label">
+          高さ {_diagram.height} cm
+        </text>
+        <line x1="104" y1="115" x2="104" y2="190" class="diagram-measure" />
+        <line x1="99" y1="115" x2="109" y2="115" class="diagram-measure" />
+        <line x1="99" y1="190" x2="109" y2="190" class="diagram-measure" />
+        <text x="94" y="156" text-anchor="end" class="diagram-label">x</text>
+      </svg>
+    )
+  }
+  <figcaption>{_diagram.caption}</figcaption>
+</figure>
