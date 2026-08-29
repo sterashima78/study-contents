@@ -1,6 +1,8 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import CourseCatalog from "../components/CourseCatalog.astro";
+import { biologyAreas } from "../content/biology/catalog";
+import { biologyBasicAreas } from "../content/biology-basic/catalog";
 import { chemistryAreas } from "../content/chemistry/catalog";
 import { chemistryBasicAreas } from "../content/chemistry-basic/catalog";
 import { math1Areas } from "../content/math1/catalog";
@@ -106,6 +108,24 @@ const _courses = [
       "様々な運動、波、電気と磁気、原子を、物理基礎から発展させて現象・法則・式の根拠・演習をつないで学びます。",
     areas: physicsAreas.map((area) => area.title),
     lessonCount: _lessonCount(physicsAreas),
+  },
+  {
+    title: "生物基礎",
+    kicker: "BASIC BIOLOGY",
+    href: `${_base}biology-basic/`,
+    description:
+      "生物の特徴、ヒトの体の調節、生物の多様性と生態系を、細胞から生態系までつないで学びます。",
+    areas: biologyBasicAreas.map((area) => area.title),
+    lessonCount: _lessonCount(biologyBasicAreas),
+  },
+  {
+    title: "生物",
+    kicker: "BIOLOGY",
+    href: `${_base}biology/`,
+    description:
+      "生物の進化、生命現象と物質、遺伝情報の発現と発生、環境応答、生態と環境を、資料解釈を交えて学びます。",
+    areas: biologyAreas.map((area) => area.title),
+    lessonCount: _lessonCount(biologyAreas),
   },
 ];
 ---
