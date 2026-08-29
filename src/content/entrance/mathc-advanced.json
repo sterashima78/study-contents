@@ -1,0 +1,152 @@
+{
+  "copyrightPolicyVersion": 2,
+  "topicSets": [
+    {
+      "course": "mathc",
+      "topic": "vectors",
+      "areaTitle": "ベクトル",
+      "title": "ベクトル 発展",
+      "description": "直線のベクトル方程式と座標条件を連立する発展パターンです。",
+      "patterns": [
+        {
+          "id": "mathc-vectors-pattern-line-intersection",
+          "title": "媒介変数表示と直線条件を連立して交点を求める",
+          "level": "advanced",
+          "estimatedMinutes": 17,
+          "skills": ["位置ベクトル", "直線のベクトル方程式", "連立"],
+          "thinking": {
+            "title": "直線上の点を1つの変数で表し、もう一方の条件へ代入する",
+            "body": ["直線上の点Pを p=a+td と表せるなら、座標x,yはtの一次式になります。交わる別の直線の方程式へ代入すれば、未知数をtだけに減らせます。"],
+            "checkpoints": ["x,yをtの式にする", "もう一方の直線条件へ代入する", "tを戻して交点を求める"]
+          },
+          "example": {
+            "statement": ["P=(1,0)+t(2,1)で表される直線と、x+y=6の交点を考える。"],
+            "question": "交点の座標を求めよ。",
+            "solution": {
+              "strategy": "x=1+2t、y=tをx+y=6へ代入する。",
+              "steps": ["1+2t+t=6より3t=5。", "t=5/3。", "x=13/3、y=5/3。"],
+              "answer": "(13/3, 5/3)。"
+            }
+          },
+          "guidedPractice": {
+            "title": "媒介変数を1つに絞る",
+            "statement": ["P=(0,1)+t(1,2)とx+y=7の交点を考える。"],
+            "question": "tと交点を求めよう。",
+            "steps": [
+              {"prompt": "tを求めてください。", "answers": ["2"]},
+              {"prompt": "交点を座標で書いてください。", "answers": ["(2,5)", "2,5"]}
+            ],
+            "hint": "x=t、y=1+2tです。"
+          },
+          "practice": {
+            "statement": ["P=(2,−1)+t(1,3)で表される直線とx−y=0の交点を考える。"],
+            "question": "交点を求めよ。",
+            "solution": {
+              "steps": ["x=2+t、y=−1+3t。", "x−y=3−2t=0よりt=3/2。", "交点は(7/2,7/2)。"],
+              "answer": "(7/2,7/2)。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "mathc",
+      "topic": "curves-complex",
+      "areaTitle": "平面上の曲線と複素数平面",
+      "title": "平面上の曲線と複素数平面 発展",
+      "description": "複素数の絶対値条件を平面上の距離条件へ翻訳する発展パターンです。",
+      "patterns": [
+        {
+          "id": "mathc-curves-complex-pattern-complex-locus",
+          "title": "|z−a|=|z−b|を垂直二等分線として読む",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["複素数平面", "絶対値", "軌跡", "距離"],
+          "thinking": {
+            "title": "複素数の絶対値を2点間の距離へ読み替える",
+            "body": ["複素数平面で|z−a|は点zと点aの距離です。2つの距離が等しい条件は、2点a,bを結ぶ線分の垂直二等分線を表します。座標へ直しても同じ結果を確認できます。"],
+            "checkpoints": ["a,bを平面上の点として読む", "等距離条件として解釈する", "必要ならx,yで平方して整理する"]
+          },
+          "example": {
+            "statement": ["z=x+yiとし、|z−2|=|z−2i|を満たす点zを考える。"],
+            "question": "軌跡の方程式をx,yで表せ。",
+            "solution": {
+              "strategy": "点(2,0)と(0,2)から等距離の条件へ直す。",
+              "steps": ["(x−2)²+y²=x²+(y−2)²。", "展開すると−4x=−4y。", "よってx−y=0。"],
+              "answer": "x−y=0。"
+            }
+          },
+          "guidedPractice": {
+            "title": "複素数条件を座標へ直す",
+            "statement": ["|z−4|=|z−2i|を満たすz=x+yiを考える。"],
+            "question": "軌跡を求めよう。",
+            "steps": [
+              {"prompt": "等距離の2点を座標で書いてください。", "answers": ["(4,0),(0,2)", "4,0;0,2"]},
+              {"prompt": "整理後の方程式を書いてください。", "answers": ["2x-y-3=0", "2x−y−3=0"]}
+            ],
+            "hint": "(x−4)²+y²=x²+(y−2)²です。"
+          },
+          "practice": {
+            "statement": ["|z+2|=|z−4i|を満たすz=x+yiを考える。"],
+            "question": "軌跡の方程式を求めよ。",
+            "solution": {
+              "steps": ["点(−2,0)と(0,4)から等距離。", "(x+2)²+y²=x²+(y−4)²。", "整理してx+2y−3=0。"],
+              "answer": "x+2y−3=0。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "mathc",
+      "topic": "mathematical-expression",
+      "areaTitle": "数学的な表現の工夫",
+      "title": "数学的な表現の工夫 発展",
+      "description": "離散グラフの次数から一筆書き可能性を判断する発展パターンです。",
+      "patterns": [
+        {
+          "id": "mathc-mathematical-expression-pattern-euler-trail",
+          "title": "奇数次数の頂点数からオイラー路を判定する",
+          "level": "advanced",
+          "estimatedMinutes": 17,
+          "skills": ["離散グラフ", "次数", "オイラー路", "論理判断"],
+          "thinking": {
+            "title": "すべての辺を1回ずつ通る条件を奇数次数の個数で見る",
+            "body": ["連結な無向グラフでは、奇数次数の頂点が0個ならオイラー閉路、2個なら始点と終点が異なるオイラー路を持ちます。4個以上なら一筆書きはできません。"],
+            "checkpoints": ["各頂点の次数を確認する", "奇数次数の頂点を数える", "0個・2個・4個以上で結論を分ける"]
+          },
+          "example": {
+            "statement": ["連結な無向グラフの頂点の次数が3,3,2,2である。"],
+            "question": "すべての辺を1回ずつ通る道は存在するか。閉路にもできるか。",
+            "solution": {
+              "strategy": "奇数次数の頂点数を数える。",
+              "steps": ["奇数次数は3の2頂点。", "奇数次数が2個なのでオイラー路は存在する。", "0個ではないためオイラー閉路にはできない。"],
+              "answer": "一筆書きはできるが、始点へ戻る閉路にはできない。"
+            }
+          },
+          "guidedPractice": {
+            "title": "奇数次数の個数だけで判定する",
+            "statement": ["連結な無向グラフの次数が2,2,2,2である。"],
+            "question": "オイラー閉路が存在するか判断しよう。",
+            "steps": [
+              {"prompt": "奇数次数の頂点数を求めてください。", "answers": ["0"]},
+              {"prompt": "オイラー閉路は存在しますか。", "answers": ["はい", "存在する"]}
+            ],
+            "hint": "すべての頂点が偶数次数です。"
+          },
+          "practice": {
+            "statement": ["完全グラフK₄を考える。各頂点の次数は3である。"],
+            "question": "K₄にオイラー路は存在するか。",
+            "solution": {
+              "steps": ["頂点は4個あり、すべて次数3で奇数。", "奇数次数の頂点が4個ある。", "2個を超えるためオイラー路は存在しない。"],
+              "answer": "存在しない。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    }
+  ]
+}
