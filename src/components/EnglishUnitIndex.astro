@@ -1,0 +1,79 @@
+---
+import type { EnglishCourseInfo } from "../content/english/course";
+import type { EnglishArea, EnglishUnit } from "../content/english/types";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ActionPanel from "./ui/ActionPanel.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "./ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import LearningFlow from "./ui/LearningFlow.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "./ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
+
+type Props = {
+  area: EnglishArea;
+  unit: EnglishUnit;
+  course: EnglishCourseInfo;
+};
+
+const { area: _area, unit: _unit, course: _course } = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
+const _unitHref = `${_areaHref}${_unit.key}/`;
+const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _lessonItems = _unit.lessons.map((lesson, index) => ({
+  marker: String(index + 1).padStart(2, "0"),
+  title: lesson.title,
+  href: _lessonHref(lesson.key),
+  description: lesson.description,
+  meta: "5〜10分",
+}));
+---
+
+<StudyPage
+  title={`${_unit.title} | ${_area.title} | ${_course.title}`}
+  description={`高校英語「${_unit.title}」の小単元一覧。要点、英文・例文、分析、直後の練習を1ページ1技能で学びます。`}
+>
+  <BreadcrumbTrail
+    items={[
+      { label: _course.title, href: _courseHomeHref },
+      { label: _area.title, href: _areaHref },
+      { label: _unit.title },
+    ]}
+  />
+  <ContentHero kicker={_area.title} title={_unit.title} description={_unit.description} />
+
+  <ActionPanel
+    label="LEARNING FLOW"
+    title="英文の役割を確認してから使う"
+    description="ルールを単独で暗記するのではなく、英文の中で何を手掛かりに判断するかを確認し、例題の直後に同じ技能を使います。"
+  >
+    <LearningFlow steps={["要点", "英文・例文", "分析", "直後の練習", "まとめ"]} />
+  </ActionPanel>
+
+  <ContentSection labelledby="lessons-title">
+    <SectionHeading
+      label="LESSONS"
+      title="小単元"
+      id="lessons-title"
+      description="上から順に進めると、前の技能を使いながら読解・表現へつなげられます。"
+    />
+    <ContentIndex items={_lessonItems} />
+  </ContentSection>
+
+  <PageNavigation
+    previous={{ label: `← ${_area.title}の目次へ`, href: _areaHref }}
+    next={{ label: "最初の小単元から始める →", href: _lessonHref(_unit.lessons[0].key) }}
+  />
+</StudyPage>
