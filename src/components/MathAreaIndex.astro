@@ -1,0 +1,71 @@
+---
+import type { MathArea } from "../content/math1/types";
+import "../styles/global.css";
+import "../styles/lesson.css";
+
+type Props = {
+  area: MathArea;
+};
+
+const { area: _area } = Astro.props;
+const _base = import.meta.env.BASE_URL;
+const _areaHref = `${_base}math1/${_area.key}/`;
+const _lessonCount = _area.units.reduce((sum, unit) => sum + unit.lessons.length, 0);
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={`高校数学I「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`} />
+    <title>{_area.title} | 数学I</title>
+  </head>
+  <body>
+    <main class="lesson-shell">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <a href={_base}>数学I</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{_area.title}</span>
+      </nav>
+
+      <header class="lesson-hero unit-hero">
+        <p class="lesson-kicker">MATHEMATICS I</p>
+        <h1>{_area.title}</h1>
+        <p>{_area.description}</p>
+      </header>
+
+      <section class="lesson-section" aria-labelledby="units-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">UNITS</p>
+            <h2 id="units-title">学習する単元</h2>
+          </div>
+          <p>{_lessonCount}個の小教材を、単元ごとに順番に学習します。</p>
+        </div>
+
+        <ol class="lesson-index-list">
+          {
+            _area.units.map((unit, index) => (
+              <li>
+                <a href={`${_areaHref}${unit.key}/`}>
+                  <span class="lesson-index-number">{String(index + 1).padStart(2, "0")}</span>
+                  <span class="lesson-index-content">
+                    <strong>{unit.title}</strong>
+                    <span>{unit.description}</span>
+                  </span>
+                  <span class="lesson-index-meta">{unit.lessons.length}小教材</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <nav class="lesson-navigation" aria-label="教材ナビゲーション">
+        <a href={_base}>← 数学Iの目次へ</a>
+        <a href={`${_areaHref}${_area.units[0].key}/`}>最初の単元から始める →</a>
+      </nav>
+    </main>
+  </body>
+</html>
