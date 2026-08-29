@@ -1,42 +1,108 @@
-<aside class="notice" aria-labelledby="experimental-notice-title">
-  <p class="label">EXPERIMENTAL</p>
-  <h2 id="experimental-notice-title">生成AIによる実験的な学習コンテンツです</h2>
-  <p class="description">
-    このサイトは、生成AIを使って学習コンテンツをバイブコーディングすることを試した実験的な生成物です。内容は生成AIを活用して作成・改善しており、誤りや不正確な記述を含む可能性があります。学習時は教科書や公式資料などもあわせて確認してください。
-  </p>
+<aside class="notice" aria-label="この教材について">
+  <details>
+    <summary>
+      <span class="label">ABOUT</span>
+      <span class="summary-text">生成AIを利用した実験的な教材です</span>
+    </summary>
+    <div class="body">
+      <p>
+        このサイトの教材は、生成AIを利用して作成・改善しています。内容に誤りや不正確な記述を含む可能性があるため、学習時は教科書や文部科学省などの公式資料もあわせて確認してください。
+      </p>
+    </div>
+  </details>
 </aside>
 
 <style>
   .notice {
-    max-width: 44rem;
-    margin-top: 1.7rem;
-    padding: 1rem 0 0 1rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
     border-top: 1px solid var(--color-border-soft);
-    border-left: 2px solid var(--color-accent-light);
-    background: transparent;
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  details {
+    padding: 0.9rem 0;
+  }
+
+  summary {
+    display: flex;
+    gap: 0.8rem 1.2rem;
+    align-items: baseline;
+    color: var(--color-text-soft);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::after {
+    margin-left: auto;
+    color: var(--color-accent);
+    content: "+";
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  details[open] summary::after {
+    content: "−";
   }
 
   .label {
-    margin: 0 0 0.4rem;
     color: var(--color-accent);
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     font-weight: 750;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.16em;
   }
 
-  h2 {
-    margin: 0;
-    color: var(--color-text-strong);
+  .summary-text {
     font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", ui-serif, serif;
-    font-size: clamp(0.98rem, 2vw, 1.1rem);
+    font-size: 0.9rem;
     font-weight: 600;
-    line-height: 1.55;
+    line-height: 1.6;
   }
 
-  .description {
-    margin: 0.55rem 0 0;
+  .body {
+    max-width: 46rem;
+    padding: 0.7rem 0 0 4.2rem;
+  }
+
+  p {
+    margin: 0;
     color: var(--color-muted-strong);
-    font-size: 0.88rem;
-    line-height: 1.85;
+    font-size: 0.82rem;
+    line-height: 1.8;
+  }
+
+  summary:focus-visible {
+    border-radius: 0.1rem;
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 0.25rem;
+  }
+
+  @media (max-width: 520px) {
+    summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.25rem 0.8rem;
+    }
+
+    .label {
+      grid-column: 1;
+    }
+
+    .summary-text {
+      grid-column: 1;
+    }
+
+    summary::after {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: center;
+    }
+
+    .body {
+      padding-left: 0;
+    }
   }
 </style>
