@@ -3,11 +3,12 @@ import "../styles/exercise.css";
 
 type Props = {
   mode: "lesson" | "unit";
+  areaKey: string;
   unitKey: string;
   lessonKey?: string;
 };
 
-const { mode: _mode, unitKey: _unitKey, lessonKey: _lessonKey } = Astro.props;
+const { mode: _mode, areaKey: _areaKey, unitKey: _unitKey, lessonKey: _lessonKey } = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _isUnit = _mode === "unit";
 ---
@@ -16,6 +17,7 @@ const _isUnit = _mode === "unit";
   class:list={["exercise-set", _isUnit && "unit-exercise-set"]}
   data-exercise-set
   data-mode={_mode}
+  data-area-key={_areaKey}
   data-unit-key={_unitKey}
   data-lesson-key={_lessonKey}
   data-base={_base}
@@ -72,12 +74,6 @@ const _isUnit = _mode === "unit";
   } from "../content/math1/exercise-generators";
 
   MathfieldElement.soundsDirectory = null;
-
-  const textAnswerLessonKeys = new Set([
-    "rational-irrational",
-    "propositions-counterexamples",
-    "necessary-sufficient",
-  ]);
 
   const mathShortcuts = [
     { label: "x²", latex: "#@^{2}", ariaLabel: "直前の式を2乗する" },
@@ -155,9 +151,6 @@ const _isUnit = _mode === "unit";
     return element;
   };
 
-  const isTextAnswer = (exercise: GeneratedExercise) =>
-    exercise.lessonKeys.length > 0 && exercise.lessonKeys.every((key) => textAnswerLessonKeys.has(key));
-
   const createMathAnswerEditor = (answerId: string, ariaLabel: string) => {
     const wrapper = createElement("div", "exercise-math-editor");
     const mathField = new MathfieldElement();
@@ -181,10 +174,7 @@ const _isUnit = _mode === "unit";
       button.type = "button";
       button.setAttribute("aria-label", shortcut.ariaLabel);
       button.addEventListener("click", () => {
-        mathField.insert(shortcut.latex, {
-          focus: true,
-          selectionMode: "placeholder",
-        });
+        mathField.insert(shortcut.latex, { focus: true, selectionMode: "placeholder" });
       });
       shortcuts.append(button);
     }
@@ -195,6 +185,7 @@ const _isUnit = _mode === "unit";
 
   for (const section of document.querySelectorAll<HTMLElement>("[data-exercise-set]")) {
     const mode = section.dataset.mode;
+    const areaKey = section.dataset.areaKey;
     const unitKey = section.dataset.unitKey;
     const lessonKey = section.dataset.lessonKey;
     const base = section.dataset.base ?? "/";
@@ -205,7 +196,16 @@ const _isUnit = _mode === "unit";
     const diagnostic = section.querySelector<HTMLElement>("[data-exercise-diagnostic]");
     const diagnosticList = section.querySelector<HTMLElement>("[data-diagnostic-list]");
 
-    if (!unitKey || !form || !list || !feedback || !regenerateButton || !diagnostic || !diagnosticList) {
+    if (
+      !areaKey ||
+      !unitKey ||
+      !form ||
+      !list ||
+      !feedback ||
+      !regenerateButton ||
+      !diagnostic ||
+      !diagnosticList
+    ) {
       continue;
     }
 
@@ -253,7 +253,7 @@ const _isUnit = _mode === "unit";
         const labelText = createElement("label", undefined, "答え");
         labelText.htmlFor = answerId;
 
-        if (isTextAnswer(exercise)) {
+        if (exercise.answerMode === "text") {
           const input = document.createElement("input");
           input.id = answerId;
           input.type = "text";
@@ -266,10 +266,7 @@ const _isUnit = _mode === "unit";
           input.setAttribute("aria-label", `問${index + 1}の答え`);
           answerBlock.append(labelText, input);
         } else {
-          answerBlock.append(
-            labelText,
-            createMathAnswerEditor(answerId, `問${index + 1}の数式の答え`),
-          );
+          answerBlock.append(labelText, createMathAnswerEditor(answerId, `問${index + 1}の数式の答え`));
         }
 
         article.append(header, prompt, mapping, answerBlock);
@@ -301,7 +298,7 @@ const _isUnit = _mode === "unit";
           ratio === 1 ? "理解できています" : "復習候補",
         );
         const link = createElement("a", "diagnostic-link", "この小単元を復習する");
-        link.href = `${base}math1/algebra/${unitKey}/${key}/`;
+        link.href = `${base}math1/${areaKey}/${unitKey}/${key}/`;
         item.append(title, score, status, link);
         diagnosticList.append(item);
       }
@@ -345,7 +342,6 @@ const _isUnit = _mode === "unit";
 
       feedback.textContent = `全${exercises.length}問中 ${correctCount}問正解です。`;
       feedback.className = `feedback exercise-feedback ${correctCount === exercises.length ? "is-correct" : "is-error"}`;
-
       if (mode === "unit") renderDiagnostic(lessonResults);
     });
 
