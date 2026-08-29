@@ -9,7 +9,8 @@ import { math1Areas } from "../../../../content/math1/catalog";
 export function getStaticPaths() {
   const topicSets = [algebra, geometry, dataAnalysis];
   return topicSets.flatMap((topicSet) => {
-    const areaTitle = math1Areas.find((area) => area.key === topicSet.topic)?.title ?? topicSet.title;
+    const areaTitle =
+      math1Areas.find((area) => area.key === topicSet.topic)?.title ?? topicSet.title;
     return topicSet.patterns.map((pattern, patternIndex) => ({
       params: {
         topic: topicSet.topic,
