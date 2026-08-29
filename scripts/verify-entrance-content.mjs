@@ -41,6 +41,20 @@ const requiredTopicsByCourse = new Map([
       "chemistry-role",
     ]),
   ],
+  [
+    "biology-basic",
+    new Set(["biological-features", "human-regulation", "biodiversity-ecosystems"]),
+  ],
+  [
+    "biology",
+    new Set([
+      "evolution",
+      "life-processes-material",
+      "gene-expression-development",
+      "environmental-response",
+      "ecology-environment",
+    ]),
+  ],
 ]);
 const forbiddenOriginalFields = new Set([
   "sourceText",
