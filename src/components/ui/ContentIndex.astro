@@ -24,11 +24,7 @@ type Props = {
   density?: "normal" | "compact";
 };
 
-const {
-  items: _items,
-  variant: _variant = "rows",
-  density: _density = "normal",
-} = Astro.props;
+const { items: _items, variant: _variant = "rows", density: _density = "normal" } = Astro.props;
 ---
 
 <ol class:list={["index", `variant-${_variant}`, `density-${_density}`]}>
