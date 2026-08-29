@@ -1,0 +1,23 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import AdvancedPatternIndex from "../../../components/AdvancedPatternIndex.astro";
+import algebra from "../../../content/entrance/math1-algebra.json";
+import dataAnalysis from "../../../content/entrance/math1-data-analysis.json";
+import geometry from "../../../content/entrance/math1-geometry.json";
+import { math1Areas } from "../../../content/math1/catalog";
+
+export function getStaticPaths() {
+  const topicSets = [algebra, geometry, dataAnalysis];
+  return topicSets.map((topicSet) => ({
+    params: { topic: topicSet.topic },
+    props: {
+      topicSet,
+      areaTitle: math1Areas.find((area) => area.key === topicSet.topic)?.title ?? topicSet.title,
+    },
+  }));
+}
+
+const { topicSet: _topicSet, areaTitle: _areaTitle } = Astro.props;
+---
+
+<AdvancedPatternIndex topicSet={_topicSet} areaTitle={_areaTitle} />
