@@ -30,7 +30,9 @@ const { topicSet: _topicSet, areaTitle: _areaTitle } = Astro.props as Props;
 const _base = import.meta.env.BASE_URL;
 const _levelLabel = (level: string) => (level === "advanced" ? "発展" : "応用");
 const _patternSlug = (id: string) => id.replace(`math1-${_topicSet.topic}-pattern-`, "");
-const _applicationCount = _topicSet.patterns.filter((pattern) => pattern.level === "application").length;
+const _applicationCount = _topicSet.patterns.filter(
+  (pattern) => pattern.level === "application",
+).length;
 const _advancedCount = _topicSet.patterns.filter((pattern) => pattern.level === "advanced").length;
 ---
 
