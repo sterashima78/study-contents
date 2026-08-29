@@ -1,0 +1,59 @@
+---
+import type { EnglishCourseInfo } from "../content/english/course";
+import type { EnglishArea } from "../content/english/types";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "./ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "./ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
+
+type Props = {
+  area: EnglishArea;
+  course: EnglishCourseInfo;
+};
+
+const { area: _area, course: _course } = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
+const _lessonCount = _area.units.reduce((sum, unit) => sum + unit.lessons.length, 0);
+const _unitItems = _area.units.map((unit, index) => ({
+  marker: String(index + 1).padStart(2, "0"),
+  title: unit.title,
+  href: `${_areaHref}${unit.key}/`,
+  description: unit.description,
+  meta: `${unit.lessons.length}小教材`,
+}));
+---
+
+<StudyPage
+  title={`${_area.title} | ${_course.title}`}
+  description={`高校英語「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`}
+>
+  <BreadcrumbTrail items={[{ label: _course.title, href: _courseHomeHref }, { label: _area.title }]} />
+  <ContentHero kicker={_course.kicker} title={_area.title} description={_area.description} />
+
+  <ContentSection labelledby="units-title">
+    <SectionHeading
+      label="UNITS"
+      title="学習する単元"
+      id="units-title"
+      description={`${_lessonCount}個の小教材を、単元ごとに順番に学習します。`}
+    />
+    <ContentIndex items={_unitItems} />
+  </ContentSection>
+
+  <PageNavigation
+    previous={{ label: "← 英語の目次へ", href: _courseHomeHref }}
+    next={{ label: "最初の単元から始める →", href: `${_areaHref}${_area.units[0].key}/` }}
+  />
+</StudyPage>

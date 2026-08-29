@@ -1,0 +1,137 @@
+---
+import type { EnglishCourseInfo } from "../content/english/course";
+import type { EnglishArea, EnglishLesson as EnglishLessonData, EnglishUnit } from "../content/english/types";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ConceptCard from "./ui/ConceptCard.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import GuidedPractice from "./ui/GuidedPractice.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "./ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SummaryPoints from "./ui/SummaryPoints.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import WorkedExample from "./ui/WorkedExample.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import EnglishPassage from "./EnglishPassage.astro";
+
+type Props = {
+  area: EnglishArea;
+  unit: EnglishUnit;
+  lesson: EnglishLessonData;
+  course: EnglishCourseInfo;
+};
+
+const { area: _area, unit: _unit, lesson: _lesson, course: _course } = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _lessonIndex = _unit.lessons.findIndex((item) => item.key === _lesson.key);
+const _previousLesson = _lessonIndex > 0 ? _unit.lessons[_lessonIndex - 1] : undefined;
+const _nextLesson = _lessonIndex < _unit.lessons.length - 1 ? _unit.lessons[_lessonIndex + 1] : undefined;
+const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
+const _unitHref = `${_areaHref}${_unit.key}/`;
+const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+---
+
+<StudyPage
+  title={`${_lesson.title} | ${_unit.title} | ${_course.title}`}
+  description={`高校英語「${_lesson.title}」の教材。要点、オリジナル英文、分析、直後の練習、まとめで学習します。`}
+>
+  <BreadcrumbTrail
+    items={[
+      { label: _course.title, href: _courseHomeHref },
+      { label: _area.title, href: _areaHref },
+      { label: _unit.title, href: _unitHref },
+      { label: _lesson.title },
+    ]}
+  />
+  <ContentHero
+    kicker={`${_area.title} · ${String(_lessonIndex + 1).padStart(2, "0")}`}
+    title={_lesson.title}
+    description={_lesson.description}
+    compact
+  />
+
+  <ContentSection labelledby="goal-title" compact>
+    <SectionHeading label="GOAL" title="このページでできるようになること" id="goal-title" />
+    <SummaryPoints items={_lesson.goals} />
+  </ContentSection>
+
+  <ContentSection labelledby="rule-title">
+    <SectionHeading
+      label="POINT"
+      title="読み方・使い方の要点"
+      id="rule-title"
+      description="形の暗記ではなく、英文のどこを手掛かりに判断するかを確認します。"
+    />
+    <div class="concept-list">
+      {_lesson.concepts.map((concept) => <ConceptCard {...concept} />)}
+    </div>
+  </ContentSection>
+
+  {
+    _lesson.passage && (
+      <ContentSection labelledby="passage-title">
+        <SectionHeading
+          label="PASSAGE"
+          title="英文を読む"
+          id="passage-title"
+          description="掲載英文はこの教材向けに作成したオリジナルです。"
+        />
+        <EnglishPassage title={_lesson.passage.title} paragraphs={_lesson.passage.paragraphs} />
+      </ContentSection>
+    )
+  }
+
+  <ContentSection labelledby="example-title">
+    <SectionHeading label="EXAMPLE" title={_lesson.example.title} id="example-title" />
+    <WorkedExample
+      problem={_lesson.example.problem}
+      steps={_lesson.example.steps.map((step) => ({ expression: step.expression, note: step.note }))}
+    />
+    <GuidedPractice
+      title={_lesson.practice.title}
+      problem={_lesson.practice.problem}
+      steps={_lesson.practice.steps}
+      hint={_lesson.practice.hint}
+      position="例題の直後に確認"
+      successMessage="すべて正解です。このページの判断手順を再現できています。"
+      errorMessage="赤く表示された段階を、要点と例題に戻って確認してください。"
+    />
+  </ContentSection>
+
+  <ContentSection labelledby="summary-title" compact>
+    <SectionHeading label="SUMMARY" title="このページのポイント" id="summary-title" />
+    <SummaryPoints items={_lesson.summary} />
+  </ContentSection>
+
+  <PageNavigation
+    previous={
+      _previousLesson
+        ? { label: `← ${_previousLesson.title}`, href: _lessonHref(_previousLesson.key) }
+        : { label: `← ${_unit.title}の目次`, href: _unitHref }
+    }
+    center={{ label: `${_unit.title}の小単元一覧`, href: _unitHref }}
+    next={
+      _nextLesson
+        ? { label: `${_nextLesson.title} →`, href: _lessonHref(_nextLesson.key) }
+        : { label: `${_area.title}の目次へ →`, href: _areaHref }
+    }
+  />
+</StudyPage>
+
+<style>
+  .concept-list {
+    display: grid;
+    gap: 1rem;
+  }
+</style>

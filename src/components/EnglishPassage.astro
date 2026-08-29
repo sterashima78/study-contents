@@ -1,0 +1,52 @@
+---
+type Props = {
+  title: string;
+  paragraphs: string[];
+};
+
+const { title: _title, paragraphs: _paragraphs } = Astro.props as Props;
+---
+
+<article class="english-passage" lang="en">
+  <p class="label">ORIGINAL ENGLISH</p>
+  <h3>{_title}</h3>
+  <div class="body">
+    {_paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  </div>
+</article>
+
+<style>
+  .english-passage {
+    padding: clamp(1.4rem, 4vw, 2.2rem);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 1.15rem;
+    background: rgb(255 255 255 / 82%);
+  }
+
+  .label {
+    margin: 0 0 0.7rem;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+  }
+
+  h3 {
+    margin: 0 0 1rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .body {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .body p {
+    margin: 0;
+    color: var(--color-text);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+    line-height: 1.9;
+  }
+</style>
