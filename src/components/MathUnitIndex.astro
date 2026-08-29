@@ -1,4 +1,5 @@
 ---
+import { type MathCourseInfo, math1Course } from "../content/math-courses";
 import type { MathArea, MathUnit } from "../content/math1/types";
 import "../styles/global.css";
 import "../styles/lesson.css";
@@ -6,11 +7,13 @@ import "../styles/lesson.css";
 type Props = {
   area: MathArea;
   unit: MathUnit;
+  course?: MathCourseInfo;
 };
 
-const { area: _area, unit: _unit } = Astro.props;
+const { area: _area, unit: _unit, course: _course = math1Course } = Astro.props;
 const _base = import.meta.env.BASE_URL;
-const _areaHref = `${_base}math1/${_area.key}/`;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
 const _exerciseHref = `${_unitHref}exercise/`;
@@ -23,14 +26,14 @@ const _exerciseHref = `${_unitHref}exercise/`;
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content={`高校数学I「${_unit.title}」の小単元一覧。1ページ1技能で学習し、最後に単元末演習で弱点を確認します。`}
+      content={`高校${_course.title}「${_unit.title}」の小単元一覧。1ページ1技能で学習し、最後に単元末演習で弱点を確認します。`}
     />
-    <title>{_unit.title} | {_area.title} | 数学I</title>
+    <title>{_unit.title} | {_area.title} | {_course.title}</title>
   </head>
   <body>
     <main class="lesson-shell">
       <nav class="breadcrumb" aria-label="パンくずリスト">
-        <a href={_base}>数学I</a>
+        <a href={_courseHomeHref}>{_course.title}</a>
         <span aria-hidden="true">/</span>
         <a href={_areaHref}>{_area.title}</a>
         <span aria-hidden="true">/</span>
@@ -99,7 +102,7 @@ const _exerciseHref = `${_unitHref}exercise/`;
       </section>
 
       <nav class="lesson-navigation" aria-label="教材ナビゲーション">
-        <a href={_base}>← 数学Iの目次へ</a>
+        <a href={_courseHomeHref}>← {_course.title}の目次へ</a>
         <a href={_lessonHref(_unit.lessons[0].key)}>最初の小単元から始める →</a>
       </nav>
     </main>

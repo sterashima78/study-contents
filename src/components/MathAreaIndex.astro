@@ -1,15 +1,18 @@
 ---
+import { type MathCourseInfo, math1Course } from "../content/math-courses";
 import type { MathArea } from "../content/math1/types";
 import "../styles/global.css";
 import "../styles/lesson.css";
 
 type Props = {
   area: MathArea;
+  course?: MathCourseInfo;
 };
 
-const { area: _area } = Astro.props;
+const { area: _area, course: _course = math1Course } = Astro.props;
 const _base = import.meta.env.BASE_URL;
-const _areaHref = `${_base}math1/${_area.key}/`;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _lessonCount = _area.units.reduce((sum, unit) => sum + unit.lessons.length, 0);
 ---
 
@@ -18,19 +21,22 @@ const _lessonCount = _area.units.reduce((sum, unit) => sum + unit.lessons.length
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content={`高校数学I「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`} />
-    <title>{_area.title} | 数学I</title>
+    <meta
+      name="description"
+      content={`高校${_course.title}「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`}
+    />
+    <title>{_area.title} | {_course.title}</title>
   </head>
   <body>
     <main class="lesson-shell">
       <nav class="breadcrumb" aria-label="パンくずリスト">
-        <a href={_base}>数学I</a>
+        <a href={_courseHomeHref}>{_course.title}</a>
         <span aria-hidden="true">/</span>
         <span aria-current="page">{_area.title}</span>
       </nav>
 
       <header class="lesson-hero unit-hero">
-        <p class="lesson-kicker">MATHEMATICS I</p>
+        <p class="lesson-kicker">{_course.kicker}</p>
         <h1>{_area.title}</h1>
         <p>{_area.description}</p>
       </header>
@@ -63,7 +69,7 @@ const _lessonCount = _area.units.reduce((sum, unit) => sum + unit.lessons.length
       </section>
 
       <nav class="lesson-navigation" aria-label="教材ナビゲーション">
-        <a href={_base}>← 数学Iの目次へ</a>
+        <a href={_courseHomeHref}>← {_course.title}の目次へ</a>
         <a href={`${_areaHref}${_area.units[0].key}/`}>最初の単元から始める →</a>
       </nav>
     </main>

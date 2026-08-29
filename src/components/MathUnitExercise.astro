@@ -1,4 +1,5 @@
 ---
+import { type MathCourseInfo, math1Course } from "../content/math-courses";
 import type { MathArea, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
@@ -8,11 +9,13 @@ import "../styles/lesson.css";
 type Props = {
   area: MathArea;
   unit: MathUnit;
+  course?: MathCourseInfo;
 };
 
-const { area: _area, unit: _unit } = Astro.props;
+const { area: _area, unit: _unit, course: _course = math1Course } = Astro.props;
 const _base = import.meta.env.BASE_URL;
-const _areaHref = `${_base}math1/${_area.key}/`;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 ---
 
@@ -23,14 +26,14 @@ const _unitHref = `${_areaHref}${_unit.key}/`;
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content={`高校数学I「${_unit.title}」の単元末演習。基礎・応用・難問を自動採点し、小単元ごとの弱点を確認します。`}
+      content={`高校${_course.title}「${_unit.title}」の単元末演習。基礎・応用・難問を自動採点し、小単元ごとの弱点を確認します。`}
     />
-    <title>単元末演習 | {_unit.title} | 数学I</title>
+    <title>単元末演習 | {_unit.title} | {_course.title}</title>
   </head>
   <body>
     <main class="lesson-shell">
       <nav class="breadcrumb" aria-label="パンくずリスト">
-        <a href={_base}>数学I</a>
+        <a href={_courseHomeHref}>{_course.title}</a>
         <span aria-hidden="true">/</span>
         <a href={_areaHref}>{_area.title}</a>
         <span aria-hidden="true">/</span>
@@ -47,11 +50,11 @@ const _unitHref = `${_areaHref}${_unit.key}/`;
         </p>
       </header>
 
-      <ExerciseSet mode="unit" areaKey={_area.key} unitKey={_unit.key} />
+      <ExerciseSet mode="unit" courseKey={_course.key} areaKey={_area.key} unitKey={_unit.key} />
 
       <nav class="lesson-navigation" aria-label="教材ナビゲーション">
         <a href={_unitHref}>← {_unit.title}の小単元一覧</a>
-        <a href={_base}>数学Iの目次へ →</a>
+        <a href={_courseHomeHref}>{_course.title}の目次へ →</a>
       </nav>
     </main>
   </body>
