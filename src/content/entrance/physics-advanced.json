@@ -1,0 +1,202 @@
+{
+  "copyrightPolicyVersion": 2,
+  "topicSets": [
+    {
+      "course": "physics",
+      "topic": "motion",
+      "areaTitle": "様々な運動",
+      "title": "様々な運動 発展",
+      "description": "水平投射を水平・鉛直成分に分けて到達時間と水平距離を求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "physics-motion-pattern-horizontal-projectile",
+          "title": "水平投射を独立な2方向の運動へ分解する",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["水平投射", "自由落下", "ベクトル分解"],
+          "thinking": {
+            "title": "落下時間は鉛直運動、水平距離はその時間を水平運動へ戻して求める",
+            "body": ["空気抵抗を無視した水平投射では、水平方向は等速運動、鉛直方向は初速度0の自由落下です。まず高さから落下時間を求め、その時間をx=v₀tへ使います。"],
+            "checkpoints": ["水平と鉛直を別々に式にする", "h=(1/2)gt²から時間を求める", "同じ時間を水平距離x=v₀tへ使う"]
+          },
+          "example": {
+            "statement": ["高さ20 mの位置から物体を水平に10 m/sで投げる。g=10 m/s²、空気抵抗は無視する。"],
+            "question": "地面へ達するまでの時間と水平到達距離を求めよ。",
+            "solution": {
+              "strategy": "鉛直方向から時間を求めて水平運動へ戻す。",
+              "steps": ["20=(1/2)·10·t²よりt²=4、t=2 s。", "水平方向は10 m/sの等速運動。", "水平距離は10×2=20 m。"],
+              "answer": "2 s、20 m。"
+            }
+          },
+          "guidedPractice": {
+            "title": "時間を共通変数として2方向をつなぐ",
+            "statement": ["高さ45 mから8.0 m/sで水平投射する。g=10 m/s²。"],
+            "question": "落下時間と水平距離を求めよう。",
+            "steps": [
+              {"prompt": "落下時間を求めてください。", "answers": ["3", "3s", "3 s"]},
+              {"prompt": "水平距離を求めてください。", "answers": ["24", "24m", "24 m"]}
+            ],
+            "hint": "45=5t²よりt=3です。"
+          },
+          "practice": {
+            "statement": ["高さ5.0 mから12 m/sで水平投射する。g=10 m/s²。"],
+            "question": "落下時間と水平距離を求めよ。",
+            "solution": {
+              "steps": ["5.0=5t²よりt=1.0 s。", "水平距離は12×1.0=12 m。"],
+              "answer": "1.0 s、12 m。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "physics",
+      "topic": "waves",
+      "areaTitle": "波",
+      "title": "波 発展",
+      "description": "動く音源によるドップラー効果を、分母の符号から判断する発展パターンです。",
+      "patterns": [
+        {
+          "id": "physics-waves-pattern-doppler-source",
+          "title": "動く音源が作る波長の変化から観測振動数を求める",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["ドップラー効果", "音速", "振動数"],
+          "thinking": {
+            "title": "音源が近づくと前方の波長が短くなり、観測振動数が高くなる",
+            "body": ["観測者が静止し音源だけが速さvₛで動く場合、近づくときの前方波長は(v−vₛ)/fです。したがって観測振動数はf'=v/(v−vₛ)·fとなります。遠ざかるときは分母がv+vₛです。"],
+            "checkpoints": ["音源が近づくか遠ざかるか確認する", "近づくならv−vₛ、遠ざかるならv+vₛ", "結果が高くなる/低くなる直感とも照合する"]
+          },
+          "example": {
+            "statement": ["振動数500 Hzの音源が、静止した観測者へ20 m/sで近づく。音速340 m/s。"],
+            "question": "観測される振動数を求めよ。",
+            "solution": {
+              "strategy": "近づく音源なのでf'=340/(340−20)×500を使う。",
+              "steps": ["分母は340−20=320 m/s。", "f'=340/320×500。", "=531.25 Hz。"],
+              "answer": "約531 Hz。"
+            }
+          },
+          "guidedPractice": {
+            "title": "接近時の分母を作る",
+            "statement": ["600 Hzの音源が40 m/sで観測者へ近づく。音速340 m/s。"],
+            "question": "観測振動数を求めよう。",
+            "steps": [
+              {"prompt": "分母v−vₛを求めてください。", "answers": ["300"]},
+              {"prompt": "観測振動数を求めてください。", "answers": ["680", "680hz", "680 Hz"]}
+            ],
+            "hint": "340/300×600=680です。"
+          },
+          "practice": {
+            "statement": ["720 Hzの音源が静止観測者から20 m/sで遠ざかる。音速340 m/s。"],
+            "question": "観測振動数を求めよ。",
+            "solution": {
+              "steps": ["遠ざかるので分母は340+20=360。", "f'=340/360×720。", "=680 Hz。"],
+              "answer": "680 Hz。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "physics",
+      "topic": "electricity-magnetism",
+      "areaTitle": "電気と磁気",
+      "title": "電気と磁気 発展",
+      "description": "磁界中の荷電粒子について、ローレンツ力を向心力へ結び付ける発展パターンです。",
+      "patterns": [
+        {
+          "id": "physics-electricity-magnetism-pattern-charged-particle-radius",
+          "title": "磁気力を向心力として円運動半径を求める",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["ローレンツ力", "円運動", "磁界"],
+          "thinking": {
+            "title": "速度と磁界が垂直なら磁気力は速さを変えず向きだけを変える",
+            "body": ["荷電粒子が磁界へ垂直に入ると、磁気力|q|vBが常に速度へ垂直に働きます。これが向心力mv²/rとなるため、r=mv/(|q|B)を得られます。"],
+            "checkpoints": ["速度と磁界が垂直か確認する", "|q|vB=mv²/rを立てる", "半径rについて整理する"]
+          },
+          "example": {
+            "statement": ["質量2.0×10⁻⁶ kg、電荷の大きさ4.0×10⁻³ Cの粒子が6.0 m/sで0.50 Tの一様磁界へ垂直に入る。"],
+            "question": "円運動の半径を求めよ。",
+            "solution": {
+              "strategy": "r=mv/(|q|B)へ直接代入する。",
+              "steps": ["mv=2.0×10⁻⁶×6.0=1.2×10⁻⁵。", "|q|B=4.0×10⁻³×0.50=2.0×10⁻³。", "r=1.2×10⁻⁵/(2.0×10⁻³)=6.0×10⁻³ m。"],
+              "answer": "6.0×10⁻³ m。"
+            }
+          },
+          "guidedPractice": {
+            "title": "質量・速度・電荷・磁束密度を整理する",
+            "statement": ["m=1.0×10⁻⁶ kg、|q|=2.0×10⁻³ C、v=4.0 m/s、B=0.50 T。"],
+            "question": "半径を求めよう。",
+            "steps": [
+              {"prompt": "mvを求めてください。", "answers": ["4e-6", "4×10^-6", "4.0×10⁻⁶"]},
+              {"prompt": "|q|Bを求めてください。", "answers": ["0.001", "1e-3", "1.0×10⁻³"]},
+              {"prompt": "半径を求めてください。", "answers": ["0.004", "4e-3", "4.0×10⁻³"]}
+            ],
+            "hint": "r=(4×10⁻⁶)/(1×10⁻³)です。"
+          },
+          "practice": {
+            "statement": ["m=3.0×10⁻⁶ kg、|q|=2.0×10⁻³ C、v=5.0 m/s、B=0.75 T。"],
+            "question": "円運動の半径を求めよ。",
+            "solution": {
+              "steps": ["mv=1.5×10⁻⁵。", "|q|B=1.5×10⁻³。", "r=1.0×10⁻² m。"],
+              "answer": "1.0×10⁻² m。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "physics",
+      "topic": "atoms",
+      "areaTitle": "原子",
+      "title": "原子 発展",
+      "description": "半減期を経過回数へ変換して放射能の減衰を求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "physics-atoms-pattern-half-life",
+          "title": "経過時間を半減期の回数に直して残存量を求める",
+          "level": "advanced",
+          "estimatedMinutes": 16,
+          "skills": ["半減期", "指数的減衰", "放射能"],
+          "thinking": {
+            "title": "半減期を1回経るごとに量が1/2になる",
+            "body": ["半減期T、経過時間tなら、半減回数n=t/Tを先に求めます。初期量A₀に(1/2)^nを掛ければ残存量や放射能を求められます。"],
+            "checkpoints": ["経過時間÷半減期で回数を求める", "(1/2)^nを掛ける", "単位を初期量とそろえる"]
+          },
+          "example": {
+            "statement": ["初めの放射能が800 Bq、半減期が3.0 hの放射性物質がある。"],
+            "question": "9.0 h後の放射能を求めよ。",
+            "solution": {
+              "strategy": "9/3=3回半減すると考える。",
+              "steps": ["半減回数は3回。", "800×(1/2)³=800/8。", "=100 Bq。"],
+              "answer": "100 Bq。"
+            }
+          },
+          "guidedPractice": {
+            "title": "半減回数から残存量を計算する",
+            "statement": ["初期640 Bq、半減期2.0 h。6.0 h後を考える。"],
+            "question": "半減回数と放射能を求めよう。",
+            "steps": [
+              {"prompt": "半減回数を求めてください。", "answers": ["3"]},
+              {"prompt": "放射能を求めてください。", "answers": ["80", "80bq", "80 Bq"]}
+            ],
+            "hint": "640→320→160→80です。"
+          },
+          "practice": {
+            "statement": ["初期960 Bq、半減期4.0 hの物質を12 h置く。"],
+            "question": "12 h後の放射能を求めよ。",
+            "solution": {
+              "steps": ["12/4=3回半減。", "960×(1/2)³=120。"],
+              "answer": "120 Bq。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    }
+  ]
+}
