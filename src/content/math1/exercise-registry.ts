@@ -3,6 +3,10 @@ import {
   generateUnitExercises as generateMath2UnitExercises,
 } from "../math2/exercise-registry";
 import {
+  generateLessonExercises as generateMathBLessonExercises,
+  generateUnitExercises as generateMathBUnitExercises,
+} from "../mathb/exercise-registry";
+import {
   type ExtraExerciseAnswerMode,
   generateAdditionalLessonExercises,
   generateAdditionalUnitExercises,
@@ -23,6 +27,18 @@ const algebraTextAnswerLessonKeys = new Set([
   "necessary-sufficient",
 ]);
 
+const mathBUnitKeys = new Set([
+  "sequence-basics",
+  "various-sequences",
+  "recurrence-relations",
+  "mathematical-induction",
+  "probability-distributions",
+  "normal-distributions",
+  "sampling-inference",
+  "modeling-process",
+  "social-problem-solving",
+]);
+
 const addAlgebraAnswerMode = (exercise: AlgebraGeneratedExercise): GeneratedExercise => ({
   ...exercise,
   answerMode:
@@ -33,6 +49,7 @@ const addAlgebraAnswerMode = (exercise: AlgebraGeneratedExercise): GeneratedExer
 });
 
 export const generateLessonExercises = (unitKey: string, lessonKey: string, count = 3) => {
+  if (mathBUnitKeys.has(unitKey)) return generateMathBLessonExercises(unitKey, lessonKey, count);
   const algebra = generateAlgebraLessonExercises(unitKey, lessonKey, count);
   if (algebra.length > 0) return algebra.map(addAlgebraAnswerMode);
   const additional = generateAdditionalLessonExercises(unitKey, lessonKey, count);
@@ -41,6 +58,7 @@ export const generateLessonExercises = (unitKey: string, lessonKey: string, coun
 };
 
 export const generateUnitExercises = (unitKey: string) => {
+  if (mathBUnitKeys.has(unitKey)) return generateMathBUnitExercises(unitKey);
   const algebra = generateAlgebraUnitExercises(unitKey);
   if (algebra.length > 0) return algebra.map(addAlgebraAnswerMode);
   const additional = generateAdditionalUnitExercises(unitKey);

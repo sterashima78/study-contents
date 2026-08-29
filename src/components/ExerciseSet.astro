@@ -3,7 +3,7 @@ import "../styles/exercise.css";
 
 type Props = {
   mode: "lesson" | "unit";
-  courseKey?: "math1" | "matha";
+  courseKey?: "math1" | "matha" | "mathc";
   areaKey: string;
   unitKey: string;
   lessonKey?: string;
@@ -82,6 +82,10 @@ const _isUnit = _mode === "unit";
     generateLessonExercises as generateMathALessonExercises,
     generateUnitExercises as generateMathAUnitExercises,
   } from "../content/matha/exercise-registry";
+  import {
+    generateLessonExercises as generateMathCLessonExercises,
+    generateUnitExercises as generateMathCUnitExercises,
+  } from "../content/mathc/exercise-registry";
 
   MathfieldElement.soundsDirectory = null;
 
@@ -205,6 +209,13 @@ const _isUnit = _mode === "unit";
           ? generateMathAUnitExercises(unitKey)
           : lessonKey
             ? generateMathALessonExercises(unitKey, lessonKey)
+            : [];
+      }
+      if (courseKey === "mathc") {
+        return mode === "unit"
+          ? generateMathCUnitExercises(unitKey)
+          : lessonKey
+            ? generateMathCLessonExercises(unitKey, lessonKey)
             : [];
       }
       return mode === "unit"
