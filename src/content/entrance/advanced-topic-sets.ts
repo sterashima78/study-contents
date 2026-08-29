@@ -10,15 +10,15 @@ import {
   physicsBasicsCourse,
   physicsCourse,
 } from "../math-courses";
-import chemistryBasic from "./chemistry-basic-advanced.json";
 import chemistry from "./chemistry-advanced.json";
+import chemistryBasic from "./chemistry-basic-advanced.json";
 import math2 from "./math2-advanced.json";
 import math3 from "./math3-advanced.json";
 import matha from "./matha-advanced.json";
 import mathb from "./mathb-advanced.json";
 import mathc from "./mathc-advanced.json";
-import physicsBasics from "./physics-basics-advanced.json";
 import physics from "./physics-advanced.json";
+import physicsBasics from "./physics-basics-advanced.json";
 
 export type AdvancedPattern = {
   id: string;
@@ -101,7 +101,9 @@ const courseByKey = new Map<MathCourseInfo["key"], MathCourseInfo>([
 ]);
 
 export function findAdvancedTopicSet(course: MathCourseInfo["key"], topic: string) {
-  return advancedTopicSets.find((topicSet) => topicSet.course === course && topicSet.topic === topic);
+  return advancedTopicSets.find(
+    (topicSet) => topicSet.course === course && topicSet.topic === topic,
+  );
 }
 
 export function findAdvancedCourse(course: string) {
