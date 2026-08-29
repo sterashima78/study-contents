@@ -99,9 +99,7 @@ const generateDetermineQuadratic = (): GeneratedPractice => {
   const minimum = pick([-3, -2, -1, 0, 1] as const);
   const distance = pick([1, 2, 3] as const);
   const sampleValue = minimum + distance * distance;
-  const vertices = [sampleX - distance, sampleX + distance].sort(
-    (left, right) => left - right,
-  );
+  const vertices = [sampleX - distance, sampleX + distance].sort((left, right) => left - right);
 
   const functions = vertices.map((vertex) => {
     const b = -2 * vertex;
