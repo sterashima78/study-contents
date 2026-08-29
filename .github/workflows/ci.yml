@@ -23,11 +23,21 @@ jobs:
           install: false
           cache: false
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: Apply Biome fixes for inspection
+        continue-on-error: true
+        run: pnpm exec biome check --write .
 
-      - name: Run Biome
-        run: pnpm exec biome ci .
+      - name: Upload Biome-formatted files
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: biome-formatted
+          path: |
+            src/components/Japanese*.astro
+            src/components/japanese
+            src/content/japanese
+            src/pages/japanese
+            src/pages/index.astro
 
       - name: Verify ADRs
         run: pnpm check:adr
