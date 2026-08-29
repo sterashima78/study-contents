@@ -1,0 +1,126 @@
+---
+import type { MathCourseInfo } from "../content/math-courses";
+import type { MathArea } from "../content/math1/types";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "./ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import LearningFlow from "./ui/LearningFlow.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageFooter from "./ui/PageFooter.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
+
+type AdvancedArea = {
+  topic: string;
+  title: string;
+  description: string;
+  patternCount: number;
+  applicationCount: number;
+  advancedCount: number;
+  generatorCount?: number;
+};
+
+type Props = {
+  course: MathCourseInfo;
+  areas: MathArea[];
+  description: string;
+  metaDescription: string;
+  footerDescription: string;
+  advancedAreas?: AdvancedArea[];
+};
+
+const {
+  course: _course,
+  areas: _areas,
+  description: _description,
+  metaDescription: _metaDescription,
+  footerDescription: _footerDescription,
+  advancedAreas: _advancedAreas,
+} = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const _areaItems = _areas.map((area, index) => {
+  const lessonCount = area.units.reduce((sum, unit) => sum + unit.lessons.length, 0);
+  return {
+    marker: String(index + 1).padStart(2, "0"),
+    title: area.title,
+    href: `${_base}${_course.routeBase}/${area.key}/`,
+    description: area.description,
+    links: area.units.map((unit) => ({
+      label: unit.title,
+      href: `${_base}${_course.routeBase}/${area.key}/${unit.key}/`,
+    })),
+    meta: `${lessonCount}小教材公開`,
+  };
+});
+const _totalLessonCount = _areas.reduce(
+  (sum, area) =>
+    sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
+  0,
+);
+const _advancedItems = _advancedAreas?.map((area, index) => ({
+  marker: String(index + 1).padStart(2, "0"),
+  title: `${area.title} 応用・発展`,
+  href: `${_base}${_course.routeBase}/entrance/${area.topic}/`,
+  description: area.description,
+  tags: [
+    `応用 ${area.applicationCount}パターン`,
+    `発展 ${area.advancedCount}パターン`,
+    ...(area.generatorCount ? [`問題生成 ${area.generatorCount}パターン対応`] : []),
+    "1パターン1ページ",
+  ],
+  meta: `${area.patternCount}パターン公開`,
+}));
+---
+
+<StudyPage
+  title={`${_course.title} | 学習コンテンツ`}
+  description={_metaDescription}
+  width="wide"
+>
+  <ContentHero
+    kicker={_course.kicker}
+    title={_course.title}
+    description={_description}
+    variant="display"
+  >
+    <LearningFlow
+      label="各小単元の学習の流れ"
+      steps={["考え方", "導出・根拠", "例題", "直後の練習", "3問確認", "まとめ"]}
+    />
+  </ContentHero>
+
+  <ContentSection labelledby="curriculum-title">
+    <SectionHeading
+      label="CONTENTS"
+      title={`学習する${_areas.length}つの領域`}
+      id="curriculum-title"
+      description={`全${_totalLessonCount}小教材。領域から単元へ進み、各ページを5〜10分程度で学習します。`}
+    />
+    <ContentIndex items={_areaItems} variant="grid" />
+  </ContentSection>
+
+  {
+    _advancedItems && _advancedItems.length > 0 && (
+      <ContentSection labelledby="application-title">
+        <SectionHeading
+          label="APPLICATION & ADVANCED"
+          title="応用・発展"
+          id="application-title"
+          description={`${_course.title}の各領域で、基礎技能を組み合わせ、問題文の条件から使う解法を選ぶ練習へ進みます。`}
+        />
+        <ContentIndex items={_advancedItems} variant="grid" />
+      </ContentSection>
+    )
+  }
+
+  <PageFooter
+    items={[`高校 ${_course.title}`, _footerDescription]}
+    homeHref={_base}
+  />
+</StudyPage>
