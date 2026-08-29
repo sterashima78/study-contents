@@ -1,6 +1,7 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import MathAreaIndex from "../../../components/MathAreaIndex.astro";
+import { findMath1AdvancedTopicSet } from "../../../content/entrance/math1-topic-sets";
 import { math1Areas } from "../../../content/math1/catalog";
 import type { MathArea } from "../../../content/math1/types";
 
@@ -16,6 +17,14 @@ type Props = {
 };
 
 const { area: _area } = Astro.props;
+const _base = import.meta.env.BASE_URL;
+const _advancedTopicSet = findMath1AdvancedTopicSet(_area.key);
+const _advanced = _advancedTopicSet
+  ? {
+      href: `${_base}math1/entrance/${_area.key}/`,
+      patternCount: _advancedTopicSet.patterns.length,
+    }
+  : undefined;
 ---
 
-<MathAreaIndex area={_area} />
+<MathAreaIndex area={_area} advanced={_advanced} />
