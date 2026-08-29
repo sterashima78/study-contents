@@ -8,9 +8,9 @@ import type {
   JapaneseUnit,
 } from "../../../../content/japanese/types";
 
-const basePath = import.meta.env.BASE_URL;
-
 export function getStaticPaths() {
+  const basePath = import.meta.env.BASE_URL;
+
   return japaneseAreas.flatMap((area) =>
     area.units.flatMap((unit) =>
       unit.lessons.map((lesson, index) => {
