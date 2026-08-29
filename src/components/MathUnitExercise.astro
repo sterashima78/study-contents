@@ -4,6 +4,8 @@ import type { MathArea, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SocialExerciseSet from "./SocialExerciseSet.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentHero from "./ui/ContentHero.astro";
@@ -23,6 +25,10 @@ const _base = import.meta.env.BASE_URL;
 const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
+const _socialCourseKey =
+  _course.key === "japanese-history" || _course.key === "world-history" || _course.key === "ethics"
+    ? _course.key
+    : undefined;
 ---
 
 <StudyPage
@@ -44,7 +50,18 @@ const _unitHref = `${_areaHref}${_unit.key}/`;
     compact
   />
 
-  <ExerciseSet mode="unit" courseKey={_course.key} areaKey={_area.key} unitKey={_unit.key} />
+  {
+    _socialCourseKey ? (
+      <SocialExerciseSet
+        mode="unit"
+        courseKey={_socialCourseKey}
+        areaKey={_area.key}
+        unitKey={_unit.key}
+      />
+    ) : (
+      <ExerciseSet mode="unit" courseKey={_course.key} areaKey={_area.key} unitKey={_unit.key} />
+    )
+  }
 
   <PageNavigation
     previous={{ label: `← ${_unit.title}の小単元一覧`, href: _unitHref }}

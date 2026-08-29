@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { worldHistoryAreas } from "../../content/world-history/catalog";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { worldHistoryCourse } from "../../content/math-courses";
+---
+
+<CourseHome
+  course={worldHistoryCourse}
+  areas={worldHistoryAreas}
+  description="世界各地域の歴史を、交流・比較・因果関係を通して古代から現代まで学びます。"
+  metaDescription="高校世界史の学習コンテンツ。古代文明から現代世界までを地域間の交流と比較から学べます。"
+  footerDescription="古代から現代までを、地域横断の比較・確認演習・単元末演習で学習できます。"
+/>

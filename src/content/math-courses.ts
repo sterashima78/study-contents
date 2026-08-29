@@ -11,7 +11,10 @@ export type MathCourseInfo = {
     | "physics-basics"
     | "physics"
     | "biology-basic"
-    | "biology";
+    | "biology"
+    | "japanese-history"
+    | "world-history"
+    | "ethics";
   title: string;
   kicker: string;
   routeBase: string;
@@ -112,4 +115,28 @@ export const biologyCourse: MathCourseInfo = {
   kicker: "BIOLOGY",
   routeBase: "biology",
   homePath: "biology/",
+};
+
+export const japaneseHistoryCourse: MathCourseInfo = {
+  key: "japanese-history",
+  title: "日本史",
+  kicker: "JAPANESE HISTORY",
+  routeBase: "japanese-history",
+  homePath: "japanese-history/",
+};
+
+export const worldHistoryCourse: MathCourseInfo = {
+  key: "world-history",
+  title: "世界史",
+  kicker: "WORLD HISTORY",
+  routeBase: "world-history",
+  homePath: "world-history/",
+};
+
+export const ethicsCourse: MathCourseInfo = {
+  key: "ethics",
+  title: "倫理",
+  kicker: "ETHICS",
+  routeBase: "ethics",
+  homePath: "ethics/",
 };
