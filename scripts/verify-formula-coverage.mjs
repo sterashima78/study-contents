@@ -5,10 +5,14 @@ const contentPaths = [
   "../src/content/math1/geometry.ts",
   "../src/content/math1/quadratic.ts",
   "../src/content/math1/data-analysis.ts",
+  "../src/content/matha/counting-probability.ts",
+  "../src/content/matha/geometry-properties.ts",
+  "../src/content/matha/human-activity.ts",
 ];
 const derivationPaths = [
   "../src/content/math1/formula-derivations.ts",
   "../src/content/math1/additional-formula-derivations.ts",
+  "../src/content/matha/formula-derivations.ts",
 ];
 
 const formulaExemptions = new Map([
@@ -24,6 +28,13 @@ const formulaExemptions = new Map([
   ["variance", "分散の定義"],
   ["standard-deviation", "標準偏差の定義"],
   ["covariance", "共分散の定義"],
+  ["probability-definition", "同様に確からしい場合における確率の定義"],
+  ["expected-value", "期待値の定義"],
+  ["independent-trials", "独立な試行を扱う際の積の基本法則"],
+  ["conditional-probability", "条件付き確率の定義"],
+  ["triangle-centers", "重心の位置を表す基本定理をこの小単元の出発点として扱う"],
+  ["ceva-menelaus", "チェバ・メネラウスの定理を辺の比を扱う小単元の出発点として扱う"],
+  ["polyhedra-euler", "オイラーの多面体定理を凸多面体を扱う小単元の出発点として扱う"],
 ]);
 
 const lessonsWithFormulas = new Set();
