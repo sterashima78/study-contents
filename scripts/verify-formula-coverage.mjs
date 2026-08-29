@@ -17,6 +17,9 @@ const contentPaths = [
   "../src/content/mathb/statistical-inference.ts",
   "../src/content/mathb/social-life.ts",
   "../src/content/mathc/catalog.ts",
+  "../src/content/math3/limits.ts",
+  "../src/content/math3/differentiation.ts",
+  "../src/content/math3/integration.ts",
   "../src/content/physics-basics/catalog.ts",
 ];
 const derivationPaths = [
@@ -26,6 +29,7 @@ const derivationPaths = [
   "../src/content/math2/formula-derivations.ts",
   "../src/content/mathb/formula-derivations.ts",
   "../src/content/mathc/formula-derivations.ts",
+  "../src/content/math3/formula-derivations.ts",
   "../src/content/physics-basics/formula-derivations.ts",
 ];
 
@@ -58,6 +62,10 @@ const formulaExemptions = new Map([
   ["normal-distribution", "正規分布N(μ,σ²)の記法の定義"],
   ["hypothesis-testing", "有意水準による基本的な検定判断ルール"],
   ["evaluate-model", "誤差と相対誤差の定義"],
+  ["sequence-limits", "数列の極限記号と収束の定義"],
+  ["composite-inverse-functions", "合成関数と逆関数の定義"],
+  ["function-limits-continuity", "関数の連続性の定義"],
+  ["motion", "位置・速度・加速度の定義"],
   ["force-diagrams", "重力W=mgは重力加速度の定義と運動法則を前提にする基本関係"],
   ["force-equilibrium", "ΣF=0は加速度0の場合の運動法則を表す基本条件"],
   ["newton-law", "ΣF=maは実験に基づく運動の基本法則"],
