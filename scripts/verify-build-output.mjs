@@ -4,7 +4,11 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: ["学習する4つの領域", "全55小教材", "数学Aの教材へ"],
+    markers: ["学習する科目", "数学I", "数学A", "科目の目次を見る"],
+  },
+  {
+    path: new URL("../dist/math1/index.html", import.meta.url),
+    markers: ["数学I", "学習する4つの領域", "全55小教材", "科目一覧へ"],
   },
   {
     path: new URL(
@@ -43,7 +47,7 @@ const checks = [
   },
   {
     path: new URL("../dist/matha/index.html", import.meta.url),
-    markers: ["数学A", "学習する3つの領域", "全23小教材"],
+    markers: ["数学A", "学習する3つの領域", "全23小教材", "科目一覧へ"],
   },
   {
     path: new URL(
@@ -90,4 +94,4 @@ for (const check of checks) {
   }
 }
 
-console.log("Generated HTML rendering checks passed for Math I and Math A.");
+console.log("Generated HTML rendering checks passed for the course index, Math I, and Math A.");
