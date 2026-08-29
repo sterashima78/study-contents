@@ -1,0 +1,255 @@
+{
+  "copyrightPolicyVersion": 2,
+  "topicSets": [
+    {
+      "course": "chemistry",
+      "topic": "states-equilibrium",
+      "areaTitle": "物質の状態と平衡",
+      "title": "物質の状態と平衡 発展",
+      "description": "気体の状態変化を、圧力・体積・絶対温度の関係から一続きに追う発展パターンです。",
+      "patterns": [
+        {
+          "id": "chemistry-states-equilibrium-pattern-gas-state-change",
+          "title": "気体の状態変化を比で追う",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["気体の状態方程式", "絶対温度", "状態変化"],
+          "thinking": {
+            "title": "同じ物質量なら PV/T が一定になる",
+            "body": ["理想気体では PV=nRT です。同じ気体で物質量nが変わらない2状態を比べると、P₁V₁/T₁=P₂V₂/T₂ としてRやnを消せます。", "温度はセルシウス温度のまま比べず、必ず絶対温度Kへ直します。体積変化と温度変化が同時に起きるときは、どちらが圧力を増減させるかも確認します。"],
+            "checkpoints": ["2状態で物質量が一定か確認する", "温度をKでそろえる", "P₁V₁/T₁=P₂V₂/T₂ に代入する"]
+          },
+          "example": {
+            "statement": ["100 kPa、2.0 L、300 Kの理想気体を、物質量を変えずに450 Kまで加熱し、体積を1.5 Lにした。"],
+            "question": "最終圧力を求めよ。",
+            "solution": {
+              "strategy": "同じ気体なので PV/T の比を使い、体積の減少と温度の上昇を同時に反映する。",
+              "steps": ["P₂=P₁×(V₁/V₂)×(T₂/T₁)。", "=100×(2.0/1.5)×(450/300)。", "=200 kPa。"],
+              "answer": "200 kPa。"
+            }
+          },
+          "guidedPractice": {
+            "title": "比の式を3段階で組み立てる",
+            "statement": ["120 kPa、3.0 L、300 Kの気体を、400 K、2.0 Lに変化させる。"],
+            "question": "最終圧力を順に求めよう。",
+            "steps": [
+              {"prompt": "P₂/P₁ を V と T の比で表してください。", "answers": ["(3.0/2.0)*(400/300)", "(3/2)*(4/3)", "2"]},
+              {"prompt": "P₂/P₁ の値を求めてください。", "answers": ["2"]},
+              {"prompt": "最終圧力を求めてください。", "answers": ["240kPa", "240 kPa", "240"]}
+            ],
+            "hint": "圧力は体積が小さくなると増え、絶対温度が上がっても増えます。"
+          },
+          "practice": {
+            "statement": ["90 kPa、4.0 L、300 Kの気体を、物質量一定のまま360 K、3.0 Lにした。"],
+            "question": "最終圧力を求めよ。",
+            "solution": {
+              "steps": ["P₂=90×(4.0/3.0)×(360/300)。", "=90×(4/3)×1.2=144 kPa。"],
+              "answer": "144 kPa。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "chemistry",
+      "topic": "changes-equilibrium",
+      "areaTitle": "物質の変化と平衡",
+      "title": "物質の変化と平衡 発展",
+      "description": "反応量表を使って平衡濃度を整理し、平衡定数までつなげる発展パターンです。",
+      "patterns": [
+        {
+          "id": "chemistry-changes-equilibrium-pattern-equilibrium-table",
+          "title": "反応量表から平衡定数を求める",
+          "level": "advanced",
+          "estimatedMinutes": 20,
+          "skills": ["化学平衡", "平衡定数", "反応量表"],
+          "thinking": {
+            "title": "係数比で濃度変化をそろえてからKへ代入する",
+            "body": ["平衡問題では、初めの濃度・変化量・平衡濃度を表にすると、複数成分の増減を係数比で一度に管理できます。", "平衡定数Kcへ入れるのは平衡時の濃度です。反応式の係数が、そのまま濃度の指数になる点も確認します。"],
+            "checkpoints": ["反応式の係数比で変化量を置く", "平衡濃度をすべて求める", "平衡濃度だけをKcへ代入する"]
+          },
+          "example": {
+            "statement": ["反応 H₂ + I₂ ⇄ 2HI を考える。初濃度を [H₂]=1.0 mol/L、[I₂]=1.0 mol/L、[HI]=0 とし、平衡時に [H₂]=0.40 mol/L だった。"],
+            "question": "Kc=[HI]²/([H₂][I₂]) を求めよ。",
+            "solution": {
+              "strategy": "H₂が0.60 mol/L減ったので、係数比1:1:2からI₂とHIの変化を求める。",
+              "steps": ["H₂は0.60減少したので、I₂も0.60減少し [I₂]=0.40。", "HIは2×0.60=1.20増加し [HI]=1.20。", "Kc=1.20²/(0.40×0.40)=1.44/0.16=9.0。"],
+              "answer": "Kc=9.0。"
+            }
+          },
+          "guidedPractice": {
+            "title": "平衡濃度を順に埋める",
+            "statement": ["A + B ⇄ 2C。初濃度は[A]=0.80、[B]=0.80、[C]=0 mol/L。平衡時[A]=0.50 mol/L。"],
+            "question": "Kc=[C]²/([A][B]) を求めよう。",
+            "steps": [
+              {"prompt": "平衡時[B]を求めてください。", "answers": ["0.50", "0.5"]},
+              {"prompt": "平衡時[C]を求めてください。", "answers": ["0.60", "0.6"]},
+              {"prompt": "Kcを求めてください。", "answers": ["1.44", "36/25"]}
+            ],
+            "hint": "Aが0.30減ればBも0.30減り、Cは0.60増えます。"
+          },
+          "practice": {
+            "statement": ["A + B ⇄ 2C。初濃度[A]=1.2、[B]=1.2、[C]=0 mol/Lで、平衡時[A]=0.60 mol/Lだった。"],
+            "question": "Kcを求めよ。",
+            "solution": {
+              "steps": ["AとBはそれぞれ0.60減るので、平衡時[A]=[B]=0.60。", "Cは1.20増えるので[C]=1.20。", "Kc=1.20²/(0.60×0.60)=4.0。"],
+              "answer": "Kc=4.0。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "chemistry",
+      "topic": "inorganic-properties",
+      "areaTitle": "無機物質の性質",
+      "title": "無機物質の性質 発展",
+      "description": "沈殿反応を物質量で追い、限界となるイオンと反応後の濃度を判断する発展パターンです。",
+      "patterns": [
+        {
+          "id": "chemistry-inorganic-properties-pattern-precipitation-limiting-ion",
+          "title": "沈殿反応で限界イオンを見抜く",
+          "level": "advanced",
+          "estimatedMinutes": 19,
+          "skills": ["沈殿反応", "物質量", "モル濃度"],
+          "thinking": {
+            "title": "イオン反応式を1:1の物質量計算へ落とす",
+            "body": ["沈殿の量や反応後の濃度を求めるときは、まず沈殿をつくるイオンだけの反応式へ簡略化します。", "Ag⁺ + Cl⁻ → AgCl のような1:1反応なら、少ない物質量のイオンが限界となります。余ったイオンの物質量は、混合後の全体積で割って濃度へ戻します。"],
+            "checkpoints": ["各溶液のイオンの物質量を求める", "係数比から限界イオンを決める", "余剰量を混合後体積で割る"]
+          },
+          "example": {
+            "statement": ["0.10 mol/L AgNO₃水溶液100 mLと、0.20 mol/L NaCl水溶液40 mLを混合した。AgClは完全に沈殿するとする。"],
+            "question": "反応後に残るAg⁺の濃度を求めよ。",
+            "solution": {
+              "strategy": "Ag⁺とCl⁻の物質量を比べ、Cl⁻を使い切った後のAg⁺を全体積0.140 Lで割る。",
+              "steps": ["Ag⁺は0.10×0.100=0.010 mol。Cl⁻は0.20×0.040=0.0080 mol。", "1:1反応なのでCl⁻が限界。Ag⁺は0.010−0.0080=0.0020 mol残る。", "[Ag⁺]=0.0020/0.140=0.0143 mol/L。"],
+              "answer": "約1.4×10⁻² mol/L。"
+            }
+          },
+          "guidedPractice": {
+            "title": "限界イオンと余剰量を分けて考える",
+            "statement": ["0.20 mol/L AgNO₃ 50 mLと0.10 mol/L NaCl 80 mLを混合する。"],
+            "question": "反応後に残るAg⁺の物質量と濃度を求めよう。",
+            "steps": [
+              {"prompt": "Ag⁺の初めの物質量を求めてください。", "answers": ["0.010", "0.01"]},
+              {"prompt": "反応後に残るAg⁺の物質量を求めてください。", "answers": ["0.0020", "0.002"]},
+              {"prompt": "混合後のAg⁺濃度を mol/L で求めてください。", "answers": ["0.0154", "0.015", "1.54*10^-2"]}
+            ],
+            "hint": "Cl⁻は0.10×0.080=0.0080 mol、混合後体積は0.130 Lです。"
+          },
+          "practice": {
+            "statement": ["0.15 mol/L AgNO₃ 80 mLと0.10 mol/L NaCl 100 mLを混合する。"],
+            "question": "反応後に残るAg⁺の濃度を求めよ。",
+            "solution": {
+              "steps": ["Ag⁺は0.15×0.080=0.012 mol、Cl⁻は0.10×0.100=0.010 mol。", "Ag⁺が0.002 mol残り、全体積は0.180 L。", "[Ag⁺]=0.002/0.180=0.0111 mol/L。"],
+              "answer": "約1.1×10⁻² mol/L。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "chemistry",
+      "topic": "organic-properties",
+      "areaTitle": "有機化合物の性質",
+      "title": "有機化合物の性質 発展",
+      "description": "分子式だけでなく反応生成物の種類を使い、候補となる構造を絞り込む発展パターンです。",
+      "patterns": [
+        {
+          "id": "chemistry-organic-properties-pattern-structure-from-oxidation",
+          "title": "酸化生成物からアルコールの構造を決める",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["アルコール", "酸化", "構造決定"],
+          "thinking": {
+            "title": "一次・二次アルコールの酸化生成物を手掛かりにする",
+            "body": ["同じ分子式でも構造異性体は異なる反応性を示します。アルコールでは、OHが結合する炭素の置換状態に注目すると酸化生成物の種類を区別できます。", "一次アルコールは酸化でアルデヒドへ、二次アルコールはケトンへ進むことを使うと、生成物名から元の骨格を逆にたどれます。"],
+            "checkpoints": ["分子式から候補となるアルコールを考える", "生成物がアルデヒドかケトンか判断する", "OHが結合していた炭素の位置を決める"]
+          },
+          "example": {
+            "statement": ["分子式C₃H₈OのアルコールXを酸化すると、プロパノンが得られた。"],
+            "question": "Xの構造を示し、名称を答えよ。",
+            "solution": {
+              "strategy": "ケトンが生じたのでXは二次アルコールであると判断する。",
+              "steps": ["C₃骨格のアルコールには1-プロパノールと2-プロパノールがある。", "プロパノンはケトンなので、酸化前は二次アルコール。", "したがってXはCH₃CH(OH)CH₃、2-プロパノール。"],
+              "answer": "CH₃CH(OH)CH₃（2-プロパノール）。"
+            }
+          },
+          "guidedPractice": {
+            "title": "生成物の種類からOHの位置を戻す",
+            "statement": ["分子式C₄H₁₀OのアルコールXを酸化するとブタノンが得られた。"],
+            "question": "Xの名称を順に決めよう。",
+            "steps": [
+              {"prompt": "生成物ブタノンはアルデヒドとケトンのどちらですか。", "answers": ["ケトン"]},
+              {"prompt": "Xは一次・二次・三次アルコールのどれですか。", "answers": ["二次", "二次アルコール"]},
+              {"prompt": "Xの名称を答えてください。", "answers": ["2-ブタノール", "2ブタノール", "butan-2-ol"]}
+            ],
+            "hint": "ブタノンのカルボニル炭素に対応する位置へOHを戻します。"
+          },
+          "practice": {
+            "statement": ["分子式C₃H₈OのアルコールXを穏やかに酸化するとプロパナールが得られた。"],
+            "question": "Xの構造と名称を答えよ。",
+            "solution": {
+              "steps": ["プロパナールはアルデヒドなので、Xは一次アルコール。", "C₃の直鎖末端にOHを持つCH₃CH₂CH₂OHが対応する。"],
+              "answer": "CH₃CH₂CH₂OH（1-プロパノール）。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "chemistry",
+      "topic": "chemistry-role",
+      "areaTitle": "化学が果たす役割",
+      "title": "化学が果たす役割 発展",
+      "description": "回収率と工程収率を連続して扱い、資源循環を定量評価する発展パターンです。",
+      "patterns": [
+        {
+          "id": "chemistry-chemistry-role-pattern-multistage-yield",
+          "title": "多段階の回収率・収率を掛け合わせる",
+          "level": "advanced",
+          "estimatedMinutes": 16,
+          "skills": ["資源循環", "収率", "割合"],
+          "thinking": {
+            "title": "各段階で残る割合を順に掛ける",
+            "body": ["回収・分離・再生のように複数工程があるとき、最終的な有効量は各段階の割合を順に掛けて求めます。", "『20%失う』は80%残ることを意味します。割合を足し算せず、工程ごとに残る量を更新すると混乱しにくくなります。"],
+            "checkpoints": ["各工程の残存割合へ直す", "前段階の量に次の割合を掛ける", "最終量を初期量で割って総合効率も確認する"]
+          },
+          "example": {
+            "statement": ["使用済み材料1000 kgを回収する工程の回収率が80%、回収物から再生材料を得る工程の収率が90%である。"],
+            "question": "得られる再生材料の質量と、全体としての収率を求めよ。",
+            "solution": {
+              "strategy": "1000 kgに0.80、さらに0.90を順に掛ける。",
+              "steps": ["回収される量は1000×0.80=800 kg。", "再生材料は800×0.90=720 kg。", "全体の収率は720/1000=0.72=72%。"],
+              "answer": "720 kg、72%。"
+            }
+          },
+          "guidedPractice": {
+            "title": "工程ごとの残量を更新する",
+            "statement": ["原料500 kgを85%回収し、そのうち80%を製品化できる。"],
+            "question": "最終製品量と総合収率を求めよう。",
+            "steps": [
+              {"prompt": "回収後の量をkgで求めてください。", "answers": ["425", "425kg", "425 kg"]},
+              {"prompt": "製品量をkgで求めてください。", "answers": ["340", "340kg", "340 kg"]},
+              {"prompt": "総合収率を%で求めてください。", "answers": ["68", "68%", "68 %"]}
+            ],
+            "hint": "0.85×0.80=0.68が全体で残る割合です。"
+          },
+          "practice": {
+            "statement": ["原料1200 kgを75%回収し、回収物の92%を再生材料にできる。"],
+            "question": "再生材料の質量と総合収率を求めよ。",
+            "solution": {
+              "steps": ["回収量は1200×0.75=900 kg。", "再生材料は900×0.92=828 kg。", "総合収率は0.75×0.92=0.69=69%。"],
+              "answer": "828 kg、69%。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    }
+  ]
+}
