@@ -1,4 +1,5 @@
 ---
+import { chemistryAreas } from "../content/chemistry/catalog";
 import { chemistryBasicAreas } from "../content/chemistry-basic/catalog";
 import { math1Areas } from "../content/math1/catalog";
 import { math2Areas } from "../content/math2/catalog";
@@ -94,6 +95,18 @@ const _courses = [
     ),
   },
   {
+    title: "化学",
+    kicker: "CHEMISTRY",
+    href: `${_base}chemistry/`,
+    description:
+      "状態と平衡、反応と平衡、無機物質、有機化合物、高分子、化学の役割を構造・反応・量の視点から学びます。",
+    areas: chemistryAreas.map((area) => area.title),
+    lessonCount: chemistryAreas.reduce(
+      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
+      0,
+    ),
+  },
+  {
     title: "物理基礎",
     kicker: "BASIC PHYSICS",
     href: `${_base}physics-basics/`,
@@ -115,7 +128,7 @@ const _courses = [
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="高校の学習コンテンツ。数学I、数学A、数学II、数学B、数学C、数学III、化学基礎、物理基礎から学びたい科目を選び、小単元ごとの教材と演習に進めます。"
+      content="高校の学習コンテンツ。数学I、数学A、数学II、数学B、数学C、数学III、化学基礎、化学、物理基礎から学びたい科目を選び、小単元ごとの教材と演習に進めます。"
     />
     <title>高校学習コンテンツ</title>
   </head>
