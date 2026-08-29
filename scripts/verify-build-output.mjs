@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: ["学習する科目", "数学I", "数学A", "化学基礎", "科目の目次を見る"],
+    markers: ["学習する科目", "数学I", "数学A", "数学B", "数学C", "化学基礎", "科目の目次を見る"],
   },
   {
     path: new URL("../dist/math1/index.html", import.meta.url),
@@ -78,6 +78,64 @@ const checks = [
     markers: ["確率の基本の単元末演習", "単元末演習"],
   },
   {
+    path: new URL("../dist/mathb/index.html", import.meta.url),
+    markers: ["数学B", "学習する3つの領域", "全28小教材", "科目一覧へ"],
+  },
+  {
+    path: new URL(
+      "../dist/mathb/sequences/sequence-basics/arithmetic-sum/index.html",
+      import.meta.url,
+    ),
+    markers: ["等差数列の和", "公式の根拠: 等差数列の和", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/mathb/statistical-inference/sampling-inference/confidence-interval/index.html",
+      import.meta.url,
+    ),
+    markers: ["母平均の区間推定", "公式の根拠: 95%信頼区間", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/mathb/social-life/social-problem-solving/evaluate-model/index.html",
+      import.meta.url,
+    ),
+    markers: ["モデルを現実と照らして評価・改善する", "相対誤差", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/mathb/sequences/recurrence-relations/exercise/index.html",
+      import.meta.url,
+    ),
+    markers: ["漸化式の単元末演習", "単元末演習"],
+  },
+  {
+    path: new URL("../dist/mathc/index.html", import.meta.url),
+    markers: ["数学C", "学習する3つの領域", "全14小教材", "科目一覧へ"],
+  },
+  {
+    path: new URL("../dist/mathc/vectors/vector-basics/inner-product/index.html", import.meta.url),
+    markers: ["ベクトルの内積", "公式の根拠: 成分による内積", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/mathc/curves-complex/complex-plane/polar-demoivre/index.html",
+      import.meta.url,
+    ),
+    markers: ["複素数の極形式とド・モアブルの定理", "公式の根拠: ド・モアブルの定理"],
+  },
+  {
+    path: new URL(
+      "../dist/mathc/mathematical-expression/representation-tools/matrices/index.html",
+      import.meta.url,
+    ),
+    markers: ["行列でデータと変換を表す", "公式の根拠: 行列の和と実数倍"],
+  },
+  {
+    path: new URL("../dist/mathc/vectors/vector-basics/exercise/index.html", import.meta.url),
+    markers: ["ベクトルの基本と内積の単元末演習", "単元末演習"],
+  },
+  {
     path: new URL("../dist/chemistry-basic/index.html", import.meta.url),
     markers: ["化学基礎", "学習する3つの領域", "全14小教材", "科目一覧へ"],
   },
@@ -113,5 +171,5 @@ for (const check of checks) {
 }
 
 console.log(
-  "Generated HTML rendering checks passed for the course index, Math I, Math A, and Basic Chemistry.",
+  "Generated HTML rendering checks passed for the course index, Math I, Math A, Math B, Math C, and Basic Chemistry.",
 );

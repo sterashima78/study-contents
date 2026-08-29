@@ -2,6 +2,8 @@
 import { chemistryBasicAreas } from "../content/chemistry-basic/catalog";
 import { math1Areas } from "../content/math1/catalog";
 import { mathAAreas } from "../content/matha/catalog";
+import { mathBAreas } from "../content/mathb/catalog";
+import { mathCAreas } from "../content/mathc/catalog";
 import "../styles/global.css";
 
 const _base = import.meta.env.BASE_URL;
@@ -31,6 +33,29 @@ const _courses = [
     ),
   },
   {
+    title: "数学B",
+    kicker: "MATHEMATICS B",
+    href: `${_base}mathb/`,
+    description: "数列、統計的な推測、数学と社会生活を、1ページ1技能の小さな教材で学びます。",
+    areas: mathBAreas.map((area) => area.title),
+    lessonCount: mathBAreas.reduce(
+      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
+      0,
+    ),
+  },
+  {
+    title: "数学C",
+    kicker: "MATHEMATICS C",
+    href: `${_base}mathc/`,
+    description:
+      "ベクトル、平面上の曲線と複素数平面、数学的な表現の工夫を、1ページ1技能の小さな教材で学びます。",
+    areas: mathCAreas.map((area) => area.title),
+    lessonCount: mathCAreas.reduce(
+      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
+      0,
+    ),
+  },
+  {
     title: "化学基礎",
     kicker: "BASIC CHEMISTRY",
     href: `${_base}chemistry-basic/`,
@@ -52,7 +77,7 @@ const _courses = [
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="高校の学習コンテンツ。数学I、数学A、化学基礎から学びたい科目を選び、小単元ごとの教材と演習に進めます。"
+      content="高校の学習コンテンツ。数学I、数学A、数学B、数学C、化学基礎から学びたい科目を選び、小単元ごとの教材と演習に進めます。"
     />
     <title>高校学習コンテンツ</title>
   </head>

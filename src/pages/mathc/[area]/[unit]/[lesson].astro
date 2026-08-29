@@ -1,0 +1,33 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MathLesson from "../../../../components/MathLesson.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { mathCCourse } from "../../../../content/math-courses";
+import type {
+  MathArea,
+  MathLesson as MathLessonData,
+  MathUnit,
+} from "../../../../content/math1/types";
+import { mathCAreas } from "../../../../content/mathc/catalog";
+
+export function getStaticPaths() {
+  return mathCAreas.flatMap((area) =>
+    area.units.flatMap((unit) =>
+      unit.lessons.map((lesson) => ({
+        params: { area: area.key, unit: unit.key, lesson: lesson.key },
+        props: { area, unit, lesson },
+      })),
+    ),
+  );
+}
+
+type Props = {
+  area: MathArea;
+  unit: MathUnit;
+  lesson: MathLessonData;
+};
+
+const { area: _area, unit: _unit, lesson: _lesson } = Astro.props;
+---
+
+<MathLesson area={_area} unit={_unit} lesson={_lesson} course={mathCCourse} />

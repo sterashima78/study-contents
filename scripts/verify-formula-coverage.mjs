@@ -8,11 +8,17 @@ const contentPaths = [
   "../src/content/matha/counting-probability.ts",
   "../src/content/matha/geometry-properties.ts",
   "../src/content/matha/human-activity.ts",
+  "../src/content/mathb/sequences.ts",
+  "../src/content/mathb/statistical-inference.ts",
+  "../src/content/mathb/social-life.ts",
+  "../src/content/mathc/catalog.ts",
 ];
 const derivationPaths = [
   "../src/content/math1/formula-derivations.ts",
   "../src/content/math1/additional-formula-derivations.ts",
   "../src/content/matha/formula-derivations.ts",
+  "../src/content/mathb/formula-derivations.ts",
+  "../src/content/mathc/formula-derivations.ts",
 ];
 
 const formulaExemptions = new Map([
@@ -35,6 +41,15 @@ const formulaExemptions = new Map([
   ["triangle-centers", "重心の位置を表す基本定理をこの小単元の出発点として扱う"],
   ["ceva-menelaus", "チェバ・メネラウスの定理を辺の比を扱う小単元の出発点として扱う"],
   ["polyhedra-euler", "オイラーの多面体定理を凸多面体を扱う小単元の出発点として扱う"],
+  ["sequence-general-term", "数列と一般項の記法の定義"],
+  ["sigma-notation", "Σ記号の意味と和に対する線形性を基本法則として扱う"],
+  ["recurrence-basics", "漸化式の意味を示す具体例"],
+  ["random-variable-distribution", "確率分布と確率の総和の定義・基本性質"],
+  ["expectation-variance", "期待値・分散・標準偏差の定義"],
+  ["continuous-random-variable", "確率密度と区間確率の定義"],
+  ["normal-distribution", "正規分布N(μ,σ²)の記法の定義"],
+  ["hypothesis-testing", "有意水準による基本的な検定判断ルール"],
+  ["evaluate-model", "誤差と相対誤差の定義"],
 ]);
 
 const lessonsWithFormulas = new Set();
@@ -42,7 +57,7 @@ for (const relativePath of contentPaths) {
   const source = await readFile(new URL(relativePath, import.meta.url), "utf8");
   let currentLessonKey;
   for (const line of source.split("\n")) {
-    const keyMatch = line.match(/^\s{8}key: "([^"]+)",/);
+    const keyMatch = line.match(/^\s{8,}key: "([^"]+)",/);
     if (keyMatch) currentLessonKey = keyMatch[1];
     if (line.includes("formulas:")) {
       if (!currentLessonKey) {

@@ -1,5 +1,5 @@
 export type MathCourseInfo = {
-  key: "math1" | "matha" | "chemistry-basic";
+  key: "math1" | "matha" | "mathb" | "mathc" | "chemistry-basic";
   title: string;
   kicker: string;
   routeBase: string;
@@ -20,6 +20,22 @@ export const mathACourse: MathCourseInfo = {
   kicker: "MATHEMATICS A",
   routeBase: "matha",
   homePath: "matha/",
+};
+
+export const mathBCourse: MathCourseInfo = {
+  key: "mathb",
+  title: "数学B",
+  kicker: "MATHEMATICS B",
+  routeBase: "mathb",
+  homePath: "mathb/",
+};
+
+export const mathCCourse: MathCourseInfo = {
+  key: "mathc",
+  title: "数学C",
+  kicker: "MATHEMATICS C",
+  routeBase: "mathc",
+  homePath: "mathc/",
 };
 
 export const chemistryBasicCourse: MathCourseInfo = {
