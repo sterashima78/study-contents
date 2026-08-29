@@ -1,4 +1,8 @@
 import {
+  generateLessonExercises as generateMath2LessonExercises,
+  generateUnitExercises as generateMath2UnitExercises,
+} from "../math2/exercise-registry";
+import {
   generateLessonExercises as generateMathBLessonExercises,
   generateUnitExercises as generateMathBUnitExercises,
 } from "../mathb/exercise-registry";
@@ -48,12 +52,16 @@ export const generateLessonExercises = (unitKey: string, lessonKey: string, coun
   if (mathBUnitKeys.has(unitKey)) return generateMathBLessonExercises(unitKey, lessonKey, count);
   const algebra = generateAlgebraLessonExercises(unitKey, lessonKey, count);
   if (algebra.length > 0) return algebra.map(addAlgebraAnswerMode);
-  return generateAdditionalLessonExercises(unitKey, lessonKey, count);
+  const additional = generateAdditionalLessonExercises(unitKey, lessonKey, count);
+  if (additional.length > 0) return additional;
+  return generateMath2LessonExercises(unitKey, lessonKey, count);
 };
 
 export const generateUnitExercises = (unitKey: string) => {
   if (mathBUnitKeys.has(unitKey)) return generateMathBUnitExercises(unitKey);
   const algebra = generateAlgebraUnitExercises(unitKey);
   if (algebra.length > 0) return algebra.map(addAlgebraAnswerMode);
-  return generateAdditionalUnitExercises(unitKey);
+  const additional = generateAdditionalUnitExercises(unitKey);
+  if (additional.length > 0) return additional;
+  return generateMath2UnitExercises(unitKey);
 };

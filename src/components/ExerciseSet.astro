@@ -3,7 +3,7 @@ import "../styles/exercise.css";
 
 type Props = {
   mode: "lesson" | "unit";
-  courseKey?: "math1" | "matha" | "mathb" | "mathc" | "chemistry-basic";
+  courseKey?: "math1" | "matha" | "math2" | "mathb" | "mathc" | "chemistry-basic";
   areaKey: string;
   unitKey: string;
   lessonKey?: string;
@@ -97,10 +97,6 @@ const _isChemistry = _courseKey === "chemistry-basic";
     generateLessonExercises as generateMathALessonExercises,
     generateUnitExercises as generateMathAUnitExercises,
   } from "../content/matha/exercise-registry";
-  import {
-    generateLessonExercises as generateMathBLessonExercises,
-    generateUnitExercises as generateMathBUnitExercises,
-  } from "../content/mathb/exercise-registry";
   import {
     generateLessonExercises as generateMathCLessonExercises,
     generateUnitExercises as generateMathCUnitExercises,
@@ -235,13 +231,6 @@ const _isChemistry = _courseKey === "chemistry-basic";
           ? generateMathAUnitExercises(unitKey)
           : lessonKey
             ? generateMathALessonExercises(unitKey, lessonKey)
-            : [];
-      }
-      if (courseKey === "mathb") {
-        return mode === "unit"
-          ? generateMathBUnitExercises(unitKey)
-          : lessonKey
-            ? generateMathBLessonExercises(unitKey, lessonKey)
             : [];
       }
       if (courseKey === "mathc") {

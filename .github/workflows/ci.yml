@@ -18,7 +18,7 @@ jobs:
       - name: Setup pnpm and Node.js
         uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1
         with:
-          version: 12.0.0-rc.9
+          version: 12.0.0
           runtime: node@24
           install: false
           cache: false
@@ -37,3 +37,6 @@ jobs:
 
       - name: Verify generated HTML
         run: node scripts/verify-build-output.mjs
+
+      - name: Verify Math II generated HTML
+        run: node scripts/verify-math2-build-output.mjs
