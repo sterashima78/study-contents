@@ -12,7 +12,7 @@ const { steps: _steps, label: _label = "学習の流れ" } = Astro.props;
     _steps.map((step, index) => (
       <>
         {index > 0 && <span class="arrow" aria-hidden="true">→</span>}
-        <span>{step}</span>
+        <span class="step"><span class="number" aria-hidden="true">{index + 1}</span>{step}</span>
       </>
     ))
   }
@@ -21,28 +21,52 @@ const { steps: _steps, label: _label = "学習の流れ" } = Astro.props;
 <style>
   .flow {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.55rem 0.8rem;
+    gap: 0.5rem;
     align-items: center;
-    width: fit-content;
-    max-width: 100%;
-    margin-top: 1.25rem;
-    padding: 0.8rem 1rem;
+    width: 100%;
+    margin-top: 1.4rem;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--color-border-soft);
+    border-bottom: 1px solid var(--color-border-soft);
+    color: var(--color-text-soft);
+    font-size: 0.76rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .step {
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 0.45rem;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.35rem 0.55rem;
+    white-space: nowrap;
+  }
+
+  .number {
+    display: inline-grid;
+    width: 1.45rem;
+    height: 1.45rem;
+    place-items: center;
     border: 1px solid var(--color-border-strong);
-    border-radius: 999px;
+    border-radius: 50%;
     color: var(--color-accent-strong);
-    background: rgb(255 255 255 / 62%);
-    font-size: 0.84rem;
+    font-family: "Times New Roman", serif;
+    font-size: 0.68rem;
     font-weight: 700;
   }
 
   .arrow {
-    color: var(--color-muted);
+    flex: 0 0 auto;
+    color: var(--color-border-strong);
   }
 
   @media (max-width: 760px) {
     .flow {
-      border-radius: 1rem;
+      margin-right: -1.1rem;
+      padding-right: 1.1rem;
+      font-size: 0.72rem;
     }
   }
 </style>
