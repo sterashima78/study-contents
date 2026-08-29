@@ -4,15 +4,7 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: [
-      "学習する科目",
-      "数学I",
-      "数学A",
-      "数学B",
-      "数学C",
-      "物理基礎",
-      "科目の目次を見る",
-    ],
+    markers: ["学習する科目", "数学I", "数学A", "数学B", "数学C", "物理基礎", "科目の目次を見る"],
   },
   {
     path: new URL("../dist/math1/index.html", import.meta.url),
