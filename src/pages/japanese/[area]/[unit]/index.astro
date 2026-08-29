@@ -1,0 +1,24 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import JapaneseUnitIndex from "../../../../components/JapaneseUnitIndex.astro";
+import { japaneseAreas } from "../../../../content/japanese/catalog";
+import type { JapaneseArea, JapaneseUnit } from "../../../../content/japanese/types";
+
+export function getStaticPaths() {
+  return japaneseAreas.flatMap((area) =>
+    area.units.map((unit) => ({
+      params: { area: area.key, unit: unit.key },
+      props: { area, unit },
+    })),
+  );
+}
+
+type Props = {
+  area: JapaneseArea;
+  unit: JapaneseUnit;
+};
+
+const { area: _area, unit: _unit } = Astro.props as Props;
+---
+
+<JapaneseUnitIndex area={_area} unit={_unit} />
