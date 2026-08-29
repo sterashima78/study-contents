@@ -8,6 +8,10 @@ import {
   generateLessonExercises as generateAlgebraLessonExercises,
   generateUnitExercises as generateAlgebraUnitExercises,
 } from "./exercise-generators";
+import {
+  generateLessonExercises as generateMath2LessonExercises,
+  generateUnitExercises as generateMath2UnitExercises,
+} from "../math2/exercise-registry";
 
 export type GeneratedExercise = AlgebraGeneratedExercise & {
   answerMode: ExtraExerciseAnswerMode;
@@ -31,11 +35,15 @@ const addAlgebraAnswerMode = (exercise: AlgebraGeneratedExercise): GeneratedExer
 export const generateLessonExercises = (unitKey: string, lessonKey: string, count = 3) => {
   const algebra = generateAlgebraLessonExercises(unitKey, lessonKey, count);
   if (algebra.length > 0) return algebra.map(addAlgebraAnswerMode);
-  return generateAdditionalLessonExercises(unitKey, lessonKey, count);
+  const additional = generateAdditionalLessonExercises(unitKey, lessonKey, count);
+  if (additional.length > 0) return additional;
+  return generateMath2LessonExercises(unitKey, lessonKey, count);
 };
 
 export const generateUnitExercises = (unitKey: string) => {
   const algebra = generateAlgebraUnitExercises(unitKey);
   if (algebra.length > 0) return algebra.map(addAlgebraAnswerMode);
-  return generateAdditionalUnitExercises(unitKey);
+  const additional = generateAdditionalUnitExercises(unitKey);
+  if (additional.length > 0) return additional;
+  return generateMath2UnitExercises(unitKey);
 };
