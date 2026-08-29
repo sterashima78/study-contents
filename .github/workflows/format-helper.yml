@@ -1,0 +1,38 @@
+name: Format helper
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  format:
+    if: github.head_ref == 'feature/exercise-diagnostics'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1
+        with:
+          version: 11.24.0
+          runtime: node@24
+          install: false
+          cache: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Format generator
+        run: pnpm exec biome format --write src/content/math1/exercise-generators.ts
+
+      - name: Print formatted generator
+        run: |
+          echo 'FORMATTED_GENERATOR_BEGIN'
+          base64 -w0 src/content/math1/exercise-generators.ts
+          echo
+          echo 'FORMATTED_GENERATOR_END'
