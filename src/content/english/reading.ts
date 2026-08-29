@@ -124,7 +124,8 @@ export const englishReadingUnits: EnglishUnit[] = [
   {
     key: "exam-reading",
     title: "情報検索と推論",
-    description: "実用文や説明文から必要情報を探し、本文に直接書かれていない内容を根拠付きで推論します。",
+    description:
+      "実用文や説明文から必要情報を探し、本文に直接書かれていない内容を根拠付きで推論します。",
     lessons: [
       {
         key: "scan-information",
@@ -151,7 +152,8 @@ export const englishReadingUnits: EnglishUnit[] = [
         },
         example: {
           title: "例題: 条件に合う情報だけを抜き出す",
-          problem: "A 17-year-old student wants to join. What must the student bring, and how much is the fee?",
+          problem:
+            "A 17-year-old student wants to join. What must the student bring, and how much is the fee?",
           steps: [
             {
               expression: "bring one small household item",
@@ -192,7 +194,8 @@ export const englishReadingUnits: EnglishUnit[] = [
       {
         key: "inference-paraphrase",
         title: "言い換えから推論する",
-        description: "本文と選択肢で使われる異なる表現を対応させ、書かれている事実から妥当な結論を導きます。",
+        description:
+          "本文と選択肢で使われる異なる表現を対応させ、書かれている事実から妥当な結論を導きます。",
         rights: "original",
         goals: [
           "本文の表現と言い換え表現を対応させられる。",
@@ -237,7 +240,11 @@ export const englishReadingUnits: EnglishUnit[] = [
           steps: [
             {
               prompt: "最も近い表現を入力してください。",
-              answers: ["changed her usual way of traveling", "changed her usual way of travelling", "used a different way to get to school"],
+              answers: [
+                "changed her usual way of traveling",
+                "changed her usual way of travelling",
+                "used a different way to get to school",
+              ],
               placeholder: "paraphrase",
             },
           ],
