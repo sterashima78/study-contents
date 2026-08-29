@@ -11,8 +11,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "biome ci .",
-    "check:write": "biome check --write ."
+    "check": "biome ci . && node scripts/verify-formula-coverage.mjs",
+    "check:write": "biome check --write .",
+    "check:formulas": "node scripts/verify-formula-coverage.mjs"
   },
   "dependencies": {
     "astro": "7.2.9",
