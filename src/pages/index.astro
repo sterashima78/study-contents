@@ -1,57 +1,14 @@
 ---
+import { math1Areas } from "../content/math1/catalog";
 import "../styles/global.css";
 
 const _base = import.meta.env.BASE_URL;
-const _units = [
-  {
-    number: "01",
-    title: "数と式",
-    description: "数や式の扱い方を整理し、数学Iの計算と論理の土台をつくります。",
-    topics: [
-      { label: "式の展開と因数分解", href: "math1/algebra/expansion-factorization/" },
-      { label: "実数", href: "math1/algebra/real-numbers/" },
-      { label: "一次不等式", href: "math1/algebra/linear-inequalities/" },
-      { label: "集合と命題", href: "math1/algebra/sets-propositions/" },
-    ],
-    status: "16小教材公開",
-  },
-  {
-    number: "02",
-    title: "図形と計量",
-    description: "三角比を使って、角度・長さ・面積を数量として捉えます。",
-    topics: [
-      { label: "三角比" },
-      { label: "三角比の相互関係" },
-      { label: "正弦定理・余弦定理" },
-      { label: "図形の計量" },
-    ],
-    status: "教材を準備中",
-  },
-  {
-    number: "03",
-    title: "二次関数",
-    description: "グラフと式を行き来しながら、変化の特徴や条件を読み取ります。",
-    topics: [
-      { label: "二次関数とグラフ" },
-      { label: "最大・最小" },
-      { label: "二次方程式とグラフ" },
-      { label: "二次不等式" },
-    ],
-    status: "教材を準備中",
-  },
-  {
-    number: "04",
-    title: "データの分析",
-    description: "データの散らばりや関係を数値とグラフで捉え、判断につなげます。",
-    topics: [
-      { label: "データの散らばり" },
-      { label: "分散・標準偏差" },
-      { label: "散布図・相関係数" },
-      { label: "仮説検定の考え方" },
-    ],
-    status: "教材を準備中",
-  },
-];
+const _areas = math1Areas.map((area, index) => ({
+  ...area,
+  number: String(index + 1).padStart(2, "0"),
+  lessonCount: area.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
+}));
+const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0);
 ---
 
 <!doctype html>
@@ -61,7 +18,7 @@ const _units = [
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="高校数学Iの学習コンテンツ。数と式、図形と計量、二次関数、データの分析を順に学べます。"
+      content="高校数学Iの学習コンテンツ。数と式、図形と計量、二次関数、データの分析を1ページ1技能で学べます。"
     />
     <title>数学I | 学習コンテンツ</title>
   </head>
@@ -76,9 +33,13 @@ const _units = [
         <div class="learning-flow" aria-label="各小単元の学習の流れ">
           <span>考え方</span>
           <span aria-hidden="true">→</span>
+          <span>導出・根拠</span>
+          <span aria-hidden="true">→</span>
           <span>例題</span>
           <span aria-hidden="true">→</span>
           <span>直後の練習</span>
+          <span aria-hidden="true">→</span>
+          <span>3問確認</span>
           <span aria-hidden="true">→</span>
           <span>まとめ</span>
         </div>
@@ -90,32 +51,26 @@ const _units = [
             <p class="section-label">CONTENTS</p>
             <h2 id="curriculum-title">学習する4つの領域</h2>
           </div>
-          <p>領域から単元へ進み、各単元を5〜10分程度の小単元に分けて学習します。</p>
+          <p>全{_totalLessonCount}小教材。領域から単元へ進み、各ページを5〜10分程度で学習します。</p>
         </div>
 
         <ol class="unit-grid">
           {
-            _units.map((unit) => (
+            _areas.map((area) => (
               <li class="unit-card">
                 <div class="unit-header">
-                  <span class="unit-number" aria-hidden="true">{unit.number}</span>
-                  <h3>{unit.title}</h3>
+                  <span class="unit-number" aria-hidden="true">{area.number}</span>
+                  <h3><a href={`${_base}math1/${area.key}/`}>{area.title}</a></h3>
                 </div>
-                <p class="unit-description">{unit.description}</p>
+                <p class="unit-description">{area.description}</p>
                 <ul class="topic-list">
-                  {unit.topics.map((topic) => (
+                  {area.units.map((unit) => (
                     <li>
-                      {topic.href ? (
-                        <a href={`${_base}${topic.href}`}>{topic.label}</a>
-                      ) : (
-                        topic.label
-                      )}
+                      <a href={`${_base}math1/${area.key}/${unit.key}/`}>{unit.title}</a>
                     </li>
                   ))}
                 </ul>
-                <p class:list={["preparing", { available: unit.status !== "教材を準備中" }]}>
-                  {unit.status}
-                </p>
+                <p class="preparing available">{area.lessonCount}小教材公開</p>
               </li>
             ))
           }
@@ -124,7 +79,7 @@ const _units = [
 
       <footer class="page-footer">
         <p>高校 数学I</p>
-        <p>学習指導要領の内容に沿って順次追加します。</p>
+        <p>現行学習指導要領の4領域を、小単元・確認演習・単元末演習で学習できます。</p>
       </footer>
     </main>
   </body>

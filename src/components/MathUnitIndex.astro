@@ -1,16 +1,19 @@
 ---
-import type { AlgebraUnit } from "../content/math1/algebra";
+import type { MathArea, MathUnit } from "../content/math1/types";
 import "../styles/global.css";
 import "../styles/lesson.css";
 
 type Props = {
-  unit: AlgebraUnit;
+  area: MathArea;
+  unit: MathUnit;
 };
 
-const { unit: _unit } = Astro.props;
+const { area: _area, unit: _unit } = Astro.props;
 const _base = import.meta.env.BASE_URL;
-const _lessonHref = (lessonKey: string) => `${_base}math1/algebra/${_unit.key}/${lessonKey}/`;
-const _exerciseHref = `${_base}math1/algebra/${_unit.key}/exercise/`;
+const _areaHref = `${_base}math1/${_area.key}/`;
+const _unitHref = `${_areaHref}${_unit.key}/`;
+const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _exerciseHref = `${_unitHref}exercise/`;
 ---
 
 <!doctype html>
@@ -22,20 +25,20 @@ const _exerciseHref = `${_base}math1/algebra/${_unit.key}/exercise/`;
       name="description"
       content={`高校数学I「${_unit.title}」の小単元一覧。1ページ1技能で学習し、最後に単元末演習で弱点を確認します。`}
     />
-    <title>{_unit.title} | 数学I</title>
+    <title>{_unit.title} | {_area.title} | 数学I</title>
   </head>
   <body>
     <main class="lesson-shell">
       <nav class="breadcrumb" aria-label="パンくずリスト">
         <a href={_base}>数学I</a>
         <span aria-hidden="true">/</span>
-        <span>数と式</span>
+        <a href={_areaHref}>{_area.title}</a>
         <span aria-hidden="true">/</span>
         <span aria-current="page">{_unit.title}</span>
       </nav>
 
       <header class="lesson-hero unit-hero">
-        <p class="lesson-kicker">数と式</p>
+        <p class="lesson-kicker">{_area.title}</p>
         <h1>{_unit.title}</h1>
         <p>{_unit.description}</p>
       </header>

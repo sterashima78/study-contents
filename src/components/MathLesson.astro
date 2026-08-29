@@ -1,23 +1,25 @@
 ---
-import type { AlgebraUnit, Lesson } from "../content/math1/algebra";
-import { getFormulaDerivation } from "../content/math1/formula-derivations";
+import { getFormulaDerivation } from "../content/math1/formula-registry";
+import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 import "../styles/global.css";
 import "../styles/lesson.css";
 
 type Props = {
-  unit: AlgebraUnit;
-  lesson: Lesson;
+  area: MathArea;
+  unit: MathUnit;
+  lesson: MathLesson;
 };
 
-const { unit: _unit, lesson: _lesson } = Astro.props;
+const { area: _area, unit: _unit, lesson: _lesson } = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _lessonIndex = _unit.lessons.findIndex((item) => item.key === _lesson.key);
 const _previousLesson = _lessonIndex > 0 ? _unit.lessons[_lessonIndex - 1] : undefined;
 const _nextLesson =
   _lessonIndex < _unit.lessons.length - 1 ? _unit.lessons[_lessonIndex + 1] : undefined;
-const _unitHref = `${_base}math1/algebra/${_unit.key}/`;
+const _areaHref = `${_base}math1/${_area.key}/`;
+const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
 const _formulaDerivation = getFormulaDerivation(_lesson.key);
@@ -39,13 +41,15 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
       <nav class="breadcrumb" aria-label="パンくずリスト">
         <a href={_base}>数学I</a>
         <span aria-hidden="true">/</span>
+        <a href={_areaHref}>{_area.title}</a>
+        <span aria-hidden="true">/</span>
         <a href={_unitHref}>{_unit.title}</a>
         <span aria-hidden="true">/</span>
         <span aria-current="page">{_lesson.title}</span>
       </nav>
 
       <header class="lesson-hero compact-hero">
-        <p class="lesson-kicker">数と式 · {String(_lessonIndex + 1).padStart(2, "0")}</p>
+        <p class="lesson-kicker">{_area.title} · {String(_lessonIndex + 1).padStart(2, "0")}</p>
         <h1>{_lesson.title}</h1>
         <p>{_lesson.description}</p>
       </header>
@@ -162,7 +166,7 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
         </article>
       </section>
 
-      <ExerciseSet mode="lesson" unitKey={_unit.key} lessonKey={_lesson.key} />
+      <ExerciseSet mode="lesson" areaKey={_area.key} unitKey={_unit.key} lessonKey={_lesson.key} />
 
       <section class="lesson-section summary-section" aria-labelledby="summary-title">
         <p class="section-label">SUMMARY</p>
@@ -211,20 +215,16 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
 
       for (const card of document.querySelectorAll("[data-guided-practice]")) {
         if (!(card instanceof HTMLElement)) continue;
-
         const form = card.querySelector(".guided-practice-form");
         const feedback = card.querySelector(".practice-feedback");
         const hint = card.querySelector(".practice-hint");
         const hintButton = card.querySelector(".hint-button");
-
         if (
           !(form instanceof HTMLFormElement) ||
           !(feedback instanceof HTMLElement) ||
           !(hint instanceof HTMLElement) ||
           !(hintButton instanceof HTMLButtonElement)
-        ) {
-          continue;
-        }
+        ) continue;
 
         hintButton.addEventListener("click", () => {
           hint.hidden = !hint.hidden;
@@ -237,19 +237,16 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
             (input) => input instanceof HTMLInputElement,
           );
           let correctCount = 0;
-
           for (const input of inputs) {
             if (!(input instanceof HTMLInputElement)) continue;
             const rawAnswers = input.dataset.answers;
             if (!rawAnswers) continue;
-
             const answers = JSON.parse(rawAnswers).map(normalizeAnswer);
             const isCorrect = answers.includes(normalizeAnswer(input.value));
             input.classList.toggle("is-correct", isCorrect);
             input.classList.toggle("is-error", !isCorrect);
             if (isCorrect) correctCount += 1;
           }
-
           if (correctCount === inputs.length) {
             feedback.textContent = "すべて正解です。例題と同じ手順を自分で再現できています。";
             feedback.className = "feedback practice-feedback is-correct";
@@ -261,9 +258,7 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
 
         form.addEventListener("reset", () => {
           window.setTimeout(() => {
-            for (const input of form.querySelectorAll("input")) {
-              input.classList.remove("is-correct", "is-error");
-            }
+            for (const input of form.querySelectorAll("input")) input.classList.remove("is-correct", "is-error");
             feedback.textContent = "";
             feedback.className = "feedback practice-feedback";
             hint.hidden = true;

@@ -1,17 +1,19 @@
 ---
-import type { AlgebraUnit } from "../content/math1/algebra";
+import type { MathArea, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 import "../styles/global.css";
 import "../styles/lesson.css";
 
 type Props = {
-  unit: AlgebraUnit;
+  area: MathArea;
+  unit: MathUnit;
 };
 
-const { unit: _unit } = Astro.props;
+const { area: _area, unit: _unit } = Astro.props;
 const _base = import.meta.env.BASE_URL;
-const _unitHref = `${_base}math1/algebra/${_unit.key}/`;
+const _areaHref = `${_base}math1/${_area.key}/`;
+const _unitHref = `${_areaHref}${_unit.key}/`;
 ---
 
 <!doctype html>
@@ -30,20 +32,22 @@ const _unitHref = `${_base}math1/algebra/${_unit.key}/`;
       <nav class="breadcrumb" aria-label="パンくずリスト">
         <a href={_base}>数学I</a>
         <span aria-hidden="true">/</span>
+        <a href={_areaHref}>{_area.title}</a>
+        <span aria-hidden="true">/</span>
         <a href={_unitHref}>{_unit.title}</a>
         <span aria-hidden="true">/</span>
         <span aria-current="page">単元末演習</span>
       </nav>
 
       <header class="lesson-hero compact-hero">
-        <p class="lesson-kicker">数と式 · UNIT EXERCISE</p>
+        <p class="lesson-kicker">{_area.title} · UNIT EXERCISE</p>
         <h1>{_unit.title}の単元末演習</h1>
         <p>
           単元全体から問題を出し、採点後に小単元別の正答状況を表示します。不正解が多い小単元は復習リンクから戻れます。
         </p>
       </header>
 
-      <ExerciseSet mode="unit" unitKey={_unit.key} />
+      <ExerciseSet mode="unit" areaKey={_area.key} unitKey={_unit.key} />
 
       <nav class="lesson-navigation" aria-label="教材ナビゲーション">
         <a href={_unitHref}>← {_unit.title}の小単元一覧</a>
