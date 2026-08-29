@@ -1,4 +1,5 @@
 ---
+import { type MathCourseInfo, math1Course } from "../content/math-courses";
 import "../styles/global.css";
 import "../styles/entrance.css";
 import "../styles/entrance-index.css";
@@ -24,16 +25,22 @@ type TopicSet = {
 type Props = {
   topicSet: TopicSet;
   areaTitle: string;
+  course?: MathCourseInfo;
 };
 
-const { topicSet: _topicSet, areaTitle: _areaTitle } = Astro.props as Props;
+const { topicSet: _topicSet, areaTitle: _areaTitle, course: _course = math1Course } =
+  Astro.props as Props;
 const _base = import.meta.env.BASE_URL;
 const _levelLabel = (level: string) => (level === "advanced" ? "発展" : "応用");
-const _patternSlug = (id: string) => id.replace(`math1-${_topicSet.topic}-pattern-`, "");
+const _patternSlug = (id: string) =>
+  id.replace(`${_course.key}-${_topicSet.topic}-pattern-`, "");
 const _applicationCount = _topicSet.patterns.filter(
   (pattern) => pattern.level === "application",
 ).length;
 const _advancedCount = _topicSet.patterns.filter((pattern) => pattern.level === "advanced").length;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _areaHref = `${_base}${_course.routeBase}/${_topicSet.topic}/`;
+const _topicHref = `${_base}${_course.routeBase}/entrance/${_topicSet.topic}/`;
 ---
 
 <!doctype html>
@@ -43,7 +50,7 @@ const _advancedCount = _topicSet.patterns.filter((pattern) => pattern.level === 
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content={`数学I「${_areaTitle}」の応用・発展教材。解法パターンごとに考え方、例題、ステップ練習、実践を学びます。`}
+      content={`${_course.title}「${_areaTitle}」の応用・発展教材。解法パターンごとに考え方、例題、ステップ練習、実践を学びます。`}
     />
     <title>{_topicSet.title} | 学習コンテンツ</title>
   </head>
@@ -53,9 +60,9 @@ const _advancedCount = _topicSet.patterns.filter((pattern) => pattern.level === 
         <nav class="breadcrumbs" aria-label="パンくずリスト">
           <a href={_base}>科目一覧</a>
           <span aria-hidden="true">/</span>
-          <a href={`${_base}math1/`}>数学I</a>
+          <a href={_courseHomeHref}>{_course.title}</a>
           <span aria-hidden="true">/</span>
-          <a href={`${_base}math1/${_topicSet.topic}/`}>{_areaTitle}</a>
+          <a href={_areaHref}>{_areaTitle}</a>
           <span aria-hidden="true">/</span>
           <span>応用・発展</span>
         </nav>
@@ -74,8 +81,8 @@ const _advancedCount = _topicSet.patterns.filter((pattern) => pattern.level === 
             <span>解法選択と条件整理を重視</span>
           </li>
           <li>
-            <strong>図解なし</strong>
-            <span>現在は文章と数式のみで構成</span>
+            <strong>完全独自作成</strong>
+            <span>外部問題本文を転載・軽微改変しない</span>
           </li>
         </ul>
       </header>
@@ -93,10 +100,14 @@ const _advancedCount = _topicSet.patterns.filter((pattern) => pattern.level === 
           {
             _topicSet.patterns.map((pattern, index) => (
               <li>
-                <a href={`${_base}math1/entrance/${_topicSet.topic}/${_patternSlug(pattern.id)}/`}>
+                <a href={`${_topicHref}${_patternSlug(pattern.id)}/`}>
                   <div class="pattern-index-heading">
-                    <span class="pattern-index-number">PATTERN {String(index + 1).padStart(2, "0")}</span>
-                    <span class={`level-badge level-${pattern.level}`}>{_levelLabel(pattern.level)}</span>
+                    <span class="pattern-index-number">
+                      PATTERN {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span class={`level-badge level-${pattern.level}`}>
+                      {_levelLabel(pattern.level)}
+                    </span>
                   </div>
                   <h3>{pattern.title}</h3>
                   <p>{pattern.thinking.title}</p>
@@ -112,8 +123,8 @@ const _advancedCount = _topicSet.patterns.filter((pattern) => pattern.level === 
       </section>
 
       <nav class="entrance-footer-nav" aria-label="関連ページ">
-        <a href={`${_base}math1/${_topicSet.topic}/`}>{_areaTitle}の基礎教材へ戻る</a>
-        <a href={`${_base}math1/`}>数学Iトップへ</a>
+        <a href={_areaHref}>{_areaTitle}の基礎教材へ戻る</a>
+        <a href={_courseHomeHref}>{_course.title}トップへ</a>
       </nav>
     </main>
   </body>
