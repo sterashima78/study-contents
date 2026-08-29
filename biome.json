@@ -32,6 +32,12 @@
       "formatter": {
         "enabled": false
       }
+    },
+    {
+      "includes": ["src/content/entrance/*-advanced.json"],
+      "formatter": {
+        "enabled": false
+      }
     }
   ]
 }
