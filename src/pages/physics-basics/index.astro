@@ -9,6 +9,7 @@ const _areas = physicsBasicsAreas.map((area, index) => ({
   lessonCount: area.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
 }));
 const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0);
+const _lessonSummary = `全${_totalLessonCount}小教材。`;
 ---
 
 <!doctype html>
@@ -51,7 +52,7 @@ const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0
             <p class="section-label">CONTENTS</p>
             <h2 id="curriculum-title">学習する5つの領域</h2>
           </div>
-          <p>全{_totalLessonCount}小教材。現行学習指導要領の物理基礎を、関連する内容ごとにまとめて学習します。</p>
+          <p>{_lessonSummary}現行学習指導要領の物理基礎を、関連する内容ごとにまとめて学習します。</p>
         </div>
 
         <ol class="unit-grid">
