@@ -26,7 +26,8 @@ export const englishInterpretationUnits: EnglishUnit[] = [
         ],
         example: {
           title: "例題: although 節と主節を分ける",
-          problem: "Although the forecast predicted rain, the event continued because the sky remained clear.",
+          problem:
+            "Although the forecast predicted rain, the event continued because the sky remained clear.",
           steps: [
             {
               expression: "Although [the forecast predicted rain]",
@@ -126,12 +127,14 @@ export const englishInterpretationUnits: EnglishUnit[] = [
   {
     key: "logic-and-reference",
     title: "論理関係と指示語",
-    description: "逆接・因果・追加などの論理関係と、代名詞・省略の参照先を追って文章の流れを読みます。",
+    description:
+      "逆接・因果・追加などの論理関係と、代名詞・省略の参照先を追って文章の流れを読みます。",
     lessons: [
       {
         key: "contrast-cause",
         title: "逆接と因果を文の関係として読む",
-        description: "however や therefore だけを探すのではなく、前後で何が対比・因果になっているかを特定します。",
+        description:
+          "however や therefore だけを探すのではなく、前後で何が対比・因果になっているかを特定します。",
         rights: "original",
         goals: [
           "逆接の前後で対比される内容を言葉で説明できる。",
@@ -148,7 +151,8 @@ export const englishInterpretationUnits: EnglishUnit[] = [
         ],
         example: {
           title: "例題: however の対比を言語化する",
-          problem: "The route looked shorter on the map. However, it included a steep hill that slowed us down.",
+          problem:
+            "The route looked shorter on the map. However, it included a steep hill that slowed us down.",
           steps: [
             {
               expression: "前: 地図上では短く見えた",
@@ -166,7 +170,8 @@ export const englishInterpretationUnits: EnglishUnit[] = [
         },
         practice: {
           title: "練習: 因果関係を答える",
-          problem: "The library extended its weekend hours. As a result, more students began using the study rooms.",
+          problem:
+            "The library extended its weekend hours. As a result, more students began using the study rooms.",
           steps: [
             {
               prompt: "原因を表す内容を日本語で短く入力してください。",
@@ -189,7 +194,8 @@ export const englishInterpretationUnits: EnglishUnit[] = [
       {
         key: "reference-ellipsis",
         title: "代名詞と省略の参照先を追う",
-        description: "it・they・this・such などが何を指すかを、数・意味・直前の文脈から特定します。",
+        description:
+          "it・they・this・such などが何を指すかを、数・意味・直前の文脈から特定します。",
         rights: "original",
         goals: [
           "代名詞の参照先を文法と意味の両方から絞れる。",
@@ -206,7 +212,8 @@ export const englishInterpretationUnits: EnglishUnit[] = [
         ],
         example: {
           title: "例題: this の内容を特定する",
-          problem: "The school moved the meeting online at the last minute. This allowed several absent students to join.",
+          problem:
+            "The school moved the meeting online at the last minute. This allowed several absent students to join.",
           steps: [
             {
               expression: "This = the school moved the meeting online",
@@ -220,7 +227,8 @@ export const englishInterpretationUnits: EnglishUnit[] = [
         },
         practice: {
           title: "練習: they の参照先を特定する",
-          problem: "Rina placed the keys beside the documents because she needed them later. They were still there at noon.",
+          problem:
+            "Rina placed the keys beside the documents because she needed them later. They were still there at noon.",
           steps: [
             {
               prompt: "They が指す語を入力してください。",
