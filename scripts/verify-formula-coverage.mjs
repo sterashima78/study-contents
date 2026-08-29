@@ -1,6 +1,9 @@
 import { readFile } from "node:fs/promises";
 
-const algebraSource = await readFile(new URL("../src/content/math1/algebra.ts", import.meta.url), "utf8");
+const algebraSource = await readFile(
+  new URL("../src/content/math1/algebra.ts", import.meta.url),
+  "utf8",
+);
 const derivationSource = await readFile(
   new URL("../src/content/math1/formula-derivations.ts", import.meta.url),
   "utf8",
