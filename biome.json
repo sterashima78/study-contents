@@ -24,7 +24,8 @@
         "src/content/math2/**/*.ts",
         "src/content/mathb/**/*.ts",
         "src/content/mathc/**/*.ts",
-        "src/content/chemistry-basic/**/*.ts"
+        "src/content/chemistry-basic/**/*.ts",
+        "src/content/chemistry/**/*.ts"
       ],
       "formatter": {
         "enabled": false
