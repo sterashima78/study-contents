@@ -1,0 +1,79 @@
+---
+type Props = {
+  label: string;
+  title: string;
+  description: string;
+  href?: string;
+  action?: string;
+};
+
+const {
+  label: _label,
+  title: _title,
+  description: _description,
+  href: _href,
+  action: _action,
+} = Astro.props;
+---
+
+<section class="panel">
+  <p class="label">{_label}</p>
+  <h2>{_title}</h2>
+  <p class="description">{_description}</p>
+  {_href && _action && <a href={_href}>{_action}</a>}
+  <slot />
+</section>
+
+<style>
+  .panel {
+    padding: clamp(2rem, 5vw, 3rem) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .label {
+    margin: 0 0 0.75rem;
+    color: var(--color-accent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 2.8rem);
+    line-height: 1.25;
+    letter-spacing: -0.035em;
+  }
+
+  .description {
+    max-width: 50rem;
+    margin: 1rem 0 1.2rem;
+    color: var(--color-muted-strong);
+    line-height: 1.8;
+  }
+
+  a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    padding: 0.65rem 0.95rem;
+    border: 1px solid #315f3f;
+    border-radius: 0.65rem;
+    color: #fff;
+    background: #315f3f;
+    font-size: 0.86rem;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  a:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 0.2rem;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    a:hover {
+      background: #244c32;
+    }
+  }
+</style>
