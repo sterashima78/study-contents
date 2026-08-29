@@ -12,9 +12,7 @@ const _applicationCount = _problemSet.patterns.filter(
 const _advancedCount = _problemSet.patterns.filter(
   (pattern) => pattern.level === "advanced",
 ).length;
-const _generatorCount = _problemSet.patterns.filter(
-  (pattern) => "generatorKey" in pattern,
-).length;
+const _generatorCount = _problemSet.patterns.filter((pattern) => "generatorKey" in pattern).length;
 const _levelLabel = (level: string) => (level === "advanced" ? "発展" : "応用");
 ---
 
