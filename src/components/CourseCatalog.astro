@@ -6,6 +6,8 @@ import ContentIndex from "./ui/ContentIndex.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentSection from "./ui/ContentSection.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ExperimentalNotice from "./ui/ExperimentalNotice.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PageFooter from "./ui/PageFooter.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import SectionHeading from "./ui/SectionHeading.astro";
@@ -48,7 +50,9 @@ const _items = _courses.map((course, index) => ({
     title="学習コンテンツ"
     description="学びたい科目を選び、領域、単元、小単元の順に進みます。各小単元では考え方から例題、練習、確認問題までを一続きで学習できます。"
     variant="display"
-  />
+  >
+    <ExperimentalNotice />
+  </ContentHero>
 
   <ContentSection labelledby="courses-title">
     <SectionHeading
