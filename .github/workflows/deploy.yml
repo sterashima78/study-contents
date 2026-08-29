@@ -36,8 +36,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run checks
-        run: pnpm check
+      - name: Run Biome
+        run: pnpm exec biome ci .
+
+      - name: Verify formula coverage
+        run: pnpm check:formulas
 
       - name: Build
         run: pnpm build
