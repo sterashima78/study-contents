@@ -1,14 +1,33 @@
 ---
 import { math1Areas } from "../content/math1/catalog";
+import { mathAAreas } from "../content/matha/catalog";
 import "../styles/global.css";
 
 const _base = import.meta.env.BASE_URL;
-const _areas = math1Areas.map((area, index) => ({
-  ...area,
-  number: String(index + 1).padStart(2, "0"),
-  lessonCount: area.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
-}));
-const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0);
+const _courses = [
+  {
+    title: "数学I",
+    kicker: "MATHEMATICS I",
+    href: `${_base}math1/`,
+    description: "数と式、図形と計量、二次関数、データの分析を、1ページ1技能の小さな教材で学びます。",
+    areas: math1Areas.map((area) => area.title),
+    lessonCount: math1Areas.reduce(
+      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
+      0,
+    ),
+  },
+  {
+    title: "数学A",
+    kicker: "MATHEMATICS A",
+    href: `${_base}matha/`,
+    description: "場合の数と確率、図形の性質、数学と人間の活動を、1ページ1技能の小さな教材で学びます。",
+    areas: mathAAreas.map((area) => area.title),
+    lessonCount: mathAAreas.reduce(
+      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
+      0,
+    ),
+  },
+];
 ---
 
 <!doctype html>
@@ -18,60 +37,50 @@ const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="高校数学Iの学習コンテンツ。数と式、図形と計量、二次関数、データの分析を1ページ1技能で学べます。"
+      content="高校数学の学習コンテンツ。数学Iと数学Aから学びたい科目を選び、小単元ごとの教材と演習に進めます。"
     />
-    <title>数学I | 学習コンテンツ</title>
+    <title>高校数学 | 学習コンテンツ</title>
   </head>
   <body>
     <main class="page-shell">
       <header class="hero">
-        <p class="eyebrow">MATHEMATICS I</p>
-        <h1>数学I</h1>
+        <p class="eyebrow">HIGH SCHOOL MATHEMATICS</p>
+        <h1>学習コンテンツ</h1>
         <p class="lead">
-          1ページ1技能の小さな教材で、例題の手順を追い、直後の練習で同じ考え方を使います。
+          学びたい科目を選び、領域、単元、小単元の順に進みます。各小単元では考え方から例題、練習、確認問題までを一続きで学習できます。
         </p>
-        <p><a href={`${_base}matha/`}>数学Aの教材へ →</a></p>
-        <div class="learning-flow" aria-label="各小単元の学習の流れ">
-          <span>考え方</span>
-          <span aria-hidden="true">→</span>
-          <span>導出・根拠</span>
-          <span aria-hidden="true">→</span>
-          <span>例題</span>
-          <span aria-hidden="true">→</span>
-          <span>直後の練習</span>
-          <span aria-hidden="true">→</span>
-          <span>3問確認</span>
-          <span aria-hidden="true">→</span>
-          <span>まとめ</span>
-        </div>
       </header>
 
-      <section class="curriculum" aria-labelledby="curriculum-title">
+      <section class="curriculum" aria-labelledby="courses-title">
         <div class="section-heading">
           <div>
-            <p class="section-label">CONTENTS</p>
-            <h2 id="curriculum-title">学習する4つの領域</h2>
+            <p class="section-label">COURSES</p>
+            <h2 id="courses-title">学習する科目</h2>
           </div>
-          <p>全{_totalLessonCount}小教材。領域から単元へ進み、各ページを5〜10分程度で学習します。</p>
+          <p>科目ごとに独立した目次から、学びたい領域と単元を選択できます。</p>
         </div>
 
-        <ol class="unit-grid">
+        <ol class="course-grid">
           {
-            _areas.map((area) => (
-              <li class="unit-card">
-                <div class="unit-header">
-                  <span class="unit-number" aria-hidden="true">{area.number}</span>
-                  <h3><a href={`${_base}math1/${area.key}/`}>{area.title}</a></h3>
-                </div>
-                <p class="unit-description">{area.description}</p>
-                <ul class="topic-list">
-                  {area.units.map((unit) => (
-                    <li>
-                      <a href={`${_base}math1/${area.key}/${unit.key}/`}>{unit.title}</a>
-                    </li>
-                  ))}
-                </ul>
-                <p class="preparing available">{area.lessonCount}小教材公開</p>
+            _courses.map((course, index) => (
+              <li class="course-card">
+                <a class="course-card-link" href={course.href}>
+                  <div class="course-card-heading">
+                    <span class="course-number" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <p class="course-kicker">{course.kicker}</p>
+                      <h3>{course.title}</h3>
+                    </div>
+                  </div>
+                  <p class="course-description">{course.description}</p>
+                  <ul class="course-area-list" aria-label={`${course.title}の領域`}>
+                    {course.areas.map((area) => <li>{area}</li>)}
+                  </ul>
+                  <p class="course-meta">{course.lessonCount}小教材公開</p>
+                  <span class="course-action">科目の目次を見る →</span>
+                </a>
               </li>
             ))
           }
@@ -79,8 +88,8 @@ const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0
       </section>
 
       <footer class="page-footer">
-        <p>高校 数学I</p>
-        <p>現行学習指導要領の4領域を、小単元・確認演習・単元末演習で学習できます。</p>
+        <p>高校数学 学習コンテンツ</p>
+        <p>科目を入口として、領域・単元・小単元へ進む構成です。</p>
       </footer>
     </main>
   </body>
