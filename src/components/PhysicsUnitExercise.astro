@@ -1,0 +1,59 @@
+---
+import type { MathArea, MathUnit } from "../content/math1/types";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PhysicsExerciseSet from "./PhysicsExerciseSet.astro";
+import "../styles/global.css";
+import "../styles/lesson.css";
+
+type Props = {
+  area: MathArea;
+  unit: MathUnit;
+};
+
+const { area: _area, unit: _unit } = Astro.props;
+const _base = import.meta.env.BASE_URL;
+const _courseHomeHref = `${_base}physics-basics/`;
+const _areaHref = `${_courseHomeHref}${_area.key}/`;
+const _unitHref = `${_areaHref}${_unit.key}/`;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content={`高校物理基礎「${_unit.title}」の単元末演習。基礎・応用・難問を採点し、小単元ごとの弱点を確認します。`}
+    />
+    <title>単元末演習 | {_unit.title} | 物理基礎</title>
+  </head>
+  <body>
+    <main class="lesson-shell">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <a href={_courseHomeHref}>物理基礎</a>
+        <span aria-hidden="true">/</span>
+        <a href={_areaHref}>{_area.title}</a>
+        <span aria-hidden="true">/</span>
+        <a href={_unitHref}>{_unit.title}</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">単元末演習</span>
+      </nav>
+
+      <header class="lesson-hero compact-hero">
+        <p class="lesson-kicker">{_area.title} · UNIT EXERCISE</p>
+        <h1>{_unit.title}の単元末演習</h1>
+        <p>
+          単元全体から問題を出し、採点後に小単元別の正答状況を表示します。数値だけでなく、向き・単位・条件の読み取りも確認します。
+        </p>
+      </header>
+
+      <PhysicsExerciseSet mode="unit" areaKey={_area.key} unitKey={_unit.key} />
+
+      <nav class="lesson-navigation" aria-label="教材ナビゲーション">
+        <a href={_unitHref}>← {_unit.title}の小単元一覧</a>
+        <a href={_courseHomeHref}>物理基礎の目次へ →</a>
+      </nav>
+    </main>
+  </body>
+</html>

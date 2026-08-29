@@ -12,6 +12,7 @@ const contentPaths = [
   "../src/content/mathb/statistical-inference.ts",
   "../src/content/mathb/social-life.ts",
   "../src/content/mathc/catalog.ts",
+  "../src/content/physics-basics/catalog.ts",
 ];
 const derivationPaths = [
   "../src/content/math1/formula-derivations.ts",
@@ -19,6 +20,7 @@ const derivationPaths = [
   "../src/content/matha/formula-derivations.ts",
   "../src/content/mathb/formula-derivations.ts",
   "../src/content/mathc/formula-derivations.ts",
+  "../src/content/physics-basics/formula-derivations.ts",
 ];
 
 const formulaExemptions = new Map([
@@ -50,6 +52,15 @@ const formulaExemptions = new Map([
   ["normal-distribution", "正規分布N(μ,σ²)の記法の定義"],
   ["hypothesis-testing", "有意水準による基本的な検定判断ルール"],
   ["evaluate-model", "誤差と相対誤差の定義"],
+  ["force-diagrams", "重力W=mgは重力加速度の定義と運動法則を前提にする基本関係"],
+  ["force-equilibrium", "ΣF=0は加速度0の場合の運動法則を表す基本条件"],
+  ["newton-law", "ΣF=maは実験に基づく運動の基本法則"],
+  ["work-power", "W=FxとP=W/tはこの範囲で用いる仕事・仕事率の定義"],
+  ["wave-superposition", "重ね合わせy=y₁+y₂は線形な波を扱う基本原理"],
+  ["heat-temperature", "Q=mcΔTは比熱の定義を含む熱量の基本関係"],
+  ["heat-balance", "Q失=Q得は断熱系のエネルギー保存を熱量で表した基本関係"],
+  ["ohms-law", "V=IRは金属導体で成り立つ実験法則、R=ρL/Aは抵抗率の基本関係"],
+  ["energy-resources-efficiency", "効率は入力に対する有効出力の割合として定義する量"],
 ]);
 
 const lessonsWithFormulas = new Set();
