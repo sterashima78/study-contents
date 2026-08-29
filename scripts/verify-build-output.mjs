@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: ["学習する科目", "数学I", "数学A", "科目の目次を見る"],
+    markers: ["学習する科目", "数学I", "数学A", "数学C", "科目の目次を見る"],
   },
   {
     path: new URL("../dist/math1/index.html", import.meta.url),
@@ -77,6 +77,32 @@ const checks = [
     ),
     markers: ["確率の基本の単元末演習", "単元末演習"],
   },
+  {
+    path: new URL("../dist/mathc/index.html", import.meta.url),
+    markers: ["数学C", "学習する3つの領域", "全14小教材", "科目一覧へ"],
+  },
+  {
+    path: new URL("../dist/mathc/vectors/vector-basics/inner-product/index.html", import.meta.url),
+    markers: ["ベクトルの内積", "公式の根拠: 成分による内積", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/mathc/curves-complex/complex-plane/polar-demoivre/index.html",
+      import.meta.url,
+    ),
+    markers: ["複素数の極形式とド・モアブルの定理", "公式の根拠: ド・モアブルの定理"],
+  },
+  {
+    path: new URL(
+      "../dist/mathc/mathematical-expression/representation-tools/matrices/index.html",
+      import.meta.url,
+    ),
+    markers: ["行列でデータと変換を表す", "公式の根拠: 行列の和と実数倍"],
+  },
+  {
+    path: new URL("../dist/mathc/vectors/vector-basics/exercise/index.html", import.meta.url),
+    markers: ["ベクトルの基本と内積の単元末演習", "単元末演習"],
+  },
 ];
 
 for (const check of checks) {
@@ -94,4 +120,6 @@ for (const check of checks) {
   }
 }
 
-console.log("Generated HTML rendering checks passed for the course index, Math I, and Math A.");
+console.log(
+  "Generated HTML rendering checks passed for the course index, Math I, Math A, and Math C.",
+);
