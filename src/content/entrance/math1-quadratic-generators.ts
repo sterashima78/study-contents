@@ -29,9 +29,7 @@ const generateBoundedMinimum = (): GeneratedPractice => {
   const rightValue = upper * upper + constant;
 
   return {
-    statement: [
-      `実数 a に対し、f(x)=x²−2ax+${constant} を 0≤x≤${upper} の範囲で考える。`,
-    ],
+    statement: [`実数 a に対し、f(x)=x²−2ax+${constant} を 0≤x≤${upper} の範囲で考える。`],
     question: "f(x) の最小値と、そのときの x を a の値によって場合分けして求めよ。",
     solution: {
       steps: [
@@ -51,12 +49,11 @@ const generateParabolaTangent = (): GeneratedPractice => {
   const tangentX = slope / 2;
   const intercept = offset - tangentX * tangentX;
   const tangentY = tangentX * tangentX + offset;
-  const interceptText = intercept === 0 ? "" : intercept > 0 ? `+${intercept}` : `−${Math.abs(intercept)}`;
+  const interceptText =
+    intercept === 0 ? "" : intercept > 0 ? `+${intercept}` : `−${Math.abs(intercept)}`;
 
   return {
-    statement: [
-      `放物線 C: y=x²+${offset} と、傾き ${slope} の直線 l: y=${slope}x+k を考える。`,
-    ],
+    statement: [`放物線 C: y=x²+${offset} と、傾き ${slope} の直線 l: y=${slope}x+k を考える。`],
     question: "C と l が接するような k と、その接点の座標を求めよ。",
     solution: {
       steps: [
@@ -102,7 +99,9 @@ const generateDetermineQuadratic = (): GeneratedPractice => {
   const minimum = pick([-3, -2, -1, 0, 1] as const);
   const distance = pick([1, 2, 3] as const);
   const sampleValue = minimum + distance * distance;
-  const vertices = [sampleX - distance, sampleX + distance].sort((left, right) => left - right);
+  const vertices = [sampleX - distance, sampleX + distance].sort(
+    (left, right) => left - right,
+  );
 
   const functions = vertices.map((vertex) => {
     const b = -2 * vertex;
