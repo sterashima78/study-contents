@@ -25,7 +25,7 @@ jobs:
       - name: Setup pnpm and Node.js
         uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1
         with:
-          version: 12.0.0
+          version: 12.0.0-rc.9
           runtime: node@24
           install: false
           cache: false
@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run Biome
+      - name: Run checks
         run: pnpm check
 
       - name: Build
