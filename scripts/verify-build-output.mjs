@@ -12,6 +12,7 @@ const checks = [
       "数学B",
       "数学C",
       "化学基礎",
+      "CHEMISTRY",
       "物理基礎",
       "科目の目次を見る",
     ],
@@ -164,6 +165,31 @@ const checks = [
     markers: ["化学反応の単元末演習", "全6問"],
   },
   {
+    path: new URL("../dist/chemistry/index.html", import.meta.url),
+    markers: ["化学", "学習する5つの領域", "全32小教材", "科目一覧へ"],
+  },
+  {
+    path: new URL(
+      "../dist/chemistry/states-equilibrium/states-and-structures/gas-laws/index.html",
+      import.meta.url,
+    ),
+    markers: ["気体の法則と状態方程式", "PV = nRT", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/chemistry/changes-equilibrium/electrochemistry/exercise/index.html",
+      import.meta.url,
+    ),
+    markers: ["電池と電気分解の単元末演習", "全6問"],
+  },
+  {
+    path: new URL(
+      "../dist/chemistry/organic-properties/polymers/synthetic-polymers/index.html",
+      import.meta.url,
+    ),
+    markers: ["合成高分子化合物", "付加重合", "縮合重合", "理解を確認する3問"],
+  },
+  {
     path: new URL("../dist/physics-basics/index.html", import.meta.url),
     markers: ["物理基礎", "学習する5つの領域", "全19小教材", "科目一覧へ"],
   },
@@ -217,5 +243,5 @@ for (const check of checks) {
 }
 
 console.log(
-  "Generated HTML rendering checks passed for the course index, Math I, Math A, Math B, Math C, Basic Chemistry, and Physics Basics.",
+  "Generated HTML rendering checks passed for the course index, Math I, Math A, Math B, Math C, Basic Chemistry, Chemistry, and Physics Basics.",
 );
