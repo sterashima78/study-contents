@@ -106,27 +106,86 @@
   gap: 0.35rem;
 }
 
-.exercise-answer-label span {
+.exercise-answer-label > label {
   font-size: 0.9rem;
   font-weight: 700;
 }
 
-.exercise-answer-label input {
+.exercise-answer-editor {
   width: min(100%, 34rem);
-  padding: 0.7rem 0.8rem;
+  min-height: 2.8rem;
   border: 1px solid #aeb4bc;
   border-radius: 0.55rem;
+  background: #fff;
+}
+
+.exercise-text-input {
+  padding: 0.7rem 0.8rem;
   font: inherit;
 }
 
-.exercise-answer-label input.is-correct {
+.exercise-math-editor {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.exercise-math-input {
+  display: block;
+  padding: 0.55rem 0.7rem;
+  font-size: 1.15rem;
+  --caret-color: #1f5e93;
+  --selection-background-color: #dcecff;
+}
+
+.exercise-math-input:focus-within,
+.exercise-text-input:focus {
+  outline: 2px solid #315f87;
+  outline-offset: 2px;
+}
+
+.exercise-answer-editor.is-correct {
   border-color: #2f7d4a;
   outline-color: #2f7d4a;
 }
 
-.exercise-answer-label input.is-error {
+.exercise-answer-editor.is-error {
   border-color: #b43c3c;
   outline-color: #b43c3c;
+}
+
+.exercise-input-help {
+  margin: 0;
+  color: var(--muted, #5f6368);
+  font-size: 0.82rem;
+}
+
+.exercise-symbol-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  width: min(100%, 34rem);
+}
+
+.exercise-symbol-button {
+  min-width: 2.9rem;
+  min-height: 2.35rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid #b9c1ca;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.exercise-symbol-button:hover {
+  background: #f1f5f8;
+}
+
+.exercise-symbol-button:focus-visible {
+  outline: 2px solid #315f87;
+  outline-offset: 2px;
 }
 
 .exercise-hint {
@@ -198,6 +257,13 @@
   font-weight: 700;
 }
 
+@media (pointer: coarse) {
+  .exercise-symbol-button {
+    min-width: 3.3rem;
+    min-height: 2.8rem;
+  }
+}
+
 @media (max-width: 680px) {
   .exercise-heading,
   .exercise-toolbar {
@@ -206,6 +272,11 @@
   }
 
   .exercise-toolbar .secondary-button {
+    width: 100%;
+  }
+
+  .exercise-answer-editor,
+  .exercise-symbol-toolbar {
     width: 100%;
   }
 }

@@ -63,17 +63,55 @@ const _isUnit = _mode === "unit";
 </section>
 
 <script>
+  import { MathfieldElement } from "mathlive";
+  import "mathlive/fonts.css";
   import {
     generateLessonExercises,
     generateUnitExercises,
     type GeneratedExercise,
   } from "../content/math1/exercise-generators";
 
-  const normalizeAnswer = (value: string) =>
-    value
+  MathfieldElement.soundsDirectory = null;
+
+  const textAnswerLessonKeys = new Set([
+    "rational-irrational",
+    "propositions-counterexamples",
+    "necessary-sufficient",
+  ]);
+
+  const mathShortcuts = [
+    { label: "x²", latex: "#@^{2}", ariaLabel: "直前の式を2乗する" },
+    { label: "xⁿ", latex: "#@^{#?}", ariaLabel: "指数を入力する" },
+    { label: "√□", latex: "\\sqrt{#0}", ariaLabel: "平方根を入力する" },
+    { label: "□/□", latex: "\\frac{#0}{#?}", ariaLabel: "分数を入力する" },
+    { label: "±", latex: "\\pm", ariaLabel: "プラスマイナスを入力する" },
+    { label: "(", latex: "(", ariaLabel: "左かっこを入力する" },
+    { label: ")", latex: ")", ariaLabel: "右かっこを入力する" },
+  ] as const;
+
+  const normalizeAnswer = (value: string) => {
+    let normalized = value
       .trim()
       .toLowerCase()
       .replaceAll(/\s+/g, "")
+      .replaceAll("\\left", "")
+      .replaceAll("\\right", "")
+      .replaceAll(/\\[,;:!]/g, "")
+      .replaceAll("\\cdot", "*")
+      .replaceAll("\\times", "*")
+      .replaceAll("\\pm", "±")
+      .replaceAll("\\leqslant", "≤")
+      .replaceAll("\\leq", "≤")
+      .replaceAll("\\le", "≤")
+      .replaceAll("\\geqslant", "≥")
+      .replaceAll("\\geq", "≥")
+      .replaceAll("\\ge", "≥")
+      .replaceAll("\\Rightarrow", "⇒")
+      .replaceAll("\\implies", "⇒")
+      .replaceAll("\\lbrace", "{")
+      .replaceAll("\\rbrace", "}")
+      .replaceAll("\\{", "{")
+      .replaceAll("\\}", "}")
       .replaceAll("−", "-")
       .replaceAll("–", "-")
       .replaceAll("—", "-")
@@ -83,8 +121,22 @@ const _isUnit = _mode === "unit";
       .replaceAll("（", "(")
       .replaceAll("）", ")")
       .replaceAll("｛", "{")
-      .replaceAll("｝", "}")
-      .replaceAll("^2", "²");
+      .replaceAll("｝", "}");
+
+    let previous = "";
+    while (previous !== normalized) {
+      previous = normalized;
+      normalized = normalized.replace(/\\sqrt\{([^{}]+)\}/g, "√$1");
+    }
+
+    previous = "";
+    while (previous !== normalized) {
+      previous = normalized;
+      normalized = normalized.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, "$1/$2");
+    }
+
+    return normalized.replaceAll("^{2}", "²").replaceAll("^2", "²");
+  };
 
   const difficultyLabel: Record<GeneratedExercise["difficulty"], string> = {
     basic: "基礎",
@@ -101,6 +153,44 @@ const _isUnit = _mode === "unit";
     if (className) element.className = className;
     if (text !== undefined) element.textContent = text;
     return element;
+  };
+
+  const isTextAnswer = (exercise: GeneratedExercise) =>
+    exercise.lessonKeys.length > 0 && exercise.lessonKeys.every((key) => textAnswerLessonKeys.has(key));
+
+  const createMathAnswerEditor = (answerId: string, ariaLabel: string) => {
+    const wrapper = createElement("div", "exercise-math-editor");
+    const mathField = new MathfieldElement();
+    mathField.id = answerId;
+    mathField.className = "exercise-answer-editor exercise-math-input";
+    mathField.placeholder = "\\text{答えを入力}";
+    mathField.mathVirtualKeyboardPolicy = "auto";
+    mathField.setAttribute("aria-label", ariaLabel);
+    mathField.dataset.answerEditor = "math";
+
+    const helperText = createElement(
+      "p",
+      "exercise-input-help",
+      "入力しにくい記号は下のボタンから挿入できます。スマートフォンでは数式キーボードも利用できます。",
+    );
+    const shortcuts = createElement("div", "exercise-symbol-toolbar");
+    shortcuts.setAttribute("aria-label", "数式入力補助");
+
+    for (const shortcut of mathShortcuts) {
+      const button = createElement("button", "exercise-symbol-button", shortcut.label);
+      button.type = "button";
+      button.setAttribute("aria-label", shortcut.ariaLabel);
+      button.addEventListener("click", () => {
+        mathField.insert(shortcut.latex, {
+          focus: true,
+          selectionMode: "placeholder",
+        });
+      });
+      shortcuts.append(button);
+    }
+
+    wrapper.append(mathField, helperText, shortcuts);
+    return wrapper;
   };
 
   for (const section of document.querySelectorAll<HTMLElement>("[data-exercise-set]")) {
@@ -158,18 +248,31 @@ const _isUnit = _mode === "unit";
           "exercise-mapping",
           `対応: ${exercise.lessonTitles.join(" / ")}`,
         );
-        const label = createElement("label", "exercise-answer-label");
-        const labelText = createElement("span", undefined, "答え");
-        const input = document.createElement("input");
-        input.type = "text";
-        input.autocomplete = "off";
-        input.spellcheck = false;
-        input.placeholder = "答えを入力";
-        input.required = true;
-        input.setAttribute("aria-label", `問${index + 1}の答え`);
-        label.append(labelText, input);
+        const answerBlock = createElement("div", "exercise-answer-label");
+        const answerId = `exercise-answer-${exercise.id}-${index}`;
+        const labelText = createElement("label", undefined, "答え");
+        labelText.htmlFor = answerId;
 
-        article.append(header, prompt, mapping, label);
+        if (isTextAnswer(exercise)) {
+          const input = document.createElement("input");
+          input.id = answerId;
+          input.type = "text";
+          input.className = "exercise-answer-editor exercise-text-input";
+          input.autocomplete = "off";
+          input.spellcheck = false;
+          input.placeholder = "答えを入力";
+          input.required = true;
+          input.dataset.answerEditor = "text";
+          input.setAttribute("aria-label", `問${index + 1}の答え`);
+          answerBlock.append(labelText, input);
+        } else {
+          answerBlock.append(
+            labelText,
+            createMathAnswerEditor(answerId, `問${index + 1}の数式の答え`),
+          );
+        }
+
+        article.append(header, prompt, mapping, answerBlock);
 
         if (exercise.hint) {
           const details = createElement("details", "exercise-hint");
@@ -212,16 +315,20 @@ const _isUnit = _mode === "unit";
       const lessonResults = new Map<string, { title: string; correct: number; total: number }>();
 
       for (const [index, article] of [...list.querySelectorAll<HTMLElement>(".exercise-question")].entries()) {
-        const input = article.querySelector<HTMLInputElement>("input");
-        if (!input) continue;
+        const mathField = article.querySelector<MathfieldElement>("math-field[data-answer-editor='math']");
+        const textInput = article.querySelector<HTMLInputElement>("input[data-answer-editor='text']");
+        const editor = mathField ?? textInput;
+        if (!editor) continue;
+
         const exercise = exercises[index];
         if (!exercise) continue;
+        const answer = mathField ? mathField.getValue("latex-unstyled") : (textInput?.value ?? "");
         const accepted = exercise.answers.map(normalizeAnswer);
-        const isCorrect = accepted.includes(normalizeAnswer(input.value));
+        const isCorrect = accepted.includes(normalizeAnswer(answer));
         article.classList.toggle("is-correct", isCorrect);
         article.classList.toggle("is-error", !isCorrect);
-        input.classList.toggle("is-correct", isCorrect);
-        input.classList.toggle("is-error", !isCorrect);
+        editor.classList.toggle("is-correct", isCorrect);
+        editor.classList.toggle("is-error", !isCorrect);
         if (isCorrect) correctCount += 1;
 
         for (const [lessonIndex, key] of exercise.lessonKeys.entries()) {
@@ -246,8 +353,11 @@ const _isUnit = _mode === "unit";
       window.setTimeout(() => {
         for (const article of list.querySelectorAll<HTMLElement>(".exercise-question")) {
           article.classList.remove("is-correct", "is-error");
-          const input = article.querySelector("input");
-          input?.classList.remove("is-correct", "is-error");
+          const mathField = article.querySelector<MathfieldElement>("math-field[data-answer-editor='math']");
+          const textInput = article.querySelector<HTMLInputElement>("input[data-answer-editor='text']");
+          mathField?.setValue("");
+          mathField?.classList.remove("is-correct", "is-error");
+          textInput?.classList.remove("is-correct", "is-error");
         }
         feedback.textContent = "";
         feedback.className = "feedback exercise-feedback";
