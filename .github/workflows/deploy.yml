@@ -60,6 +60,9 @@ jobs:
       - name: Verify English generated HTML
         run: node scripts/verify-english-build-output.mjs
 
+      - name: Verify biology generated HTML
+        run: node scripts/verify-biology-build-output.mjs
+
       - name: Verify Math I application and advanced HTML
         run: node scripts/verify-math1-advanced-build-output.mjs
 

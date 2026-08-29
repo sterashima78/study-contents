@@ -1,4 +1,6 @@
 import {
+  biologyBasicCourse,
+  biologyCourse,
   chemistryBasicCourse,
   chemistryCourse,
   type MathCourseInfo,
@@ -10,6 +12,8 @@ import {
   physicsBasicsCourse,
   physicsCourse,
 } from "../math-courses";
+import biology from "./biology-advanced.json";
+import biologyBasic from "./biology-basic-advanced.json";
 import chemistry from "./chemistry-advanced.json";
 import chemistryBasic from "./chemistry-basic-advanced.json";
 import math2 from "./math2-advanced.json";
@@ -84,6 +88,8 @@ const documents = [
   physics,
   chemistryBasic,
   chemistry,
+  biologyBasic,
+  biology,
 ] as unknown as AdvancedDocument[];
 
 export const advancedTopicSets = documents.flatMap((document) => document.topicSets);
@@ -98,6 +104,8 @@ const courseByKey = new Map<MathCourseInfo["key"], MathCourseInfo>([
   [physicsCourse.key, physicsCourse],
   [chemistryBasicCourse.key, chemistryBasicCourse],
   [chemistryCourse.key, chemistryCourse],
+  [biologyBasicCourse.key, biologyBasicCourse],
+  [biologyCourse.key, biologyCourse],
 ]);
 
 export function findAdvancedTopicSet(course: MathCourseInfo["key"], topic: string) {

@@ -9,7 +9,9 @@ export type MathCourseInfo = {
     | "chemistry-basic"
     | "chemistry"
     | "physics-basics"
-    | "physics";
+    | "physics"
+    | "biology-basic"
+    | "biology";
   title: string;
   kicker: string;
   routeBase: string;
@@ -94,4 +96,20 @@ export const physicsCourse: MathCourseInfo = {
   kicker: "PHYSICS",
   routeBase: "physics",
   homePath: "physics/",
+};
+
+export const biologyBasicCourse: MathCourseInfo = {
+  key: "biology-basic",
+  title: "生物基礎",
+  kicker: "BASIC BIOLOGY",
+  routeBase: "biology-basic",
+  homePath: "biology-basic/",
+};
+
+export const biologyCourse: MathCourseInfo = {
+  key: "biology",
+  title: "生物",
+  kicker: "BIOLOGY",
+  routeBase: "biology",
+  homePath: "biology/",
 };

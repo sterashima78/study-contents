@@ -69,8 +69,8 @@ for (const filename of advancedFiles) {
   }
 }
 
-if (topicCount !== 34) {
-  issues.push(`数学I以外の発展教材は34領域必要ですが、${topicCount}領域でした。`);
+if (topicCount !== 42) {
+  issues.push(`数学I以外の発展教材は42領域必要ですが、${topicCount}領域でした。`);
 }
 
 if (issues.length > 0) {

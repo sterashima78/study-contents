@@ -44,7 +44,7 @@ const _lessonItems = _unit.lessons.map((lesson, index) => ({
 
 <StudyPage
   title={`${_unit.title} | ${_area.title} | ${_course.title}`}
-  description={`高校${_course.title}「${_unit.title}」の小単元一覧。1ページ1技能で学習し、最後に単元末演習で弱点を確認します。`}
+  description={`高校${_course.title}「${_unit.title}」の小単元一覧。1ページ1テーマで学習し、最後に単元末演習で弱点を確認します。`}
 >
   <BreadcrumbTrail
     items={[
@@ -58,7 +58,7 @@ const _lessonItems = _unit.lessons.map((lesson, index) => ({
   <ActionPanel
     label="LEARNING FLOW"
     title="小さく区切って順番に学ぶ"
-    description="各ページは1つの技能だけを扱います。考え方を確認し、細かい途中式の例題を見た直後に練習し、3問の確認演習で自力で解けるか確かめます。"
+    description="各ページは1つのテーマだけを扱います。考え方を確認し、例題で整理した直後に練習し、3問の確認演習で自力で説明・解答できるか確かめます。"
   >
     <LearningFlow steps={["考え方", "例題", "直後の練習", "3問確認", "まとめ"]} />
   </ActionPanel>
@@ -68,7 +68,7 @@ const _lessonItems = _unit.lessons.map((lesson, index) => ({
       label="LESSONS"
       title="小単元"
       id="lessons-title"
-      description="上から順に進めると、前の技能を使いながら学べます。"
+      description="上から順に進めると、前の内容を使いながら学べます。"
     />
     <ContentIndex items={_lessonItems} />
   </ContentSection>
@@ -76,7 +76,7 @@ const _lessonItems = _unit.lessons.map((lesson, index) => ({
   <ActionPanel
     label="UNIT EXERCISE"
     title="最後に単元全体を確認する"
-    description="基礎・応用・難問を自動採点し、各問題と小単元の対応から復習すべき技能を確認します。"
+    description="基礎・応用・難問を自動採点し、各問題と小単元の対応から復習すべき内容を確認します。"
     href={_exerciseHref}
     action="単元末演習を始める"
   />
