@@ -1,5 +1,7 @@
 ---
+import { math1Course, type MathCourseInfo } from "../content/math-courses";
 import { getFormulaDerivation } from "../content/math1/formula-registry";
+import { getMathAFormulaDerivation } from "../content/matha/formula-derivations";
 import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
@@ -10,19 +12,22 @@ type Props = {
   area: MathArea;
   unit: MathUnit;
   lesson: MathLesson;
+  course?: MathCourseInfo;
 };
 
-const { area: _area, unit: _unit, lesson: _lesson } = Astro.props;
+const { area: _area, unit: _unit, lesson: _lesson, course: _course = math1Course } = Astro.props;
 const _base = import.meta.env.BASE_URL;
+const _courseHomeHref = `${_base}${_course.homePath}`;
 const _lessonIndex = _unit.lessons.findIndex((item) => item.key === _lesson.key);
 const _previousLesson = _lessonIndex > 0 ? _unit.lessons[_lessonIndex - 1] : undefined;
 const _nextLesson =
   _lessonIndex < _unit.lessons.length - 1 ? _unit.lessons[_lessonIndex + 1] : undefined;
-const _areaHref = `${_base}math1/${_area.key}/`;
+const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
-const _formulaDerivation = getFormulaDerivation(_lesson.key);
+const _formulaDerivation =
+  _course.key === "matha" ? getMathAFormulaDerivation(_lesson.key) : getFormulaDerivation(_lesson.key);
 ---
 
 <!doctype html>
@@ -32,14 +37,14 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content={`高校数学I「${_lesson.title}」の教材。細かい途中式、例題直後の練習問題、3問の確認演習、まとめで学習します。`}
+      content={`高校${_course.title}「${_lesson.title}」の教材。細かい途中式、例題直後の練習問題、3問の確認演習、まとめで学習します。`}
     />
-    <title>{_lesson.title} | {_unit.title} | 数学I</title>
+    <title>{_lesson.title} | {_unit.title} | {_course.title}</title>
   </head>
   <body>
     <main class="lesson-shell">
       <nav class="breadcrumb" aria-label="パンくずリスト">
-        <a href={_base}>数学I</a>
+        <a href={_courseHomeHref}>{_course.title}</a>
         <span aria-hidden="true">/</span>
         <a href={_areaHref}>{_area.title}</a>
         <span aria-hidden="true">/</span>
@@ -166,7 +171,13 @@ const _formulaDerivation = getFormulaDerivation(_lesson.key);
         </article>
       </section>
 
-      <ExerciseSet mode="lesson" areaKey={_area.key} unitKey={_unit.key} lessonKey={_lesson.key} />
+      <ExerciseSet
+        mode="lesson"
+        courseKey={_course.key}
+        areaKey={_area.key}
+        unitKey={_unit.key}
+        lessonKey={_lesson.key}
+      />
 
       <section class="lesson-section summary-section" aria-labelledby="summary-title">
         <p class="section-label">SUMMARY</p>
