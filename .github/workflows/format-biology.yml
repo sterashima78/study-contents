@@ -1,0 +1,47 @@
+name: Format biology branch
+
+on:
+  push:
+    branches:
+      - feature/biology-content
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    if: github.repository == 'sterashima78/study-contents'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: feature/biology-content
+
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1
+        with:
+          version: 12.0.0
+          runtime: node@24
+          install: false
+          cache: false
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Update Biome and format biology files
+        run: |
+          pnpm add -D @biomejs/biome@2.5.11
+          pnpm exec biome format --write src/content/biology-basic/catalog.ts src/content/biology/catalog.ts src/content/biology-exercises.ts
+          pnpm exec biome ci .
+
+      - name: Commit generated changes
+        run: |
+          if git diff --quiet; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json pnpm-lock.yaml src/content/biology-basic/catalog.ts src/content/biology/catalog.ts src/content/biology-exercises.ts
+          git commit -m "chore: format biology content and update Biome"
+          git push origin HEAD:feature/biology-content
