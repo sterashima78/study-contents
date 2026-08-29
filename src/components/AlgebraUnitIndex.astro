@@ -10,6 +10,7 @@ type Props = {
 const { unit: _unit } = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _lessonHref = (lessonKey: string) => `${_base}math1/algebra/${_unit.key}/${lessonKey}/`;
+const _exerciseHref = `${_base}math1/algebra/${_unit.key}/exercise/`;
 ---
 
 <!doctype html>
@@ -19,7 +20,7 @@ const _lessonHref = (lessonKey: string) => `${_base}math1/algebra/${_unit.key}/$
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content={`高校数学I「${_unit.title}」の小単元一覧。1ページ1技能で順番に学習します。`}
+      content={`高校数学I「${_unit.title}」の小単元一覧。1ページ1技能で学習し、最後に単元末演習で弱点を確認します。`}
     />
     <title>{_unit.title} | 数学I</title>
   </head>
@@ -43,7 +44,7 @@ const _lessonHref = (lessonKey: string) => `${_base}math1/algebra/${_unit.key}/$
         <p class="section-label">LEARNING FLOW</p>
         <h2 id="guide-title">小さく区切って順番に学ぶ</h2>
         <p class="unit-guide-description">
-          各ページは1つの技能だけを扱います。考え方を確認し、細かい途中式の例題を見た直後に練習問題へ進みます。
+          各ページは1つの技能だけを扱います。考え方を確認し、細かい途中式の例題を見た直後に練習し、3問の確認演習で自力で解けるか確かめます。
         </p>
         <div class="learning-flow lesson-flow" aria-label="各小単元の流れ">
           <span>考え方</span>
@@ -51,6 +52,8 @@ const _lessonHref = (lessonKey: string) => `${_base}math1/algebra/${_unit.key}/$
           <span>例題</span>
           <span aria-hidden="true">→</span>
           <span>直後の練習</span>
+          <span aria-hidden="true">→</span>
+          <span>3問確認</span>
           <span aria-hidden="true">→</span>
           <span>まとめ</span>
         </div>
@@ -81,6 +84,15 @@ const _lessonHref = (lessonKey: string) => `${_base}math1/algebra/${_unit.key}/$
             ))
           }
         </ol>
+      </section>
+
+      <section class="lesson-section unit-guide" aria-labelledby="unit-exercise-link-title">
+        <p class="section-label">UNIT EXERCISE</p>
+        <h2 id="unit-exercise-link-title">最後に単元全体を確認する</h2>
+        <p class="unit-guide-description">
+          基礎12問・応用3問・難問1問を自動採点し、各問題と小単元の対応から復習すべき技能を確認します。
+        </p>
+        <a class="primary-button" href={_exerciseHref}>単元末演習を始める</a>
       </section>
 
       <nav class="lesson-navigation" aria-label="教材ナビゲーション">
