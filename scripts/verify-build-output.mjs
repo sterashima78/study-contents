@@ -276,22 +276,14 @@ const checks = [
       "../dist/physics/motion/circular-oscillation/uniform-circular-motion/index.html",
       import.meta.url,
     ),
-    markers: [
-      "等速円運動",
-      "式の根拠: 等速円運動の向心加速度 a = v²/r",
-      "理解を確認する3問",
-    ],
+    markers: ["等速円運動", "式の根拠: 等速円運動の向心加速度 a = v²/r", "理解を確認する3問"],
   },
   {
     path: new URL(
       "../dist/physics/waves/light/light-interference-diffraction/index.html",
       import.meta.url,
     ),
-    markers: [
-      "光の回折と干渉",
-      "式の根拠: ヤングの干渉縞 Δx = λL/d",
-      "理解を確認する3問",
-    ],
+    markers: ["光の回折と干渉", "式の根拠: ヤングの干渉縞 Δx = λL/d", "理解を確認する3問"],
   },
   {
     path: new URL(
@@ -301,15 +293,8 @@ const checks = [
     markers: ["電磁誘導・自己誘導・交流", "ファラデー", "理解を確認する3問"],
   },
   {
-    path: new URL(
-      "../dist/physics/atoms/atom-nucleus/nuclear-physics/index.html",
-      import.meta.url,
-    ),
-    markers: [
-      "原子核・崩壊・核反応",
-      "式の根拠: 半減期を用いた残存量",
-      "理解を確認する3問",
-    ],
+    path: new URL("../dist/physics/atoms/atom-nucleus/nuclear-physics/index.html", import.meta.url),
+    markers: ["原子核・崩壊・核反応", "式の根拠: 半減期を用いた残存量", "理解を確認する3問"],
   },
   {
     path: new URL(
