@@ -29,10 +29,22 @@ const _curriculumReference = getCurriculumReference(_courseKey);
     <title>{_title}</title>
   </head>
   <body>
-    <main class:list={["study-page", _width === "wide" && "is-wide"]}>
-      <slot />
-      {_curriculumReference && <CurriculumReference reference={_curriculumReference} />}
-    </main>
+    <div class="site-shell">
+      <a class="skip-link" href="#page-top">本文へ移動</a>
+      <header class="site-header">
+        <div class="site-header-inner">
+          <a class="brand" href={_baseUrl}>高校学習コンテンツ</a>
+          <nav class="site-nav" aria-label="共通ナビゲーション">
+            <a href={_baseUrl}>科目を選ぶ</a>
+            <a href="#page-top">ページ先頭</a>
+          </nav>
+        </div>
+      </header>
+      <main id="page-top" class:list={["study-page", _width === "wide" && "is-wide"]}>
+        <slot />
+        {_curriculumReference && <CurriculumReference reference={_curriculumReference} />}
+      </main>
+    </div>
   </body>
 </html>
 
@@ -45,65 +57,165 @@ const _curriculumReference = getCurriculumReference(_courseKey);
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
-    background:
-      radial-gradient(circle at top right, rgb(200 222 204 / 45%), transparent 32rem), #f4f6f2;
+    background: #f3f0e9;
   }
 
-  .study-page {
-    width: min(100%, 76rem);
-    margin: 0 auto;
-    padding: clamp(1.5rem, 4vw, 3rem) clamp(1.1rem, 4vw, 3rem) 3rem;
-    color: #172033;
+  .site-shell {
+    min-height: 100vh;
+    color: #282622;
     font-family:
-      Inter, "Hiragino Sans", "Yu Gothic", ui-sans-serif, system-ui, -apple-system,
-      BlinkMacSystemFont, "Segoe UI", sans-serif;
+      "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", ui-sans-serif,
+      system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
 
-    --color-text: #172033;
-    --color-text-strong: #26382c;
-    --color-text-soft: #34443a;
-    --color-muted: #66746b;
-    --color-muted-strong: #526158;
-    --color-accent: #3f7050;
-    --color-accent-light: #688474;
-    --color-accent-medium: #4b7559;
-    --color-accent-strong: #285f3a;
-    --color-link: #245c37;
-    --color-link-hover: #183f26;
-    --color-border: #cfd7d0;
-    --color-border-strong: #ccd8ce;
-    --color-border-soft: #d5ddd6;
-    --surface: #ffffff;
-    --surface-subtle: #f7f9f6;
-    --surface-accent: #f1f5f1;
-    --focus-ring: rgb(63 112 80 / 28%);
+    --color-text: #282622;
+    --color-text-strong: #1f1d1a;
+    --color-text-soft: #514d46;
+    --color-muted: #7a746b;
+    --color-muted-strong: #625c53;
+    --color-accent: #887657;
+    --color-accent-light: #9a896f;
+    --color-accent-medium: #806d4f;
+    --color-accent-strong: #655438;
+    --color-link: #5f4e34;
+    --color-link-hover: #40331f;
+    --color-border: #d7d1c7;
+    --color-border-strong: #cfc7bb;
+    --color-border-soft: #e4dfd7;
+    --surface: #fffefa;
+    --surface-subtle: #f9f7f2;
+    --surface-accent: #f2eee6;
+    --focus-ring: rgb(136 118 87 / 28%);
   }
 
-  .study-page,
-  .study-page :global(*) {
+  .site-shell,
+  .site-shell :global(*) {
     box-sizing: border-box;
   }
 
-  .study-page :global(button),
-  .study-page :global(input),
-  .study-page :global(textarea),
-  .study-page :global(select) {
+  .site-shell :global(button),
+  .site-shell :global(input),
+  .site-shell :global(textarea),
+  .site-shell :global(select) {
     font: inherit;
   }
 
+  .skip-link {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 20;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--color-border-strong);
+    color: var(--color-text-strong);
+    background: var(--surface);
+    font-size: 0.82rem;
+    font-weight: 700;
+    transform: translateY(-180%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .site-header {
+    border-bottom: 1px solid var(--color-border-soft);
+    background: rgb(255 254 250 / 94%);
+  }
+
+  .site-header-inner {
+    display: flex;
+    width: min(100%, 86rem);
+    min-height: 3.6rem;
+    margin: 0 auto;
+    padding: 0 clamp(1.1rem, 4vw, 3rem);
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand,
+  .site-nav a {
+    color: var(--color-text-strong);
+    text-decoration: none;
+  }
+
+  .brand {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", ui-serif, serif;
+    font-size: 0.96rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  .site-nav {
+    display: flex;
+    gap: 1.4rem;
+    align-items: center;
+    font-size: 0.78rem;
+  }
+
+  .site-nav a {
+    color: var(--color-muted-strong);
+    font-weight: 650;
+  }
+
+  .brand:focus-visible,
+  .site-nav a:focus-visible,
+  .skip-link:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 0.2rem;
+  }
+
+  .study-page {
+    width: min(100%, 72rem);
+    margin: 0 auto;
+    padding: clamp(2.4rem, 6vw, 4.8rem) clamp(1.1rem, 4vw, 3rem) 3.5rem;
+    color: var(--color-text);
+    line-height: 1.75;
+  }
+
   .study-page.is-wide {
-    width: min(100%, 78rem);
-    padding-top: clamp(2rem, 5vw, 5rem);
+    width: min(100%, 82rem);
+    padding-top: clamp(3rem, 7vw, 5.8rem);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .brand:hover,
+    .site-nav a:hover {
+      color: var(--color-link);
+    }
   }
 
   @media (max-width: 760px) {
-    .study-page {
-      padding-top: 1rem;
+    .site-header-inner {
+      min-height: 3.25rem;
+      gap: 1rem;
     }
 
+    .brand {
+      font-size: 0.86rem;
+    }
+
+    .site-nav {
+      gap: 0.8rem;
+      font-size: 0.72rem;
+    }
+
+    .site-nav a:last-child {
+      display: none;
+    }
+
+    .study-page,
     .study-page.is-wide {
       padding-top: 2rem;
+      padding-bottom: 2.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
     }
   }
 </style>
