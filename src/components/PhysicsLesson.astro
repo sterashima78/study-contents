@@ -1,0 +1,280 @@
+---
+import { physicsBasicsCourse } from "../content/math-courses";
+import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
+import { getPhysicsBasicsFormulaDerivation } from "../content/physics-basics/formula-derivations";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PhysicsExerciseSet from "./PhysicsExerciseSet.astro";
+import "../styles/global.css";
+import "../styles/lesson.css";
+
+type Props = {
+  area: MathArea;
+  unit: MathUnit;
+  lesson: MathLesson;
+};
+
+const { area: _area, unit: _unit, lesson: _lesson } = Astro.props;
+const _course = physicsBasicsCourse;
+const _base = import.meta.env.BASE_URL;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _lessonIndex = _unit.lessons.findIndex((item) => item.key === _lesson.key);
+const _previousLesson = _lessonIndex > 0 ? _unit.lessons[_lessonIndex - 1] : undefined;
+const _nextLesson =
+  _lessonIndex < _unit.lessons.length - 1 ? _unit.lessons[_lessonIndex + 1] : undefined;
+const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
+const _unitHref = `${_areaHref}${_unit.key}/`;
+const _unitExerciseHref = `${_unitHref}exercise/`;
+const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _formulaDerivation = getPhysicsBasicsFormulaDerivation(_lesson.key);
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content={`高校物理基礎「${_lesson.title}」の教材。考え方、式の根拠、例題、直後の練習、3問確認で学習します。`}
+    />
+    <title>{_lesson.title} | {_unit.title} | 物理基礎</title>
+  </head>
+  <body>
+    <main class="lesson-shell">
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <a href={_courseHomeHref}>物理基礎</a>
+        <span aria-hidden="true">/</span>
+        <a href={_areaHref}>{_area.title}</a>
+        <span aria-hidden="true">/</span>
+        <a href={_unitHref}>{_unit.title}</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{_lesson.title}</span>
+      </nav>
+
+      <header class="lesson-hero compact-hero">
+        <p class="lesson-kicker">{_area.title} · {String(_lessonIndex + 1).padStart(2, "0")}</p>
+        <h1>{_lesson.title}</h1>
+        <p>{_lesson.description}</p>
+      </header>
+
+      <section class="lesson-section goal-section" aria-labelledby="goal-title">
+        <p class="section-label">GOAL</p>
+        <h2 id="goal-title">このページでできるようになること</h2>
+        <ul class="goal-list">
+          {_lesson.goals.map((goal) => <li>{goal}</li>)}
+        </ul>
+      </section>
+
+      <section class="lesson-section" aria-labelledby="rule-title">
+        <div class="section-heading lesson-heading">
+          <div>
+            <p class="section-label">RULE</p>
+            <h2 id="rule-title">考え方・物理法則</h2>
+          </div>
+          <p>物理量の意味、向き、単位、成り立つ条件を確認してから式を使います。</p>
+        </div>
+
+        <div class="concept-grid single-column-grid">
+          {
+            _lesson.concepts.map((concept) => (
+              <article class="concept-card">
+                <h3>{concept.title}</h3>
+                {concept.body.map((paragraph) => <p>{paragraph}</p>)}
+                {concept.formulas && (
+                  <div class="formula-stack">
+                    {concept.formulas.map((formula) => <p class="formula">{formula}</p>)}
+                  </div>
+                )}
+              </article>
+            ))
+          }
+        </div>
+
+        {
+          _formulaDerivation && (
+            <article class="worked-example detailed-example formula-derivation">
+              <p class="section-label">DERIVATION</p>
+              <h3>{_formulaDerivation.title}</h3>
+              <p>{_formulaDerivation.introduction}</p>
+              <ol class="worked-steps">
+                {_formulaDerivation.steps.map((step) => (
+                  <li>
+                    <div class="calculation answer-line">{step.expression}</div>
+                    <p>{step.note}</p>
+                  </li>
+                ))}
+              </ol>
+            </article>
+          )
+        }
+      </section>
+
+      <section class="lesson-section example-practice-section" aria-labelledby="example-title">
+        <p class="section-label">EXAMPLE</p>
+        <h2 id="example-title">{_lesson.example.title}</h2>
+
+        <article class="worked-example detailed-example">
+          <p class="question-expression example-question">{_lesson.example.problem}</p>
+          <ol class="worked-steps">
+            {
+              _lesson.example.steps.map((step) => (
+                <li>
+                  <div class="calculation answer-line">{step.expression}</div>
+                  <p>{step.note}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </article>
+
+        <article class="practice-card immediate-practice" data-guided-practice>
+          <div class="practice-card-header">
+            <div>
+              <p class="practice-label">PRACTICE</p>
+              <h3>{_lesson.practice.title}</h3>
+            </div>
+            <p class="practice-position">例題の直後に確認</p>
+          </div>
+
+          <p class="question-expression">{_lesson.practice.problem}</p>
+          <form class="guided-practice-form">
+            <ol class="guided-fields">
+              {
+                _lesson.practice.steps.map((step, index) => (
+                  <li>
+                    <label>
+                      <span>{step.prompt}</span>
+                      <input
+                        type="text"
+                        autocomplete="off"
+                        spellcheck="false"
+                        placeholder={step.placeholder ?? "答えを入力"}
+                        data-answers={JSON.stringify(step.answers)}
+                        aria-label={`練習問題 ${index + 1}: ${step.prompt}`}
+                        required
+                      />
+                    </label>
+                  </li>
+                ))
+              }
+            </ol>
+            <div class="practice-actions">
+              <button type="submit" class="primary-button">答え合わせ</button>
+              <button type="button" class="secondary-button hint-button">ヒント</button>
+              <button type="reset" class="secondary-button">やり直す</button>
+            </div>
+          </form>
+          <p class="hint practice-hint" hidden>{_lesson.practice.hint}</p>
+          <p class="feedback practice-feedback" aria-live="polite"></p>
+        </article>
+      </section>
+
+      <PhysicsExerciseSet
+        mode="lesson"
+        areaKey={_area.key}
+        unitKey={_unit.key}
+        lessonKey={_lesson.key}
+      />
+
+      <section class="lesson-section summary-section" aria-labelledby="summary-title">
+        <p class="section-label">SUMMARY</p>
+        <h2 id="summary-title">このページのポイント</h2>
+        <ul class="summary-list">
+          {_lesson.summary.map((item) => <li>{item}</li>)}
+        </ul>
+      </section>
+
+      <nav class="lesson-navigation" aria-label="教材ナビゲーション">
+        <div>
+          {_previousLesson ? (
+            <a href={_lessonHref(_previousLesson.key)}>← {_previousLesson.title}</a>
+          ) : (
+            <a href={_unitHref}>← {_unit.title}の目次</a>
+          )}
+        </div>
+        <a class="unit-index-link" href={_unitHref}>{_unit.title}の小単元一覧</a>
+        <div>
+          {_nextLesson ? (
+            <a href={_lessonHref(_nextLesson.key)}>{_nextLesson.title} →</a>
+          ) : (
+            <a href={_unitExerciseHref}>単元末演習へ →</a>
+          )}
+        </div>
+      </nav>
+    </main>
+
+    <script>
+      const normalizeAnswer = (value) =>
+        value
+          .trim()
+          .toLowerCase()
+          .replaceAll(/\s+/g, "")
+          .replaceAll("−", "-")
+          .replaceAll("–", "-")
+          .replaceAll("—", "-")
+          .replaceAll("×", "*")
+          .replaceAll("·", "*")
+          .replaceAll("，", ",")
+          .replaceAll("（", "(")
+          .replaceAll("）", ")")
+          .replaceAll("°c", "℃")
+          .replaceAll("ohm", "ω");
+
+      for (const card of document.querySelectorAll("[data-guided-practice]")) {
+        if (!(card instanceof HTMLElement)) continue;
+        const form = card.querySelector(".guided-practice-form");
+        const feedback = card.querySelector(".practice-feedback");
+        const hint = card.querySelector(".practice-hint");
+        const hintButton = card.querySelector(".hint-button");
+        if (
+          !(form instanceof HTMLFormElement) ||
+          !(feedback instanceof HTMLElement) ||
+          !(hint instanceof HTMLElement) ||
+          !(hintButton instanceof HTMLButtonElement)
+        ) continue;
+
+        hintButton.addEventListener("click", () => {
+          hint.hidden = !hint.hidden;
+          hintButton.textContent = hint.hidden ? "ヒント" : "ヒントを閉じる";
+        });
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const inputs = [...form.querySelectorAll("input[data-answers]")].filter(
+            (input) => input instanceof HTMLInputElement,
+          );
+          let correctCount = 0;
+          for (const input of inputs) {
+            if (!(input instanceof HTMLInputElement)) continue;
+            const rawAnswers = input.dataset.answers;
+            if (!rawAnswers) continue;
+            const answers = JSON.parse(rawAnswers).map(normalizeAnswer);
+            const isCorrect = answers.includes(normalizeAnswer(input.value));
+            input.classList.toggle("is-correct", isCorrect);
+            input.classList.toggle("is-error", !isCorrect);
+            if (isCorrect) correctCount += 1;
+          }
+          if (correctCount === inputs.length) {
+            feedback.textContent = "すべて正解です。物理量の意味と計算手順を再現できています。";
+            feedback.className = "feedback practice-feedback is-correct";
+          } else {
+            feedback.textContent = `全 ${inputs.length} 段階のうち ${correctCount} 段階が合っています。単位と符号も含めて例題と比べてください。`;
+            feedback.className = "feedback practice-feedback is-error";
+          }
+        });
+
+        form.addEventListener("reset", () => {
+          window.setTimeout(() => {
+            for (const input of form.querySelectorAll("input")) {
+              input.classList.remove("is-correct", "is-error");
+            }
+            feedback.textContent = "";
+            feedback.className = "feedback practice-feedback";
+            hint.hidden = true;
+            hintButton.textContent = "ヒント";
+          }, 0);
+        });
+      }
+    </script>
+  </body>
+</html>
