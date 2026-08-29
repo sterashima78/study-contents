@@ -1,0 +1,304 @@
+{
+  "course": "math1",
+  "topic": "geometry",
+  "title": "図形と計量 応用・発展",
+  "description": "正弦定理・余弦定理・面積公式を、条件から選び分ける解法パターンとして学ぶ独自教材です。",
+  "copyrightPolicyVersion": 2,
+  "patterns": [
+    {
+      "id": "math1-geometry-pattern-cosine-area",
+      "title": "余弦定理で辺を求めて面積へつなぐ",
+      "level": "application",
+      "estimatedMinutes": 15,
+      "skills": ["余弦定理", "三角形の面積", "三角比"],
+      "thinking": {
+        "title": "2辺とその間の角があれば、辺と面積を同じ条件から求める",
+        "body": [
+          "2辺とその間の角が与えられているとき、残りの1辺には余弦定理、面積には S=(1/2)ab sinC を使えます。",
+          "同じ3つの条件から2種類の情報を取り出せるので、先に『どの辺が角Cの向かいか』を整理すると式の取り違えを防げます。"
+        ],
+        "checkpoints": [
+          "与えられた2辺の間の角を確認する",
+          "向かいの辺を余弦定理で求める",
+          "同じ2辺と角を面積公式へ使う"
+        ]
+      },
+      "example": {
+        "statement": ["三角形ABCで AB=5、AC=7、∠A=60° とする。"],
+        "question": "辺BCの長さと三角形ABCの面積を求めよ。",
+        "solution": {
+          "strategy": "BCには余弦定理、面積には2辺とその間の角の面積公式を使う。",
+          "steps": [
+            "BC²=5²+7²−2·5·7·cos60°。",
+            "=25+49−70·1/2=39 より BC=√39。",
+            "面積 S=(1/2)·5·7·sin60°=35√3/4。"
+          ],
+          "answer": "BC=√39、面積は 35√3/4。"
+        }
+      },
+      "guidedPractice": {
+        "title": "同じ条件から辺と面積を求める",
+        "statement": ["三角形ABCで AB=6、AC=8、∠A=60° とする。"],
+        "question": "BC²、BC、面積を順に求めよう。",
+        "steps": [
+          {
+            "prompt": "余弦定理で BC² を求めてください。",
+            "answers": ["52"],
+            "placeholder": "BC²"
+          },
+          {
+            "prompt": "BC を最も簡単な根号で書いてください。",
+            "answers": ["2√13", "√52"],
+            "placeholder": "√…"
+          },
+          {
+            "prompt": "三角形の面積を求めてください。",
+            "answers": ["12√3", "12*√3"],
+            "placeholder": "面積"
+          }
+        ],
+        "hint": "cos60°=1/2、sin60°=√3/2 を使います。"
+      },
+      "practice": {
+        "statement": ["三角形ABCで AB=4、AC=6、∠A=120° とする。"],
+        "question": "辺BCの長さと面積を求めよ。",
+        "solution": {
+          "steps": [
+            "BC²=4²+6²−2·4·6·cos120°=16+36+24=76。",
+            "よって BC=2√19。",
+            "S=(1/2)·4·6·sin120°=6√3。"
+          ],
+          "answer": "BC=2√19、面積は6√3。"
+        }
+      },
+      "rights": {
+        "origin": "original",
+        "reviewStatus": "reviewed",
+        "reviewedAt": "2026-08-29"
+      }
+    },
+    {
+      "id": "math1-geometry-pattern-sine-radius",
+      "title": "正弦定理で辺と外接円半径をまとめて求める",
+      "level": "application",
+      "estimatedMinutes": 15,
+      "skills": ["正弦定理", "三角形の角", "外接円"],
+      "thinking": {
+        "title": "向かい合う辺と角の組をそろえる",
+        "body": [
+          "正弦定理 a/sinA=b/sinB=2R は、辺とその向かいの角を対応させて使います。",
+          "角が2つ分かっていれば、まず残りの角を180°から求めます。既知の辺とその向かいの角を基準にすると、別の辺と外接円半径を同じ比例式から求められます。"
+        ],
+        "checkpoints": [
+          "辺と向かいの角の対応を確認する",
+          "必要なら三角形の内角和で残りの角を求める",
+          "a/sinA=b/sinB=2R の必要な部分だけ使う"
+        ]
+      },
+      "example": {
+        "statement": ["三角形ABCで ∠A=45°、∠B=60°、辺a=BC=6 とする。"],
+        "question": "辺b=CA と外接円の半径Rを求めよ。",
+        "solution": {
+          "strategy": "a/sinA を基準にして b と 2R を求める。",
+          "steps": [
+            "正弦定理より 6/sin45°=b/sin60°。",
+            "b=6·(√3/2)/(√2/2)=3√6。",
+            "6/sin45°=2R より 2R=6√2、したがって R=3√2。"
+          ],
+          "answer": "b=3√6、R=3√2。"
+        }
+      },
+      "guidedPractice": {
+        "title": "辺と半径を同じ比例式から求める",
+        "statement": ["三角形ABCで ∠A=30°、∠B=90°、辺a=4 とする。"],
+        "question": "∠C、辺b、外接円半径Rを順に求めよう。",
+        "steps": [
+          {
+            "prompt": "∠C を求めてください。",
+            "answers": ["60", "60°"],
+            "placeholder": "角度"
+          },
+          {
+            "prompt": "辺bを求めてください。",
+            "answers": ["8"],
+            "placeholder": "b"
+          },
+          {
+            "prompt": "外接円半径Rを求めてください。",
+            "answers": ["4"],
+            "placeholder": "R"
+          }
+        ],
+        "hint": "4/sin30°=8 なので、この値が b/sin90° と 2R に等しくなります。"
+      },
+      "practice": {
+        "statement": ["三角形ABCで ∠A=45°、∠C=90°、辺a=5 とする。"],
+        "question": "辺c=AB と外接円半径Rを求めよ。",
+        "solution": {
+          "steps": [
+            "∠B=45°。正弦定理より 5/sin45°=c/sin90°。",
+            "c=5√2。",
+            "c/sin90°=2R より 2R=5√2、R=5√2/2。"
+          ],
+          "answer": "c=5√2、R=5√2/2。"
+        }
+      },
+      "rights": {
+        "origin": "original",
+        "reviewStatus": "reviewed",
+        "reviewedAt": "2026-08-29"
+      }
+    },
+    {
+      "id": "math1-geometry-pattern-max-area",
+      "title": "2辺が固定された三角形の面積を最大化する",
+      "level": "advanced",
+      "estimatedMinutes": 16,
+      "skills": ["三角形の面積", "三角比", "最大値"],
+      "thinking": {
+        "title": "変化するのが角だけなら sin の最大値を見る",
+        "body": [
+          "2辺 a,b の長さが固定され、その間の角Cだけが変わるとき、面積は S=(1/2)ab sinC です。",
+          "0°<C<180° では sinC≤1 なので、平方完成などをせずに sinC の最大値から面積の最大値を判断できます。"
+        ],
+        "checkpoints": [
+          "固定されている量と変化する量を分ける",
+          "面積を定数×sinC の形にする",
+          "sinC≤1 と等号条件 C=90° を使う"
+        ]
+      },
+      "example": {
+        "statement": ["2辺の長さが8と10である三角形を考え、その間の角を θ とする。"],
+        "question": "この三角形の面積の最大値と、そのときの θ を求めよ。",
+        "solution": {
+          "strategy": "面積を40sinθと表し、sinθの最大値1を使う。",
+          "steps": [
+            "S=(1/2)·8·10·sinθ=40sinθ。",
+            "0°<θ<180° では sinθ≤1。",
+            "sinθ=1 は θ=90° のとき。"
+          ],
+          "answer": "最大面積40、そのとき θ=90°。"
+        }
+      },
+      "guidedPractice": {
+        "title": "面積を定数×sinθにする",
+        "statement": ["2辺の長さが6と14である三角形で、その間の角を θ とする。"],
+        "question": "面積式と最大値を求めよう。",
+        "steps": [
+          {
+            "prompt": "面積Sを sinθ を使って表してください。",
+            "answers": ["42sinθ", "42sin(theta)", "42sinθ"],
+            "placeholder": "S=…sinθ"
+          },
+          {
+            "prompt": "面積の最大値を求めてください。",
+            "answers": ["42"],
+            "placeholder": "最大値"
+          },
+          {
+            "prompt": "そのときの θ を求めてください。",
+            "answers": ["90", "90°"],
+            "placeholder": "角度"
+          }
+        ],
+        "hint": "(1/2)·6·14=42、sinθ の最大値は1です。"
+      },
+      "practice": {
+        "statement": ["2辺の長さが9と12である三角形で、その間の角を θ とする。"],
+        "question": "面積の最大値と、そのときの θ を求めよ。",
+        "solution": {
+          "steps": [
+            "S=(1/2)·9·12·sinθ=54sinθ。",
+            "sinθ≤1 より S≤54。",
+            "θ=90° のとき等号が成り立つ。"
+          ],
+          "answer": "最大面積54、そのとき θ=90°。"
+        }
+      },
+      "rights": {
+        "origin": "original",
+        "reviewStatus": "reviewed",
+        "reviewedAt": "2026-08-29"
+      }
+    },
+    {
+      "id": "math1-geometry-pattern-two-angle-candidates",
+      "title": "面積条件から角の2候補を残して処理する",
+      "level": "advanced",
+      "estimatedMinutes": 18,
+      "skills": ["三角形の面積", "三角比", "余弦定理", "場合分け"],
+      "thinking": {
+        "title": "sinC の値だけでは鋭角と鈍角を区別できない",
+        "body": [
+          "面積 S=(1/2)ab sinC から sinC が求まっても、0°<C<180° では同じ正弦値をもつ2つの角が存在する場合があります。",
+          "例えば sinC=1/2 なら C=30° または150°です。余弦定理では cosC の符号が変わるため、辺の長さも2通りに分かれます。"
+        ],
+        "checkpoints": [
+          "面積公式から sinC を求める",
+          "0°<C<180° の範囲で角の候補をすべて出す",
+          "各候補を余弦定理へ別々に代入する"
+        ]
+      },
+      "example": {
+        "statement": ["三角形ABCで AB=5、AC=8、面積が10である。"],
+        "question": "∠A の可能な値と、それぞれの場合の BC² を求めよ。",
+        "solution": {
+          "strategy": "面積から sinA=1/2 を求め、30°と150°を分けて余弦定理へ使う。",
+          "steps": [
+            "10=(1/2)·5·8·sinA より sinA=1/2。",
+            "0°<A<180° なので A=30° または150°。",
+            "A=30°: BC²=25+64−80·(√3/2)=89−40√3。",
+            "A=150°: BC²=25+64−80·(−√3/2)=89+40√3。"
+          ],
+          "answer": "A=30° のとき BC²=89−40√3、A=150° のとき BC²=89+40√3。"
+        }
+      },
+      "guidedPractice": {
+        "title": "正弦の2候補を余弦定理へつなぐ",
+        "statement": ["三角形ABCで AB=6、AC=10、面積が15である。"],
+        "question": "∠Aの候補と、それぞれのBC²を求めよう。",
+        "steps": [
+          {
+            "prompt": "sinA の値を求めてください。",
+            "answers": ["1/2", "0.5"],
+            "placeholder": "sinA"
+          },
+          {
+            "prompt": "∠A の2つの候補を小さい順に書いてください。",
+            "answers": ["30,150", "30°,150°", "30，150"],
+            "placeholder": "…, …"
+          },
+          {
+            "prompt": "A=30° のときの BC² を書いてください。",
+            "answers": ["136-60√3", "136−60√3"],
+            "placeholder": "136−…"
+          },
+          {
+            "prompt": "A=150° のときの BC² を書いてください。",
+            "answers": ["136+60√3"],
+            "placeholder": "136+…"
+          }
+        ],
+        "hint": "2·6·10=120 なので、cos30° と cos150° の符号の違いに注意します。"
+      },
+      "practice": {
+        "statement": ["三角形ABCで AB=4、AC=6、面積が6である。"],
+        "question": "∠A の可能な値と、それぞれの場合の BC² を求めよ。",
+        "solution": {
+          "steps": [
+            "6=(1/2)·4·6·sinA より sinA=1/2。",
+            "A=30° または150°。",
+            "A=30°では BC²=16+36−48·√3/2=52−24√3。",
+            "A=150°では BC²=52+24√3。"
+          ],
+          "answer": "A=30° のとき BC²=52−24√3、A=150° のとき BC²=52+24√3。"
+        }
+      },
+      "rights": {
+        "origin": "original",
+        "reviewStatus": "reviewed",
+        "reviewedAt": "2026-08-29"
+      }
+    }
+  ]
+}
