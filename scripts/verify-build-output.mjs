@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: ["学習する科目", "数学I", "数学A", "科目の目次を見る"],
+    markers: ["学習する科目", "数学I", "数学A", "物理基礎", "科目の目次を見る"],
   },
   {
     path: new URL("../dist/math1/index.html", import.meta.url),
@@ -77,6 +77,38 @@ const checks = [
     ),
     markers: ["確率の基本の単元末演習", "単元末演習"],
   },
+  {
+    path: new URL("../dist/physics-basics/index.html", import.meta.url),
+    markers: ["物理基礎", "学習する5つの領域", "全18小教材", "科目一覧へ"],
+  },
+  {
+    path: new URL(
+      "../dist/physics-basics/motion/motion-description/acceleration/index.html",
+      import.meta.url,
+    ),
+    markers: ["加速度と速度―時間グラフ", "式の根拠: 等加速度運動の v = v₀ + at", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/physics-basics/forces-energy/work-energy/mechanical-energy-conservation/index.html",
+      import.meta.url,
+    ),
+    markers: ["力学的エネルギー保存", "保存則の根拠: 重力だけが仕事をする場合"],
+  },
+  {
+    path: new URL(
+      "../dist/physics-basics/waves/wave-sound/sound-resonance/index.html",
+      import.meta.url,
+    ),
+    markers: ["音・弦・気柱の共鳴", "片側閉管の基本振動 L = λ/4"],
+  },
+  {
+    path: new URL(
+      "../dist/physics-basics/thermal-electricity/electric-energy/exercise/index.html",
+      import.meta.url,
+    ),
+    markers: ["電気とその利用の単元末演習", "単元末演習"],
+  },
 ];
 
 for (const check of checks) {
@@ -94,4 +126,4 @@ for (const check of checks) {
   }
 }
 
-console.log("Generated HTML rendering checks passed for the course index, Math I, and Math A.");
+console.log("Generated HTML rendering checks passed for the course index, Math I, Math A, and Physics Basics.");
