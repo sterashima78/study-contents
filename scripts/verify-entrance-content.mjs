@@ -109,7 +109,7 @@ function hasOwnPropertyDeep(value, field) {
   }
 
   if (value && typeof value === "object") {
-    if (Object.prototype.hasOwnProperty.call(value, field)) return true;
+    if (Object.hasOwn(value, field)) return true;
     return Object.values(value).some((item) => hasOwnPropertyDeep(item, field));
   }
 
