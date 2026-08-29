@@ -1,10 +1,10 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import MathUnitExercise from "../../../../components/MathUnitExercise.astro";
+import { chemistryBasicAreas } from "../../../../content/chemistry-basic/catalog";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { chemistryBasicCourse } from "../../../../content/math-courses";
 import type { MathArea, MathUnit } from "../../../../content/math1/types";
-import { chemistryBasicAreas } from "../../../../content/chemistry-basic/catalog";
 
 export function getStaticPaths() {
   return chemistryBasicAreas.flatMap((area) =>
