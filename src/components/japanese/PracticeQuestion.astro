@@ -1,0 +1,113 @@
+---
+type Props = {
+  prompt: string;
+  choices?: string[];
+  answer: string;
+  explanation: string;
+};
+
+const { prompt: _prompt, choices: _choices, answer: _answer, explanation: _explanation } = Astro.props;
+---
+
+<article class="practice-question">
+  <p class="label">PRACTICE</p>
+  <h3>確認問題</h3>
+  <p class="prompt">{_prompt}</p>
+  {
+    _choices && _choices.length > 0 && (
+      <ol class="choices">
+        {_choices.map((choice) => <li>{choice}</li>)}
+      </ol>
+    )
+  }
+  <details>
+    <summary>答えと解説を確認する</summary>
+    <div class="answer">
+      <p><span>答え</span>{_answer}</p>
+      <p>{_explanation}</p>
+    </div>
+  </details>
+</article>
+
+<style>
+  .practice-question {
+    padding: clamp(1.4rem, 3vw, 2rem);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 82%);
+  }
+
+  .label {
+    margin: 0 0 0.55rem;
+    color: var(--color-accent);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  .prompt {
+    margin: 0.9rem 0 0;
+    color: var(--color-text-strong);
+    font-size: 1.02rem;
+    line-height: 1.9;
+  }
+
+  .choices {
+    display: grid;
+    gap: 0.45rem;
+    margin: 1rem 0 0;
+    padding-left: 1.7rem;
+    color: var(--color-muted-strong);
+    line-height: 1.7;
+  }
+
+  details {
+    margin-top: 1.2rem;
+    border-top: 1px solid var(--color-border-soft);
+    padding-top: 1rem;
+  }
+
+  summary {
+    width: fit-content;
+    color: var(--color-link);
+    cursor: pointer;
+    font-weight: 800;
+  }
+
+  summary:focus-visible {
+    border-radius: 0.2rem;
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 0.2rem;
+  }
+
+  .answer {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    background: var(--surface-accent);
+  }
+
+  .answer p {
+    margin: 0.5rem 0 0;
+    color: var(--color-muted-strong);
+    line-height: 1.8;
+  }
+
+  .answer p:first-child {
+    margin-top: 0;
+    color: var(--color-accent-strong);
+    font-weight: 700;
+  }
+
+  .answer span {
+    display: inline-block;
+    margin-right: 0.7rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+</style>
