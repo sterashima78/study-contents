@@ -1,8 +1,8 @@
 ---
-import { math1Course, type MathCourseInfo } from "../content/math-courses";
+import { type MathCourseInfo, math1Course } from "../content/math-courses";
 import { getFormulaDerivation } from "../content/math1/formula-registry";
-import { getMathAFormulaDerivation } from "../content/matha/formula-derivations";
 import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
+import { getMathAFormulaDerivation } from "../content/matha/formula-derivations";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 import "../styles/global.css";
@@ -27,7 +27,9 @@ const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
 const _formulaDerivation =
-  _course.key === "matha" ? getMathAFormulaDerivation(_lesson.key) : getFormulaDerivation(_lesson.key);
+  _course.key === "matha"
+    ? getMathAFormulaDerivation(_lesson.key)
+    : getFormulaDerivation(_lesson.key);
 ---
 
 <!doctype html>
