@@ -1,42 +1,72 @@
-<aside class="notice" aria-labelledby="experimental-notice-title">
-  <p class="label">EXPERIMENTAL</p>
-  <h2 id="experimental-notice-title">生成AIによる実験的な学習コンテンツです</h2>
-  <p class="description">
-    このサイトは、生成AIを使って学習コンテンツをバイブコーディングすることを試した実験的な生成物です。内容は生成AIを活用して作成・改善しており、誤りや不正確な記述を含む可能性があります。学習時は教科書や公式資料などもあわせて確認してください。
-  </p>
+<aside class="notice" aria-label="この教材について">
+  <div class="heading">
+    <span class="label">EXPERIMENTAL</span>
+    <h2>生成AIを使った学習コンテンツ制作の実験です</h2>
+  </div>
+  <div class="body">
+    <p>
+      このサイトは、生成AIを使って学習コンテンツをバイブコーディングすることを試した実験的な生成物です。教材の内容や構成の作成・改善にも生成AIを活用しています。
+    </p>
+    <p>
+      通常の編集・監修済み教材と同等の正確性を保証するものではなく、誤りや不正確な記述を含む可能性があります。学習時は教科書や文部科学省などの公式資料もあわせて確認してください。
+    </p>
+  </div>
 </aside>
 
 <style>
   .notice {
-    max-width: 44rem;
-    margin-top: 1.7rem;
-    padding: 1rem 0 0 1rem;
+    margin-top: clamp(1.4rem, 3vw, 2.2rem);
+    padding: clamp(1rem, 2.5vw, 1.4rem) 0;
     border-top: 1px solid var(--color-border-soft);
-    border-left: 2px solid var(--color-accent-light);
-    background: transparent;
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .heading {
+    display: grid;
+    grid-template-columns: minmax(6.8rem, auto) minmax(0, 1fr);
+    gap: 0.55rem 1.2rem;
+    align-items: baseline;
   }
 
   .label {
-    margin: 0 0 0.4rem;
     color: var(--color-accent);
-    font-size: 0.68rem;
+    font-size: 0.66rem;
     font-weight: 750;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.16em;
   }
 
   h2 {
     margin: 0;
-    color: var(--color-text-strong);
+    color: var(--color-text);
     font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", ui-serif, serif;
-    font-size: clamp(0.98rem, 2vw, 1.1rem);
+    font-size: clamp(0.98rem, 1.7vw, 1.1rem);
     font-weight: 600;
-    line-height: 1.55;
+    line-height: 1.6;
   }
 
-  .description {
-    margin: 0.55rem 0 0;
+  .body {
+    display: grid;
+    gap: 0.45rem;
+    max-width: 50rem;
+    margin-top: 0.7rem;
+    padding-left: calc(6.8rem + 1.2rem);
+  }
+
+  p {
+    margin: 0;
     color: var(--color-muted-strong);
-    font-size: 0.88rem;
-    line-height: 1.85;
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 620px) {
+    .heading {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+
+    .body {
+      padding-left: 0;
+    }
   }
 </style>

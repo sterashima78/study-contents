@@ -35,36 +35,34 @@ const _items = _courses.map((course, index) => ({
   href: course.href,
   description: course.description,
   tags: course.areas,
-  meta: `${course.lessonCount}小教材公開`,
-  action: "科目の目次を見る →",
+  meta: `${course.lessonCount}教材`,
+  action: "目次へ →",
 }));
 ---
 
 <StudyPage
   title="高校学習コンテンツ"
-  description="高校の学習コンテンツ。数学、化学、物理、英語から学びたい科目を選び、小単元ごとの教材と演習に進めます。"
+  description="生成AIを使って、高校範囲の学習コンテンツを構成・改善する実験です。"
   width="wide"
 >
   <ContentHero
-    kicker="HIGH SCHOOL STUDY CONTENTS"
-    title="学習コンテンツ"
-    description="学びたい科目を選び、領域、単元、小単元の順に進みます。各小単元では考え方から例題、練習、確認問題までを一続きで学習できます。"
+    kicker="EXPERIMENTAL HIGH SCHOOL STUDY CONTENTS"
+    title="高校学習コンテンツ"
+    description="生成AIを使って、高校範囲の学習コンテンツを構成・改善する実験です。教材は科目・領域・単元・小単元ごとに公開しています。"
     variant="display"
-  >
-    <ExperimentalNotice />
-  </ContentHero>
+  />
 
-  <ContentSection labelledby="courses-title">
+  <ExperimentalNotice />
+
+  <ContentSection labelledby="courses-title" compact>
     <SectionHeading
       label="COURSES"
-      title="学習する科目"
+      title="科目からはじめる"
       id="courses-title"
-      description="科目ごとに独立した目次から、学びたい領域と単元を選択できます。"
+      description="学びたい科目を選んでください。各科目の目次から、領域・単元・小単元へ進めます。"
     />
-    <ContentIndex items={_items} variant="grid" />
+    <ContentIndex items={_items} variant="grid" density="compact" />
   </ContentSection>
 
-  <PageFooter
-    items={["高校 学習コンテンツ", "科目を入口として、領域・単元・小単元へ進む構成です。"]}
-  />
+  <PageFooter items={["高校学習コンテンツ", "生成AIを使った実験的な学習コンテンツ"]} />
 </StudyPage>
