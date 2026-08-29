@@ -59,8 +59,7 @@ const _areaItems = _areas.map((area, index) => {
   };
 });
 const _totalLessonCount = _areas.reduce(
-  (sum, area) =>
-    sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
+  (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
   0,
 );
 const _advancedItems = _advancedAreas?.map((area, index) => ({
@@ -119,8 +118,5 @@ const _advancedItems = _advancedAreas?.map((area, index) => ({
     )
   }
 
-  <PageFooter
-    items={[`高校 ${_course.title}`, _footerDescription]}
-    homeHref={_base}
-  />
+  <PageFooter items={[`高校 ${_course.title}`, _footerDescription]} homeHref={_base} />
 </StudyPage>

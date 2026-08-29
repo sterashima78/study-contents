@@ -2,8 +2,9 @@
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import CourseHome from "../../components/CourseHome.astro";
 import { math1AdvancedTopicSets } from "../../content/entrance/math1-topic-sets";
-import { math1Areas } from "../../content/math1/catalog";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { math1Course } from "../../content/math-courses";
+import { math1Areas } from "../../content/math1/catalog";
 
 const _advancedAreas = math1AdvancedTopicSets.map((topicSet) => {
   const area = math1Areas.find((candidate) => candidate.key === topicSet.topic);

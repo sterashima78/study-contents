@@ -5,7 +5,12 @@ const root = new URL("../", import.meta.url);
 const src = new URL("../src/", import.meta.url);
 const globalCssUrl = new URL("../src/styles/global.css", import.meta.url);
 const exerciseCssUrl = new URL("../src/styles/exercise.css", import.meta.url);
-const forbiddenStyleNames = ["lesson.css", "entrance.css", "entrance-index.css", "lesson-interactive.css"];
+const forbiddenStyleNames = [
+  "lesson.css",
+  "entrance.css",
+  "entrance-index.css",
+  "lesson-interactive.css",
+];
 const forbiddenLegacyClasses = [
   "lesson-shell",
   "lesson-hero",
@@ -48,13 +53,15 @@ for (const file of astroFiles) {
 
   if (
     source.includes("styles/exercise.css") &&
-    !["src/components/ExerciseSet.astro", "src/components/PhysicsExerciseSet.astro"].includes(relative)
+    !["src/components/ExerciseSet.astro", "src/components/PhysicsExerciseSet.astro"].includes(
+      relative,
+    )
   ) {
     issues.push(`${relative}: exercise.css は演習コンポーネント以外からimportできません。`);
   }
 
   for (const className of forbiddenLegacyClasses) {
-    if (source.includes(`class=\"${className}`) || source.includes(`\"${className}\"`)) {
+    if (source.includes(`class="${className}`) || source.includes(`"${className}"`)) {
       issues.push(`${relative}: 旧共有レイアウトクラス「${className}」を使用しないでください。`);
     }
   }

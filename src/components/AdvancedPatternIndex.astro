@@ -47,7 +47,9 @@ const {
 const _base = import.meta.env.BASE_URL;
 const _levelLabel = (level: string) => (level === "advanced" ? "発展" : "応用");
 const _patternSlug = (id: string) => id.replace(`${_course.key}-${_topicSet.topic}-pattern-`, "");
-const _applicationCount = _topicSet.patterns.filter((pattern) => pattern.level === "application").length;
+const _applicationCount = _topicSet.patterns.filter(
+  (pattern) => pattern.level === "application",
+).length;
 const _advancedCount = _topicSet.patterns.filter((pattern) => pattern.level === "advanced").length;
 const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_topicSet.topic}/`;
@@ -86,7 +88,10 @@ const _items = _topicSet.patterns.map((pattern, index) => ({
       ariaLabel="教材の概要"
       items={[
         { value: `${_topicSet.patterns.length}パターン`, label: "1パターン1ページで学習" },
-        { value: `応用 ${_applicationCount} / 発展 ${_advancedCount}`, label: "解法選択と条件整理を重視" },
+        {
+          value: `応用 ${_applicationCount} / 発展 ${_advancedCount}`,
+          label: "解法選択と条件整理を重視",
+        },
         { value: "完全独自作成", label: "外部問題本文を転載・軽微改変しない" },
       ]}
     />
