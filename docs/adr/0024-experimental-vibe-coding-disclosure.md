@@ -1,7 +1,8 @@
 # ADR 0024: 生成AIによる実験的コンテンツであることをトップページで明示する
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-29
+- Superseded by: ADR 0030
 - Related: ADR 0001, ADR 0022, ADR 0023
 
 ## Context
