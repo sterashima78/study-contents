@@ -1,14 +1,20 @@
 ---
-import _problemSet from "../../../content/entrance/math1-quadratic.json";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ApplicationDiagram from "../../../components/ApplicationDiagram.astro";
+import _problemSet from "../../../content/entrance/math1-quadratic.json";
 import "../../../styles/global.css";
 import "../../../styles/entrance.css";
 
 const _base = import.meta.env.BASE_URL;
-const _applicationCount = _problemSet.patterns.filter((pattern) => pattern.level === "application").length;
-const _advancedCount = _problemSet.patterns.filter((pattern) => pattern.level === "advanced").length;
-const _generatorCount = _problemSet.patterns.filter((pattern) => "generatorKey" in pattern).length;
+const _applicationCount = _problemSet.patterns.filter(
+  (pattern) => pattern.level === "application",
+).length;
+const _advancedCount = _problemSet.patterns.filter(
+  (pattern) => pattern.level === "advanced",
+).length;
+const _generatorCount = _problemSet.patterns.filter(
+  (pattern) => "generatorKey" in pattern,
+).length;
 const _levelLabel = (level: string) => (level === "advanced" ? "発展" : "応用");
 ---
 
@@ -112,7 +118,11 @@ const _levelLabel = (level: string) => (level === "advanced" ? "発展" : "応�
                   </ol>
                 </section>
 
-                {"diagram" in pattern && pattern.diagram && <ApplicationDiagram diagram={pattern.diagram} />}
+                {
+                  "diagram" in pattern && pattern.diagram && (
+                    <ApplicationDiagram diagram={pattern.diagram} />
+                  )
+                }
 
                 <section class="pattern-block example-block" aria-labelledby={`${pattern.id}-example`}>
                   <p class="pattern-section-label">EXAMPLE</p>
@@ -357,7 +367,8 @@ const _levelLabel = (level: string) => (level === "advanced" ? "発展" : "応�
           answer.textContent = generated.solution.answer;
           solution.open = false;
           content.hidden = false;
-          feedback.textContent = "別の条件で実践問題を生成しました。まず解答を閉じたまま解いてください。";
+          feedback.textContent =
+            "別の条件で実践問題を生成しました。まず解答を閉じたまま解いてください。";
         });
       }
     </script>
