@@ -21,7 +21,8 @@
       "includes": [
         "src/content/math1/algebra.ts",
         "src/content/matha/**/*.ts",
-        "src/content/mathb/**/*.ts"
+        "src/content/mathb/**/*.ts",
+        "src/content/mathc/**/*.ts"
       ],
       "formatter": {
         "enabled": false

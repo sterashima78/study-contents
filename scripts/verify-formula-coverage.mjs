@@ -11,12 +11,14 @@ const contentPaths = [
   "../src/content/mathb/sequences.ts",
   "../src/content/mathb/statistical-inference.ts",
   "../src/content/mathb/social-life.ts",
+  "../src/content/mathc/catalog.ts",
 ];
 const derivationPaths = [
   "../src/content/math1/formula-derivations.ts",
   "../src/content/math1/additional-formula-derivations.ts",
   "../src/content/matha/formula-derivations.ts",
   "../src/content/mathb/formula-derivations.ts",
+  "../src/content/mathc/formula-derivations.ts",
 ];
 
 const formulaExemptions = new Map([
@@ -55,7 +57,7 @@ for (const relativePath of contentPaths) {
   const source = await readFile(new URL(relativePath, import.meta.url), "utf8");
   let currentLessonKey;
   for (const line of source.split("\n")) {
-    const keyMatch = line.match(/^\s{8}key: "([^"]+)",/);
+    const keyMatch = line.match(/^\s{8,}key: "([^"]+)",/);
     if (keyMatch) currentLessonKey = keyMatch[1];
     if (line.includes("formulas:")) {
       if (!currentLessonKey) {
