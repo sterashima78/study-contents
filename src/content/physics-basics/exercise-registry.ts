@@ -1,5 +1,5 @@
-import type { GeneratedExercise } from "../math1/exercise-registry";
 import type { ExerciseDifficulty } from "../math1/exercise-generators";
+import type { GeneratedExercise } from "../math1/exercise-registry";
 
 const lessonTitles: Record<string, string> = {
   "physical-quantities-units": "物理量とSI単位",
@@ -33,8 +33,7 @@ const unitLessonKeys: Record<string, string[]> = {
   "energy-society": ["energy-resources-efficiency", "physics-opens-world"],
 };
 
-const randomInt = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
+const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const numberAnswers = (value: number, unit?: string) => {
   const plain = Number.isInteger(value) ? String(value) : String(Number(value.toFixed(2)));

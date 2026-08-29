@@ -72,7 +72,8 @@ export const physicsBasicsAreas: MathArea[] = [
           {
             key: "velocity-graphs",
             title: "変位・速度とグラフ",
-            description: "位置の変化を変位として捉え、位置―時間グラフの傾きから速度を読み取ります。",
+            description:
+              "位置の変化を変位として捉え、位置―時間グラフの傾きから速度を読み取ります。",
             goals: [
               "変位と移動距離を区別できる。",
               "位置―時間グラフの傾きから平均の速度を求められる。",
@@ -130,7 +131,8 @@ export const physicsBasicsAreas: MathArea[] = [
           {
             key: "acceleration",
             title: "加速度と速度―時間グラフ",
-            description: "速度の変化の割合を加速度として表し、速度―時間グラフから運動を読み取ります。",
+            description:
+              "速度の変化の割合を加速度として表し、速度―時間グラフから運動を読み取ります。",
             goals: [
               "速度の変化と時間から加速度を求められる。",
               "速度―時間グラフの傾きと面積の意味を説明できる。",
@@ -192,7 +194,8 @@ export const physicsBasicsAreas: MathArea[] = [
   {
     key: "forces-energy",
     title: "力と力学的エネルギー",
-    description: "力の図示、つり合い、運動方程式、落下運動、仕事と力学的エネルギーを一続きで学びます。",
+    description:
+      "力の図示、つり合い、運動方程式、落下運動、仕事と力学的エネルギーを一続きで学びます。",
     units: [
       {
         key: "forces-motion",
@@ -203,10 +206,7 @@ export const physicsBasicsAreas: MathArea[] = [
             key: "force-diagrams",
             title: "力の種類と力の図示",
             description: "重力、垂直抗力、張力、摩擦力などを、物体を主語にして矢印で表します。",
-            goals: [
-              "物体に働く代表的な力を見分けられる。",
-              "力の向きと大きさを矢印で整理できる。",
-            ],
+            goals: ["物体に働く代表的な力を見分けられる。", "力の向きと大きさを矢印で整理できる。"],
             concepts: [
               {
                 title: "『誰が誰を押す・引くか』を確認する",
@@ -219,7 +219,8 @@ export const physicsBasicsAreas: MathArea[] = [
             ],
             example: {
               title: "例題: 水平な床に置いた物体に働く力",
-              problem: "質量2.0 kgの物体が水平な床の上で静止している。g = 9.8 m/s²として、重力と垂直抗力の大きさを求める。",
+              problem:
+                "質量2.0 kgの物体が水平な床の上で静止している。g = 9.8 m/s²として、重力と垂直抗力の大きさを求める。",
               steps: [
                 {
                   expression: "W = mg = 2.0 × 9.8 = 19.6 N",
@@ -287,7 +288,8 @@ export const physicsBasicsAreas: MathArea[] = [
             },
             practice: {
               title: "練習: つり合う力を求める",
-              problem: "右向きに8 Nの力が働く物体をつり合わせるには、もう1つの力をどう加えればよいですか。",
+              problem:
+                "右向きに8 Nの力が働く物体をつり合わせるには、もう1つの力をどう加えればよいですか。",
               steps: [
                 {
                   prompt: "必要な力の向きを答えてください。",
@@ -311,10 +313,7 @@ export const physicsBasicsAreas: MathArea[] = [
             key: "newton-law",
             title: "運動の三法則と運動方程式",
             description: "慣性、作用反作用、運動方程式を区別し、合力から加速度を求めます。",
-            goals: [
-              "運動の三法則の役割を区別できる。",
-              "ΣF = ma を使って加速度や力を求められる。",
-            ],
+            goals: ["運動の三法則の役割を区別できる。", "ΣF = ma を使って加速度や力を求められる。"],
             concepts: [
               {
                 title: "合力が加速度を決める",
@@ -522,7 +521,8 @@ export const physicsBasicsAreas: MathArea[] = [
             },
             practice: {
               title: "練習: 重力による位置エネルギー",
-              problem: "質量1.5 kgの物体を基準面から2.0 mの高さに置く。g = 9.8 m/s²として位置エネルギーを求めてください。",
+              problem:
+                "質量1.5 kgの物体を基準面から2.0 mの高さに置く。g = 9.8 m/s²として位置エネルギーを求めてください。",
               steps: [
                 {
                   prompt: "式に数値を代入してください。",
@@ -545,7 +545,8 @@ export const physicsBasicsAreas: MathArea[] = [
           {
             key: "mechanical-energy-conservation",
             title: "力学的エネルギー保存",
-            description: "摩擦などが無視できるとき、運動エネルギーと位置エネルギーの和が保たれることを使います。",
+            description:
+              "摩擦などが無視できるとき、運動エネルギーと位置エネルギーの和が保たれることを使います。",
             goals: [
               "力学的エネルギー保存が使える条件を判断できる。",
               "高さと速さの関係をエネルギー保存から求められる。",
@@ -562,7 +563,8 @@ export const physicsBasicsAreas: MathArea[] = [
             ],
             example: {
               title: "例題: 落下による速さを求める",
-              problem: "物体を高さ5.0 mから静かに離す。空気抵抗を無視し、g = 9.8 m/s²とする。地面直前の速さを求める。",
+              problem:
+                "物体を高さ5.0 mから静かに離す。空気抵抗を無視し、g = 9.8 m/s²とする。地面直前の速さを求める。",
               steps: [
                 {
                   expression: "mgh = 1/2 mv²",
@@ -607,7 +609,8 @@ export const physicsBasicsAreas: MathArea[] = [
   {
     key: "waves",
     title: "波",
-    description: "波長・振動数・速さ、重ね合わせ、反射、音と共鳴を、図と式を対応させながら学びます。",
+    description:
+      "波長・振動数・速さ、重ね合わせ、反射、音と共鳴を、図と式を対応させながら学びます。",
     units: [
       {
         key: "wave-sound",
@@ -671,7 +674,8 @@ export const physicsBasicsAreas: MathArea[] = [
           {
             key: "wave-superposition",
             title: "波の重ね合わせと反射",
-            description: "波が重なった瞬間の変位を足し合わせ、固定端・自由端での反射の違いを整理します。",
+            description:
+              "波が重なった瞬間の変位を足し合わせ、固定端・自由端での反射の違いを整理します。",
             goals: [
               "重ね合わせの原理を使って合成波を考えられる。",
               "固定端反射と自由端反射の違いを説明できる。",
@@ -688,7 +692,8 @@ export const physicsBasicsAreas: MathArea[] = [
             ],
             example: {
               title: "例題: 同じ場所で重なる2つのパルス",
-              problem: "ある瞬間、同じ位置で上向き+3 cmの変位と下向き−1 cmの変位が重なった。合成変位を求める。",
+              problem:
+                "ある瞬間、同じ位置で上向き+3 cmの変位と下向き−1 cmの変位が重なった。合成変位を求める。",
               steps: [
                 {
                   expression: "y = y₁ + y₂",
@@ -702,7 +707,8 @@ export const physicsBasicsAreas: MathArea[] = [
             },
             practice: {
               title: "練習: 反射の向きを判断する",
-              problem: "上向きのパルスが固定端で反射する。反射直後のパルスは上向き・下向きのどちらですか。",
+              problem:
+                "上向きのパルスが固定端で反射する。反射直後のパルスは上向き・下向きのどちらですか。",
               steps: [
                 {
                   prompt: "反射後の向きを答えてください。",
@@ -725,7 +731,8 @@ export const physicsBasicsAreas: MathArea[] = [
           {
             key: "sound-resonance",
             title: "音・弦・気柱の共鳴",
-            description: "音の高さと振動数を結び、弦や気柱にできる定常波から共鳴条件を読み取ります。",
+            description:
+              "音の高さと振動数を結び、弦や気柱にできる定常波から共鳴条件を読み取ります。",
             goals: [
               "音の高さと振動数の関係を説明できる。",
               "片側閉管の基本振動で管長と波長を結び付けられる。",
@@ -742,7 +749,8 @@ export const physicsBasicsAreas: MathArea[] = [
             ],
             example: {
               title: "例題: 閉管の基本振動",
-              problem: "長さ0.50 mの片側閉管が基本振動している。音速を340 m/sとして共鳴振動数を求める。",
+              problem:
+                "長さ0.50 mの片側閉管が基本振動している。音速を340 m/sとして共鳴振動数を求める。",
               steps: [
                 {
                   expression: "λ = 4L = 4 × 0.50 = 2.0 m",
@@ -814,7 +822,8 @@ export const physicsBasicsAreas: MathArea[] = [
             ],
             example: {
               title: "例題: 水を温める熱量",
-              problem: "0.20 kgの水を10 K温める。水の比熱を4.2×10³ J/(kg·K)として必要な熱量を求める。",
+              problem:
+                "0.20 kgの水を10 K温める。水の比熱を4.2×10³ J/(kg·K)として必要な熱量を求める。",
               steps: [
                 {
                   expression: "Q = mcΔT",
@@ -856,10 +865,7 @@ export const physicsBasicsAreas: MathArea[] = [
             key: "heat-balance",
             title: "熱平衡と熱の利用",
             description: "断熱された系で高温物体が失う熱と低温物体が得る熱を対応させます。",
-            goals: [
-              "熱平衡の意味を説明できる。",
-              "熱量保存を使って混合後の温度を求められる。",
-            ],
+            goals: ["熱平衡の意味を説明できる。", "熱量保存を使って混合後の温度を求められる。"],
             concepts: [
               {
                 title: "外部との熱の出入りがなければ熱量がつり合う",
@@ -872,7 +878,8 @@ export const physicsBasicsAreas: MathArea[] = [
             ],
             example: {
               title: "例題: 同じ量の水を混ぜる",
-              problem: "同じ質量の20 ℃の水と60 ℃の水を、外部へ熱が逃げない容器で混ぜる。最終温度を求める。",
+              problem:
+                "同じ質量の20 ℃の水と60 ℃の水を、外部へ熱が逃げない容器で混ぜる。最終温度を求める。",
               steps: [
                 {
                   expression: "mc(60 − T) = mc(T − 20)",
@@ -978,7 +985,8 @@ export const physicsBasicsAreas: MathArea[] = [
           {
             key: "electric-power",
             title: "電力・電力量とジュール熱",
-            description: "電気器具が単位時間に変換するエネルギーと、一定時間に使う電力量を求めます。",
+            description:
+              "電気器具が単位時間に変換するエネルギーと、一定時間に使う電力量を求めます。",
             goals: [
               "電力P = VIと電力量E = Ptを使える。",
               "電気エネルギーが熱などへ変換されることを説明できる。",
@@ -1041,7 +1049,8 @@ export const physicsBasicsAreas: MathArea[] = [
       {
         key: "energy-society",
         title: "エネルギーの利用と物理学",
-        description: "エネルギー資源、変換効率、放射線を含むエネルギー利用と、物理学の社会的役割を扱います。",
+        description:
+          "エネルギー資源、変換効率、放射線を含むエネルギー利用と、物理学の社会的役割を扱います。",
         lessons: [
           {
             key: "energy-resources-efficiency",
@@ -1063,7 +1072,8 @@ export const physicsBasicsAreas: MathArea[] = [
             ],
             example: {
               title: "例題: エネルギー変換効率",
-              problem: "入力エネルギー500 Jのうち350 Jが目的のエネルギーへ変換された。効率を求める。",
+              problem:
+                "入力エネルギー500 Jのうち350 Jが目的のエネルギーへ変換された。効率を求める。",
               steps: [
                 {
                   expression: "η = 350/500 × 100 %",
@@ -1100,7 +1110,8 @@ export const physicsBasicsAreas: MathArea[] = [
           {
             key: "physics-opens-world",
             title: "物理学が拓く世界",
-            description: "センサー、医療、通信、交通、エネルギー技術を例に、物理学の知識が社会でどう使われるかを考えます。",
+            description:
+              "センサー、医療、通信、交通、エネルギー技術を例に、物理学の知識が社会でどう使われるかを考えます。",
             goals: [
               "身近な技術を物理基礎の概念と結び付けられる。",
               "物理学の知識を使うとき、測定・モデル・安全性・社会的影響を合わせて考えられる。",
@@ -1117,7 +1128,8 @@ export const physicsBasicsAreas: MathArea[] = [
             ],
             example: {
               title: "例題: 身近な機器を物理概念へ結び付ける",
-              problem: "スマートフォンが端末の向きや動きの変化を検出するとき、物理基礎のどの量が中心になるか考える。",
+              problem:
+                "スマートフォンが端末の向きや動きの変化を検出するとき、物理基礎のどの量が中心になるか考える。",
               steps: [
                 {
                   expression: "運動の変化 → 加速度",

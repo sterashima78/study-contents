@@ -86,7 +86,11 @@ const checks = [
       "../dist/physics-basics/motion/motion-description/acceleration/index.html",
       import.meta.url,
     ),
-    markers: ["加速度と速度―時間グラフ", "式の根拠: 等加速度運動の v = v₀ + at", "理解を確認する3問"],
+    markers: [
+      "加速度と速度―時間グラフ",
+      "式の根拠: 等加速度運動の v = v₀ + at",
+      "理解を確認する3問",
+    ],
   },
   {
     path: new URL(
@@ -126,4 +130,6 @@ for (const check of checks) {
   }
 }
 
-console.log("Generated HTML rendering checks passed for the course index, Math I, Math A, and Physics Basics.");
+console.log(
+  "Generated HTML rendering checks passed for the course index, Math I, Math A, and Physics Basics.",
+);

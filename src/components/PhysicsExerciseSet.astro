@@ -8,8 +8,7 @@ type Props = {
   lessonKey?: string;
 };
 
-const { mode: _mode, areaKey: _areaKey, unitKey: _unitKey, lessonKey: _lessonKey } =
-  Astro.props;
+const { mode: _mode, areaKey: _areaKey, unitKey: _unitKey, lessonKey: _lessonKey } = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _isUnit = _mode === "unit";
 ---

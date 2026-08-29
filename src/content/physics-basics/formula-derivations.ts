@@ -75,7 +75,8 @@ const physicsBasicsFormulaDerivations: Record<string, FormulaDerivation> = {
   },
   "kinetic-potential-energy": {
     title: "式の根拠: 運動エネルギー K = 1/2 mv²",
-    introduction: "静止していた物体へ一定の合力を加える場合の仕事を、運動方程式と等加速度運動から整理します。",
+    introduction:
+      "静止していた物体へ一定の合力を加える場合の仕事を、運動方程式と等加速度運動から整理します。",
     steps: [
       {
         expression: "W = Fx = max",
