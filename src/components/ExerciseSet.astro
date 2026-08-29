@@ -11,7 +11,9 @@ type Props = {
     | "mathc"
     | "math3"
     | "chemistry-basic"
-    | "chemistry";
+    | "chemistry"
+    | "biology-basic"
+    | "biology";
   areaKey: string;
   unitKey: string;
   lessonKey?: string;
@@ -26,7 +28,11 @@ const {
 } = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _isUnit = _mode === "unit";
-const _isChemistry = _courseKey === "chemistry-basic" || _courseKey === "chemistry";
+const _usesCompactUnitSet =
+  _courseKey === "chemistry-basic" ||
+  _courseKey === "chemistry" ||
+  _courseKey === "biology-basic" ||
+  _courseKey === "biology";
 ---
 
 <section
@@ -50,8 +56,8 @@ const _isChemistry = _courseKey === "chemistry-basic" || _courseKey === "chemist
     <p>
       {
         _isUnit
-          ? _isChemistry
-            ? "基礎4問・応用1問・難問1問を採点し、小単元ごとの理解度を確認します。"
+          ? _usesCompactUnitSet
+            ? "基礎・応用・難問を全6問で採点し、小単元ごとの理解度を確認します。"
             : "基礎12問・応用3問・難問1問を採点し、小単元ごとの理解度を確認します。"
           : "解き方を確認したあと、誘導なしで3問解いてからまとめへ進みます。"
       }
@@ -62,7 +68,7 @@ const _isChemistry = _courseKey === "chemistry-basic" || _courseKey === "chemist
     <p class="exercise-count-note">
       {
         _isUnit
-          ? _isChemistry
+          ? _usesCompactUnitSet
             ? "全6問 · 対応小単元を各問題に表示"
             : "全16問 · 対応小単元を各問題に表示"
           : "全3問 · すべてこの小単元の確認問題"
@@ -92,6 +98,14 @@ const _isChemistry = _courseKey === "chemistry-basic" || _courseKey === "chemist
 <script>
   import { MathfieldElement } from "mathlive";
   import "mathlive/fonts.css";
+  import {
+    generateLessonExercises as generateBiologyLessonExercises,
+    generateUnitExercises as generateBiologyUnitExercises,
+  } from "../content/biology/exercise-registry";
+  import {
+    generateLessonExercises as generateBiologyBasicLessonExercises,
+    generateUnitExercises as generateBiologyBasicUnitExercises,
+  } from "../content/biology-basic/exercise-registry";
   import {
     generateLessonExercises as generateAdvancedChemistryLessonExercises,
     generateUnitExercises as generateAdvancedChemistryUnitExercises,
@@ -235,6 +249,20 @@ const _isChemistry = _courseKey === "chemistry-basic" || _courseKey === "chemist
 
     let exercises: GeneratedExercise[] = [];
     const makeExercises = () => {
+      if (courseKey === "biology") {
+        return mode === "unit"
+          ? generateBiologyUnitExercises(unitKey)
+          : lessonKey
+            ? generateBiologyLessonExercises(unitKey, lessonKey)
+            : [];
+      }
+      if (courseKey === "biology-basic") {
+        return mode === "unit"
+          ? generateBiologyBasicUnitExercises(unitKey)
+          : lessonKey
+            ? generateBiologyBasicLessonExercises(unitKey, lessonKey)
+            : [];
+      }
       if (courseKey === "chemistry") {
         return mode === "unit"
           ? generateAdvancedChemistryUnitExercises(unitKey)
