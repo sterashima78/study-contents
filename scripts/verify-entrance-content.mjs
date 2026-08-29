@@ -102,14 +102,14 @@ function validateLearningStructure(pattern, location) {
   if (!Array.isArray(pattern.example?.statement) || pattern.example.statement.length === 0) {
     issues.push(`${location}: example.statement に例題が必要です。`);
   }
-  if (!Array.isArray(pattern.example?.solution?.steps) || pattern.example.solution.steps.length === 0) {
+  if (
+    !Array.isArray(pattern.example?.solution?.steps) ||
+    pattern.example.solution.steps.length === 0
+  ) {
     issues.push(`${location}: example.solution.steps に例題の解答過程が必要です。`);
   }
 
-  if (
-    !Array.isArray(pattern.guidedPractice?.steps) ||
-    pattern.guidedPractice.steps.length === 0
-  ) {
+  if (!Array.isArray(pattern.guidedPractice?.steps) || pattern.guidedPractice.steps.length === 0) {
     issues.push(`${location}: guidedPractice.steps にステップ練習が必要です。`);
   } else {
     for (const [stepIndex, step] of pattern.guidedPractice.steps.entries()) {
@@ -122,7 +122,10 @@ function validateLearningStructure(pattern, location) {
   if (!Array.isArray(pattern.practice?.statement) || pattern.practice.statement.length === 0) {
     issues.push(`${location}: practice.statement に実践問題が必要です。`);
   }
-  if (!Array.isArray(pattern.practice?.solution?.steps) || pattern.practice.solution.steps.length === 0) {
+  if (
+    !Array.isArray(pattern.practice?.solution?.steps) ||
+    pattern.practice.solution.steps.length === 0
+  ) {
     issues.push(`${location}: practice.solution.steps に実践問題の解答過程が必要です。`);
   }
 }
@@ -130,7 +133,9 @@ function validateLearningStructure(pattern, location) {
 function validateGenerator(pattern, location) {
   if (pattern.generatorKey === undefined) return;
   if (!allowedGeneratorKeys.has(pattern.generatorKey)) {
-    issues.push(`${location}: generatorKey「${pattern.generatorKey}」は許可済み生成器ではありません。`);
+    issues.push(
+      `${location}: generatorKey「${pattern.generatorKey}」は許可済み生成器ではありません。`,
+    );
   }
 }
 
