@@ -5,6 +5,7 @@ import { biologyAreas } from "../content/biology/catalog";
 import { biologyBasicAreas } from "../content/biology-basic/catalog";
 import { chemistryAreas } from "../content/chemistry/catalog";
 import { chemistryBasicAreas } from "../content/chemistry-basic/catalog";
+import { englishAreas } from "../content/english/catalog";
 import { math1Areas } from "../content/math1/catalog";
 import { math2Areas } from "../content/math2/catalog";
 import { math3Areas } from "../content/math3/catalog";
@@ -14,8 +15,14 @@ import { mathCAreas } from "../content/mathc/catalog";
 import { physicsAreas } from "../content/physics/catalog";
 import { physicsBasicsAreas } from "../content/physics-basics/catalog";
 
+type CountableArea = {
+  units: ReadonlyArray<{
+    lessons: ReadonlyArray<unknown>;
+  }>;
+};
+
 const _base = import.meta.env.BASE_URL;
-const _lessonCount = (areas: typeof math1Areas) =>
+const _lessonCount = (areas: ReadonlyArray<CountableArea>) =>
   areas.reduce(
     (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
     0,
@@ -126,6 +133,15 @@ const _courses = [
       "生物の進化、生命現象と物質、遺伝情報の発現と発生、環境応答、生態と環境を、資料解釈を交えて学びます。",
     areas: biologyAreas.map((area) => area.title),
     lessonCount: _lessonCount(biologyAreas),
+  },
+  {
+    title: "英語",
+    kicker: "ENGLISH",
+    href: `${_base}english/`,
+    description:
+      "英語基礎、英文解釈、長文読解、論理・表現を、オリジナル英文と1ページ1技能の教材で学びます。",
+    areas: englishAreas.map((area) => area.title),
+    lessonCount: _lessonCount(englishAreas),
   },
 ];
 ---
