@@ -31,11 +31,9 @@ const _isUnit = _mode === "unit";
       </h2>
     </div>
     <p>
-      {
-        _isUnit
-          ? "基礎12問・応用3問・難問1問を採点し、小単元ごとの理解度を確認します。"
-          : "解き方を確認したあと、誘導なしで3問解いてからまとめへ進みます。"
-      }
+      {_isUnit
+        ? "基礎12問・応用3問・難問1問を採点し、小単元ごとの理解度を確認します。"
+        : "解き方を確認したあと、誘導なしで3問解いてからまとめへ進みます。"}
     </p>
   </div>
 
@@ -71,19 +69,9 @@ const _isUnit = _mode === "unit";
     generateLessonExercises,
     generateUnitExercises,
     type GeneratedExercise,
-  } from "../content/math1/exercise-generators";
+  } from "../content/math1/exercise-registry";
 
   MathfieldElement.soundsDirectory = null;
-
-  const mathShortcuts = [
-    { label: "x²", latex: "#@^{2}", ariaLabel: "直前の式を2乗する" },
-    { label: "xⁿ", latex: "#@^{#?}", ariaLabel: "指数を入力する" },
-    { label: "√□", latex: "\\sqrt{#0}", ariaLabel: "平方根を入力する" },
-    { label: "□/□", latex: "\\frac{#0}{#?}", ariaLabel: "分数を入力する" },
-    { label: "±", latex: "\\pm", ariaLabel: "プラスマイナスを入力する" },
-    { label: "(", latex: "(", ariaLabel: "左かっこを入力する" },
-    { label: ")", latex: ")", ariaLabel: "右かっこを入力する" },
-  ] as const;
 
   const normalizeAnswer = (value: string) => {
     let normalized = value
@@ -124,13 +112,11 @@ const _isUnit = _mode === "unit";
       previous = normalized;
       normalized = normalized.replace(/\\sqrt\{([^{}]+)\}/g, "√$1");
     }
-
     previous = "";
     while (previous !== normalized) {
       previous = normalized;
       normalized = normalized.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, "$1/$2");
     }
-
     return normalized.replaceAll("^{2}", "²").replaceAll("^2", "²");
   };
 
@@ -140,46 +126,48 @@ const _isUnit = _mode === "unit";
     challenge: "難問",
   };
 
-  const createElement = <K extends keyof HTMLElementTagNameMap>(
-    tag: K,
-    className?: string,
-    text?: string,
-  ) => {
+  const createElement = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
     const element = document.createElement(tag);
     if (className) element.className = className;
     if (text !== undefined) element.textContent = text;
     return element;
   };
 
-  const createMathAnswerEditor = (answerId: string, ariaLabel: string) => {
-    const wrapper = createElement("div", "exercise-math-editor");
-    const mathField = new MathfieldElement();
-    mathField.id = answerId;
-    mathField.className = "exercise-answer-editor exercise-math-input";
-    mathField.placeholder = "\\text{答えを入力}";
-    mathField.mathVirtualKeyboardPolicy = "auto";
-    mathField.setAttribute("aria-label", ariaLabel);
-    mathField.dataset.answerEditor = "math";
+  const mathShortcuts = [
+    ["x²", "#@^{2}", "直前の式を2乗する"],
+    ["xⁿ", "#@^{#?}", "指数を入力する"],
+    ["√□", "\\sqrt{#0}", "平方根を入力する"],
+    ["□/□", "\\frac{#0}{#?}", "分数を入力する"],
+    ["±", "\\pm", "プラスマイナスを入力する"],
+    ["(", "(", "左かっこを入力する"],
+    [")", ")", "右かっこを入力する"],
+  ] as const;
 
-    const helperText = createElement(
+  const createMathEditor = (id: string, ariaLabel: string) => {
+    const wrapper = createElement("div", "exercise-math-editor");
+    const field = new MathfieldElement();
+    field.id = id;
+    field.className = "exercise-answer-editor exercise-math-input";
+    field.placeholder = "\\text{答えを入力}";
+    field.mathVirtualKeyboardPolicy = "auto";
+    field.dataset.answerEditor = "math";
+    field.setAttribute("aria-label", ariaLabel);
+
+    const help = createElement(
       "p",
       "exercise-input-help",
       "入力しにくい記号は下のボタンから挿入できます。スマートフォンでは数式キーボードも利用できます。",
     );
-    const shortcuts = createElement("div", "exercise-symbol-toolbar");
-    shortcuts.setAttribute("aria-label", "数式入力補助");
-
-    for (const shortcut of mathShortcuts) {
-      const button = createElement("button", "exercise-symbol-button", shortcut.label);
+    const toolbar = createElement("div", "exercise-symbol-toolbar");
+    toolbar.setAttribute("aria-label", "数式入力補助");
+    for (const [label, latex, shortcutAriaLabel] of mathShortcuts) {
+      const button = createElement("button", "exercise-symbol-button", label);
       button.type = "button";
-      button.setAttribute("aria-label", shortcut.ariaLabel);
-      button.addEventListener("click", () => {
-        mathField.insert(shortcut.latex, { focus: true, selectionMode: "placeholder" });
-      });
-      shortcuts.append(button);
+      button.setAttribute("aria-label", shortcutAriaLabel);
+      button.addEventListener("click", () => field.insert(latex, { focus: true, selectionMode: "placeholder" }));
+      toolbar.append(button);
     }
-
-    wrapper.append(mathField, helperText, shortcuts);
+    wrapper.append(field, help, toolbar);
     return wrapper;
   };
 
@@ -192,25 +180,12 @@ const _isUnit = _mode === "unit";
     const form = section.querySelector<HTMLFormElement>(".exercise-form");
     const list = section.querySelector<HTMLElement>("[data-exercise-list]");
     const feedback = section.querySelector<HTMLElement>(".exercise-feedback");
-    const regenerateButton = section.querySelector<HTMLButtonElement>(".exercise-regenerate");
+    const regenerate = section.querySelector<HTMLButtonElement>(".exercise-regenerate");
     const diagnostic = section.querySelector<HTMLElement>("[data-exercise-diagnostic]");
     const diagnosticList = section.querySelector<HTMLElement>("[data-diagnostic-list]");
-
-    if (
-      !areaKey ||
-      !unitKey ||
-      !form ||
-      !list ||
-      !feedback ||
-      !regenerateButton ||
-      !diagnostic ||
-      !diagnosticList
-    ) {
-      continue;
-    }
+    if (!areaKey || !unitKey || !form || !list || !feedback || !regenerate || !diagnostic || !diagnosticList) continue;
 
     let exercises: GeneratedExercise[] = [];
-
     const makeExercises = () =>
       mode === "unit"
         ? generateUnitExercises(unitKey)
@@ -221,37 +196,24 @@ const _isUnit = _mode === "unit";
     const renderExercises = () => {
       exercises = makeExercises();
       list.replaceChildren();
-      feedback.textContent = "";
-      feedback.className = "feedback exercise-feedback";
       diagnostic.hidden = true;
       diagnosticList.replaceChildren();
+      feedback.textContent = "";
+      feedback.className = "feedback exercise-feedback";
 
       for (const [index, exercise] of exercises.entries()) {
         const article = createElement("article", "exercise-question");
-        article.dataset.exerciseId = exercise.id;
-        article.dataset.answers = JSON.stringify(exercise.answers);
-        article.dataset.lessonKeys = JSON.stringify(exercise.lessonKeys);
-        article.dataset.lessonTitles = JSON.stringify(exercise.lessonTitles);
-
         const header = createElement("div", "exercise-question-header");
-        const number = createElement("span", "exercise-number", `問${index + 1}`);
-        const difficulty = createElement(
-          "span",
-          `exercise-difficulty difficulty-${exercise.difficulty}`,
-          difficultyLabel[exercise.difficulty],
+        header.append(
+          createElement("span", "exercise-number", `問${index + 1}`),
+          createElement("span", `exercise-difficulty difficulty-${exercise.difficulty}`, difficultyLabel[exercise.difficulty]),
         );
-        header.append(number, difficulty);
-
         const prompt = createElement("p", "exercise-prompt", exercise.prompt);
-        const mapping = createElement(
-          "p",
-          "exercise-mapping",
-          `対応: ${exercise.lessonTitles.join(" / ")}`,
-        );
+        const mapping = createElement("p", "exercise-mapping", `対応: ${exercise.lessonTitles.join(" / ")}`);
         const answerBlock = createElement("div", "exercise-answer-label");
         const answerId = `exercise-answer-${exercise.id}-${index}`;
-        const labelText = createElement("label", undefined, "答え");
-        labelText.htmlFor = answerId;
+        const label = createElement("label", undefined, "答え");
+        label.htmlFor = answerId;
 
         if (exercise.answerMode === "text") {
           const input = document.createElement("input");
@@ -260,25 +222,20 @@ const _isUnit = _mode === "unit";
           input.className = "exercise-answer-editor exercise-text-input";
           input.autocomplete = "off";
           input.spellcheck = false;
-          input.placeholder = "答えを入力";
           input.required = true;
           input.dataset.answerEditor = "text";
           input.setAttribute("aria-label", `問${index + 1}の答え`);
-          answerBlock.append(labelText, input);
+          answerBlock.append(label, input);
         } else {
-          answerBlock.append(labelText, createMathAnswerEditor(answerId, `問${index + 1}の数式の答え`));
+          answerBlock.append(label, createMathEditor(answerId, `問${index + 1}の数式の答え`));
         }
 
         article.append(header, prompt, mapping, answerBlock);
-
         if (exercise.hint) {
           const details = createElement("details", "exercise-hint");
-          const summary = createElement("summary", undefined, "ヒント");
-          const hint = createElement("p", undefined, exercise.hint);
-          details.append(summary, hint);
+          details.append(createElement("summary", undefined, "ヒント"), createElement("p", undefined, exercise.hint));
           article.append(details);
         }
-
         list.append(article);
       }
     };
@@ -286,23 +243,23 @@ const _isUnit = _mode === "unit";
     const renderDiagnostic = (results: Map<string, { title: string; correct: number; total: number }>) => {
       diagnosticList.replaceChildren();
       const sorted = [...results.entries()].sort(([, a], [, b]) => a.correct / a.total - b.correct / b.total);
-
       for (const [key, result] of sorted) {
         const item = createElement("article", "diagnostic-item");
-        const score = createElement("p", "diagnostic-score", `${result.correct}/${result.total} 正解`);
-        const title = createElement("h4", undefined, result.title);
         const ratio = result.total === 0 ? 0 : result.correct / result.total;
-        const status = createElement(
-          "p",
-          ratio === 1 ? "diagnostic-status is-strong" : "diagnostic-status is-weak",
-          ratio === 1 ? "理解できています" : "復習候補",
-        );
         const link = createElement("a", "diagnostic-link", "この小単元を復習する");
         link.href = `${base}math1/${areaKey}/${unitKey}/${key}/`;
-        item.append(title, score, status, link);
+        item.append(
+          createElement("h4", undefined, result.title),
+          createElement("p", "diagnostic-score", `${result.correct}/${result.total} 正解`),
+          createElement(
+            "p",
+            ratio === 1 ? "diagnostic-status is-strong" : "diagnostic-status is-weak",
+            ratio === 1 ? "理解できています" : "復習候補",
+          ),
+          link,
+        );
         diagnosticList.append(item);
       }
-
       diagnostic.hidden = false;
     };
 
@@ -312,16 +269,14 @@ const _isUnit = _mode === "unit";
       const lessonResults = new Map<string, { title: string; correct: number; total: number }>();
 
       for (const [index, article] of [...list.querySelectorAll<HTMLElement>(".exercise-question")].entries()) {
+        const exercise = exercises[index];
+        if (!exercise) continue;
         const mathField = article.querySelector<MathfieldElement>("math-field[data-answer-editor='math']");
         const textInput = article.querySelector<HTMLInputElement>("input[data-answer-editor='text']");
         const editor = mathField ?? textInput;
         if (!editor) continue;
-
-        const exercise = exercises[index];
-        if (!exercise) continue;
-        const answer = mathField ? mathField.getValue("latex-unstyled") : (textInput?.value ?? "");
-        const accepted = exercise.answers.map(normalizeAnswer);
-        const isCorrect = accepted.includes(normalizeAnswer(answer));
+        const rawAnswer = mathField ? mathField.getValue("latex-unstyled") : (textInput?.value ?? "");
+        const isCorrect = exercise.answers.map(normalizeAnswer).includes(normalizeAnswer(rawAnswer));
         article.classList.toggle("is-correct", isCorrect);
         article.classList.toggle("is-error", !isCorrect);
         editor.classList.toggle("is-correct", isCorrect);
@@ -362,7 +317,7 @@ const _isUnit = _mode === "unit";
       }, 0);
     });
 
-    regenerateButton.addEventListener("click", () => {
+    regenerate.addEventListener("click", () => {
       renderExercises();
       feedback.textContent = "別の問題を生成しました。";
     });
