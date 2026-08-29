@@ -15,6 +15,7 @@ const checks = [
       "化学基礎",
       "CHEMISTRY",
       "物理基礎",
+      "PHYSICS",
       "科目の目次を見る",
     ],
   },
@@ -258,6 +259,65 @@ const checks = [
     ),
     markers: ["電気とその利用の単元末演習", "単元末演習"],
   },
+  {
+    path: new URL("../dist/physics/index.html", import.meta.url),
+    markers: [
+      "物理",
+      "学習する4つの領域",
+      "全33小教材",
+      "様々な運動",
+      "電気と磁気",
+      "原子",
+      "科目一覧へ",
+    ],
+  },
+  {
+    path: new URL(
+      "../dist/physics/motion/circular-oscillation/uniform-circular-motion/index.html",
+      import.meta.url,
+    ),
+    markers: [
+      "等速円運動",
+      "式の根拠: 等速円運動の向心加速度 a = v²/r",
+      "理解を確認する3問",
+    ],
+  },
+  {
+    path: new URL(
+      "../dist/physics/waves/light/light-interference-diffraction/index.html",
+      import.meta.url,
+    ),
+    markers: [
+      "光の回折と干渉",
+      "式の根拠: ヤングの干渉縞 Δx = λL/d",
+      "理解を確認する3問",
+    ],
+  },
+  {
+    path: new URL(
+      "../dist/physics/electricity-magnetism/current-magnetic-field/electromagnetic-induction/index.html",
+      import.meta.url,
+    ),
+    markers: ["電磁誘導・自己誘導・交流", "ファラデー", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/physics/atoms/atom-nucleus/nuclear-physics/index.html",
+      import.meta.url,
+    ),
+    markers: [
+      "原子核・崩壊・核反応",
+      "式の根拠: 半減期を用いた残存量",
+      "理解を確認する3問",
+    ],
+  },
+  {
+    path: new URL(
+      "../dist/physics/electricity-magnetism/electricity-current/exercise/index.html",
+      import.meta.url,
+    ),
+    markers: ["電気と電流の単元末演習", "単元末演習", "全16問"],
+  },
 ];
 
 for (const check of checks) {
@@ -276,5 +336,5 @@ for (const check of checks) {
 }
 
 console.log(
-  "Generated HTML rendering checks passed for the course index, Math I, Math A, Math B, Math C, Math III, Basic Chemistry, Chemistry, and Physics Basics.",
+  "Generated HTML rendering checks passed for the course index, Math I, Math A, Math B, Math C, Math III, Basic Chemistry, Chemistry, Physics Basics, and Physics.",
 );
