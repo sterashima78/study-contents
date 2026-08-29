@@ -1,4 +1,5 @@
 ---
+import ExerciseSet from "./ExerciseSet.astro";
 import type { AlgebraUnit, Lesson } from "../content/math1/algebra";
 import "../styles/global.css";
 import "../styles/lesson.css";
@@ -15,6 +16,7 @@ const _previousLesson = _lessonIndex > 0 ? _unit.lessons[_lessonIndex - 1] : und
 const _nextLesson =
   _lessonIndex < _unit.lessons.length - 1 ? _unit.lessons[_lessonIndex + 1] : undefined;
 const _unitHref = `${_base}math1/algebra/${_unit.key}/`;
+const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
 ---
 
@@ -25,7 +27,7 @@ const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content={`高校数学I「${_lesson.title}」の教材。細かい途中式、例題直後の練習問題、まとめで学習します。`}
+      content={`高校数学I「${_lesson.title}」の教材。細かい途中式、例題直後の練習問題、3問の確認演習、まとめで学習します。`}
     />
     <title>{_lesson.title} | {_unit.title} | 数学I</title>
   </head>
@@ -139,6 +141,8 @@ const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
         </article>
       </section>
 
+      <ExerciseSet mode="lesson" unitKey={_unit.key} lessonKey={_lesson.key} />
+
       <section class="lesson-section summary-section" aria-labelledby="summary-title">
         <p class="section-label">SUMMARY</p>
         <h2 id="summary-title">このページのポイント</h2>
@@ -160,7 +164,7 @@ const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
           {_nextLesson ? (
             <a href={_lessonHref(_nextLesson.key)}>{_nextLesson.title} →</a>
           ) : (
-            <a href={_unitHref}>{_unit.title}の目次へ →</a>
+            <a href={_unitExerciseHref}>単元末演習へ →</a>
           )}
         </div>
       </nav>
