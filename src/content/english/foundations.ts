@@ -9,7 +9,8 @@ export const englishFoundationUnits: EnglishUnit[] = [
       {
         key: "five-patterns",
         title: "SVOCで文の骨格をつかむ",
-        description: "修飾語をいったん外し、主語・動詞・目的語・補語の関係から英文の中心を読み取ります。",
+        description:
+          "修飾語をいったん外し、主語・動詞・目的語・補語の関係から英文の中心を読み取ります。",
         rights: "original",
         goals: [
           "英文から主語と動詞を最初に特定できる。",
@@ -78,7 +79,8 @@ export const englishFoundationUnits: EnglishUnit[] = [
       {
         key: "tense-viewpoint",
         title: "時制を時間の視点として読む",
-        description: "現在・過去・完了形を単なる形ではなく、話し手がどこから出来事を見るかで整理します。",
+        description:
+          "現在・過去・完了形を単なる形ではなく、話し手がどこから出来事を見るかで整理します。",
         rights: "original",
         goals: [
           "現在形と現在進行形の基本的な視点の違いを説明できる。",
@@ -143,7 +145,8 @@ export const englishFoundationUnits: EnglishUnit[] = [
       {
         key: "infinitive-gerund",
         title: "不定詞と動名詞を役割で見分ける",
-        description: "to do と doing を暗記だけで選ばず、名詞・形容詞・副詞としての働きや動詞との結び付きから判断します。",
+        description:
+          "to do と doing を暗記だけで選ばず、名詞・形容詞・副詞としての働きや動詞との結び付きから判断します。",
         rights: "original",
         goals: [
           "不定詞が名詞・形容詞・副詞のどの役割か判断できる。",
@@ -201,7 +204,8 @@ export const englishFoundationUnits: EnglishUnit[] = [
       {
         key: "participle-relative",
         title: "分詞と関係詞で名詞を修飾する",
-        description: "名詞の後ろに続く情報をまとまりとして捉え、どの名詞を説明しているかを追います。",
+        description:
+          "名詞の後ろに続く情報をまとまりとして捉え、どの名詞を説明しているかを追います。",
         rights: "original",
         goals: [
           "現在分詞・過去分詞が修飾する名詞を特定できる。",
