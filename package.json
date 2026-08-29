@@ -11,8 +11,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "biome ci . && node scripts/verify-formula-coverage.mjs",
+    "check": "biome ci . && pnpm check:adr && pnpm check:formulas",
     "check:write": "biome check --write .",
+    "check:adr": "node scripts/verify-adrs.mjs",
     "check:formulas": "node scripts/verify-formula-coverage.mjs"
   },
   "dependencies": {
