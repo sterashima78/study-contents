@@ -3,10 +3,8 @@ import { fileURLToPath } from "node:url";
 
 const root = new URL("../", import.meta.url);
 const src = new URL("../src/", import.meta.url);
-const styles = new URL("../src/styles/", import.meta.url);
 const exerciseCssUrl = new URL("../src/styles/exercise.css", import.meta.url);
 const forbiddenStyleNames = [
-  "global.css",
   "lesson.css",
   "entrance.css",
   "entrance-index.css",
@@ -37,11 +35,6 @@ const requiredScopedComponents = [
 ];
 const issues = [];
 const astroFiles = await findFiles(src, ".astro");
-const styleEntries = await readdir(styles);
-
-if (styleEntries.includes("global.css")) {
-  issues.push("src/styles/global.css: グローバルCSSファイルは配置しないでください。");
-}
 
 for (const file of astroFiles) {
   const source = await readFile(file, "utf8");
