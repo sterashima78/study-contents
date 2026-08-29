@@ -18,7 +18,7 @@
   },
   "overrides": [
     {
-      "includes": ["src/content/math1/algebra.ts"],
+      "includes": ["src/content/math1/algebra.ts", "src/content/matha/**/*.ts"],
       "formatter": {
         "enabled": false
       }
