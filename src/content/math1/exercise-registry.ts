@@ -1,4 +1,8 @@
 import {
+  generateLessonExercises as generateMath2LessonExercises,
+  generateUnitExercises as generateMath2UnitExercises,
+} from "../math2/exercise-registry";
+import {
   type ExtraExerciseAnswerMode,
   generateAdditionalLessonExercises,
   generateAdditionalUnitExercises,
@@ -8,10 +12,6 @@ import {
   generateLessonExercises as generateAlgebraLessonExercises,
   generateUnitExercises as generateAlgebraUnitExercises,
 } from "./exercise-generators";
-import {
-  generateLessonExercises as generateMath2LessonExercises,
-  generateUnitExercises as generateMath2UnitExercises,
-} from "../math2/exercise-registry";
 
 export type GeneratedExercise = AlgebraGeneratedExercise & {
   answerMode: ExtraExerciseAnswerMode;
