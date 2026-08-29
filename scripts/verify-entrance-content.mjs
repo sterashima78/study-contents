@@ -9,6 +9,7 @@ const allowedGeneratorKeys = new Set([
   "triangle-rectangle",
   "determine-quadratic",
 ]);
+const requiredMath1Topics = new Set(["algebra", "geometry", "quadratic", "data-analysis"]);
 const forbiddenOriginalFields = new Set([
   "sourceText",
   "sourceProblem",
@@ -19,6 +20,7 @@ const forbiddenOriginalFields = new Set([
 
 const issues = [];
 const files = await findJsonFiles(entranceDirectory);
+const seenMath1Topics = new Map();
 
 if (files.length === 0) {
   issues.push("src/content/entrance/ に検証対象のJSON教材がありません。");
@@ -42,6 +44,10 @@ for (const file of files) {
   if (!Array.isArray(document.patterns) || document.patterns.length === 0) {
     issues.push(`${relativeName}: patterns は1件以上の配列にしてください。`);
     continue;
+  }
+
+  if (document.course === "math1") {
+    validateMath1CoverageDocument(document, relativeName);
   }
 
   const ids = new Set();
@@ -80,6 +86,12 @@ for (const file of files) {
   }
 }
 
+for (const topic of requiredMath1Topics) {
+  if (!seenMath1Topics.has(topic)) {
+    issues.push(`数学I: 応用・発展教材が未実装の領域「${topic}」があります。`);
+  }
+}
+
 if (issues.length > 0) {
   console.error("Entrance content verification failed:");
   for (const issue of issues) {
@@ -87,7 +99,36 @@ if (issues.length > 0) {
   }
   process.exitCode = 1;
 } else {
-  console.log(`Entrance content verification passed: ${files.length} file(s).`);
+  console.log(
+    `Entrance content verification passed: ${files.length} file(s), Math I ${seenMath1Topics.size}/${requiredMath1Topics.size} topics covered.`,
+  );
+}
+
+function validateMath1CoverageDocument(document, relativeName) {
+  if (!requiredMath1Topics.has(document.topic)) {
+    issues.push(`${relativeName}: 数学Iの未知の topic「${document.topic}」です。`);
+    return;
+  }
+
+  if (seenMath1Topics.has(document.topic)) {
+    issues.push(
+      `${relativeName}: 数学Iの topic「${document.topic}」が ${seenMath1Topics.get(document.topic)} と重複しています。`,
+    );
+  } else {
+    seenMath1Topics.set(document.topic, relativeName);
+  }
+
+  if (document.patterns.length < 4) {
+    issues.push(`${relativeName}: 数学Iの各領域には4パターン以上の応用・発展教材が必要です。`);
+  }
+
+  const levels = new Set(document.patterns.map((pattern) => pattern.level));
+  if (!levels.has("application")) {
+    issues.push(`${relativeName}: application（応用）パターンが1件以上必要です。`);
+  }
+  if (!levels.has("advanced")) {
+    issues.push(`${relativeName}: advanced（発展）パターンが1件以上必要です。`);
+  }
 }
 
 function validateLearningStructure(pattern, location) {

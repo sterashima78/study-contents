@@ -1,4 +1,5 @@
 ---
+import { math1AdvancedTopicSets } from "../../content/entrance/math1-topic-sets";
 import { math1Areas } from "../../content/math1/catalog";
 import "../../styles/global.css";
 
@@ -9,6 +10,19 @@ const _areas = math1Areas.map((area, index) => ({
   lessonCount: area.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
 }));
 const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0);
+const _advancedAreas = math1AdvancedTopicSets.map((topicSet, index) => {
+  const area = math1Areas.find((candidate) => candidate.key === topicSet.topic);
+  return {
+    topic: topicSet.topic,
+    title: area?.title ?? topicSet.title,
+    description: topicSet.description,
+    number: String(index + 1).padStart(2, "0"),
+    patternCount: topicSet.patterns.length,
+    applicationCount: topicSet.patterns.filter((pattern) => pattern.level === "application").length,
+    advancedCount: topicSet.patterns.filter((pattern) => pattern.level === "advanced").length,
+    generatorCount: topicSet.patterns.filter((pattern) => "generatorKey" in pattern).length,
+  };
+});
 ---
 
 <!doctype html>
@@ -18,7 +32,7 @@ const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="高校数学Iの学習コンテンツ。数と式、図形と計量、二次関数、データの分析を1ページ1技能で学べます。"
+      content="高校数学Iの学習コンテンツ。数と式、図形と計量、二次関数、データの分析を1ページ1技能で学び、全領域の応用・発展パターンへ進めます。"
     />
     <title>数学I | 学習コンテンツ</title>
   </head>
@@ -28,7 +42,7 @@ const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0
         <p class="eyebrow">MATHEMATICS I</p>
         <h1>数学I</h1>
         <p class="lead">
-          1ページ1技能の小さな教材で、例題の手順を追い、直後の練習で同じ考え方を使います。
+          1ページ1技能の小さな教材で基礎を学び、領域ごとの応用・発展では解法パターンを使って問題選択の力を伸ばします。
         </p>
         <div class="learning-flow" aria-label="各小単元の学習の流れ">
           <span>考え方</span>
@@ -84,33 +98,35 @@ const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0
             <h2 id="application-title">応用・発展</h2>
           </div>
           <p>
-            基礎教材で身につけた技能を組み合わせ、問題文の条件から使う解法を選ぶ練習へ進みます。
+            数学Iの4領域すべてで、基礎技能を組み合わせ、問題文の条件から使う解法を選ぶ練習へ進みます。
           </p>
         </div>
 
         <ol class="unit-grid">
-          <li class="unit-card">
-            <div class="unit-header">
-              <span class="unit-number" aria-hidden="true">01</span>
-              <h3><a href={`${_base}math1/entrance/quadratic/`}>二次関数 応用・発展</a></h3>
-            </div>
-            <p class="unit-description">
-              場合分け、共有点、2解の符号、図形との融合、二次関数の決定を、解法パターンごとに学びます。
-            </p>
-            <ul class="topic-list">
-              <li>応用 3パターン</li>
-              <li>発展 2パターン</li>
-              <li>問題生成 4パターン対応</li>
-              <li>必要な問題には図解付き</li>
-            </ul>
-            <p class="preparing available">パターン教材公開</p>
-          </li>
+          {
+            _advancedAreas.map((area) => (
+              <li class="unit-card">
+                <div class="unit-header">
+                  <span class="unit-number" aria-hidden="true">{area.number}</span>
+                  <h3><a href={`${_base}math1/entrance/${area.topic}/`}>{area.title} 応用・発展</a></h3>
+                </div>
+                <p class="unit-description">{area.description}</p>
+                <ul class="topic-list">
+                  <li>応用 {area.applicationCount}パターン</li>
+                  <li>発展 {area.advancedCount}パターン</li>
+                  {area.generatorCount > 0 && <li>問題生成 {area.generatorCount}パターン対応</li>}
+                  <li>1パターン1ページ</li>
+                </ul>
+                <p class="preparing available">{area.patternCount}パターン公開</p>
+              </li>
+            ))
+          }
         </ol>
       </section>
 
       <footer class="page-footer">
         <p>高校 数学I</p>
-        <p>現行学習指導要領の4領域を、小単元・確認演習・単元末演習で学習できます。</p>
+        <p>現行学習指導要領の4領域を、基礎教材と応用・発展パターンで学習できます。</p>
         <p><a href={_base}>科目一覧へ</a></p>
       </footer>
     </main>

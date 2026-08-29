@@ -1,0 +1,308 @@
+---
+import "../styles/global.css";
+import "../styles/entrance.css";
+
+type GuidedStep = {
+  prompt: string;
+  answers: string[];
+  placeholder?: string;
+};
+
+type Pattern = {
+  id: string;
+  title: string;
+  level: string;
+  estimatedMinutes: number;
+  skills: string[];
+  thinking: {
+    title: string;
+    body: string[];
+    checkpoints: string[];
+  };
+  example: {
+    statement: string[];
+    question: string;
+    solution: {
+      strategy: string;
+      steps: string[];
+      answer: string;
+    };
+  };
+  guidedPractice: {
+    title: string;
+    statement: string[];
+    question: string;
+    steps: GuidedStep[];
+    hint: string;
+  };
+  practice: {
+    statement: string[];
+    question: string;
+    solution: {
+      steps: string[];
+      answer: string;
+    };
+  };
+};
+
+type TopicSet = {
+  topic: string;
+  title: string;
+  patterns: Pattern[];
+};
+
+type Props = {
+  topicSet: TopicSet;
+  areaTitle: string;
+  pattern: Pattern;
+  patternIndex: number;
+};
+
+const {
+  topicSet: _topicSet,
+  areaTitle: _areaTitle,
+  pattern: _pattern,
+  patternIndex: _patternIndex,
+} = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const _levelLabel = _pattern.level === "advanced" ? "発展" : "応用";
+const _patternSlug = (pattern: Pattern) =>
+  pattern.id.replace(`math1-${_topicSet.topic}-pattern-`, "");
+const _previousPattern = _patternIndex > 0 ? _topicSet.patterns[_patternIndex - 1] : undefined;
+const _nextPattern =
+  _patternIndex < _topicSet.patterns.length - 1 ? _topicSet.patterns[_patternIndex + 1] : undefined;
+const _patternHref = (pattern: Pattern) =>
+  `${_base}math1/entrance/${_topicSet.topic}/${_patternSlug(pattern)}/`;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content={`数学I「${_areaTitle}」の${_levelLabel}パターン「${_pattern.title}」。考え方、例題、ステップ練習、実践の順で学びます。`}
+    />
+    <title>{_pattern.title} | {_topicSet.title} | 学習コンテンツ</title>
+  </head>
+  <body>
+    <main class="page-shell entrance-page">
+      <header class="entrance-hero">
+        <nav class="breadcrumbs" aria-label="パンくずリスト">
+          <a href={_base}>科目一覧</a>
+          <span aria-hidden="true">/</span>
+          <a href={`${_base}math1/`}>数学I</a>
+          <span aria-hidden="true">/</span>
+          <a href={`${_base}math1/${_topicSet.topic}/`}>{_areaTitle}</a>
+          <span aria-hidden="true">/</span>
+          <a href={`${_base}math1/entrance/${_topicSet.topic}/`}>応用・発展</a>
+          <span aria-hidden="true">/</span>
+          <span>{_pattern.title}</span>
+        </nav>
+
+        <p class="pattern-number">PATTERN {String(_patternIndex + 1).padStart(2, "0")}</p>
+        <div class="pattern-header">
+          <div>
+            <p class="eyebrow">APPLICATION & ADVANCED</p>
+            <h1>{_pattern.title}</h1>
+          </div>
+          <div class="pattern-meta">
+            <span class={`level-badge level-${_pattern.level}`}>{_levelLabel}</span>
+            <span>目安 {_pattern.estimatedMinutes}分</span>
+          </div>
+        </div>
+
+        <ul class="skill-list" aria-label="このパターンで使う主な技能">
+          {_pattern.skills.map((skill) => <li>{skill}</li>)}
+        </ul>
+
+        <div class="advanced-learning-flow" aria-label="このページの学習の流れ">
+          <span>考え方</span>
+          <span aria-hidden="true">→</span>
+          <span>例題</span>
+          <span aria-hidden="true">→</span>
+          <span>ステップ練習</span>
+          <span aria-hidden="true">→</span>
+          <span>実践</span>
+        </div>
+      </header>
+
+      <article class="application-pattern single-pattern-page">
+        <section class="pattern-block thinking-block" aria-labelledby="thinking-title">
+          <p class="pattern-section-label">THINKING</p>
+          <h2 id="thinking-title">考え方・着眼点</h2>
+          <h3>{_pattern.thinking.title}</h3>
+          {_pattern.thinking.body.map((paragraph) => <p>{paragraph}</p>)}
+          <ol class="checkpoint-list">
+            {_pattern.thinking.checkpoints.map((checkpoint) => <li>{checkpoint}</li>)}
+          </ol>
+        </section>
+
+        <section class="pattern-block example-block" aria-labelledby="example-title">
+          <p class="pattern-section-label">EXAMPLE</p>
+          <h2 id="example-title">例題</h2>
+          <div class="problem-body">
+            {_pattern.example.statement.map((paragraph) => <p>{paragraph}</p>)}
+            <p class="problem-question">{_pattern.example.question}</p>
+          </div>
+          <div class="worked-solution">
+            <h3>方針</h3>
+            <p>{_pattern.example.solution.strategy}</p>
+            <ol class="worked-steps">
+              {_pattern.example.solution.steps.map((step) => <li>{step}</li>)}
+            </ol>
+            <p class="solution-answer">{_pattern.example.solution.answer}</p>
+          </div>
+        </section>
+
+        <section class="pattern-block guided-block" aria-labelledby="guided-title" data-guided-practice>
+          <p class="pattern-section-label">STEP PRACTICE</p>
+          <h2 id="guided-title">ステップバイステップの練習</h2>
+          <h3>{_pattern.guidedPractice.title}</h3>
+          <div class="problem-body">
+            {_pattern.guidedPractice.statement.map((paragraph) => <p>{paragraph}</p>)}
+            <p class="problem-question">{_pattern.guidedPractice.question}</p>
+          </div>
+          <form class="guided-practice-form">
+            <ol class="guided-fields">
+              {_pattern.guidedPractice.steps.map((step, stepIndex) => (
+                <li>
+                  <label>
+                    <span>{step.prompt}</span>
+                    <input
+                      type="text"
+                      autocomplete="off"
+                      spellcheck="false"
+                      placeholder={step.placeholder}
+                      data-answers={JSON.stringify(step.answers)}
+                      aria-label={`${_pattern.title} ステップ${stepIndex + 1}: ${step.prompt}`}
+                      required
+                    />
+                  </label>
+                </li>
+              ))}
+            </ol>
+            <div class="practice-actions">
+              <button type="submit" class="primary-button">答え合わせ</button>
+              <button type="button" class="secondary-button hint-button">ヒント</button>
+              <button type="reset" class="secondary-button">やり直す</button>
+            </div>
+          </form>
+          <p class="hint practice-hint" hidden>{_pattern.guidedPractice.hint}</p>
+          <p class="feedback practice-feedback" aria-live="polite" />
+        </section>
+
+        <section class="pattern-block practice-block" aria-labelledby="practice-title">
+          <p class="pattern-section-label">PRACTICE</p>
+          <h2 id="practice-title">実践</h2>
+          <div class="problem-body">
+            {_pattern.practice.statement.map((paragraph) => <p>{paragraph}</p>)}
+            <p class="problem-question">{_pattern.practice.question}</p>
+          </div>
+          <details class="solution">
+            <summary>実践問題の解答・解説を表示</summary>
+            <div class="solution-content">
+              <ol>
+                {_pattern.practice.solution.steps.map((step) => <li>{step}</li>)}
+              </ol>
+              <p class="solution-answer">{_pattern.practice.solution.answer}</p>
+            </div>
+          </details>
+        </section>
+      </article>
+
+      <nav class="lesson-navigation entrance-pattern-navigation" aria-label="パターンナビゲーション">
+        <div>
+          {_previousPattern ? (
+            <a href={_patternHref(_previousPattern)}>← {_previousPattern.title}</a>
+          ) : (
+            <a href={`${_base}math1/entrance/${_topicSet.topic}/`}>← パターン一覧</a>
+          )}
+        </div>
+        <a class="unit-index-link" href={`${_base}math1/entrance/${_topicSet.topic}/`}>パターン一覧</a>
+        <div>
+          {_nextPattern ? (
+            <a href={_patternHref(_nextPattern)}>{_nextPattern.title} →</a>
+          ) : (
+            <a href={`${_base}math1/${_topicSet.topic}/`}>{_areaTitle}の基礎教材へ →</a>
+          )}
+        </div>
+      </nav>
+    </main>
+
+    <script>
+      const normalizeAnswer = (value: string) =>
+        value
+          .trim()
+          .toLowerCase()
+          .replaceAll(/\s+/g, "")
+          .replaceAll("−", "-")
+          .replaceAll("–", "-")
+          .replaceAll("—", "-")
+          .replaceAll("×", "*")
+          .replaceAll("·", "*")
+          .replaceAll("，", ",")
+          .replaceAll("（", "(")
+          .replaceAll("）", ")")
+          .replaceAll("^2", "²");
+
+      for (const block of document.querySelectorAll("[data-guided-practice]")) {
+        if (!(block instanceof HTMLElement)) continue;
+        const form = block.querySelector(".guided-practice-form");
+        const feedback = block.querySelector(".practice-feedback");
+        const hint = block.querySelector(".practice-hint");
+        const hintButton = block.querySelector(".hint-button");
+        if (
+          !(form instanceof HTMLFormElement) ||
+          !(feedback instanceof HTMLElement) ||
+          !(hint instanceof HTMLElement) ||
+          !(hintButton instanceof HTMLButtonElement)
+        ) continue;
+
+        hintButton.addEventListener("click", () => {
+          hint.hidden = !hint.hidden;
+          hintButton.textContent = hint.hidden ? "ヒント" : "ヒントを閉じる";
+        });
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const inputs = [...form.querySelectorAll("input[data-answers]")].filter(
+            (input): input is HTMLInputElement => input instanceof HTMLInputElement,
+          );
+          let correctCount = 0;
+
+          for (const input of inputs) {
+            const rawAnswers = input.dataset.answers;
+            if (!rawAnswers) continue;
+            const answers = (JSON.parse(rawAnswers) as string[]).map(normalizeAnswer);
+            const isCorrect = answers.includes(normalizeAnswer(input.value));
+            input.classList.toggle("is-correct", isCorrect);
+            input.classList.toggle("is-error", !isCorrect);
+            if (isCorrect) correctCount += 1;
+          }
+
+          if (correctCount === inputs.length) {
+            feedback.textContent = "すべて正解です。着眼点から解答手順まで再現できています。";
+            feedback.className = "feedback practice-feedback is-correct";
+          } else {
+            feedback.textContent = `全 ${inputs.length} 段階のうち ${correctCount} 段階が合っています。例題の判断順序と比べて確認してください。`;
+            feedback.className = "feedback practice-feedback is-error";
+          }
+        });
+
+        form.addEventListener("reset", () => {
+          window.setTimeout(() => {
+            for (const input of form.querySelectorAll("input")) {
+              input.classList.remove("is-correct", "is-error");
+            }
+            feedback.textContent = "";
+            feedback.className = "feedback practice-feedback";
+            hint.hidden = true;
+            hintButton.textContent = "ヒント";
+          }, 0);
+        });
+      }
+    </script>
+  </body>
+</html>
