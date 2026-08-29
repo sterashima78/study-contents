@@ -207,7 +207,7 @@ export const dataAnalysisUnits: MathUnit[] = [
           title: "練習: 分散から標準偏差を求める",
           problem: "分散が 25/4 のデータを考えます。",
           steps: [
-            { prompt: "標準偏差の式を書いてください。", answers: ["√(25/4)", "√25/4", "√(25/4)"] },
+            { prompt: "標準偏差の式を書いてください。", answers: ["√(25/4)", "sqrt(25/4)"] },
             { prompt: "標準偏差を求めてください。", answers: ["5/2", "2.5"] },
           ],
           hint: "√(25/4)=√25/√4 です。",
