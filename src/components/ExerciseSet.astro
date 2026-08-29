@@ -3,7 +3,7 @@ import "../styles/exercise.css";
 
 type Props = {
   mode: "lesson" | "unit";
-  courseKey?: "math1" | "matha" | "mathc";
+  courseKey?: "math1" | "matha" | "math2" | "mathb" | "mathc" | "chemistry-basic";
   areaKey: string;
   unitKey: string;
   lessonKey?: string;
@@ -18,6 +18,7 @@ const {
 } = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _isUnit = _mode === "unit";
+const _isChemistry = _courseKey === "chemistry-basic";
 ---
 
 <section
@@ -39,15 +40,25 @@ const _isUnit = _mode === "unit";
       </h2>
     </div>
     <p>
-      {_isUnit
-        ? "基礎12問・応用3問・難問1問を採点し、小単元ごとの理解度を確認します。"
-        : "解き方を確認したあと、誘導なしで3問解いてからまとめへ進みます。"}
+      {
+        _isUnit
+          ? _isChemistry
+            ? "基礎4問・応用1問・難問1問を採点し、小単元ごとの理解度を確認します。"
+            : "基礎12問・応用3問・難問1問を採点し、小単元ごとの理解度を確認します。"
+          : "解き方を確認したあと、誘導なしで3問解いてからまとめへ進みます。"
+      }
     </p>
   </div>
 
   <div class="exercise-toolbar">
     <p class="exercise-count-note">
-      {_isUnit ? "全16問 · 対応小単元を各問題に表示" : "全3問 · すべてこの小単元の確認問題"}
+      {
+        _isUnit
+          ? _isChemistry
+            ? "全6問 · 対応小単元を各問題に表示"
+            : "全16問 · 対応小単元を各問題に表示"
+          : "全3問 · すべてこの小単元の確認問題"
+      }
     </p>
     <button type="button" class="secondary-button exercise-regenerate">別の問題を作る</button>
   </div>
@@ -73,6 +84,10 @@ const _isUnit = _mode === "unit";
 <script>
   import { MathfieldElement } from "mathlive";
   import "mathlive/fonts.css";
+  import {
+    generateLessonExercises as generateChemistryLessonExercises,
+    generateUnitExercises as generateChemistryUnitExercises,
+  } from "../content/chemistry-basic/exercise-registry";
   import {
     generateLessonExercises as generateMath1LessonExercises,
     generateUnitExercises as generateMath1UnitExercises,
@@ -204,6 +219,13 @@ const _isUnit = _mode === "unit";
 
     let exercises: GeneratedExercise[] = [];
     const makeExercises = () => {
+      if (courseKey === "chemistry-basic") {
+        return mode === "unit"
+          ? generateChemistryUnitExercises(unitKey)
+          : lessonKey
+            ? generateChemistryLessonExercises(unitKey, lessonKey)
+            : [];
+      }
       if (courseKey === "matha") {
         return mode === "unit"
           ? generateMathAUnitExercises(unitKey)

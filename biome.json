@@ -23,7 +23,8 @@
         "src/content/matha/**/*.ts",
         "src/content/math2/**/*.ts",
         "src/content/mathb/**/*.ts",
-        "src/content/mathc/**/*.ts"
+        "src/content/mathc/**/*.ts",
+        "src/content/chemistry-basic/**/*.ts"
       ],
       "formatter": {
         "enabled": false
