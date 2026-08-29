@@ -1,12 +1,8 @@
 ---
-import {
-  type MathCourseInfo,
-  physicsBasicsCourse,
-  physicsCourse,
-} from "../content/math-courses";
+import { type MathCourseInfo, physicsBasicsCourse, physicsCourse } from "../content/math-courses";
 import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
-import { getPhysicsBasicsFormulaDerivation } from "../content/physics-basics/formula-derivations";
 import { getPhysicsFormulaDerivation } from "../content/physics/formula-derivations";
+import { getPhysicsBasicsFormulaDerivation } from "../content/physics-basics/formula-derivations";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PhysicsExerciseSet from "./PhysicsExerciseSet.astro";
 import "../styles/global.css";
