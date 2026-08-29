@@ -32,6 +32,9 @@ jobs:
       - name: Verify ADRs
         run: pnpm check:adr
 
+      - name: Verify curriculum references
+        run: pnpm check:curriculum
+
       - name: Verify formula coverage
         run: pnpm check:formulas
 
@@ -43,6 +46,9 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Verify curriculum references in generated HTML
+        run: pnpm check:curriculum-build
 
       - name: Verify generated HTML
         run: node scripts/verify-build-output.mjs

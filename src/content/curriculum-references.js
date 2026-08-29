@@ -1,0 +1,142 @@
+const GUIDELINE_INDEX_URL = "https://www.mext.go.jp/a_menu/shotou/new-cs/1384661.htm";
+const JAPANESE_COMMENTARY_URL =
+  "https://www.mext.go.jp/content/20250410-mxt_kyoiku01-100002620_02.pdf";
+const MATH_COMMENTARY_URL = "https://www.mext.go.jp/content/20260115-mxt_kyoiku02-100002620_04.pdf";
+const SCIENCE_COMMENTARY_URL =
+  "https://www.mext.go.jp/content/20250311-mxt_kyoiku02-100002620_05.pdf";
+const ENGLISH_COMMENTARY_URL = "https://www.mext.go.jp/content/1407073_09_1_2.pdf";
+const LAST_VERIFIED = "2026-08-29";
+
+function createReference({
+  courseTitle,
+  subjectTitle,
+  curriculumCourse,
+  commentaryTitle,
+  commentaryUrl,
+  note,
+}) {
+  return Object.freeze({
+    courseTitle,
+    subjectTitle,
+    curriculumCourse,
+    guidelineTitle: "高等学校学習指導要領（平成30年告示）",
+    guidelineUrl: GUIDELINE_INDEX_URL,
+    commentaryTitle,
+    commentaryUrl,
+    lastVerified: LAST_VERIFIED,
+    ...(note ? { note } : {}),
+  });
+}
+
+const mathCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 数学編・理数編";
+const scienceCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 理科編・理数編";
+
+export const curriculumReferences = Object.freeze({
+  japanese: createReference({
+    courseTitle: "国語",
+    subjectTitle: "国語",
+    curriculumCourse: "現代の国語・言語文化・論理国語・文学国語・古典探究",
+    commentaryTitle: "高等学校学習指導要領（平成30年告示）解説 国語編",
+    commentaryUrl: JAPANESE_COMMENTARY_URL,
+    note: "本サイトの「現代文・古文・漢文」は学習用の分類であり、学習指導要領上の科目名とは異なります。",
+  }),
+  math1: createReference({
+    courseTitle: "数学I",
+    subjectTitle: "数学",
+    curriculumCourse: "数学Ⅰ",
+    commentaryTitle: mathCommentaryTitle,
+    commentaryUrl: MATH_COMMENTARY_URL,
+  }),
+  math2: createReference({
+    courseTitle: "数学II",
+    subjectTitle: "数学",
+    curriculumCourse: "数学Ⅱ",
+    commentaryTitle: mathCommentaryTitle,
+    commentaryUrl: MATH_COMMENTARY_URL,
+  }),
+  math3: createReference({
+    courseTitle: "数学III",
+    subjectTitle: "数学",
+    curriculumCourse: "数学Ⅲ",
+    commentaryTitle: mathCommentaryTitle,
+    commentaryUrl: MATH_COMMENTARY_URL,
+  }),
+  matha: createReference({
+    courseTitle: "数学A",
+    subjectTitle: "数学",
+    curriculumCourse: "数学Ａ",
+    commentaryTitle: mathCommentaryTitle,
+    commentaryUrl: MATH_COMMENTARY_URL,
+  }),
+  mathb: createReference({
+    courseTitle: "数学B",
+    subjectTitle: "数学",
+    curriculumCourse: "数学Ｂ",
+    commentaryTitle: mathCommentaryTitle,
+    commentaryUrl: MATH_COMMENTARY_URL,
+  }),
+  mathc: createReference({
+    courseTitle: "数学C",
+    subjectTitle: "数学",
+    curriculumCourse: "数学Ｃ",
+    commentaryTitle: mathCommentaryTitle,
+    commentaryUrl: MATH_COMMENTARY_URL,
+  }),
+  "chemistry-basic": createReference({
+    courseTitle: "化学基礎",
+    subjectTitle: "理科",
+    curriculumCourse: "化学基礎",
+    commentaryTitle: scienceCommentaryTitle,
+    commentaryUrl: SCIENCE_COMMENTARY_URL,
+  }),
+  chemistry: createReference({
+    courseTitle: "化学",
+    subjectTitle: "理科",
+    curriculumCourse: "化学",
+    commentaryTitle: scienceCommentaryTitle,
+    commentaryUrl: SCIENCE_COMMENTARY_URL,
+  }),
+  "physics-basics": createReference({
+    courseTitle: "物理基礎",
+    subjectTitle: "理科",
+    curriculumCourse: "物理基礎",
+    commentaryTitle: scienceCommentaryTitle,
+    commentaryUrl: SCIENCE_COMMENTARY_URL,
+  }),
+  physics: createReference({
+    courseTitle: "物理",
+    subjectTitle: "理科",
+    curriculumCourse: "物理",
+    commentaryTitle: scienceCommentaryTitle,
+    commentaryUrl: SCIENCE_COMMENTARY_URL,
+  }),
+  "biology-basic": createReference({
+    courseTitle: "生物基礎",
+    subjectTitle: "理科",
+    curriculumCourse: "生物基礎",
+    commentaryTitle: scienceCommentaryTitle,
+    commentaryUrl: SCIENCE_COMMENTARY_URL,
+  }),
+  biology: createReference({
+    courseTitle: "生物",
+    subjectTitle: "理科",
+    curriculumCourse: "生物",
+    commentaryTitle: scienceCommentaryTitle,
+    commentaryUrl: SCIENCE_COMMENTARY_URL,
+  }),
+  english: createReference({
+    courseTitle: "英語",
+    subjectTitle: "外国語",
+    curriculumCourse: "英語コミュニケーションⅠ〜Ⅲ・論理・表現Ⅰ〜Ⅲ",
+    commentaryTitle: "高等学校学習指導要領（平成30年告示）解説 外国語編・英語編",
+    commentaryUrl: ENGLISH_COMMENTARY_URL,
+    note: "本サイトの「英語」は、高等学校外国語科の複数科目を横断して教材を再構成しています。",
+  }),
+});
+
+export function getCurriculumReference(courseKey) {
+  if (typeof courseKey !== "string" || !Object.hasOwn(curriculumReferences, courseKey)) {
+    return undefined;
+  }
+  return curriculumReferences[courseKey];
+}

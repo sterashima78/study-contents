@@ -1,4 +1,8 @@
 ---
+import { getCurriculumReference } from "../../content/curriculum-references.js";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CurriculumReference from "./CurriculumReference.astro";
+
 type Props = {
   title: string;
   description: string;
@@ -6,6 +10,14 @@ type Props = {
 };
 
 const { title: _title, description: _description, width: _width = "standard" } = Astro.props;
+const _baseUrl = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const _relativePath = Astro.url.pathname.startsWith(_baseUrl)
+  ? Astro.url.pathname.slice(_baseUrl.length)
+  : Astro.url.pathname.replace(/^\/+/, "");
+const _courseKey = _relativePath.split("/").find(Boolean);
+const _curriculumReference = getCurriculumReference(_courseKey);
 ---
 
 <!doctype html>
@@ -19,6 +31,7 @@ const { title: _title, description: _description, width: _width = "standard" } =
   <body>
     <main class:list={["study-page", _width === "wide" && "is-wide"]}>
       <slot />
+      {_curriculumReference && <CurriculumReference reference={_curriculumReference} />}
     </main>
   </body>
 </html>
