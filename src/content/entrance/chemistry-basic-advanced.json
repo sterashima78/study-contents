@@ -1,0 +1,157 @@
+{
+  "copyrightPolicyVersion": 2,
+  "topicSets": [
+    {
+      "course": "chemistry-basic",
+      "topic": "chemistry-human-life",
+      "areaTitle": "化学と人間生活",
+      "title": "化学と人間生活 発展",
+      "description": "混合物の性質の違いを順番に使って分離操作を設計する発展パターンです。",
+      "patterns": [
+        {
+          "id": "chemistry-basic-chemistry-human-life-pattern-separation-sequence",
+          "title": "溶解性と粒子の状態を使って分離操作を組み立てる",
+          "level": "advanced",
+          "estimatedMinutes": 17,
+          "skills": ["分離・精製", "溶解", "ろ過", "蒸発"],
+          "thinking": {
+            "title": "混合物の各成分がどの操作で違う挙動をするかを順に使う",
+            "body": ["分離操作は名称を暗記するのではなく、溶ける/溶けない、磁石につく/つかない、沸点が異なるといった性質の差から選びます。複数成分なら、1回の操作で分けられる組を作り、残った混合物へ次の操作を適用します。"],
+            "checkpoints": ["成分ごとの性質の差を列挙する", "最初の操作で何が分かれるか確認する", "残った混合物へ次の操作をつなぐ"]
+          },
+          "example": {
+            "statement": ["砂と塩化ナトリウムの混合物から、両方をそれぞれ回収したい。"],
+            "question": "必要な操作を順に説明せよ。",
+            "solution": {
+              "strategy": "塩化ナトリウムは水に溶け、砂は溶けにくい性質を使う。",
+              "steps": ["水を加えて塩化ナトリウムを溶かす。", "ろ過して、ろ紙上に砂を回収する。", "ろ液から水を蒸発させ、塩化ナトリウムを回収する。"],
+              "answer": "水に溶かす → ろ過 → ろ液を蒸発、の順。"
+            }
+          },
+          "guidedPractice": {
+            "title": "3成分を性質の差で順に分ける",
+            "statement": ["鉄粉、砂、塩化ナトリウムの混合物を考える。"],
+            "question": "3成分を分ける操作を順に答えよう。",
+            "steps": [
+              {"prompt": "最初に鉄粉を分ける道具を答えてください。", "answers": ["磁石"]},
+              {"prompt": "残った砂と塩化ナトリウムを分けるため最初に加えるものを答えてください。", "answers": ["水"]},
+              {"prompt": "砂を分ける操作名を答えてください。", "answers": ["ろ過", "濾過"]},
+              {"prompt": "塩化ナトリウムを回収する最後の操作を答えてください。", "answers": ["蒸発", "水を蒸発させる"]}
+            ],
+            "hint": "鉄粉だけは磁石に引かれ、塩化ナトリウムだけは水へよく溶けます。"
+          },
+          "practice": {
+            "statement": ["食塩水から水を液体として回収し、同時に塩化ナトリウムも残したい。"],
+            "question": "最も適切な分離操作と、その操作で何を回収できるか説明せよ。",
+            "solution": {
+              "steps": ["水と塩化ナトリウムでは揮発性が大きく異なる。", "食塩水を加熱し、水蒸気を冷却して液体の水として集める蒸留を使う。", "容器側には塩化ナトリウムが残る。"],
+              "answer": "蒸留を用い、留出液として水を回収し、容器側に塩化ナトリウムを残す。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "chemistry-basic",
+      "topic": "matter-structure",
+      "areaTitle": "物質の構成",
+      "title": "物質の構成 発展",
+      "description": "イオンの電荷が打ち消し合う最小比から組成式を決める発展パターンです。",
+      "patterns": [
+        {
+          "id": "chemistry-basic-matter-structure-pattern-charge-balance",
+          "title": "陽イオンと陰イオンの総電荷を最小整数比で0にする",
+          "level": "advanced",
+          "estimatedMinutes": 16,
+          "skills": ["イオン", "組成式", "電荷", "最小整数比"],
+          "thinking": {
+            "title": "組成式の添字は総電荷が0になる最小の個数比",
+            "body": ["イオン結晶全体は電気的に中性です。陽イオンの正電荷の合計と陰イオンの負電荷の合計が等しくなる最小整数比を探し、その比を添字として組成式を書きます。"],
+            "checkpoints": ["各イオンの電荷を確認する", "正負の総電荷が等しくなる最小個数を求める", "比を添字にして約分できないか確認する"]
+          },
+          "example": {
+            "statement": ["Mg²⁺とO²⁻からなるイオン結晶を考える。"],
+            "question": "組成式を求めよ。",
+            "solution": {
+              "strategy": "+2と−2が1個ずつで打ち消し合う。",
+              "steps": ["Mg²⁺ 1個の電荷は+2。", "O²⁻ 1個の電荷は−2。", "1:1で中性になるためMgO。"],
+              "answer": "MgO。"
+            }
+          },
+          "guidedPractice": {
+            "title": "最小公倍数から添字を決める",
+            "statement": ["Al³⁺とO²⁻からなる化合物を考える。"],
+            "question": "組成式を求めよう。",
+            "steps": [
+              {"prompt": "正負の電荷の絶対値3と2の最小公倍数を答えてください。", "answers": ["6"]},
+              {"prompt": "必要なAl³⁺の個数を答えてください。", "answers": ["2"]},
+              {"prompt": "必要なO²⁻の個数を答えてください。", "answers": ["3"]},
+              {"prompt": "組成式を書いてください。", "answers": ["Al2O3", "Al₂O₃"]}
+            ],
+            "hint": "+6と−6を作ります。"
+          },
+          "practice": {
+            "statement": ["Ca²⁺とN³⁻からなるイオン結晶を考える。"],
+            "question": "組成式を求めよ。",
+            "solution": {
+              "steps": ["2と3の最小公倍数は6。", "Ca²⁺を3個で+6、N³⁻を2個で−6。", "組成式はCa₃N₂。"],
+              "answer": "Ca₃N₂。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "chemistry-basic",
+      "topic": "matter-change-use",
+      "areaTitle": "物質の変化とその利用",
+      "title": "物質の変化とその利用 発展",
+      "description": "反応式の係数比から限界反応物と生成量・残量を求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "chemistry-basic-matter-change-use-pattern-limiting-reagent",
+          "title": "係数比と物質量を比べて先になくなる反応物を決める",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["物質量", "化学反応式", "限界反応物", "量的関係"],
+          "thinking": {
+            "title": "各反応物の物質量を反応式の係数で割って反応可能回数を比べる",
+            "body": ["複数の反応物が与えられたとき、単純に物質量が少ない方が先になくなるとは限りません。各物質量を反応式の係数で割り、反応を何組進められるかを比較します。"],
+            "checkpoints": ["反応式を係数まで正しくそろえる", "物質量÷係数を各反応物で比較する", "最小の反応物を基準に生成量と余りを求める"]
+          },
+          "example": {
+            "statement": ["反応 2H₂+O₂→2H₂O において、H₂が3.0 mol、O₂が2.0 molある。"],
+            "question": "限界反応物、生成するH₂Oの物質量、余る反応物の物質量を求めよ。",
+            "solution": {
+              "strategy": "H₂は3/2=1.5組、O₂は2/1=2組反応できるのでH₂が先になくなる。",
+              "steps": ["H₂:3.0/2=1.5、O₂:2.0/1=2.0よりH₂が限界反応物。", "1.5組の反応でH₂Oは2×1.5=3.0 mol生成。", "O₂は1.5 mol消費するので2.0−1.5=0.50 mol余る。"],
+              "answer": "限界反応物H₂、H₂O 3.0 mol、O₂ 0.50 mol余る。"
+            }
+          },
+          "guidedPractice": {
+            "title": "物質量を係数で割って比較する",
+            "statement": ["2H₂+O₂→2H₂O。H₂が4.0 mol、O₂が1.5 molある。"],
+            "question": "限界反応物と生成量・残量を求めよう。",
+            "steps": [
+              {"prompt": "限界反応物を答えてください。", "answers": ["O2", "O₂", "酸素"]},
+              {"prompt": "生成するH₂Oの物質量を求めてください。", "answers": ["3", "3.0", "3mol", "3.0 mol"]},
+              {"prompt": "余るH₂の物質量を求めてください。", "answers": ["1", "1.0", "1mol", "1.0 mol"]}
+            ],
+            "hint": "O₂ 1.5 molにはH₂ 3.0 molが必要です。"
+          },
+          "practice": {
+            "statement": ["2H₂+O₂→2H₂O。H₂が5.0 mol、O₂が3.0 molある。"],
+            "question": "限界反応物、H₂Oの生成量、余るO₂の物質量を求めよ。",
+            "solution": {
+              "steps": ["H₂:5/2=2.5、O₂:3/1=3よりH₂が限界。", "H₂Oは5.0 mol生成。", "O₂は2.5 mol消費し0.50 mol余る。"],
+              "answer": "限界反応物H₂、H₂O 5.0 mol、O₂ 0.50 mol余る。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    }
+  ]
+}
