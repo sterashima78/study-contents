@@ -3,7 +3,7 @@ import "../styles/exercise.css";
 
 type Props = {
   mode: "lesson" | "unit";
-  courseKey?: "math1" | "matha" | "math2" | "mathb" | "mathc" | "chemistry-basic";
+  courseKey?: "math1" | "matha" | "math2" | "mathb" | "mathc" | "math3" | "chemistry-basic";
   areaKey: string;
   unitKey: string;
   lessonKey?: string;
@@ -101,6 +101,10 @@ const _isChemistry = _courseKey === "chemistry-basic";
     generateLessonExercises as generateMathCLessonExercises,
     generateUnitExercises as generateMathCUnitExercises,
   } from "../content/mathc/exercise-registry";
+  import {
+    generateLessonExercises as generateMath3LessonExercises,
+    generateUnitExercises as generateMath3UnitExercises,
+  } from "../content/math3/exercise-registry";
 
   MathfieldElement.soundsDirectory = null;
 
@@ -238,6 +242,13 @@ const _isChemistry = _courseKey === "chemistry-basic";
           ? generateMathCUnitExercises(unitKey)
           : lessonKey
             ? generateMathCLessonExercises(unitKey, lessonKey)
+            : [];
+      }
+      if (courseKey === "math3") {
+        return mode === "unit"
+          ? generateMath3UnitExercises(unitKey)
+          : lessonKey
+            ? generateMath3LessonExercises(unitKey, lessonKey)
             : [];
       }
       return mode === "unit"

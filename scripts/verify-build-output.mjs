@@ -11,6 +11,7 @@ const checks = [
       "数学II",
       "数学B",
       "数学C",
+      "数学III",
       "化学基礎",
       "物理基礎",
       "科目の目次を見る",
@@ -146,6 +147,38 @@ const checks = [
     markers: ["ベクトルの基本と内積の単元末演習", "単元末演習"],
   },
   {
+    path: new URL("../dist/math3/index.html", import.meta.url),
+    markers: ["数学III", "学習する3つの領域", "全20小教材", "科目一覧へ"],
+  },
+  {
+    path: new URL(
+      "../dist/math3/limits/functions-limits/function-limits-continuity/index.html",
+      import.meta.url,
+    ),
+    markers: ["関数の極限と連続性", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/math3/differentiation/derivative-applications/monotonicity-concavity/index.html",
+      import.meta.url,
+    ),
+    markers: ["増減・極値・凹凸", "判定の根拠: 導関数の符号と増減"],
+  },
+  {
+    path: new URL(
+      "../dist/math3/integration/integral-applications/curve-length/index.html",
+      import.meta.url,
+    ),
+    markers: ["曲線の長さ", "公式の導出: 曲線の長さ"],
+  },
+  {
+    path: new URL(
+      "../dist/math3/integration/integral-applications/exercise/index.html",
+      import.meta.url,
+    ),
+    markers: ["積分の応用の単元末演習", "単元末演習"],
+  },
+  {
     path: new URL("../dist/chemistry-basic/index.html", import.meta.url),
     markers: ["化学基礎", "学習する3つの領域", "全14小教材", "科目一覧へ"],
   },
@@ -217,5 +250,5 @@ for (const check of checks) {
 }
 
 console.log(
-  "Generated HTML rendering checks passed for the course index, Math I, Math A, Math B, Math C, Basic Chemistry, and Physics Basics.",
+  "Generated HTML rendering checks passed for the course index, Math I, Math A, Math B, Math C, Math III, Basic Chemistry, and Physics Basics.",
 );
