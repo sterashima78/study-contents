@@ -8,11 +8,17 @@ const contentPaths = [
   "../src/content/matha/counting-probability.ts",
   "../src/content/matha/geometry-properties.ts",
   "../src/content/matha/human-activity.ts",
+  "../src/content/math2/expressions.ts",
+  "../src/content/math2/geometry-equations.ts",
+  "../src/content/math2/exponential-logarithmic.ts",
+  "../src/content/math2/trigonometric-functions.ts",
+  "../src/content/math2/calculus.ts",
 ];
 const derivationPaths = [
   "../src/content/math1/formula-derivations.ts",
   "../src/content/math1/additional-formula-derivations.ts",
   "../src/content/matha/formula-derivations.ts",
+  "../src/content/math2/formula-derivations.ts",
 ];
 
 const formulaExemptions = new Map([
