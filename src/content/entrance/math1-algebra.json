@@ -1,0 +1,297 @@
+{
+  "course": "math1",
+  "topic": "algebra",
+  "title": "数と式 応用・発展",
+  "description": "式の条件、絶対値、無理数、命題を、解法を選ぶ着眼点ごとに学ぶ独自教材です。",
+  "copyrightPolicyVersion": 2,
+  "patterns": [
+    {
+      "id": "math1-algebra-pattern-symmetric-expression",
+      "title": "条件式から対称式の値を求める",
+      "level": "application",
+      "estimatedMinutes": 14,
+      "skills": ["展開", "因数分解", "式の値", "条件式"],
+      "thinking": {
+        "title": "求めたい式を、与えられた和と積で表す",
+        "body": [
+          "x と y の値を個別に求める必要がない問題では、与えられた x+y と xy をそのまま利用します。",
+          "x²+y²=(x+y)²−2xy、(x−y)²=(x+y)²−4xy のように、求めたい式を既知の量へ変形してから代入します。"
+        ],
+        "checkpoints": [
+          "与えられている和と積を確認する",
+          "求めたい式を和と積で表す",
+          "個々の x,y を解かずに代入する"
+        ]
+      },
+      "example": {
+        "statement": ["実数 x,y が x+y=7、xy=10 を満たす。"],
+        "question": "x²+y² と (x−y)² を求めよ。",
+        "solution": {
+          "strategy": "x²+y²=(x+y)²−2xy を先に使い、さらに (x−y)²=x²+y²−2xy を用いる。",
+          "steps": [
+            "x²+y²=(x+y)²−2xy。",
+            "=7²−2·10=49−20=29。",
+            "(x−y)²=x²+y²−2xy=29−20=9。"
+          ],
+          "answer": "x²+y²=29、(x−y)²=9。"
+        }
+      },
+      "guidedPractice": {
+        "title": "和と積だけで式の値を作る",
+        "statement": ["x+y=6、xy=5 とする。"],
+        "question": "順に x²+y² と (x−y)² を求めよう。",
+        "steps": [
+          {
+            "prompt": "x²+y² を (x+y) と xy で表してください。",
+            "answers": ["(x+y)²-2xy", "(x+y)^2-2xy"],
+            "placeholder": "(x+y)²−…"
+          },
+          {
+            "prompt": "x²+y² の値を求めてください。",
+            "answers": ["26"],
+            "placeholder": "値"
+          },
+          {
+            "prompt": "(x−y)² の値を求めてください。",
+            "answers": ["16"],
+            "placeholder": "値"
+          }
+        ],
+        "hint": "6²−2·5 を計算し、その結果からさらに 2xy を引きます。"
+      },
+      "practice": {
+        "statement": ["実数 x,y が x+y=8、xy=12 を満たす。"],
+        "question": "x²+y² と (x−y)² を求めよ。",
+        "solution": {
+          "steps": [
+            "x²+y²=8²−2·12=64−24=40。",
+            "(x−y)²=40−2·12=16。"
+          ],
+          "answer": "x²+y²=40、(x−y)²=16。"
+        }
+      },
+      "rights": {
+        "origin": "original",
+        "reviewStatus": "reviewed",
+        "reviewedAt": "2026-08-29"
+      }
+    },
+    {
+      "id": "math1-algebra-pattern-absolute-inequality",
+      "title": "絶対値不等式を区間へ直す",
+      "level": "application",
+      "estimatedMinutes": 14,
+      "skills": ["絶対値", "一次不等式", "場合分け"],
+      "thinking": {
+        "title": "絶対値を『0からの距離』として読む",
+        "body": [
+          "|A|<r は A が −r と r の間にあること、|A|>r は A が −r より小さいか r より大きいことを表します。",
+          "絶対値を外した後は普通の一次不等式として解きます。『内側』か『外側』かで連立と場合分けを使い分けます。"
+        ],
+        "checkpoints": [
+          "不等号が <,≤ なら内側、>,≥ なら外側と判断する",
+          "絶対値を連立不等式または2つの場合へ直す",
+          "最後に x の範囲まで整理する"
+        ]
+      },
+      "example": {
+        "statement": ["不等式 |2x−3|<5 を考える。"],
+        "question": "この不等式を満たす x の範囲を求めよ。",
+        "solution": {
+          "strategy": "|A|<5 を −5<A<5 と読み替える。",
+          "steps": [
+            "−5<2x−3<5。",
+            "各辺に3を加えて −2<2x<8。",
+            "各辺を2で割って −1<x<4。"
+          ],
+          "answer": "−1<x<4。"
+        }
+      },
+      "guidedPractice": {
+        "title": "内側の範囲を3段階で解く",
+        "statement": ["|3x+1|≤7 を考える。"],
+        "question": "絶対値を外して x の範囲を求めよう。",
+        "steps": [
+          {
+            "prompt": "絶対値を外した連立不等式を書いてください。",
+            "answers": ["-7≤3x+1≤7", "−7≤3x+1≤7"],
+            "placeholder": "−7≤…≤7"
+          },
+          {
+            "prompt": "各辺から1を引いた式を書いてください。",
+            "answers": ["-8≤3x≤6", "−8≤3x≤6"],
+            "placeholder": "−8≤…≤6"
+          },
+          {
+            "prompt": "x の範囲を書いてください。",
+            "answers": ["-8/3≤x≤2", "−8/3≤x≤2"],
+            "placeholder": "…≤x≤…"
+          }
+        ],
+        "hint": "≤ なので、3x+1 が −7 と7の間にあると考えます。"
+      },
+      "practice": {
+        "statement": ["不等式 |2x+5|>3 を考える。"],
+        "question": "この不等式を満たす x の範囲を求めよ。",
+        "solution": {
+          "steps": [
+            "|2x+5|>3 なので 2x+5>3 または 2x+5<−3。",
+            "前者から x>−1、後者から x<−4。"
+          ],
+          "answer": "x<−4 または x>−1。"
+        }
+      },
+      "rights": {
+        "origin": "original",
+        "reviewStatus": "reviewed",
+        "reviewedAt": "2026-08-29"
+      }
+    },
+    {
+      "id": "math1-algebra-pattern-radical-reciprocal",
+      "title": "共役を使って無理数の逆数を扱う",
+      "level": "advanced",
+      "estimatedMinutes": 16,
+      "skills": ["根号", "有理化", "展開", "式の値"],
+      "thinking": {
+        "title": "積が1になる共役な式を見つける",
+        "body": [
+          "√a+√b の逆数を直接割り算するより、共役な √a−√b との積を確認すると構造が見えます。",
+          "特に a−b=1 なら (√a+√b)(√a−√b)=1 なので、共役な式がそのまま逆数になります。そこから x+1/x の値を作ると高次の式も簡単になります。"
+        ],
+        "checkpoints": [
+          "共役な式との積を計算する",
+          "逆数を簡単な根号の式で表す",
+          "x+1/x を作ってから平方する"
+        ]
+      },
+      "example": {
+        "statement": ["x=√5+2 とする。"],
+        "question": "1/x と x²+1/x² を求めよ。",
+        "solution": {
+          "strategy": "(√5+2)(√5−2)=1 を使って逆数を求める。",
+          "steps": [
+            "(√5+2)(√5−2)=5−4=1 より 1/x=√5−2。",
+            "x+1/x=(√5+2)+(√5−2)=2√5。",
+            "x²+1/x²=(x+1/x)²−2=(2√5)²−2=18。"
+          ],
+          "answer": "1/x=√5−2、x²+1/x²=18。"
+        }
+      },
+      "guidedPractice": {
+        "title": "共役から逆数と二乗和を求める",
+        "statement": ["x=√3+√2 とする。"],
+        "question": "1/x、x+1/x、x²+1/x² を順に求めよう。",
+        "steps": [
+          {
+            "prompt": "1/x を求めてください。",
+            "answers": ["√3-√2", "√3−√2"],
+            "placeholder": "√…−√…"
+          },
+          {
+            "prompt": "x+1/x を求めてください。",
+            "answers": ["2√3", "2*√3"],
+            "placeholder": "2√…"
+          },
+          {
+            "prompt": "x²+1/x² を求めてください。",
+            "answers": ["10"],
+            "placeholder": "値"
+          }
+        ],
+        "hint": "(√3+√2)(√3−√2)=1 です。最後は (x+1/x)²−2 を使います。"
+      },
+      "practice": {
+        "statement": ["x=3+2√2 とする。"],
+        "question": "1/x と x²+1/x² を求めよ。",
+        "solution": {
+          "steps": [
+            "(3+2√2)(3−2√2)=9−8=1 より 1/x=3−2√2。",
+            "x+1/x=6。",
+            "x²+1/x²=6²−2=34。"
+          ],
+          "answer": "1/x=3−2√2、x²+1/x²=34。"
+        }
+      },
+      "rights": {
+        "origin": "original",
+        "reviewStatus": "reviewed",
+        "reviewedAt": "2026-08-29"
+      }
+    },
+    {
+      "id": "math1-algebra-pattern-contrapositive-proof",
+      "title": "対偶を使って整数の命題を証明する",
+      "level": "advanced",
+      "estimatedMinutes": 18,
+      "skills": ["命題", "対偶", "整数", "証明"],
+      "thinking": {
+        "title": "結論を否定した方が式で表しやすいかを見る",
+        "body": [
+          "『AならばB』を直接示しにくいときは、対偶『BでないならAでない』を考えます。元の命題と対偶の真偽は一致します。",
+          "整数の偶奇や倍数では、否定した条件を n=2k+1 や n=3k±1 のように式で表せるため、対偶が有効です。"
+        ],
+        "checkpoints": [
+          "元の命題の条件と結論を分ける",
+          "結論を否定し、条件を否定して順番を逆にする",
+          "否定条件を整数式で表して計算する"
+        ]
+      },
+      "example": {
+        "statement": ["整数 n について『n² が偶数ならば n は偶数である』を考える。"],
+        "question": "対偶を用いてこの命題を証明せよ。",
+        "solution": {
+          "strategy": "対偶『n が奇数ならば n² は奇数』を証明する。",
+          "steps": [
+            "n が奇数なら n=2k+1（kは整数）と表せる。",
+            "n²=(2k+1)²=4k²+4k+1。",
+            "=2(2k²+2k)+1 なので n² は奇数。",
+            "対偶が真なので、元の命題も真である。"
+          ],
+          "answer": "対偶が成り立つため、n² が偶数なら n は偶数である。"
+        }
+      },
+      "guidedPractice": {
+        "title": "3の倍数について対偶を組み立てる",
+        "statement": ["整数 n について『n² が3の倍数ならば n は3の倍数である』を考える。"],
+        "question": "対偶の証明を順に組み立てよう。",
+        "steps": [
+          {
+            "prompt": "この命題の対偶を簡潔に書いてください。",
+            "answers": ["nが3の倍数でないならn²は3の倍数でない", "nが3の倍数でなければn²は3の倍数でない"],
+            "placeholder": "nが…なら…"
+          },
+          {
+            "prompt": "3の倍数でない整数 n の形を2通り書いてください。",
+            "answers": ["3k+1,3k-1", "3k-1,3k+1", "3k+1,3k+2"],
+            "placeholder": "3k+1, …"
+          },
+          {
+            "prompt": "(3k+1)² を3で割った余りを書いてください。",
+            "answers": ["1"],
+            "placeholder": "余り"
+          }
+        ],
+        "hint": "3の倍数でない整数は 3k+1 または 3k−1 と表せます。どちらを2乗しても余り1です。"
+      },
+      "practice": {
+        "statement": ["整数 n について『n² が4の倍数ならば n は偶数である』を考える。"],
+        "question": "対偶を用いて証明せよ。",
+        "solution": {
+          "steps": [
+            "対偶は『n が奇数ならば n² は4の倍数でない』。",
+            "n=2k+1 とすると n²=4k²+4k+1=4(k²+k)+1。",
+            "n² は4で割ると1余るので4の倍数ではない。",
+            "よって対偶が真であり、元の命題も真。"
+          ],
+          "answer": "n² が4の倍数ならば n は偶数である。"
+        }
+      },
+      "rights": {
+        "origin": "original",
+        "reviewStatus": "reviewed",
+        "reviewedAt": "2026-08-29"
+      }
+    }
+  ]
+}
