@@ -1,5 +1,5 @@
 ---
-import problemSet from "../../../content/entrance/math1-quadratic.json";
+import _problemSet from "../../../content/entrance/math1-quadratic.json";
 import "../../../styles/global.css";
 import "../../../styles/entrance.css";
 
@@ -15,7 +15,7 @@ const _base = import.meta.env.BASE_URL;
       name="description"
       content="数学Iの二次関数を対象にした、完全独自作成の大学入試標準レベル問題5問。解法選択、パラメータ、図形との融合を練習します。"
     />
-    <title>{problemSet.title} | 学習コンテンツ</title>
+    <title>{_problemSet.title} | 学習コンテンツ</title>
   </head>
   <body>
     <main class="page-shell entrance-page">
@@ -31,12 +31,12 @@ const _base = import.meta.env.BASE_URL;
         </nav>
 
         <p class="eyebrow">ENTRANCE EXAM STANDARD</p>
-        <h1>{problemSet.title}</h1>
-        <p class="lead">{problemSet.description}</p>
+        <h1>{_problemSet.title}</h1>
+        <p class="lead">{_problemSet.description}</p>
 
         <ul class="entrance-summary" aria-label="問題セットの概要">
           <li>
-            <strong>{problemSet.problems.length}問</strong>
+            <strong>{_problemSet.problems.length}問</strong>
             <span>すべて独自作成</span>
           </li>
           <li>
@@ -67,7 +67,7 @@ const _base = import.meta.env.BASE_URL;
 
         <ol class="entrance-problem-list">
           {
-            problemSet.problems.map((problem, index) => (
+            _problemSet.problems.map((problem, index) => (
               <li class="entrance-problem">
                 <header class="problem-header">
                   <span class="problem-number" aria-hidden="true">
