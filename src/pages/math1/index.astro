@@ -77,6 +77,36 @@ const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0
         </ol>
       </section>
 
+      <section class="curriculum" aria-labelledby="entrance-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">ENTRANCE EXAM</p>
+            <h2 id="entrance-title">大学入試演習</h2>
+          </div>
+          <p>
+            基礎教材で身につけた技能を組み合わせ、問題文から使う解法を自分で選ぶための演習です。
+          </p>
+        </div>
+
+        <ol class="unit-grid">
+          <li class="unit-card">
+            <div class="unit-header">
+              <span class="unit-number" aria-hidden="true">01</span>
+              <h3><a href={`${_base}math1/entrance/quadratic/`}>二次関数 入試標準</a></h3>
+            </div>
+            <p class="unit-description">
+              パラメータによる場合分け、共有点、条件整理、図形との融合、二次関数の決定を扱う独自問題です。
+            </p>
+            <ul class="topic-list">
+              <li>入試標準 5問</li>
+              <li>解答・解説付き</li>
+              <li>完全独自作成</li>
+            </ul>
+            <p class="preparing available">試行版公開</p>
+          </li>
+        </ol>
+      </section>
+
       <footer class="page-footer">
         <p>高校 数学I</p>
         <p>現行学習指導要領の4領域を、小単元・確認演習・単元末演習で学習できます。</p>
