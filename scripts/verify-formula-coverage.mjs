@@ -33,7 +33,7 @@ for (const line of algebraSource.split("\n")) {
 }
 
 const derivationKeys = new Set();
-const derivationKeyPattern = /^  (?:"([^"]+)"|([A-Za-z][A-Za-z0-9]*)): \{$/gm;
+const derivationKeyPattern = /^ {2}(?:"([^"]+)"|([A-Za-z][A-Za-z0-9]*)): \{$/gm;
 
 for (const match of derivationSource.matchAll(derivationKeyPattern)) {
   derivationKeys.add(match[1] ?? match[2]);
