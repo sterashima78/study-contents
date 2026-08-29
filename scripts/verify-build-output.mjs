@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: ["学習する科目", "数学I", "数学A", "科目の目次を見る"],
+    markers: ["学習する科目", "数学I", "数学A", "数学B", "科目の目次を見る"],
   },
   {
     path: new URL("../dist/math1/index.html", import.meta.url),
@@ -77,6 +77,38 @@ const checks = [
     ),
     markers: ["確率の基本の単元末演習", "単元末演習"],
   },
+  {
+    path: new URL("../dist/mathb/index.html", import.meta.url),
+    markers: ["数学B", "学習する3つの領域", "全28小教材", "科目一覧へ"],
+  },
+  {
+    path: new URL(
+      "../dist/mathb/sequences/sequence-basics/arithmetic-sum/index.html",
+      import.meta.url,
+    ),
+    markers: ["等差数列の和", "公式の根拠: 等差数列の和", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/mathb/statistical-inference/sampling-inference/confidence-interval/index.html",
+      import.meta.url,
+    ),
+    markers: ["母平均の区間推定", "公式の根拠: 95%信頼区間", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/mathb/social-life/social-problem-solving/evaluate-model/index.html",
+      import.meta.url,
+    ),
+    markers: ["モデルを現実と照らして評価・改善する", "相対誤差", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/mathb/sequences/recurrence-relations/exercise/index.html",
+      import.meta.url,
+    ),
+    markers: ["漸化式の単元末演習", "単元末演習"],
+  },
 ];
 
 for (const check of checks) {
@@ -94,4 +126,4 @@ for (const check of checks) {
   }
 }
 
-console.log("Generated HTML rendering checks passed for the course index, Math I, and Math A.");
+console.log("Generated HTML rendering checks passed for the course index, Math I, Math A, and Math B.");
