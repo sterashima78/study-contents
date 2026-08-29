@@ -1,0 +1,25 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MathUnitIndex from "../../../../components/MathUnitIndex.astro";
+import { mathACourse } from "../../../../content/math-courses";
+import { mathAAreas } from "../../../../content/matha/catalog";
+import type { MathArea, MathUnit } from "../../../../content/math1/types";
+
+export function getStaticPaths() {
+  return mathAAreas.flatMap((area) =>
+    area.units.map((unit) => ({
+      params: { area: area.key, unit: unit.key },
+      props: { area, unit },
+    })),
+  );
+}
+
+type Props = {
+  area: MathArea;
+  unit: MathUnit;
+};
+
+const { area: _area, unit: _unit } = Astro.props;
+---
+
+<MathUnitIndex area={_area} unit={_unit} course={mathACourse} />
