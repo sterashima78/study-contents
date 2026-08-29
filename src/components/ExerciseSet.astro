@@ -3,12 +3,19 @@ import "../styles/exercise.css";
 
 type Props = {
   mode: "lesson" | "unit";
+  courseKey?: "math1" | "matha";
   areaKey: string;
   unitKey: string;
   lessonKey?: string;
 };
 
-const { mode: _mode, areaKey: _areaKey, unitKey: _unitKey, lessonKey: _lessonKey } = Astro.props;
+const {
+  mode: _mode,
+  courseKey: _courseKey = "math1",
+  areaKey: _areaKey,
+  unitKey: _unitKey,
+  lessonKey: _lessonKey,
+} = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _isUnit = _mode === "unit";
 ---
@@ -17,6 +24,7 @@ const _isUnit = _mode === "unit";
   class:list={["exercise-set", _isUnit && "unit-exercise-set"]}
   data-exercise-set
   data-mode={_mode}
+  data-course-key={_courseKey}
   data-area-key={_areaKey}
   data-unit-key={_unitKey}
   data-lesson-key={_lessonKey}
@@ -66,10 +74,14 @@ const _isUnit = _mode === "unit";
   import { MathfieldElement } from "mathlive";
   import "mathlive/fonts.css";
   import {
-    generateLessonExercises,
-    generateUnitExercises,
+    generateLessonExercises as generateMath1LessonExercises,
+    generateUnitExercises as generateMath1UnitExercises,
     type GeneratedExercise,
   } from "../content/math1/exercise-registry";
+  import {
+    generateLessonExercises as generateMathALessonExercises,
+    generateUnitExercises as generateMathAUnitExercises,
+  } from "../content/matha/exercise-registry";
 
   MathfieldElement.soundsDirectory = null;
 
@@ -173,6 +185,7 @@ const _isUnit = _mode === "unit";
 
   for (const section of document.querySelectorAll<HTMLElement>("[data-exercise-set]")) {
     const mode = section.dataset.mode;
+    const courseKey = section.dataset.courseKey ?? "math1";
     const areaKey = section.dataset.areaKey;
     const unitKey = section.dataset.unitKey;
     const lessonKey = section.dataset.lessonKey;
@@ -186,12 +199,20 @@ const _isUnit = _mode === "unit";
     if (!areaKey || !unitKey || !form || !list || !feedback || !regenerate || !diagnostic || !diagnosticList) continue;
 
     let exercises: GeneratedExercise[] = [];
-    const makeExercises = () =>
-      mode === "unit"
-        ? generateUnitExercises(unitKey)
+    const makeExercises = () => {
+      if (courseKey === "matha") {
+        return mode === "unit"
+          ? generateMathAUnitExercises(unitKey)
+          : lessonKey
+            ? generateMathALessonExercises(unitKey, lessonKey)
+            : [];
+      }
+      return mode === "unit"
+        ? generateMath1UnitExercises(unitKey)
         : lessonKey
-          ? generateLessonExercises(unitKey, lessonKey)
+          ? generateMath1LessonExercises(unitKey, lessonKey)
           : [];
+    };
 
     const renderExercises = () => {
       exercises = makeExercises();
@@ -247,7 +268,7 @@ const _isUnit = _mode === "unit";
         const item = createElement("article", "diagnostic-item");
         const ratio = result.total === 0 ? 0 : result.correct / result.total;
         const link = createElement("a", "diagnostic-link", "この小単元を復習する");
-        link.href = `${base}math1/${areaKey}/${unitKey}/${key}/`;
+        link.href = `${base}${courseKey}/${areaKey}/${unitKey}/${key}/`;
         item.append(
           createElement("h4", undefined, result.title),
           createElement("p", "diagnostic-score", `${result.correct}/${result.total} 正解`),
