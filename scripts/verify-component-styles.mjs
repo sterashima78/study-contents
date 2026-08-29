@@ -74,10 +74,14 @@ const studyPageSource = await readFile(
   "utf8",
 );
 if (!studyPageSource.includes(":global(body)")) {
-  issues.push("src/components/ui/StudyPage.astro: body の基本スタイルをレイアウト内で管理してください。");
+  issues.push(
+    "src/components/ui/StudyPage.astro: body の基本スタイルをレイアウト内で管理してください。",
+  );
 }
 if (!studyPageSource.includes("--color-text")) {
-  issues.push("src/components/ui/StudyPage.astro: デザイントークンをレイアウト内で管理してください。");
+  issues.push(
+    "src/components/ui/StudyPage.astro: デザイントークンをレイアウト内で管理してください。",
+  );
 }
 
 const exerciseCss = await readFile(exerciseCssUrl, "utf8");
