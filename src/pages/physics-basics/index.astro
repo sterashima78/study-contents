@@ -1,88 +1,14 @@
 ---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../components/CourseHome.astro";
+import { physicsBasicsCourse } from "../../content/math-courses";
 import { physicsBasicsAreas } from "../../content/physics-basics/catalog";
-import "../../styles/global.css";
-
-const _base = import.meta.env.BASE_URL;
-const _areas = physicsBasicsAreas.map((area, index) => ({
-  ...area,
-  number: String(index + 1).padStart(2, "0"),
-  lessonCount: area.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
-}));
-const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0);
-const _lessonSummary = `全${_totalLessonCount}小教材。`;
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="高校物理基礎の学習コンテンツ。運動、力とエネルギー、波、熱、電気、エネルギー利用を小さな教材と演習で学べます。"
-    />
-    <title>物理基礎 | 学習コンテンツ</title>
-  </head>
-  <body>
-    <main class="page-shell">
-      <header class="hero">
-        <p class="eyebrow">BASIC PHYSICS</p>
-        <h1>物理基礎</h1>
-        <p class="lead">
-          物理量の意味と単位を確認し、現象を図・グラフ・式で表します。公式を暗記するだけでなく、成り立つ条件と根拠を確認してから例題と演習へ進みます。
-        </p>
-        <div class="learning-flow" aria-label="各小単元の学習の流れ">
-          <span>現象と考え方</span>
-          <span aria-hidden="true">→</span>
-          <span>式の根拠</span>
-          <span aria-hidden="true">→</span>
-          <span>例題</span>
-          <span aria-hidden="true">→</span>
-          <span>直後の練習</span>
-          <span aria-hidden="true">→</span>
-          <span>3問確認</span>
-          <span aria-hidden="true">→</span>
-          <span>まとめ</span>
-        </div>
-      </header>
-
-      <section class="curriculum" aria-labelledby="curriculum-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-label">CONTENTS</p>
-            <h2 id="curriculum-title">学習する5つの領域</h2>
-          </div>
-          <p>{_lessonSummary}現行学習指導要領の物理基礎を、関連する内容ごとにまとめて学習します。</p>
-        </div>
-
-        <ol class="unit-grid">
-          {
-            _areas.map((area) => (
-              <li class="unit-card">
-                <div class="unit-header">
-                  <span class="unit-number" aria-hidden="true">{area.number}</span>
-                  <h3><a href={`${_base}physics-basics/${area.key}/`}>{area.title}</a></h3>
-                </div>
-                <p class="unit-description">{area.description}</p>
-                <ul class="topic-list">
-                  {area.units.map((unit) => (
-                    <li>
-                      <a href={`${_base}physics-basics/${area.key}/${unit.key}/`}>{unit.title}</a>
-                    </li>
-                  ))}
-                </ul>
-                <p class="preparing available">{area.lessonCount}小教材公開</p>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <footer class="page-footer">
-        <p>高校 物理基礎</p>
-        <p>現行学習指導要領の内容を、現象・式・例題・確認演習・単元末演習で学習できます。</p>
-        <p><a href={_base}>科目一覧へ</a></p>
-      </footer>
-    </main>
-  </body>
-</html>
+<CourseHome
+  course={physicsBasicsCourse}
+  areas={physicsBasicsAreas}
+  description="運動、力と力学的エネルギー、波、熱と電気、エネルギー利用を、現象と式の意味を結び付けて学びます。"
+  metaDescription="高校物理基礎の学習コンテンツ。運動、力と力学的エネルギー、波、熱と電気、エネルギー利用を学べます。"
+  footerDescription="現行学習指導要領の5領域を、小単元・確認演習・単元末演習で学習できます。"
+/>

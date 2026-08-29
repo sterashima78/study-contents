@@ -1,85 +1,14 @@
 ---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../components/CourseHome.astro";
 import { chemistryAreas } from "../../content/chemistry/catalog";
-import "../../styles/global.css";
-
-const _base = import.meta.env.BASE_URL;
-const _areas = chemistryAreas.map((area, index) => ({
-  ...area,
-  number: String(index + 1).padStart(2, "0"),
-  lessonCount: area.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
-}));
-const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0);
+import { chemistryCourse } from "../../content/math-courses";
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="高校化学の学習コンテンツ。物質の状態と平衡、物質の変化と平衡、無機物質、有機化合物、化学が果たす役割を1ページ1技能で学べます。"
-    />
-    <title>化学 | 学習コンテンツ</title>
-  </head>
-  <body>
-    <main class="page-shell">
-      <header class="hero">
-        <p class="eyebrow">CHEMISTRY</p>
-        <h1>化学</h1>
-        <p class="lead">
-          化学基礎で学んだ粒子・物質量・酸化還元を土台に、状態と平衡、反応、無機、有機、高分子、社会での役割までを1ページ1技能で学びます。
-        </p>
-        <div class="learning-flow" aria-label="各小単元の学習の流れ">
-          <span>考え方</span>
-          <span aria-hidden="true">→</span>
-          <span>例題</span>
-          <span aria-hidden="true">→</span>
-          <span>直後の練習</span>
-          <span aria-hidden="true">→</span>
-          <span>3問確認</span>
-          <span aria-hidden="true">→</span>
-          <span>まとめ</span>
-        </div>
-      </header>
-
-      <section class="curriculum" aria-labelledby="curriculum-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-label">CONTENTS</p>
-            <h2 id="curriculum-title">学習する5つの領域</h2>
-          </div>
-          <p>全{_totalLessonCount}小教材。現行学習指導要領の構成に沿って、領域から単元へ進みます。</p>
-        </div>
-
-        <ol class="unit-grid">
-          {
-            _areas.map((area) => (
-              <li class="unit-card">
-                <div class="unit-header">
-                  <span class="unit-number" aria-hidden="true">{area.number}</span>
-                  <h3><a href={`${_base}chemistry/${area.key}/`}>{area.title}</a></h3>
-                </div>
-                <p class="unit-description">{area.description}</p>
-                <ul class="topic-list">
-                  {area.units.map((unit) => (
-                    <li>
-                      <a href={`${_base}chemistry/${area.key}/${unit.key}/`}>{unit.title}</a>
-                    </li>
-                  ))}
-                </ul>
-                <p class="preparing available">{area.lessonCount}小教材公開</p>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <footer class="page-footer">
-        <p>高校 化学</p>
-        <p>現行学習指導要領の5領域を、小単元・確認演習・単元末演習で学習できます。</p>
-        <p><a href={_base}>科目一覧へ</a></p>
-      </footer>
-    </main>
-  </body>
-</html>
+<CourseHome
+  course={chemistryCourse}
+  areas={chemistryAreas}
+  description="物質の状態と平衡、反応と平衡、無機・有機・高分子を、構造・反応・量の関係から学びます。"
+  metaDescription="高校化学の学習コンテンツ。物質の状態と平衡、物質の変化と平衡、無機物質、有機化合物、高分子化合物、化学の役割を学べます。"
+  footerDescription="現行学習指導要領の5領域を、小単元・確認演習・単元末演習で学習できます。"
+/>

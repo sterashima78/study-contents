@@ -1,22 +1,16 @@
 ---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../components/CourseHome.astro";
 import { math1AdvancedTopicSets } from "../../content/entrance/math1-topic-sets";
 import { math1Areas } from "../../content/math1/catalog";
-import "../../styles/global.css";
+import { math1Course } from "../../content/math-courses";
 
-const _base = import.meta.env.BASE_URL;
-const _areas = math1Areas.map((area, index) => ({
-  ...area,
-  number: String(index + 1).padStart(2, "0"),
-  lessonCount: area.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
-}));
-const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0);
-const _advancedAreas = math1AdvancedTopicSets.map((topicSet, index) => {
+const _advancedAreas = math1AdvancedTopicSets.map((topicSet) => {
   const area = math1Areas.find((candidate) => candidate.key === topicSet.topic);
   return {
     topic: topicSet.topic,
     title: area?.title ?? topicSet.title,
     description: topicSet.description,
-    number: String(index + 1).padStart(2, "0"),
     patternCount: topicSet.patterns.length,
     applicationCount: topicSet.patterns.filter((pattern) => pattern.level === "application").length,
     advancedCount: topicSet.patterns.filter((pattern) => pattern.level === "advanced").length,
@@ -25,110 +19,11 @@ const _advancedAreas = math1AdvancedTopicSets.map((topicSet, index) => {
 });
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="高校数学Iの学習コンテンツ。数と式、図形と計量、二次関数、データの分析を1ページ1技能で学び、全領域の応用・発展パターンへ進めます。"
-    />
-    <title>数学I | 学習コンテンツ</title>
-  </head>
-  <body>
-    <main class="page-shell">
-      <header class="hero">
-        <p class="eyebrow">MATHEMATICS I</p>
-        <h1>数学I</h1>
-        <p class="lead">
-          1ページ1技能の小さな教材で基礎を学び、領域ごとの応用・発展では解法パターンを使って問題選択の力を伸ばします。
-        </p>
-        <div class="learning-flow" aria-label="各小単元の学習の流れ">
-          <span>考え方</span>
-          <span aria-hidden="true">→</span>
-          <span>導出・根拠</span>
-          <span aria-hidden="true">→</span>
-          <span>例題</span>
-          <span aria-hidden="true">→</span>
-          <span>直後の練習</span>
-          <span aria-hidden="true">→</span>
-          <span>3問確認</span>
-          <span aria-hidden="true">→</span>
-          <span>まとめ</span>
-        </div>
-      </header>
-
-      <section class="curriculum" aria-labelledby="curriculum-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-label">CONTENTS</p>
-            <h2 id="curriculum-title">学習する4つの領域</h2>
-          </div>
-          <p>全{_totalLessonCount}小教材。領域から単元へ進み、各ページを5〜10分程度で学習します。</p>
-        </div>
-
-        <ol class="unit-grid">
-          {
-            _areas.map((area) => (
-              <li class="unit-card">
-                <div class="unit-header">
-                  <span class="unit-number" aria-hidden="true">{area.number}</span>
-                  <h3><a href={`${_base}math1/${area.key}/`}>{area.title}</a></h3>
-                </div>
-                <p class="unit-description">{area.description}</p>
-                <ul class="topic-list">
-                  {area.units.map((unit) => (
-                    <li>
-                      <a href={`${_base}math1/${area.key}/${unit.key}/`}>{unit.title}</a>
-                    </li>
-                  ))}
-                </ul>
-                <p class="preparing available">{area.lessonCount}小教材公開</p>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <section class="curriculum" aria-labelledby="application-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-label">APPLICATION & ADVANCED</p>
-            <h2 id="application-title">応用・発展</h2>
-          </div>
-          <p>
-            数学Iの4領域すべてで、基礎技能を組み合わせ、問題文の条件から使う解法を選ぶ練習へ進みます。
-          </p>
-        </div>
-
-        <ol class="unit-grid">
-          {
-            _advancedAreas.map((area) => (
-              <li class="unit-card">
-                <div class="unit-header">
-                  <span class="unit-number" aria-hidden="true">{area.number}</span>
-                  <h3><a href={`${_base}math1/entrance/${area.topic}/`}>{area.title} 応用・発展</a></h3>
-                </div>
-                <p class="unit-description">{area.description}</p>
-                <ul class="topic-list">
-                  <li>応用 {area.applicationCount}パターン</li>
-                  <li>発展 {area.advancedCount}パターン</li>
-                  {area.generatorCount > 0 && <li>問題生成 {area.generatorCount}パターン対応</li>}
-                  <li>1パターン1ページ</li>
-                </ul>
-                <p class="preparing available">{area.patternCount}パターン公開</p>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <footer class="page-footer">
-        <p>高校 数学I</p>
-        <p>現行学習指導要領の4領域を、基礎教材と応用・発展パターンで学習できます。</p>
-        <p><a href={_base}>科目一覧へ</a></p>
-      </footer>
-    </main>
-  </body>
-</html>
+<CourseHome
+  course={math1Course}
+  areas={math1Areas}
+  description="1ページ1技能の小さな教材で基礎を学び、領域ごとの応用・発展では解法パターンを使って問題選択の力を伸ばします。"
+  metaDescription="高校数学Iの学習コンテンツ。数と式、図形と計量、二次関数、データの分析を1ページ1技能で学び、全領域の応用・発展パターンへ進めます。"
+  footerDescription="現行学習指導要領の4領域を、基礎教材と応用・発展パターンで学習できます。"
+  advancedAreas={_advancedAreas}
+/>

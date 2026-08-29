@@ -1,4 +1,6 @@
 ---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseCatalog from "../components/CourseCatalog.astro";
 import { chemistryAreas } from "../content/chemistry/catalog";
 import { chemistryBasicAreas } from "../content/chemistry-basic/catalog";
 import { math1Areas } from "../content/math1/catalog";
@@ -9,45 +11,37 @@ import { mathBAreas } from "../content/mathb/catalog";
 import { mathCAreas } from "../content/mathc/catalog";
 import { physicsAreas } from "../content/physics/catalog";
 import { physicsBasicsAreas } from "../content/physics-basics/catalog";
-import "../styles/global.css";
 
 const _base = import.meta.env.BASE_URL;
+const _lessonCount = (areas: typeof math1Areas) =>
+  areas.reduce(
+    (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
+    0,
+  );
 const _courses = [
   {
     title: "数学I",
     kicker: "MATHEMATICS I",
     href: `${_base}math1/`,
-    description:
-      "数と式、図形と計量、二次関数、データの分析を、1ページ1技能の小さな教材で学びます。",
+    description: "数と式、図形と計量、二次関数、データの分析を、1ページ1技能の小さな教材で学びます。",
     areas: math1Areas.map((area) => area.title),
-    lessonCount: math1Areas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(math1Areas),
   },
   {
     title: "数学A",
     kicker: "MATHEMATICS A",
     href: `${_base}matha/`,
-    description:
-      "場合の数と確率、図形の性質、数学と人間の活動を、1ページ1技能の小さな教材で学びます。",
+    description: "場合の数と確率、図形の性質、数学と人間の活動を、1ページ1技能の小さな教材で学びます。",
     areas: mathAAreas.map((area) => area.title),
-    lessonCount: mathAAreas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(mathAAreas),
   },
   {
     title: "数学II",
     kicker: "MATHEMATICS II",
     href: `${_base}math2/`,
-    description:
-      "いろいろな式、図形と方程式、指数・対数、三角関数、微分・積分を、1ページ1技能で学びます。",
+    description: "いろいろな式、図形と方程式、指数・対数、三角関数、微分・積分を、1ページ1技能で学びます。",
     areas: math2Areas.map((area) => area.title),
-    lessonCount: math2Areas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(math2Areas),
   },
   {
     title: "数学B",
@@ -55,22 +49,15 @@ const _courses = [
     href: `${_base}mathb/`,
     description: "数列、統計的な推測、数学と社会生活を、1ページ1技能の小さな教材で学びます。",
     areas: mathBAreas.map((area) => area.title),
-    lessonCount: mathBAreas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(mathBAreas),
   },
   {
     title: "数学C",
     kicker: "MATHEMATICS C",
     href: `${_base}mathc/`,
-    description:
-      "ベクトル、平面上の曲線と複素数平面、数学的な表現の工夫を、1ページ1技能の小さな教材で学びます。",
+    description: "ベクトル、平面上の曲線と複素数平面、数学的な表現の工夫を、1ページ1技能で学びます。",
     areas: mathCAreas.map((area) => area.title),
-    lessonCount: mathCAreas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(mathCAreas),
   },
   {
     title: "数学III",
@@ -78,123 +65,41 @@ const _courses = [
     href: `${_base}math3/`,
     description: "極限、微分法、積分法を、公式の根拠と途中式を確認しながら1ページ1技能で学びます。",
     areas: math3Areas.map((area) => area.title),
-    lessonCount: math3Areas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(math3Areas),
   },
   {
     title: "化学基礎",
     kicker: "BASIC CHEMISTRY",
     href: `${_base}chemistry-basic/`,
-    description:
-      "化学と人間生活、物質の構成、物質の変化とその利用を、粒子と実験の視点から学びます。",
+    description: "化学と人間生活、物質の構成、物質の変化とその利用を、粒子と実験の視点から学びます。",
     areas: chemistryBasicAreas.map((area) => area.title),
-    lessonCount: chemistryBasicAreas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(chemistryBasicAreas),
   },
   {
     title: "化学",
     kicker: "CHEMISTRY",
     href: `${_base}chemistry/`,
-    description:
-      "状態と平衡、反応と平衡、無機物質、有機化合物、高分子、化学の役割を構造・反応・量の視点から学びます。",
+    description: "状態と平衡、反応と平衡、無機物質、有機化合物、高分子、化学の役割を構造・反応・量の視点から学びます。",
     areas: chemistryAreas.map((area) => area.title),
-    lessonCount: chemistryAreas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(chemistryAreas),
   },
   {
     title: "物理基礎",
     kicker: "BASIC PHYSICS",
     href: `${_base}physics-basics/`,
-    description:
-      "運動、力とエネルギー、波、熱、電気、エネルギー利用を、現象・式・例題・演習をつないで学びます。",
+    description: "運動、力とエネルギー、波、熱、電気、エネルギー利用を、現象・式・例題・演習をつないで学びます。",
     areas: physicsBasicsAreas.map((area) => area.title),
-    lessonCount: physicsBasicsAreas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(physicsBasicsAreas),
   },
   {
     title: "物理",
     kicker: "PHYSICS",
     href: `${_base}physics/`,
-    description:
-      "様々な運動、波、電気と磁気、原子を、物理基礎から発展させて現象・法則・式の根拠・演習をつないで学びます。",
+    description: "様々な運動、波、電気と磁気、原子を、物理基礎から発展させて現象・法則・式の根拠・演習をつないで学びます。",
     areas: physicsAreas.map((area) => area.title),
-    lessonCount: physicsAreas.reduce(
-      (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
-      0,
-    ),
+    lessonCount: _lessonCount(physicsAreas),
   },
 ];
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="高校の学習コンテンツ。数学I、数学A、数学II、数学B、数学C、数学III、化学基礎、化学、物理基礎、物理から学びたい科目を選び、小単元ごとの教材と演習に進めます。"
-    />
-    <title>高校学習コンテンツ</title>
-  </head>
-  <body>
-    <main class="page-shell">
-      <header class="hero">
-        <p class="eyebrow">HIGH SCHOOL STUDY CONTENTS</p>
-        <h1>学習コンテンツ</h1>
-        <p class="lead">
-          学びたい科目を選び、領域、単元、小単元の順に進みます。各小単元では考え方から例題、練習、確認問題までを一続きで学習できます。
-        </p>
-      </header>
-
-      <section class="curriculum" aria-labelledby="courses-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-label">COURSES</p>
-            <h2 id="courses-title">学習する科目</h2>
-          </div>
-          <p>科目ごとに独立した目次から、学びたい領域と単元を選択できます。</p>
-        </div>
-
-        <ol class="course-grid">
-          {
-            _courses.map((course, index) => (
-              <li class="course-card">
-                <a class="course-card-link" href={course.href}>
-                  <div class="course-card-heading">
-                    <span class="course-number" aria-hidden="true">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <p class="course-kicker">{course.kicker}</p>
-                      <h3>{course.title}</h3>
-                    </div>
-                  </div>
-                  <p class="course-description">{course.description}</p>
-                  <ul class="course-area-list" aria-label={`${course.title}の領域`}>
-                    {course.areas.map((area) => <li>{area}</li>)}
-                  </ul>
-                  <p class="course-meta">{course.lessonCount}小教材公開</p>
-                  <span class="course-action">科目の目次を見る →</span>
-                </a>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <footer class="page-footer">
-        <p>高校 学習コンテンツ</p>
-        <p>科目を入口として、領域・単元・小単元へ進む構成です。</p>
-      </footer>
-    </main>
-  </body>
-</html>
+<CourseCatalog courses={_courses} />
