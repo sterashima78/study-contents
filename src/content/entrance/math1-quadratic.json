@@ -106,10 +106,6 @@
           "重解を元の式へ戻して接点を求める"
         ]
       },
-      "diagram": {
-        "kind": "parabola-tangent",
-        "caption": "放物線と直線が1点だけを共有する接線の概念図。縮尺は概略です。"
-      },
       "example": {
         "statement": ["放物線 C: y=x²−4x+5 と直線 l: y=2x+k を考える。"],
         "question": "C と l がただ1つの共有点をもつような k と、その共有点の座標を求めよ。",
@@ -269,12 +265,6 @@
           "相似などで別の長さを x の式にする",
           "面積を二次関数にして平方完成する"
         ]
-      },
-      "diagram": {
-        "kind": "triangle-rectangle",
-        "base": 12,
-        "height": 8,
-        "caption": "底辺12 cm、高さ8 cmの二等辺三角形に、底辺上へ長方形を入れた図。"
       },
       "example": {
         "statement": [

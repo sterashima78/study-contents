@@ -1,0 +1,60 @@
+.entrance-index-page {
+  gap: 2.5rem;
+}
+
+.pattern-index-list {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pattern-index-card {
+  padding: clamp(1.2rem, 3vw, 1.8rem);
+  border: 1px solid #d5ddd6;
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 82%);
+  box-shadow: 0 0.6rem 1.6rem rgb(41 63 48 / 5%);
+}
+
+.pattern-index-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.pattern-index-heading h3 {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.2rem, 2.6vw, 1.55rem);
+  line-height: 1.4;
+}
+
+.pattern-index-heading h3 a {
+  color: inherit;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.pattern-index-description {
+  margin: 1rem 0 0;
+  color: #405048;
+  line-height: 1.75;
+}
+
+.pattern-index-card .skill-list {
+  margin-bottom: 1rem;
+}
+
+.pattern-index-link {
+  color: #245c37;
+  font-weight: 800;
+}
+
+@media (max-width: 700px) {
+  .pattern-index-heading {
+    display: grid;
+    gap: 0.8rem;
+  }
+}

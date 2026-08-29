@@ -9,7 +9,6 @@ const allowedGeneratorKeys = new Set([
   "triangle-rectangle",
   "determine-quadratic",
 ]);
-const allowedDiagramKinds = new Set(["parabola-tangent", "triangle-rectangle"]);
 const forbiddenOriginalFields = new Set([
   "sourceText",
   "sourceProblem",
@@ -68,7 +67,7 @@ for (const file of files) {
 
     validateLearningStructure(pattern, location);
     validateGenerator(pattern, location);
-    validateDiagram(pattern, location);
+    validateNoDiagram(pattern, location);
     validateRights(pattern, location);
 
     for (const field of forbiddenOriginalFields) {
@@ -139,13 +138,9 @@ function validateGenerator(pattern, location) {
   }
 }
 
-function validateDiagram(pattern, location) {
-  if (pattern.diagram === undefined) return;
-  if (!allowedDiagramKinds.has(pattern.diagram.kind)) {
-    issues.push(`${location}: diagram.kind「${pattern.diagram.kind}」は未対応です。`);
-  }
-  if (typeof pattern.diagram.caption !== "string" || pattern.diagram.caption.length === 0) {
-    issues.push(`${location}: diagram.caption が必要です。`);
+function validateNoDiagram(pattern, location) {
+  if (pattern.diagram !== undefined) {
+    issues.push(`${location}: 図解は一時停止中のため diagram フィールドを含めないでください。`);
   }
 }
 
