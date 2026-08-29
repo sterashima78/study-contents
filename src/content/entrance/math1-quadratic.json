@@ -38,9 +38,7 @@
       "level": "entrance-standard",
       "estimatedMinutes": 6,
       "skills": ["二次方程式", "判別式", "グラフの共有点"],
-      "statement": [
-        "放物線 C: y=x²−4x+5 と、実数 k を用いて表される直線 l: y=2x+k を考える。"
-      ],
+      "statement": ["放物線 C: y=x²−4x+5 と、実数 k を用いて表される直線 l: y=2x+k を考える。"],
       "question": "C と l がただ1つの共有点をもつような k の値を求め、その共有点の座標も求めよ。",
       "solution": {
         "strategy": "2つの式を連立して x の二次方程式を作り、共有点が1つである条件を判別式 D=0 で表す。",
@@ -65,9 +63,7 @@
       "level": "entrance-standard",
       "estimatedMinutes": 8,
       "skills": ["判別式", "二次関数のグラフ", "パラメータ", "条件整理"],
-      "statement": [
-        "実数 a に対し、二次関数 g(x)=x²−2ax+a+2 のグラフを考える。"
-      ],
+      "statement": ["実数 a に対し、二次関数 g(x)=x²−2ax+a+2 のグラフを考える。"],
       "question": "このグラフが x 軸と異なる2点で交わり、その2点の x 座標がともに正となるような a の範囲を求めよ。",
       "solution": {
         "strategy": "異なる2交点の条件を判別式で、交点がともに正である条件を軸と x=0 におけるグラフの位置で整理する。",
@@ -121,9 +117,7 @@
       "level": "entrance-standard",
       "estimatedMinutes": 8,
       "skills": ["平方完成", "二次関数の決定", "条件整理"],
-      "statement": [
-        "二次関数 f(x)=x²+bx+c は f(1)=2 を満たし、最小値が −2 である。"
-      ],
+      "statement": ["二次関数 f(x)=x²+bx+c は f(1)=2 を満たし、最小値が −2 である。"],
       "question": "条件を満たす f(x) をすべて求め、それぞれのグラフの軸も答えよ。",
       "solution": {
         "strategy": "f(1)=2 から b と c の関係を作り、平方完成で表した最小値の条件と連立する。",
