@@ -20,7 +20,8 @@ export const englishAreas: EnglishArea[] = [
   {
     key: "reading",
     title: "長文読解",
-    description: "段落構造、情報検索、言い換え、推論を使い、まとまりのある英文から必要な情報を取り出します。",
+    description:
+      "段落構造、情報検索、言い換え、推論を使い、まとまりのある英文から必要な情報を取り出します。",
     units: englishReadingUnits,
   },
   {
