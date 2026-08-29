@@ -1,12 +1,12 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import JapaneseLesson from "../../../../../components/JapaneseLesson.astro";
-import { japaneseAreas } from "../../../../../content/japanese/catalog";
+import JapaneseLesson from "../../../../components/JapaneseLesson.astro";
+import { japaneseAreas } from "../../../../content/japanese/catalog";
 import type {
   JapaneseArea,
   JapaneseLesson as JapaneseLessonData,
   JapaneseUnit,
-} from "../../../../../content/japanese/types";
+} from "../../../../content/japanese/types";
 
 const basePath = import.meta.env.BASE_URL;
 
