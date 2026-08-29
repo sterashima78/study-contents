@@ -71,7 +71,8 @@ for (const record of records) {
     );
   }
 
-  const statusMatches = [...record.content.matchAll(statusPattern)];
+  const metadata = getMetadata(record.content);
+  const statusMatches = [...metadata.matchAll(statusPattern)];
   if (statusMatches.length !== 1) {
     issues.push(`${record.filename}: 「- Status: ...」は1つだけ必要です。`);
   }
@@ -83,14 +84,14 @@ for (const record of records) {
     );
   }
 
-  const dateMatches = [...record.content.matchAll(datePattern)];
+  const dateMatches = [...metadata.matchAll(datePattern)];
   if (dateMatches.length !== 1) {
     issues.push(`${record.filename}: 「- Date: YYYY-MM-DD」は1つだけ必要です。`);
   } else if (!isValidDate(dateMatches[0][1])) {
     issues.push(`${record.filename}: Date「${dateMatches[0][1]}」は有効な日付ではありません。`);
   }
 
-  const supersededByMatches = [...record.content.matchAll(supersededByPattern)];
+  const supersededByMatches = [...metadata.matchAll(supersededByPattern)];
   if (supersededByMatches.length > 1) {
     issues.push(`${record.filename}: 「- Superseded by: ...」は最大1つです。`);
   }
@@ -134,6 +135,11 @@ if (issues.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(`ADR verification passed: ${records.length} ADRs are consistent and sequential.`);
+}
+
+function getMetadata(content) {
+  const firstSectionIndex = content.indexOf("\n## ");
+  return firstSectionIndex === -1 ? content : content.slice(0, firstSectionIndex);
 }
 
 function isValidDate(value) {
