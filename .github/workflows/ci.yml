@@ -29,6 +29,9 @@ jobs:
       - name: Run Biome
         run: pnpm exec biome ci .
 
+      - name: Verify ADRs
+        run: pnpm check:adr
+
       - name: Verify formula coverage
         run: pnpm check:formulas
 
