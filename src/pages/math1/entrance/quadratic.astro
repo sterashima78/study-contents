@@ -1,0 +1,116 @@
+---
+import _problemSet from "../../../content/entrance/math1-quadratic.json";
+import "../../../styles/global.css";
+import "../../../styles/entrance.css";
+
+const _base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="数学Iの二次関数を対象にした、完全独自作成の大学入試標準レベル問題5問。解法選択、パラメータ、図形との融合を練習します。"
+    />
+    <title>{_problemSet.title} | 学習コンテンツ</title>
+  </head>
+  <body>
+    <main class="page-shell entrance-page">
+      <header class="entrance-hero">
+        <nav class="breadcrumbs" aria-label="パンくずリスト">
+          <a href={_base}>科目一覧</a>
+          <span aria-hidden="true">/</span>
+          <a href={`${_base}math1/`}>数学I</a>
+          <span aria-hidden="true">/</span>
+          <a href={`${_base}math1/quadratic/`}>二次関数</a>
+          <span aria-hidden="true">/</span>
+          <span>入試標準</span>
+        </nav>
+
+        <p class="eyebrow">ENTRANCE EXAM STANDARD</p>
+        <h1>{_problemSet.title}</h1>
+        <p class="lead">{_problemSet.description}</p>
+
+        <ul class="entrance-summary" aria-label="問題セットの概要">
+          <li>
+            <strong>{_problemSet.problems.length}問</strong>
+            <span>すべて独自作成</span>
+          </li>
+          <li>
+            <strong>入試標準</strong>
+            <span>解法を自分で選ぶ演習</span>
+          </li>
+          <li>
+            <strong>数学I</strong>
+            <span>二次関数を中心に既習事項を統合</span>
+          </li>
+        </ul>
+
+        <p class="rights-note">
+          このページの問題文・設定・数値・解答・解説は、このリポジトリ向けに新規作成しています。過去問や市販教材の問題文を転載・軽微改変したものではありません。
+        </p>
+      </header>
+
+      <section aria-labelledby="problems-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">PROBLEMS</p>
+            <h2 id="problems-title">入試標準問題</h2>
+          </div>
+          <p>
+            まず解答を見ずに方針を立ててください。解答・解説は各問題の下で必要なときだけ開けます。
+          </p>
+        </div>
+
+        <ol class="entrance-problem-list">
+          {
+            _problemSet.problems.map((problem, index) => (
+              <li class="entrance-problem">
+                <header class="problem-header">
+                  <span class="problem-number" aria-hidden="true">
+                    Q{String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h2>{problem.title}</h2>
+                  <p class="problem-time">目安 {problem.estimatedMinutes}分</p>
+                </header>
+
+                <ul class="skill-list" aria-label="この問題で使う主な技能">
+                  {problem.skills.map((skill) => <li>{skill}</li>)}
+                </ul>
+
+                <div class="problem-body">
+                  {problem.statement.map((paragraph) => <p>{paragraph}</p>)}
+                  <p class="problem-question">{problem.question}</p>
+                </div>
+
+                <details class="solution">
+                  <summary>解答・解説を表示</summary>
+                  <div class="solution-content">
+                    <h3>方針</h3>
+                    <p>{problem.solution.strategy}</p>
+
+                    <h3>解答過程</h3>
+                    <ol>
+                      {problem.solution.steps.map((step) => <li>{step}</li>)}
+                    </ol>
+
+                    <h3>答え</h3>
+                    <p class="solution-answer">{problem.solution.answer}</p>
+                  </div>
+                </details>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <nav class="entrance-footer-nav" aria-label="関連ページ">
+        <a href={`${_base}math1/quadratic/`}>二次関数の基礎教材へ戻る</a>
+        <a href={`${_base}math1/`}>数学Iトップへ</a>
+      </nav>
+    </main>
+  </body>
+</html>

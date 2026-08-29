@@ -11,10 +11,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "biome ci . && pnpm check:adr && pnpm check:formulas",
+    "check": "biome ci . && pnpm check:adr && pnpm check:formulas && pnpm check:entrance-content",
     "check:write": "biome check --write .",
     "check:adr": "node scripts/verify-adrs.mjs",
-    "check:formulas": "node scripts/verify-formula-coverage.mjs"
+    "check:formulas": "node scripts/verify-formula-coverage.mjs",
+    "check:entrance-content": "node scripts/verify-entrance-content.mjs"
   },
   "dependencies": {
     "astro": "7.2.9",
