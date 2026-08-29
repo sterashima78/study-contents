@@ -3,6 +3,7 @@
 import CourseCatalog from "../components/CourseCatalog.astro";
 import { chemistryAreas } from "../content/chemistry/catalog";
 import { chemistryBasicAreas } from "../content/chemistry-basic/catalog";
+import { japaneseAreas } from "../content/japanese/catalog";
 import { math1Areas } from "../content/math1/catalog";
 import { math2Areas } from "../content/math2/catalog";
 import { math3Areas } from "../content/math3/catalog";
@@ -12,8 +13,12 @@ import { mathCAreas } from "../content/mathc/catalog";
 import { physicsAreas } from "../content/physics/catalog";
 import { physicsBasicsAreas } from "../content/physics-basics/catalog";
 
+type LessonArea = {
+  units: Array<{ lessons: unknown[] }>;
+};
+
 const _base = import.meta.env.BASE_URL;
-const _lessonCount = (areas: typeof math1Areas) =>
+const _lessonCount = (areas: LessonArea[]) =>
   areas.reduce(
     (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
     0,
@@ -106,6 +111,15 @@ const _courses = [
       "様々な運動、波、電気と磁気、原子を、物理基礎から発展させて現象・法則・式の根拠・演習をつないで学びます。",
     areas: physicsAreas.map((area) => area.title),
     lessonCount: _lessonCount(physicsAreas),
+  },
+  {
+    title: "国語",
+    kicker: "JAPANESE",
+    href: `${_base}japanese/`,
+    description:
+      "現代文・古文・漢文を、本文の根拠、文法、句法の判断手順が分かる1ページ1技能の教材で学びます。",
+    areas: japaneseAreas.map((area) => area.title),
+    lessonCount: _lessonCount(japaneseAreas),
   },
 ];
 ---
