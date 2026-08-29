@@ -126,4 +126,6 @@ for (const check of checks) {
   }
 }
 
-console.log("Generated HTML rendering checks passed for the course index, Math I, Math A, and Math B.");
+console.log(
+  "Generated HTML rendering checks passed for the course index, Math I, Math A, and Math B.",
+);
