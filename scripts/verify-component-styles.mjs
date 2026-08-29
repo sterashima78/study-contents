@@ -27,7 +27,6 @@ const requiredScopedComponents = [
   "src/components/ui/GuidedPractice.astro",
   "src/components/ui/PracticeProblem.astro",
   "src/components/ui/PageNavigation.astro",
-  "src/components/AdvancedPatternIndex.astro",
   "src/components/AdvancedPatternPage.astro",
 ];
 const issues = [];
