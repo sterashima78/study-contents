@@ -1,0 +1,155 @@
+{
+  "copyrightPolicyVersion": 2,
+  "topicSets": [
+    {
+      "course": "matha",
+      "topic": "counting-probability",
+      "areaTitle": "場合の数と確率",
+      "title": "場合の数と確率 発展",
+      "description": "条件付き確率を、全体の場合の数を整理して求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "matha-counting-probability-pattern-conditional-counting",
+          "title": "条件を満たす場合だけに標本空間を絞る",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["組合せ", "余事象", "条件付き確率"],
+          "thinking": {
+            "title": "条件付き確率では分母も条件を満たす場合だけ数える",
+            "body": ["『Aが起きたと分かっている』なら、もとの全事象ではなくAの中だけを新しい全体として数え直します。少なくとも1個という条件は余事象で数えると簡潔です。"],
+            "checkpoints": ["条件を満たす全場合を分母にする", "求める事象との共通部分を分子にする", "少なくとも1個は余事象を検討する"]
+          },
+          "example": {
+            "statement": ["赤玉3個、青玉2個から同時に2個を取り出す。少なくとも1個が赤玉だったことが分かっている。"],
+            "question": "2個とも赤玉である条件付き確率を求めよ。",
+            "solution": {
+              "strategy": "少なくとも1個が赤という条件を満たす組合せだけを分母にする。",
+              "steps": ["全組合せは C(5,2)=10。青2個だけの1通りを除き、条件を満たすのは9通り。", "赤2個は C(3,2)=3 通り。", "よって条件付き確率は3/9=1/3。"],
+              "answer": "1/3。"
+            }
+          },
+          "guidedPractice": {
+            "title": "分母と分子を別々に数える",
+            "statement": ["赤玉4個、青玉2個から同時に2個を取り出し、少なくとも1個が赤玉だった。"],
+            "question": "2個とも赤玉である確率を順に求めよう。",
+            "steps": [
+              {"prompt": "条件を満たす全組合せ数を求めてください。", "answers": ["14"]},
+              {"prompt": "赤2個の組合せ数を求めてください。", "answers": ["6"]},
+              {"prompt": "条件付き確率を求めてください。", "answers": ["3/7", "6/14"]}
+            ],
+            "hint": "C(6,2) から青2個の1通りを除きます。"
+          },
+          "practice": {
+            "statement": ["赤玉5個、青玉3個から同時に2個を取り出し、少なくとも1個が赤玉だった。"],
+            "question": "2個とも赤玉である条件付き確率を求めよ。",
+            "solution": {
+              "steps": ["条件を満たす組合せは C(8,2)−C(3,2)=28−3=25。", "赤2個は C(5,2)=10。", "10/25=2/5。"],
+              "answer": "2/5。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "matha",
+      "topic": "geometry-properties",
+      "areaTitle": "図形の性質",
+      "title": "図形の性質 発展",
+      "description": "角の二等分線と辺の比を組み合わせて長さを決める発展パターンです。",
+      "patterns": [
+        {
+          "id": "matha-geometry-properties-pattern-angle-bisector-ratio",
+          "title": "角の二等分線から辺の比を作る",
+          "level": "advanced",
+          "estimatedMinutes": 16,
+          "skills": ["角の二等分線", "比", "線分の内分"],
+          "thinking": {
+            "title": "角の二等分線は向かい側の辺を隣り合う2辺の比に分ける",
+            "body": ["三角形ABCでADが∠Aの二等分線なら BD:DC=AB:AC です。BC全体の長さも使えば、比から各部分の長さを直接決められます。"],
+            "checkpoints": ["二等分する角を確認する", "BD:DC=AB:AC を作る", "BC=BD+DC と合わせる"]
+          },
+          "example": {
+            "statement": ["三角形ABCで AB=6、AC=9、BC=10。ADは∠Aの二等分線でDはBC上にある。"],
+            "question": "BDとDCを求めよ。",
+            "solution": {
+              "strategy": "角の二等分線定理で2:3の比を作り、全長10を分ける。",
+              "steps": ["BD:DC=AB:AC=6:9=2:3。", "BC=10なので5等分の1つ分は2。", "BD=4、DC=6。"],
+              "answer": "BD=4、DC=6。"
+            }
+          },
+          "guidedPractice": {
+            "title": "比から線分を求める",
+            "statement": ["AB=8、AC=12、BC=15で、ADは∠Aの二等分線。"],
+            "question": "BDとDCを求めよう。",
+            "steps": [
+              {"prompt": "BD:DC を最も簡単な整数比で書いてください。", "answers": ["2:3", "2：3"]},
+              {"prompt": "BDを求めてください。", "answers": ["6"]},
+              {"prompt": "DCを求めてください。", "answers": ["9"]}
+            ],
+            "hint": "15を2:3に分けます。"
+          },
+          "practice": {
+            "statement": ["AB=5、AC=7、BC=12で、ADは∠Aの二等分線。"],
+            "question": "BDとDCを求めよ。",
+            "solution": {
+              "steps": ["BD:DC=5:7。", "BC=12は比の合計5+7と一致する。", "BD=5、DC=7。"],
+              "answer": "BD=5、DC=7。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "matha",
+      "topic": "human-activity",
+      "areaTitle": "数学と人間の活動",
+      "title": "数学と人間の活動 発展",
+      "description": "ユークリッドの互除法を一次不定方程式へつなげる発展パターンです。",
+      "patterns": [
+        {
+          "id": "matha-human-activity-pattern-euclid-diophantine",
+          "title": "互除法を逆にたどって整数解を作る",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["最大公約数", "ユークリッドの互除法", "一次不定方程式"],
+          "thinking": {
+            "title": "最大公約数を2数の整数係数の和へ戻す",
+            "body": ["ax+by=d の整数解を作るとき、まず互除法で gcd(a,b)=d を確認し、最後の余りの式を逆向きに代入します。これによりdをaとbの整数係数結合として表せます。"],
+            "checkpoints": ["gcdが右辺を割るか確認する", "互除法を最後の余りまで行う", "式を逆代入して係数を読む"]
+          },
+          "example": {
+            "statement": ["整数x,yについて 84x+30y=6 を考える。"],
+            "question": "整数解を1組求めよ。",
+            "solution": {
+              "strategy": "84と30の互除法を逆にたどって6を表す。",
+              "steps": ["84=2·30+24、30=24+6。", "6=30−24=30−(84−2·30)=3·30−84。", "したがって x=−1、y=3 が1組の解。"],
+              "answer": "例えば (x,y)=(−1,3)。"
+            }
+          },
+          "guidedPractice": {
+            "title": "最後の余りを逆代入する",
+            "statement": ["65x+26y=13 を考える。"],
+            "question": "整数解を1組求めよう。",
+            "steps": [
+              {"prompt": "65を26で割った余りを求めてください。", "answers": ["13"]},
+              {"prompt": "13を65と26で表してください。", "answers": ["65-2*26", "65−2·26", "65-52"]},
+              {"prompt": "整数解を x,y の順に書いてください。", "answers": ["1,-2", "1,−2"]}
+            ],
+            "hint": "65=2·26+13 をそのまま移項します。"
+          },
+          "practice": {
+            "statement": ["119x+34y=17 を考える。"],
+            "question": "整数解を1組求めよ。",
+            "solution": {
+              "steps": ["119=3·34+17。", "17=119−3·34。", "よって x=1、y=−3。"],
+              "answer": "例えば (x,y)=(1,−3)。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    }
+  ]
+}
