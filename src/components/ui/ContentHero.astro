@@ -26,44 +26,61 @@ const {
 <style>
   .hero {
     max-width: 58rem;
-    padding-bottom: clamp(3rem, 7vw, 5rem);
+    padding-bottom: clamp(2.6rem, 6vw, 4.4rem);
   }
 
   .hero.is-compact {
-    padding-bottom: clamp(2.6rem, 6vw, 4rem);
+    padding-bottom: clamp(2rem, 5vw, 3.2rem);
   }
 
   .kicker {
-    margin: 0 0 0.8rem;
+    margin: 0 0 0.85rem;
     color: var(--color-accent);
-    font-size: 0.8rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.17em;
   }
 
   h1 {
-    margin: 0 0 1.4rem;
-    font-size: clamp(2.4rem, 7vw, 5.2rem);
-    line-height: 1.08;
-    letter-spacing: -0.05em;
+    max-width: 15em;
+    margin: 0 0 1.2rem;
+    color: var(--color-text-strong);
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", ui-serif, serif;
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    font-weight: 600;
+    line-height: 1.18;
+    letter-spacing: -0.035em;
   }
 
   .variant-display h1 {
-    font-size: clamp(3.5rem, 10vw, 7rem);
-    line-height: 0.95;
-    letter-spacing: -0.06em;
+    font-size: clamp(3rem, 8vw, 5.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
   }
 
   .description {
-    max-width: 50rem;
+    max-width: 46rem;
     margin: 0;
     color: var(--color-muted-strong);
-    font-size: clamp(1rem, 2vw, 1.15rem);
-    line-height: 1.9;
+    font-size: clamp(0.98rem, 1.8vw, 1.08rem);
+    line-height: 2;
   }
 
   .variant-display .description {
-    max-width: 44rem;
-    font-size: clamp(1rem, 2vw, 1.2rem);
+    max-width: 43rem;
+  }
+
+  @media (max-width: 760px) {
+    h1 {
+      font-size: clamp(2rem, 10vw, 3.1rem);
+    }
+
+    .variant-display h1 {
+      font-size: clamp(2.55rem, 13vw, 4rem);
+    }
+
+    .description {
+      line-height: 1.85;
+    }
   }
 </style>

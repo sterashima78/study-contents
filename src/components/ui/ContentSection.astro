@@ -13,12 +13,23 @@ const { labelledby: _labelledby, compact: _compact = false } = Astro.props;
 
 <style>
   .section {
-    padding: clamp(3rem, 7vw, 5rem) 0;
-    border-top: 1px solid var(--color-border);
+    padding: clamp(2.8rem, 6vw, 4.6rem) 0;
+    border-top: 1px solid var(--color-border-soft);
+    scroll-margin-top: 1rem;
   }
 
   .section.is-compact {
-    padding-top: 2.5rem;
-    padding-bottom: 3rem;
+    padding-top: clamp(2.1rem, 4vw, 3rem);
+    padding-bottom: clamp(2.3rem, 5vw, 3.4rem);
+  }
+
+  @media (max-width: 760px) {
+    .section {
+      padding: 2.4rem 0;
+    }
+
+    .section.is-compact {
+      padding: 1.9rem 0 2.2rem;
+    }
   }
 </style>
