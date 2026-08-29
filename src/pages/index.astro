@@ -3,6 +3,7 @@
 import CourseCatalog from "../components/CourseCatalog.astro";
 import { chemistryAreas } from "../content/chemistry/catalog";
 import { chemistryBasicAreas } from "../content/chemistry-basic/catalog";
+import { englishAreas } from "../content/english/catalog";
 import { japaneseAreas } from "../content/japanese/catalog";
 import { math1Areas } from "../content/math1/catalog";
 import { math2Areas } from "../content/math2/catalog";
@@ -13,12 +14,14 @@ import { mathCAreas } from "../content/mathc/catalog";
 import { physicsAreas } from "../content/physics/catalog";
 import { physicsBasicsAreas } from "../content/physics-basics/catalog";
 
-type LessonArea = {
-  units: Array<{ lessons: unknown[] }>;
+type CountableArea = {
+  units: ReadonlyArray<{
+    lessons: ReadonlyArray<unknown>;
+  }>;
 };
 
 const _base = import.meta.env.BASE_URL;
-const _lessonCount = (areas: LessonArea[]) =>
+const _lessonCount = (areas: ReadonlyArray<CountableArea>) =>
   areas.reduce(
     (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
     0,
@@ -111,6 +114,15 @@ const _courses = [
       "様々な運動、波、電気と磁気、原子を、物理基礎から発展させて現象・法則・式の根拠・演習をつないで学びます。",
     areas: physicsAreas.map((area) => area.title),
     lessonCount: _lessonCount(physicsAreas),
+  },
+  {
+    title: "英語",
+    kicker: "ENGLISH",
+    href: `${_base}english/`,
+    description:
+      "英語基礎、英文解釈、長文読解、論理・表現を、オリジナル英文と1ページ1技能の教材で学びます。",
+    areas: englishAreas.map((area) => area.title),
+    lessonCount: _lessonCount(englishAreas),
   },
   {
     title: "国語",
