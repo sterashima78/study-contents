@@ -82,7 +82,10 @@ const formulaExemptions = new Map([
   ["collision-energy", "はね返り係数は衝突前後の相対速度比として定義する量"],
   ["kepler-laws", "ケプラーの法則は惑星観測から得られた経験法則"],
   ["universal-gravitation", "万有引力の法則は実験・天体観測に基づく基本法則"],
-  ["kinetic-theory-pressure", "理想気体の状態方程式と平均運動エネルギーの関係は気体分子運動論の基本関係"],
+  [
+    "kinetic-theory-pressure",
+    "理想気体の状態方程式と平均運動エネルギーの関係は気体分子運動論の基本関係",
+  ],
   ["thermodynamic-process", "熱力学第一法則は熱と仕事を含むエネルギー保存の基本法則"],
   ["wave-interference-diffraction", "干渉条件は重ね合わせと位相差から用いる波動の基本関係"],
   ["sound-interference", "うなりの振動数は近接する二振動の重ね合わせから得る基本関係"],
