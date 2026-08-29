@@ -1,0 +1,49 @@
+---
+import "../../styles/global.css";
+
+type Props = {
+  title: string;
+  description: string;
+  width?: "standard" | "wide";
+};
+
+const { title: _title, description: _description, width: _width = "standard" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={_description} />
+    <title>{_title}</title>
+  </head>
+  <body>
+    <main class:list={["study-page", _width === "wide" && "is-wide"]}>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style>
+  .study-page {
+    width: min(100%, 76rem);
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(1.1rem, 4vw, 3rem) 3rem;
+  }
+
+  .study-page.is-wide {
+    width: min(100%, 78rem);
+    padding-top: clamp(2rem, 5vw, 5rem);
+  }
+
+  @media (max-width: 760px) {
+    .study-page {
+      padding-top: 1rem;
+    }
+
+    .study-page.is-wide {
+      padding-top: 2rem;
+    }
+  }
+</style>

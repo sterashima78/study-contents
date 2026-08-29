@@ -1,0 +1,374 @@
+---
+type GuidedStep = {
+  prompt: string;
+  answers: string[];
+  placeholder?: string;
+};
+
+type Props = {
+  title: string;
+  problem?: string;
+  statement?: string[];
+  question?: string;
+  steps: GuidedStep[];
+  hint: string;
+  position?: string;
+  successMessage?: string;
+  errorMessage?: string;
+};
+
+const {
+  title: _title,
+  problem: _problem,
+  statement: _statement,
+  question: _question,
+  steps: _steps,
+  hint: _hint,
+  position: _position,
+  successMessage: _successMessage = "すべて正解です。解答手順を自分で再現できています。",
+  errorMessage: _errorMessage = "合っていない段階を例題と比べて確認してください。",
+} = Astro.props;
+---
+
+<article
+  class="guided-practice"
+  data-guided-practice
+  data-success-message={_successMessage}
+  data-error-message={_errorMessage}
+>
+  <div class="header">
+    <div>
+      <p class="label">PRACTICE</p>
+      <h3>{_title}</h3>
+    </div>
+    {_position && <p class="position">{_position}</p>}
+  </div>
+
+  {_problem && <p class="problem">{_problem}</p>}
+  {_statement && <div class="statement">{_statement.map((paragraph) => <p>{paragraph}</p>)}</div>}
+  {_question && <p class="question">{_question}</p>}
+
+  <form class="form">
+    <ol class="fields">
+      {
+        _steps.map((step, index) => (
+          <li>
+            <label>
+              <span>{step.prompt}</span>
+              <input
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder={step.placeholder ?? "答えを入力"}
+                data-answers={JSON.stringify(step.answers)}
+                aria-label={`練習問題 ${index + 1}: ${step.prompt}`}
+                required
+              />
+            </label>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="actions">
+      <button type="submit" class="primary">答え合わせ</button>
+      <button type="button" class="secondary hint-button">ヒント</button>
+      <button type="reset" class="secondary">やり直す</button>
+    </div>
+  </form>
+  <p class="hint" hidden>{_hint}</p>
+  <p class="feedback" aria-live="polite"></p>
+</article>
+
+<script>
+  const normalizeGuidedAnswer = (value: string) =>
+    value
+      .trim()
+      .toLowerCase()
+      .replaceAll(/\s+/g, "")
+      .replaceAll("−", "-")
+      .replaceAll("–", "-")
+      .replaceAll("—", "-")
+      .replaceAll("×", "*")
+      .replaceAll("·", "*")
+      .replaceAll("，", ",")
+      .replaceAll("（", "(")
+      .replaceAll("）", ")")
+      .replaceAll("｛", "{")
+      .replaceAll("｝", "}")
+      .replaceAll("オーム", "ω")
+      .replaceAll("ohm", "ω")
+      .replaceAll("°c", "℃")
+      .replaceAll("^2", "²");
+
+  for (const card of document.querySelectorAll("[data-guided-practice]")) {
+    if (!(card instanceof HTMLElement) || card.dataset.guidedReady === "true") continue;
+    card.dataset.guidedReady = "true";
+    const form = card.querySelector("form");
+    const feedback = card.querySelector(".feedback");
+    const hint = card.querySelector(".hint");
+    const hintButton = card.querySelector(".hint-button");
+    if (
+      !(form instanceof HTMLFormElement) ||
+      !(feedback instanceof HTMLElement) ||
+      !(hint instanceof HTMLElement) ||
+      !(hintButton instanceof HTMLButtonElement)
+    ) continue;
+
+    hintButton.addEventListener("click", () => {
+      hint.hidden = !hint.hidden;
+      hintButton.textContent = hint.hidden ? "ヒント" : "ヒントを閉じる";
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const inputs = [...form.querySelectorAll("input[data-answers]")].filter(
+        (input): input is HTMLInputElement => input instanceof HTMLInputElement,
+      );
+      let correctCount = 0;
+      for (const input of inputs) {
+        const rawAnswers = input.dataset.answers;
+        if (!rawAnswers) continue;
+        const answers = (JSON.parse(rawAnswers) as string[]).map(normalizeGuidedAnswer);
+        const isCorrect = answers.includes(normalizeGuidedAnswer(input.value));
+        input.classList.toggle("is-correct", isCorrect);
+        input.classList.toggle("is-error", !isCorrect);
+        if (isCorrect) correctCount += 1;
+      }
+
+      if (correctCount === inputs.length) {
+        feedback.textContent = card.dataset.successMessage ?? "すべて正解です。";
+        feedback.className = "feedback is-correct";
+      } else {
+        const detail = `全 ${inputs.length} 段階のうち ${correctCount} 段階が合っています。`;
+        feedback.textContent = `${detail}${card.dataset.errorMessage ?? ""}`;
+        feedback.className = "feedback is-error";
+      }
+    });
+
+    form.addEventListener("reset", () => {
+      window.setTimeout(() => {
+        for (const input of form.querySelectorAll("input")) input.classList.remove("is-correct", "is-error");
+        feedback.textContent = "";
+        feedback.className = "feedback";
+        hint.hidden = true;
+        hintButton.textContent = "ヒント";
+      }, 0);
+    });
+  }
+</script>
+
+<style>
+  .guided-practice {
+    margin-top: 1rem;
+    padding: clamp(1.4rem, 4vw, 2.2rem);
+    border: 1px solid #acc3b2;
+    border-radius: 1.15rem;
+    background: #fbfdfb;
+  }
+
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+  }
+
+  .label {
+    margin: 0 0 0.35rem;
+    color: #52705c;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+
+  .position {
+    margin: 0;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    color: #4f6656;
+    background: #edf4ee;
+    font-size: 0.75rem;
+    font-weight: 750;
+    white-space: nowrap;
+  }
+
+  .problem,
+  .question {
+    margin: 0 0 1.3rem;
+    padding: 1.1rem;
+    border-radius: 0.8rem;
+    background: var(--surface-accent);
+    font-family: "Times New Roman", "Yu Mincho", serif;
+    font-size: clamp(1.2rem, 3.5vw, 1.7rem);
+    font-weight: 700;
+    line-height: 1.7;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .statement {
+    color: var(--color-text-soft);
+    line-height: 1.9;
+  }
+
+  .statement p {
+    margin: 0.5rem 0;
+  }
+
+  .form {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .fields {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: practice-step;
+  }
+
+  .fields li {
+    counter-increment: practice-step;
+  }
+
+  label {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.9fr) minmax(12rem, 1.1fr);
+    gap: 0.75rem 1rem;
+    align-items: center;
+  }
+
+  label > span::before {
+    margin-right: 0.45rem;
+    color: #52705c;
+    content: counter(practice-step) ".";
+    font-weight: 800;
+  }
+
+  label > span {
+    color: #44564a;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  input {
+    width: 100%;
+    min-height: 2.85rem;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid #acb9ae;
+    border-radius: 0.55rem;
+    color: #1f3025;
+    background: #fff;
+    font: inherit;
+    font-family: "Times New Roman", "Yu Mincho", serif;
+  }
+
+  input:focus {
+    border-color: var(--color-accent);
+    outline: 3px solid rgb(63 112 80 / 18%);
+  }
+
+  input.is-correct {
+    border-color: #4b7b59;
+    background: #f0f8f2;
+  }
+
+  input.is-error {
+    border-color: #a46c63;
+    background: #fff7f5;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+  }
+
+  button {
+    min-height: 2.75rem;
+    padding: 0.65rem 0.95rem;
+    border-radius: 0.65rem;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+
+  .primary {
+    border: 1px solid #315f3f;
+    color: #fff;
+    background: #315f3f;
+  }
+
+  .secondary {
+    border: 1px solid #bdc9bf;
+    color: #344b3a;
+    background: #fff;
+  }
+
+  button:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 0.2rem;
+  }
+
+  .hint,
+  .feedback {
+    margin: 1rem 0 0;
+    padding: 0.85rem 1rem;
+    border-radius: 0.7rem;
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .hint {
+    color: #5b573a;
+    background: #f7f3e4;
+  }
+
+  .feedback:empty {
+    display: none;
+  }
+
+  .feedback.is-correct {
+    color: #244e31;
+    background: #eaf4ec;
+  }
+
+  .feedback.is-error {
+    color: #744037;
+    background: #f8edeb;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .primary:hover {
+      background: #244c32;
+    }
+
+    .secondary:hover {
+      background: var(--surface-accent);
+    }
+  }
+
+  @media (max-width: 760px) {
+    label {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .actions > button {
+      width: 100%;
+    }
+  }
+</style>

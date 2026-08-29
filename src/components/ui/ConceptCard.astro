@@ -1,0 +1,72 @@
+---
+type Props = {
+  title: string;
+  body: string[];
+  formulas?: string[];
+  points?: string[];
+};
+
+const { title: _title, body: _body, formulas: _formulas, points: _points } = Astro.props;
+---
+
+<article class="concept-card">
+  <h3>{_title}</h3>
+  {_body.map((paragraph) => <p>{paragraph}</p>)}
+  {
+    _formulas && _formulas.length > 0 && (
+      <div class="formulas">
+        {_formulas.map((formula) => <p>{formula}</p>)}
+      </div>
+    )
+  }
+  {_points && _points.length > 0 && <ol class="points">{_points.map((point) => <li>{point}</li>)}</ol>}
+</article>
+
+<style>
+  .concept-card {
+    padding: clamp(1.4rem, 3vw, 2rem);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 1.15rem;
+    background: rgb(255 255 255 / 82%);
+  }
+
+  h3 {
+    margin: 0 0 0.8rem;
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+
+  p {
+    max-width: 62rem;
+    margin: 0.6rem 0 0;
+    color: var(--color-muted-strong);
+    line-height: 1.85;
+  }
+
+  .formulas {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1.3rem;
+  }
+
+  .formulas p {
+    margin: 0;
+    padding: 0.75rem 0.95rem;
+    border-radius: 0.65rem;
+    color: var(--color-link);
+    background: var(--surface-accent);
+    font-family: "Times New Roman", "Yu Mincho", serif;
+    font-size: clamp(1.05rem, 2.7vw, 1.35rem);
+    font-variant-numeric: lining-nums tabular-nums;
+    font-weight: 700;
+  }
+
+  .points {
+    display: grid;
+    gap: 0.6rem;
+    margin: 1rem 0 0;
+    padding-left: 1.5rem;
+    color: var(--color-accent-strong);
+    font-weight: 700;
+  }
+</style>

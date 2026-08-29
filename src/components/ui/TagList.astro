@@ -1,0 +1,33 @@
+---
+type Props = {
+  items: string[];
+  ariaLabel?: string;
+};
+
+const { items: _items, ariaLabel: _ariaLabel = "項目" } = Astro.props;
+---
+
+<ul class="tags" aria-label={_ariaLabel}>
+  {_items.map((item) => <li>{item}</li>)}
+</ul>
+
+<style>
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 1rem 0 1.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 999px;
+    color: var(--color-muted-strong);
+    background: var(--surface-subtle);
+    font-size: 0.76rem;
+    font-weight: 700;
+  }
+</style>

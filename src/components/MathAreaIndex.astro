@@ -2,8 +2,20 @@
 import { findAdvancedTopicSet } from "../content/entrance/advanced-topic-sets";
 import { type MathCourseInfo, math1Course } from "../content/math-courses";
 import type { MathArea } from "../content/math1/types";
-import "../styles/global.css";
-import "../styles/lesson.css";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "./ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "./ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
 
 type AdvancedLink = {
   href: string;
@@ -30,91 +42,58 @@ const _resolvedAdvanced =
         patternCount: _advancedTopicSet.patterns.length,
       }
     : undefined);
+const _unitItems = _area.units.map((unit, index) => ({
+  marker: String(index + 1).padStart(2, "0"),
+  title: unit.title,
+  href: `${_areaHref}${unit.key}/`,
+  description: unit.description,
+  meta: `${unit.lessons.length}小教材`,
+}));
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content={`高校${_course.title}「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`}
+<StudyPage
+  title={`${_area.title} | ${_course.title}`}
+  description={`高校${_course.title}「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`}
+>
+  <BreadcrumbTrail items={[{ label: _course.title, href: _courseHomeHref }, { label: _area.title }]} />
+  <ContentHero kicker={_course.kicker} title={_area.title} description={_area.description} />
+
+  <ContentSection labelledby="units-title">
+    <SectionHeading
+      label="UNITS"
+      title="学習する単元"
+      id="units-title"
+      description={`${_lessonCount}個の小教材を、単元ごとに順番に学習します。`}
     />
-    <title>{_area.title} | {_course.title}</title>
-  </head>
-  <body>
-    <main class="lesson-shell">
-      <nav class="breadcrumb" aria-label="パンくずリスト">
-        <a href={_courseHomeHref}>{_course.title}</a>
-        <span aria-hidden="true">/</span>
-        <span aria-current="page">{_area.title}</span>
-      </nav>
+    <ContentIndex items={_unitItems} />
+  </ContentSection>
 
-      <header class="lesson-hero unit-hero">
-        <p class="lesson-kicker">{_course.kicker}</p>
-        <h1>{_area.title}</h1>
-        <p>{_area.description}</p>
-      </header>
+  {
+    _resolvedAdvanced && (
+      <ContentSection labelledby="advanced-title">
+        <SectionHeading
+          label="APPLICATION & ADVANCED"
+          title="応用・発展へ進む"
+          id="advanced-title"
+          description="基礎技能を組み合わせ、問題文から解法を選ぶ練習をパターンごとに行います。"
+        />
+        <ContentIndex
+          items={[
+            {
+              marker: "A",
+              title: `${_area.title} 応用・発展`,
+              href: _resolvedAdvanced.href,
+              description: "考え方 → 例題 → ステップ練習 → 実践の順で、1パターン1ページで学びます。",
+              meta: `${_resolvedAdvanced.patternCount}パターン`,
+            },
+          ]}
+        />
+      </ContentSection>
+    )
+  }
 
-      <section class="lesson-section" aria-labelledby="units-title">
-        <div class="section-heading lesson-heading">
-          <div>
-            <p class="section-label">UNITS</p>
-            <h2 id="units-title">学習する単元</h2>
-          </div>
-          <p>{_lessonCount}個の小教材を、単元ごとに順番に学習します。</p>
-        </div>
-
-        <ol class="lesson-index-list">
-          {
-            _area.units.map((unit, index) => (
-              <li>
-                <a href={`${_areaHref}${unit.key}/`}>
-                  <span class="lesson-index-number">{String(index + 1).padStart(2, "0")}</span>
-                  <span class="lesson-index-content">
-                    <strong>{unit.title}</strong>
-                    <span>{unit.description}</span>
-                  </span>
-                  <span class="lesson-index-meta">{unit.lessons.length}小教材</span>
-                </a>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      {
-        _resolvedAdvanced && (
-          <section class="lesson-section" aria-labelledby="advanced-title">
-            <div class="section-heading lesson-heading">
-              <div>
-                <p class="section-label">APPLICATION & ADVANCED</p>
-                <h2 id="advanced-title">応用・発展へ進む</h2>
-              </div>
-              <p>基礎技能を組み合わせ、問題文から解法を選ぶ練習をパターンごとに行います。</p>
-            </div>
-
-            <ol class="lesson-index-list">
-              <li>
-                <a href={_resolvedAdvanced.href}>
-                  <span class="lesson-index-number">A</span>
-                  <span class="lesson-index-content">
-                    <strong>{_area.title} 応用・発展</strong>
-                    <span>考え方 → 例題 → ステップ練習 → 実践の順で、1パターン1ページで学びます。</span>
-                  </span>
-                  <span class="lesson-index-meta">{_resolvedAdvanced.patternCount}パターン</span>
-                </a>
-              </li>
-            </ol>
-          </section>
-        )
-      }
-
-      <nav class="lesson-navigation" aria-label="教材ナビゲーション">
-        <a href={_courseHomeHref}>← {_course.title}の目次へ</a>
-        <a href={`${_areaHref}${_area.units[0].key}/`}>最初の単元から始める →</a>
-      </nav>
-    </main>
-  </body>
-</html>
+  <PageNavigation
+    previous={{ label: `← ${_course.title}の目次へ`, href: _courseHomeHref }}
+    next={{ label: "最初の単元から始める →", href: `${_areaHref}${_area.units[0].key}/` }}
+  />
+</StudyPage>

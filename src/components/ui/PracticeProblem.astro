@@ -1,0 +1,46 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SolutionDetails from "./SolutionDetails.astro";
+
+type Props = {
+  statement: string[];
+  question: string;
+  solutionSteps: string[];
+  answer: string;
+  solutionSummary?: string;
+};
+
+const {
+  statement: _statement,
+  question: _question,
+  solutionSteps: _solutionSteps,
+  answer: _answer,
+  solutionSummary: _solutionSummary = "解答・解説を表示",
+} = Astro.props;
+---
+
+<div class="problem">
+  <div class="statement">{_statement.map((paragraph) => <p>{paragraph}</p>)}</div>
+  <p class="question">{_question}</p>
+  <SolutionDetails summary={_solutionSummary} steps={_solutionSteps} answer={_answer} />
+</div>
+
+<style>
+  .problem {
+    color: var(--color-text-soft);
+    line-height: 1.9;
+  }
+
+  .statement p {
+    margin: 0.5rem 0;
+  }
+
+  .question {
+    margin: 1rem 0 0;
+    padding: 1rem;
+    border-radius: 0.85rem;
+    background: var(--surface-accent);
+    font-weight: 700;
+    line-height: 1.8;
+  }
+</style>

@@ -1,33 +1,42 @@
 ---
 import { type MathCourseInfo, math1Course } from "../content/math-courses";
-import "../styles/global.css";
-import "../styles/entrance.css";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ConceptCard from "./ui/ConceptCard.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import GuidedPractice from "./ui/GuidedPractice.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import LearningFlow from "./ui/LearningFlow.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "./ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PracticeProblem from "./ui/PracticeProblem.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import TagList from "./ui/TagList.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import WorkedExample from "./ui/WorkedExample.astro";
 
-type GuidedStep = {
-  prompt: string;
-  answers: string[];
-  placeholder?: string;
-};
-
+type GuidedStep = { prompt: string; answers: string[]; placeholder?: string };
 type Pattern = {
   id: string;
   title: string;
   level: string;
   estimatedMinutes: number;
   skills: string[];
-  thinking: {
-    title: string;
-    body: string[];
-    checkpoints: string[];
-  };
+  thinking: { title: string; body: string[]; checkpoints: string[] };
   example: {
     statement: string[];
     question: string;
-    solution: {
-      strategy: string;
-      steps: string[];
-      answer: string;
-    };
+    solution: { strategy: string; steps: string[]; answer: string };
   };
   guidedPractice: {
     title: string;
@@ -39,19 +48,11 @@ type Pattern = {
   practice: {
     statement: string[];
     question: string;
-    solution: {
-      steps: string[];
-      answer: string;
-    };
+    solution: { steps: string[]; answer: string };
   };
+  generatorKey?: string;
 };
-
-type TopicSet = {
-  topic: string;
-  title: string;
-  patterns: Pattern[];
-};
-
+type TopicSet = { topic: string; title: string; patterns: Pattern[] };
 type Props = {
   topicSet: TopicSet;
   areaTitle: string;
@@ -78,250 +79,238 @@ const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_topicSet.topic}/`;
 const _topicHref = `${_base}${_course.routeBase}/entrance/${_topicSet.topic}/`;
 const _patternHref = (pattern: Pattern) => `${_topicHref}${_patternSlug(pattern)}/`;
+const _flow = [
+  "考え方",
+  "例題",
+  "ステップ練習",
+  "実践",
+  ...(_pattern.generatorKey ? ["別問題で反復"] : []),
+];
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content={`${_course.title}「${_areaTitle}」の${_levelLabel}パターン「${_pattern.title}」。考え方、例題、ステップ練習、実践の順で学びます。`}
+<StudyPage
+  title={`${_pattern.title} | ${_topicSet.title} | 学習コンテンツ`}
+  description={`${_course.title}「${_areaTitle}」の${_levelLabel}パターン「${_pattern.title}」。考え方、例題、ステップ練習、実践の順で学びます。`}
+>
+  <BreadcrumbTrail
+    items={[
+      { label: "科目一覧", href: _base },
+      { label: _course.title, href: _courseHomeHref },
+      { label: _areaTitle, href: _areaHref },
+      { label: "応用・発展", href: _topicHref },
+      { label: _pattern.title },
+    ]}
+  />
+  <ContentHero
+    kicker={`PATTERN ${String(_patternIndex + 1).padStart(2, "0")} · ${_levelLabel}`}
+    title={_pattern.title}
+    description={`目安 ${_pattern.estimatedMinutes}分`}
+    compact
+  >
+    <TagList items={_pattern.skills} ariaLabel="このパターンで使う主な技能" />
+    <LearningFlow steps={_flow} label="このページの学習の流れ" />
+  </ContentHero>
+
+  <ContentSection labelledby="thinking-title">
+    <SectionHeading label="THINKING" title="考え方・着眼点" id="thinking-title" />
+    <ConceptCard
+      title={_pattern.thinking.title}
+      body={_pattern.thinking.body}
+      points={_pattern.thinking.checkpoints}
     />
-    <title>{_pattern.title} | {_topicSet.title} | 学習コンテンツ</title>
-  </head>
-  <body>
-    <main class="page-shell entrance-page">
-      <header class="entrance-hero">
-        <nav class="breadcrumbs" aria-label="パンくずリスト">
-          <a href={_base}>科目一覧</a>
-          <span aria-hidden="true">/</span>
-          <a href={_courseHomeHref}>{_course.title}</a>
-          <span aria-hidden="true">/</span>
-          <a href={_areaHref}>{_areaTitle}</a>
-          <span aria-hidden="true">/</span>
-          <a href={_topicHref}>応用・発展</a>
-          <span aria-hidden="true">/</span>
-          <span>{_pattern.title}</span>
-        </nav>
+  </ContentSection>
 
-        <p class="pattern-number">PATTERN {String(_patternIndex + 1).padStart(2, "0")}</p>
-        <div class="pattern-header">
-          <div>
-            <p class="eyebrow">APPLICATION & ADVANCED</p>
-            <h1>{_pattern.title}</h1>
+  <ContentSection labelledby="example-title">
+    <SectionHeading label="EXAMPLE" title="例題" id="example-title" />
+    <WorkedExample
+      problem={`${_pattern.example.statement.join(" ")} ${_pattern.example.question}`}
+      strategy={_pattern.example.solution.strategy}
+      steps={_pattern.example.solution.steps.map((text) => ({ text }))}
+      answer={_pattern.example.solution.answer}
+    />
+  </ContentSection>
+
+  <ContentSection labelledby="guided-title">
+    <SectionHeading
+      label="STEP PRACTICE"
+      title="ステップバイステップの練習"
+      id="guided-title"
+    />
+    <GuidedPractice
+      title={_pattern.guidedPractice.title}
+      statement={_pattern.guidedPractice.statement}
+      question={_pattern.guidedPractice.question}
+      steps={_pattern.guidedPractice.steps}
+      hint={_pattern.guidedPractice.hint}
+      successMessage="すべて正解です。着眼点から解答手順まで再現できています。"
+      errorMessage="例題の判断順序と比べて確認してください。"
+    />
+  </ContentSection>
+
+  <ContentSection labelledby="practice-title">
+    <SectionHeading label="PRACTICE" title="実践" id="practice-title" />
+    <PracticeProblem
+      statement={_pattern.practice.statement}
+      question={_pattern.practice.question}
+      solutionSteps={_pattern.practice.solution.steps}
+      answer={_pattern.practice.solution.answer}
+      solutionSummary="実践問題の解答・解説を表示"
+    />
+  </ContentSection>
+
+  {
+    _pattern.generatorKey && (
+      <ContentSection labelledby="generated-title">
+        <SectionHeading
+          label="GENERATED PRACTICE"
+          title="同じパターンでもう1問"
+          id="generated-title"
+          description="成立条件を保ったまま、数値や条件を変えた独自問題を生成します。"
+        />
+        <div class="generator" data-generator data-generator-key={_pattern.generatorKey}>
+          <button type="button" data-generator-button>別の実践問題を生成</button>
+          <div class="generated" data-generated-content hidden>
+            <div data-generated-statement></div>
+            <p class="generated-question" data-generated-question></p>
+            <details data-generated-solution>
+              <summary>生成問題の解答・解説を表示</summary>
+              <ol data-generated-steps></ol>
+              <p class="generated-answer" data-generated-answer></p>
+            </details>
           </div>
-          <div class="pattern-meta">
-            <span class={`level-badge level-${_pattern.level}`}>{_levelLabel}</span>
-            <span>目安 {_pattern.estimatedMinutes}分</span>
-          </div>
+          <p class="generator-feedback" data-generator-feedback aria-live="polite"></p>
         </div>
+      </ContentSection>
+    )
+  }
 
-        <ul class="skill-list" aria-label="このパターンで使う主な技能">
-          {_pattern.skills.map((skill) => <li>{skill}</li>)}
-        </ul>
+  <PageNavigation
+    previous={
+      _previousPattern
+        ? { label: `← ${_previousPattern.title}`, href: _patternHref(_previousPattern) }
+        : { label: "← パターン一覧", href: _topicHref }
+    }
+    center={{ label: "パターン一覧", href: _topicHref }}
+    next={
+      _nextPattern
+        ? { label: `${_nextPattern.title} →`, href: _patternHref(_nextPattern) }
+        : { label: `${_areaTitle}の基礎教材へ →`, href: _areaHref }
+    }
+  />
+</StudyPage>
 
-        <div class="advanced-learning-flow" aria-label="このページの学習の流れ">
-          <span>考え方</span>
-          <span aria-hidden="true">→</span>
-          <span>例題</span>
-          <span aria-hidden="true">→</span>
-          <span>ステップ練習</span>
-          <span aria-hidden="true">→</span>
-          <span>実践</span>
-        </div>
-      </header>
+<script>
+  import { generateMath1QuadraticPractice } from "../content/entrance/math1-quadratic-generators";
 
-      <article class="application-pattern single-pattern-page">
-        <section class="pattern-block thinking-block" aria-labelledby="thinking-title">
-          <p class="pattern-section-label">THINKING</p>
-          <h2 id="thinking-title">考え方・着眼点</h2>
-          <h3>{_pattern.thinking.title}</h3>
-          {_pattern.thinking.body.map((paragraph) => <p>{paragraph}</p>)}
-          <ol class="checkpoint-list">
-            {_pattern.thinking.checkpoints.map((checkpoint) => <li>{checkpoint}</li>)}
-          </ol>
-        </section>
+  for (const block of document.querySelectorAll("[data-generator]")) {
+    if (!(block instanceof HTMLElement) || block.dataset.generatorReady === "true") continue;
+    block.dataset.generatorReady = "true";
+    const button = block.querySelector("[data-generator-button]");
+    const content = block.querySelector("[data-generated-content]");
+    const statement = block.querySelector("[data-generated-statement]");
+    const question = block.querySelector("[data-generated-question]");
+    const steps = block.querySelector("[data-generated-steps]");
+    const answer = block.querySelector("[data-generated-answer]");
+    const solution = block.querySelector("[data-generated-solution]");
+    const feedback = block.querySelector("[data-generator-feedback]");
+    if (
+      !(button instanceof HTMLButtonElement) ||
+      !(content instanceof HTMLElement) ||
+      !(statement instanceof HTMLElement) ||
+      !(question instanceof HTMLElement) ||
+      !(steps instanceof HTMLOListElement) ||
+      !(answer instanceof HTMLElement) ||
+      !(solution instanceof HTMLDetailsElement) ||
+      !(feedback instanceof HTMLElement)
+    )
+      continue;
 
-        <section class="pattern-block example-block" aria-labelledby="example-title">
-          <p class="pattern-section-label">EXAMPLE</p>
-          <h2 id="example-title">例題</h2>
-          <div class="problem-body">
-            {_pattern.example.statement.map((paragraph) => <p>{paragraph}</p>)}
-            <p class="problem-question">{_pattern.example.question}</p>
-          </div>
-          <div class="worked-solution">
-            <h3>方針</h3>
-            <p>{_pattern.example.solution.strategy}</p>
-            <ol class="worked-steps">
-              {_pattern.example.solution.steps.map((step) => <li>{step}</li>)}
-            </ol>
-            <p class="solution-answer">{_pattern.example.solution.answer}</p>
-          </div>
-        </section>
-
-        <section
-          class="pattern-block guided-block"
-          aria-labelledby="guided-title"
-          data-guided-practice
-        >
-          <p class="pattern-section-label">STEP PRACTICE</p>
-          <h2 id="guided-title">ステップバイステップの練習</h2>
-          <h3>{_pattern.guidedPractice.title}</h3>
-          <div class="problem-body">
-            {_pattern.guidedPractice.statement.map((paragraph) => <p>{paragraph}</p>)}
-            <p class="problem-question">{_pattern.guidedPractice.question}</p>
-          </div>
-          <form class="guided-practice-form">
-            <ol class="guided-fields">
-              {
-                _pattern.guidedPractice.steps.map((step, stepIndex) => (
-                  <li>
-                    <label>
-                      <span>{step.prompt}</span>
-                      <input
-                        type="text"
-                        autocomplete="off"
-                        spellcheck="false"
-                        placeholder={step.placeholder}
-                        data-answers={JSON.stringify(step.answers)}
-                        aria-label={`${_pattern.title} ステップ${stepIndex + 1}: ${step.prompt}`}
-                        required
-                      />
-                    </label>
-                  </li>
-                ))
-              }
-            </ol>
-            <div class="practice-actions">
-              <button type="submit" class="primary-button">答え合わせ</button>
-              <button type="button" class="secondary-button hint-button">ヒント</button>
-              <button type="reset" class="secondary-button">やり直す</button>
-            </div>
-          </form>
-          <p class="hint practice-hint" hidden>{_pattern.guidedPractice.hint}</p>
-          <p class="feedback practice-feedback" aria-live="polite" />
-        </section>
-
-        <section class="pattern-block practice-block" aria-labelledby="practice-title">
-          <p class="pattern-section-label">PRACTICE</p>
-          <h2 id="practice-title">実践</h2>
-          <div class="problem-body">
-            {_pattern.practice.statement.map((paragraph) => <p>{paragraph}</p>)}
-            <p class="problem-question">{_pattern.practice.question}</p>
-          </div>
-          <details class="solution">
-            <summary>実践問題の解答・解説を表示</summary>
-            <div class="solution-content">
-              <ol>
-                {_pattern.practice.solution.steps.map((step) => <li>{step}</li>)}
-              </ol>
-              <p class="solution-answer">{_pattern.practice.solution.answer}</p>
-            </div>
-          </details>
-        </section>
-      </article>
-
-      <nav
-        class="lesson-navigation entrance-pattern-navigation"
-        aria-label="パターンナビゲーション"
-      >
-        <div>
-          {
-            _previousPattern ? (
-              <a href={_patternHref(_previousPattern)}>← {_previousPattern.title}</a>
-            ) : (
-              <a href={_topicHref}>← パターン一覧</a>
-            )
-          }
-        </div>
-        <a class="unit-index-link" href={_topicHref}>パターン一覧</a>
-        <div>
-          {
-            _nextPattern ? (
-              <a href={_patternHref(_nextPattern)}>{_nextPattern.title} →</a>
-            ) : (
-              <a href={_areaHref}>{_areaTitle}の基礎教材へ →</a>
-            )
-          }
-        </div>
-      </nav>
-    </main>
-
-    <script>
-      const normalizeAnswer = (value: string) =>
-        value
-          .trim()
-          .toLowerCase()
-          .replaceAll(/\s+/g, "")
-          .replaceAll("−", "-")
-          .replaceAll("–", "-")
-          .replaceAll("—", "-")
-          .replaceAll("×", "*")
-          .replaceAll("·", "*")
-          .replaceAll("，", ",")
-          .replaceAll("（", "(")
-          .replaceAll("）", ")")
-          .replaceAll("^2", "²");
-
-      for (const block of document.querySelectorAll("[data-guided-practice]")) {
-        if (!(block instanceof HTMLElement)) continue;
-        const form = block.querySelector(".guided-practice-form");
-        const feedback = block.querySelector(".practice-feedback");
-        const hint = block.querySelector(".practice-hint");
-        const hintButton = block.querySelector(".hint-button");
-        if (
-          !(form instanceof HTMLFormElement) ||
-          !(feedback instanceof HTMLElement) ||
-          !(hint instanceof HTMLElement) ||
-          !(hintButton instanceof HTMLButtonElement)
-        )
-          continue;
-
-        hintButton.addEventListener("click", () => {
-          hint.hidden = !hint.hidden;
-          hintButton.textContent = hint.hidden ? "ヒント" : "ヒントを閉じる";
-        });
-
-        form.addEventListener("submit", (event) => {
-          event.preventDefault();
-          const inputs = [...form.querySelectorAll("input[data-answers]")].filter(
-            (input): input is HTMLInputElement => input instanceof HTMLInputElement,
-          );
-          let correctCount = 0;
-
-          for (const input of inputs) {
-            const rawAnswers = input.dataset.answers;
-            if (!rawAnswers) continue;
-            const answers = (JSON.parse(rawAnswers) as string[]).map(normalizeAnswer);
-            const isCorrect = answers.includes(normalizeAnswer(input.value));
-            input.classList.toggle("is-correct", isCorrect);
-            input.classList.toggle("is-error", !isCorrect);
-            if (isCorrect) correctCount += 1;
-          }
-
-          if (correctCount === inputs.length) {
-            feedback.textContent = "すべて正解です。着眼点から解答手順まで再現できています。";
-            feedback.className = "feedback practice-feedback is-correct";
-          } else {
-            feedback.textContent = `全 ${inputs.length} 段階のうち ${correctCount} 段階が合っています。例題の判断順序と比べて確認してください。`;
-            feedback.className = "feedback practice-feedback is-error";
-          }
-        });
-
-        form.addEventListener("reset", () => {
-          window.setTimeout(() => {
-            for (const input of form.querySelectorAll("input")) {
-              input.classList.remove("is-correct", "is-error");
-            }
-            feedback.textContent = "";
-            feedback.className = "feedback practice-feedback";
-            hint.hidden = true;
-            hintButton.textContent = "ヒント";
-          }, 0);
-        });
+    button.addEventListener("click", () => {
+      const key = block.dataset.generatorKey;
+      if (!key) return;
+      const generated = generateMath1QuadraticPractice(key);
+      if (!generated) {
+        feedback.textContent = "このパターンの生成器を読み込めませんでした。";
+        return;
       }
-    </script>
-  </body>
-</html>
+      statement.replaceChildren(
+        ...generated.statement.map((text) =>
+          Object.assign(document.createElement("p"), { textContent: text }),
+        ),
+      );
+      question.textContent = generated.question;
+      steps.replaceChildren(
+        ...generated.solution.steps.map((text) =>
+          Object.assign(document.createElement("li"), { textContent: text }),
+        ),
+      );
+      answer.textContent = generated.solution.answer;
+      solution.open = false;
+      content.hidden = false;
+      feedback.textContent =
+        "別の条件で実践問題を生成しました。まず解答を閉じたまま解いてください。";
+    });
+  }
+</script>
+
+<style>
+  .generator {
+    padding: clamp(1.2rem, 3vw, 1.8rem);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 1rem;
+    background: var(--surface-accent);
+  }
+
+  button {
+    min-height: 2.75rem;
+    padding: 0.65rem 0.95rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 0.65rem;
+    color: var(--color-accent-strong);
+    background: #fff;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+
+  button:focus-visible,
+  summary:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 0.2rem;
+  }
+
+  .generated {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--color-border-soft);
+    color: var(--color-text-soft);
+    line-height: 1.85;
+  }
+
+  .generated-question,
+  .generated-answer {
+    padding: 1rem;
+    border-radius: 0.85rem;
+    background: #fff;
+    font-weight: 700;
+    line-height: 1.8;
+  }
+
+  summary {
+    cursor: pointer;
+    color: var(--color-link);
+    font-weight: 800;
+  }
+
+  .generator-feedback {
+    margin: 0.9rem 0 0;
+    color: var(--color-muted-strong);
+    line-height: 1.75;
+  }
+
+  .generator :global(p),
+  .generator :global(li) {
+    line-height: 1.85;
+  }
+</style>

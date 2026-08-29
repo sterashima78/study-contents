@@ -1,0 +1,42 @@
+---
+type Props = {
+  items: string[];
+  homeHref?: string;
+};
+
+const { items: _items, homeHref: _homeHref } = Astro.props;
+---
+
+<footer class="footer">
+  {_items.map((item) => <p>{item}</p>)}
+  {_homeHref && <p><a href={_homeHref}>科目一覧へ</a></p>}
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: clamp(3rem, 7vw, 5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: var(--color-link);
+    font-weight: 700;
+  }
+
+  @media (max-width: 720px) {
+    .footer {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+</style>

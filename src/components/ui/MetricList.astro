@@ -1,0 +1,64 @@
+---
+type Metric = {
+  value: string;
+  label: string;
+};
+
+type Props = {
+  items: Metric[];
+  ariaLabel?: string;
+};
+
+const { items: _items, ariaLabel: _ariaLabel = "概要" } = Astro.props;
+---
+
+<ul class="metrics" aria-label={_ariaLabel}>
+  {
+    _items.map((item) => (
+      <li>
+        <strong>{item.value}</strong>
+        <span>{item.label}</span>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 1rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 72%);
+  }
+
+  strong,
+  span {
+    display: block;
+  }
+
+  strong {
+    margin-bottom: 0.25rem;
+    font-size: 1.15rem;
+  }
+
+  span {
+    color: var(--color-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 760px) {
+    .metrics {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "./ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "./ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageFooter from "./ui/PageFooter.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "./ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
+
+type CourseItem = {
+  title: string;
+  kicker: string;
+  href: string;
+  description: string;
+  areas: string[];
+  lessonCount: number;
+};
+
+type Props = {
+  courses: CourseItem[];
+};
+
+const { courses: _courses } = Astro.props as Props;
+const _items = _courses.map((course, index) => ({
+  marker: String(index + 1).padStart(2, "0"),
+  kicker: course.kicker,
+  title: course.title,
+  href: course.href,
+  description: course.description,
+  tags: course.areas,
+  meta: `${course.lessonCount}小教材公開`,
+  action: "科目の目次を見る →",
+}));
+---
+
+<StudyPage
+  title="高校学習コンテンツ"
+  description="高校の学習コンテンツ。数学、化学、物理から学びたい科目を選び、小単元ごとの教材と演習に進めます。"
+  width="wide"
+>
+  <ContentHero
+    kicker="HIGH SCHOOL STUDY CONTENTS"
+    title="学習コンテンツ"
+    description="学びたい科目を選び、領域、単元、小単元の順に進みます。各小単元では考え方から例題、練習、確認問題までを一続きで学習できます。"
+    variant="display"
+  />
+
+  <ContentSection labelledby="courses-title">
+    <SectionHeading
+      label="COURSES"
+      title="学習する科目"
+      id="courses-title"
+      description="科目ごとに独立した目次から、学びたい領域と単元を選択できます。"
+    />
+    <ContentIndex items={_items} variant="grid" />
+  </ContentSection>
+
+  <PageFooter
+    items={["高校 学習コンテンツ", "科目を入口として、領域・単元・小単元へ進む構成です。"]}
+  />
+</StudyPage>

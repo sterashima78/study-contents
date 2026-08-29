@@ -48,6 +48,9 @@ jobs:
       - name: Verify application and advanced content
         run: pnpm check:entrance-content
 
+      - name: Verify component style boundaries
+        run: pnpm check:component-styles
+
       - name: Build
         run: pnpm build
 

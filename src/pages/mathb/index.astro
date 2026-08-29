@@ -1,87 +1,16 @@
 ---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { mathBCourse } from "../../content/math-courses";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { mathBAreas } from "../../content/mathb/catalog";
-import "../../styles/global.css";
-
-const _base = import.meta.env.BASE_URL;
-const _areas = mathBAreas.map((area, index) => ({
-  ...area,
-  number: String(index + 1).padStart(2, "0"),
-  lessonCount: area.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
-}));
-const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0);
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="高校数学Bの学習コンテンツ。数列、統計的な推測、数学と社会生活を1ページ1技能で学べます。"
-    />
-    <title>数学B | 学習コンテンツ</title>
-  </head>
-  <body>
-    <main class="page-shell">
-      <header class="hero">
-        <p class="eyebrow">MATHEMATICS B</p>
-        <h1>数学B</h1>
-        <p class="lead">
-          数列、確率分布と統計的な推測、現実の問題を数学化する考え方を、1ページ1技能の小さな教材で学びます。
-        </p>
-        <div class="learning-flow" aria-label="各小単元の学習の流れ">
-          <span>考え方</span>
-          <span aria-hidden="true">→</span>
-          <span>導出・根拠</span>
-          <span aria-hidden="true">→</span>
-          <span>例題</span>
-          <span aria-hidden="true">→</span>
-          <span>直後の練習</span>
-          <span aria-hidden="true">→</span>
-          <span>3問確認</span>
-          <span aria-hidden="true">→</span>
-          <span>まとめ</span>
-        </div>
-      </header>
-
-      <section class="curriculum" aria-labelledby="curriculum-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-label">CONTENTS</p>
-            <h2 id="curriculum-title">学習する3つの領域</h2>
-          </div>
-          <p>全{_totalLessonCount}小教材。本サイトでは学習指導要領に示される3領域をすべて掲載しています。</p>
-        </div>
-
-        <ol class="unit-grid">
-          {
-            _areas.map((area) => (
-              <li class="unit-card">
-                <div class="unit-header">
-                  <span class="unit-number" aria-hidden="true">{area.number}</span>
-                  <h3><a href={`${_base}mathb/${area.key}/`}>{area.title}</a></h3>
-                </div>
-                <p class="unit-description">{area.description}</p>
-                <ul class="topic-list">
-                  {area.units.map((unit) => (
-                    <li>
-                      <a href={`${_base}mathb/${area.key}/${unit.key}/`}>{unit.title}</a>
-                    </li>
-                  ))}
-                </ul>
-                <p class="preparing available">{area.lessonCount}小教材公開</p>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <footer class="page-footer">
-        <p>高校 数学B</p>
-        <p>現行学習指導要領の3領域を、小単元・確認演習・単元末演習で学習できます。</p>
-        <p><a href={_base}>科目一覧へ</a></p>
-      </footer>
-    </main>
-  </body>
-</html>
+<CourseHome
+  course={mathBCourse}
+  areas={mathBAreas}
+  description="数列、統計的な推測、数学と社会生活を、根拠・例題・練習をつないで1ページ1技能で学びます。"
+  metaDescription="高校数学Bの学習コンテンツ。数列、統計的な推測、数学と社会生活を1ページ1技能で学べます。"
+  footerDescription="現行学習指導要領の3領域を、小単元・確認演習・単元末演習で学習できます。"
+/>

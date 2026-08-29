@@ -1,87 +1,16 @@
 ---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { math2Course } from "../../content/math-courses";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { math2Areas } from "../../content/math2/catalog";
-import "../../styles/global.css";
-
-const _base = import.meta.env.BASE_URL;
-const _areas = math2Areas.map((area, index) => ({
-  ...area,
-  number: String(index + 1).padStart(2, "0"),
-  lessonCount: area.units.reduce((sum, unit) => sum + unit.lessons.length, 0),
-}));
-const _totalLessonCount = _areas.reduce((sum, area) => sum + area.lessonCount, 0);
 ---
 
-<!doctype html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="高校数学IIの学習コンテンツ。いろいろな式、図形と方程式、指数関数・対数関数、三角関数、微分・積分の考えを1ページ1技能で学べます。"
-    />
-    <title>数学II | 学習コンテンツ</title>
-  </head>
-  <body>
-    <main class="page-shell">
-      <header class="hero">
-        <p class="eyebrow">MATHEMATICS II</p>
-        <h1>数学II</h1>
-        <p class="lead">
-          式と方程式、座標、指数・対数、三角関数、微分・積分を、1ページ1技能の小さな教材で順に学びます。
-        </p>
-        <div class="learning-flow" aria-label="各小単元の学習の流れ">
-          <span>考え方</span>
-          <span aria-hidden="true">→</span>
-          <span>導出・根拠</span>
-          <span aria-hidden="true">→</span>
-          <span>例題</span>
-          <span aria-hidden="true">→</span>
-          <span>直後の練習</span>
-          <span aria-hidden="true">→</span>
-          <span>3問確認</span>
-          <span aria-hidden="true">→</span>
-          <span>まとめ</span>
-        </div>
-      </header>
-
-      <section class="curriculum" aria-labelledby="curriculum-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-label">CONTENTS</p>
-            <h2 id="curriculum-title">学習する5つの領域</h2>
-          </div>
-          <p>全{_totalLessonCount}小教材。領域から単元へ進み、各ページを5〜10分程度で学習します。</p>
-        </div>
-
-        <ol class="unit-grid">
-          {
-            _areas.map((area) => (
-              <li class="unit-card">
-                <div class="unit-header">
-                  <span class="unit-number" aria-hidden="true">{area.number}</span>
-                  <h3><a href={`${_base}math2/${area.key}/`}>{area.title}</a></h3>
-                </div>
-                <p class="unit-description">{area.description}</p>
-                <ul class="topic-list">
-                  {area.units.map((unit) => (
-                    <li>
-                      <a href={`${_base}math2/${area.key}/${unit.key}/`}>{unit.title}</a>
-                    </li>
-                  ))}
-                </ul>
-                <p class="preparing available">{area.lessonCount}小教材公開</p>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <footer class="page-footer">
-        <p>高校 数学II</p>
-        <p>現行学習指導要領の5領域を、小単元・確認演習・単元末演習で学習できます。</p>
-        <p><a href={_base}>科目一覧へ</a></p>
-      </footer>
-    </main>
-  </body>
-</html>
+<CourseHome
+  course={math2Course}
+  areas={math2Areas}
+  description="式、図形と方程式、指数・対数、三角関数、微分・積分を、公式の根拠と例題をつないで学びます。"
+  metaDescription="高校数学IIの学習コンテンツ。いろいろな式、図形と方程式、指数・対数関数、三角関数、微分・積分を1ページ1技能で学べます。"
+  footerDescription="現行学習指導要領の5領域を、小単元・確認演習・単元末演習で学習できます。"
+/>

@@ -1,0 +1,294 @@
+---
+type LinkItem = {
+  label: string;
+  href?: string;
+};
+
+type IndexItem = {
+  marker?: string;
+  kicker?: string;
+  title: string;
+  href: string;
+  description?: string;
+  meta?: string;
+  links?: LinkItem[];
+  tags?: string[];
+  badge?: string;
+  badgeTone?: "default" | "advanced";
+  action?: string;
+};
+
+type Props = {
+  items: IndexItem[];
+  variant?: "grid" | "rows";
+};
+
+const { items: _items, variant: _variant = "rows" } = Astro.props;
+---
+
+<ol class:list={["index", `variant-${_variant}`]}>
+  {
+    _items.map((item) => (
+      <li class="item">
+        <div class="heading">
+          {item.marker && <span class="marker" aria-hidden="true">{item.marker}</span>}
+          <div class="title-group">
+            {item.kicker && <p class="kicker">{item.kicker}</p>}
+            <h3><a href={item.href}>{item.title}</a></h3>
+          </div>
+          {item.badge && <span class:list={["badge", item.badgeTone === "advanced" && "is-advanced"]}>{item.badge}</span>}
+        </div>
+        {item.description && <p class="description">{item.description}</p>}
+        {item.links && item.links.length > 0 && (
+          <ul class="links">
+            {item.links.map((link) => <li>{link.href ? <a href={link.href}>{link.label}</a> : link.label}</li>)}
+          </ul>
+        )}
+        {item.tags && item.tags.length > 0 && (
+          <ul class="tags" aria-label={`${item.title}の項目`}>
+            {item.tags.map((tag) => <li>{tag}</li>)}
+          </ul>
+        )}
+        <div class="footer">
+          {item.meta && <span class="meta">{item.meta}</span>}
+          {item.action && <a class="action" href={item.href}>{item.action}</a>}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .index {
+    display: grid;
+    gap: 0.8rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .variant-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 0;
+  }
+
+  .item {
+    border: 1px solid var(--color-border-soft);
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 82%);
+    box-shadow: 0 0.6rem 1.6rem rgb(41 63 48 / 5%);
+  }
+
+  .variant-rows .item {
+    padding: 1.15rem 1.25rem;
+  }
+
+  .variant-grid .item {
+    display: flex;
+    flex-direction: column;
+    min-height: 22rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .heading {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .variant-grid .heading {
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .marker {
+    display: grid;
+    min-width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: var(--color-accent-medium);
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  .variant-grid .marker {
+    min-width: auto;
+    height: auto;
+    padding-top: 0.3rem;
+    border-radius: 0;
+    color: var(--color-accent-light);
+    background: transparent;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+
+  .kicker {
+    margin: 0 0 0.35rem;
+    color: var(--color-accent-light);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .variant-grid h3 {
+    font-size: clamp(1.45rem, 3vw, 2rem);
+    line-height: 1.3;
+  }
+
+  h3 a,
+  .links a,
+  .action {
+    color: var(--color-link);
+    font-weight: 750;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
+  }
+
+  h3 a {
+    color: var(--color-text-strong);
+  }
+
+  .description {
+    margin: 1.2rem 0 1rem;
+    color: var(--color-muted-strong);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .variant-rows .description {
+    margin: 0.35rem 0 0 3.5rem;
+    font-size: 0.85rem;
+    line-height: 1.55;
+  }
+
+  .links,
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .links {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .links li {
+    position: relative;
+    padding-left: 1.15rem;
+    color: var(--color-text-soft);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .links li::before {
+    position: absolute;
+    top: 0.62rem;
+    left: 0;
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 50%;
+    background: var(--color-accent-medium);
+    content: "";
+  }
+
+  .tags li {
+    padding: 0.4rem 0.65rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 999px;
+    color: var(--color-muted-strong);
+    background: var(--surface-subtle);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .badge {
+    padding: 0.28rem 0.6rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-accent-strong);
+    background: var(--surface-accent);
+    font-size: 0.8rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .badge.is-advanced {
+    border-color: #d8ccb5;
+    color: #6d5126;
+    background: #faf4e8;
+  }
+
+  .footer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1.3rem;
+  }
+
+  .variant-rows .footer {
+    margin-left: 3.5rem;
+    padding-top: 0.55rem;
+  }
+
+  .meta {
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .action {
+    font-weight: 800;
+  }
+
+  a:focus-visible {
+    border-radius: 0.2rem;
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 0.2rem;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    h3 a:hover,
+    .links a:hover,
+    .action:hover {
+      color: var(--color-link-hover);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .variant-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .variant-rows .heading {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .variant-rows .badge {
+      grid-column: 2;
+      width: fit-content;
+    }
+
+    .variant-rows .description,
+    .variant-rows .footer {
+      margin-left: 0;
+    }
+  }
+</style>

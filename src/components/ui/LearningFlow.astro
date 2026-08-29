@@ -1,0 +1,48 @@
+---
+type Props = {
+  steps: string[];
+  label?: string;
+};
+
+const { steps: _steps, label: _label = "学習の流れ" } = Astro.props;
+---
+
+<div class="flow" aria-label={_label}>
+  {
+    _steps.map((step, index) => (
+      <>
+        {index > 0 && <span class="arrow" aria-hidden="true">→</span>}
+        <span>{step}</span>
+      </>
+    ))
+  }
+</div>
+
+<style>
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.8rem;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 1.25rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-accent-strong);
+    background: rgb(255 255 255 / 62%);
+    font-size: 0.84rem;
+    font-weight: 700;
+  }
+
+  .arrow {
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 760px) {
+    .flow {
+      border-radius: 1rem;
+    }
+  }
+</style>

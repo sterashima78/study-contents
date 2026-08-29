@@ -1,0 +1,59 @@
+---
+type Props = {
+  summary: string;
+  steps: string[];
+  answer: string;
+};
+
+const { summary: _summary, steps: _steps, answer: _answer } = Astro.props;
+---
+
+<details class="solution">
+  <summary>{_summary}</summary>
+  <div class="content">
+    <ol>{_steps.map((step) => <li>{step}</li>)}</ol>
+    <p class="answer">{_answer}</p>
+  </div>
+</details>
+
+<style>
+  .solution {
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border-soft);
+  }
+
+  summary {
+    width: fit-content;
+    cursor: pointer;
+    color: var(--color-link);
+    font-weight: 800;
+  }
+
+  summary:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 0.18rem;
+  }
+
+  .content {
+    margin-top: 1rem;
+    color: var(--color-muted-strong);
+    line-height: 1.85;
+  }
+
+  ol {
+    display: grid;
+    gap: 0.7rem;
+    padding-left: 1.45rem;
+  }
+
+  .answer {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 0.85rem;
+    color: var(--color-accent-strong);
+    background: var(--surface-accent);
+    font-weight: 700;
+    line-height: 1.8;
+  }
+</style>
