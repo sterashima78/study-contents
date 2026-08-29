@@ -9,7 +9,8 @@ const _courses = [
     title: "数学I",
     kicker: "MATHEMATICS I",
     href: `${_base}math1/`,
-    description: "数と式、図形と計量、二次関数、データの分析を、1ページ1技能の小さな教材で学びます。",
+    description:
+      "数と式、図形と計量、二次関数、データの分析を、1ページ1技能の小さな教材で学びます。",
     areas: math1Areas.map((area) => area.title),
     lessonCount: math1Areas.reduce(
       (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
@@ -20,7 +21,8 @@ const _courses = [
     title: "数学A",
     kicker: "MATHEMATICS A",
     href: `${_base}matha/`,
-    description: "場合の数と確率、図形の性質、数学と人間の活動を、1ページ1技能の小さな教材で学びます。",
+    description:
+      "場合の数と確率、図形の性質、数学と人間の活動を、1ページ1技能の小さな教材で学びます。",
     areas: mathAAreas.map((area) => area.title),
     lessonCount: mathAAreas.reduce(
       (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
