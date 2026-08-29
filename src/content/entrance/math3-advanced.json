@@ -1,0 +1,154 @@
+{
+  "copyrightPolicyVersion": 2,
+  "topicSets": [
+    {
+      "course": "math3",
+      "topic": "limits",
+      "areaTitle": "極限",
+      "title": "極限 発展",
+      "description": "不定形を因数分解で解消して極限を求める発展パターンです。",
+      "patterns": [
+        {
+          "id": "math3-limits-pattern-cancel-indeterminate",
+          "title": "0/0型は共通因数を作ってから極限を取る",
+          "level": "advanced",
+          "estimatedMinutes": 16,
+          "skills": ["関数の極限", "因数分解", "不定形"],
+          "thinking": {
+            "title": "代入で0/0になったら式の構造を変えて定義域の穴を除く",
+            "body": ["極限ではxがその値に一致する必要はありません。分子・分母に共通因数がある0/0型なら、xが近い範囲で約分できる形へ変形してから極限値を求めます。"],
+            "checkpoints": ["直接代入して不定形を確認する", "分子を因数分解する", "共通因数を約分してから代入する"]
+          },
+          "example": {
+            "statement": ["lim(x→2) (x²−4)/(x−2) を考える。"],
+            "question": "極限値を求めよ。",
+            "solution": {
+              "strategy": "x²−4=(x−2)(x+2)を使う。",
+              "steps": ["直接代入すると0/0。", "x≠2では (x²−4)/(x−2)=x+2。", "x→2でx+2→4。"],
+              "answer": "4。"
+            }
+          },
+          "guidedPractice": {
+            "title": "共通因数を消してから代入する",
+            "statement": ["lim(x→3) (x²−9)/(x−3) を考える。"],
+            "question": "極限値を求めよう。",
+            "steps": [
+              {"prompt": "分子を因数分解してください。", "answers": ["(x-3)(x+3)"]},
+              {"prompt": "約分後の式を書いてください。", "answers": ["x+3"]},
+              {"prompt": "極限値を求めてください。", "answers": ["6"]}
+            ],
+            "hint": "x²−9は平方差です。"
+          },
+          "practice": {
+            "statement": ["lim(x→1) (x³−1)/(x−1) を考える。"],
+            "question": "極限値を求めよ。",
+            "solution": {
+              "steps": ["x³−1=(x−1)(x²+x+1)。", "x≠1で約分するとx²+x+1。", "x→1より3。"],
+              "answer": "3。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "math3",
+      "topic": "differentiation",
+      "areaTitle": "微分法",
+      "title": "微分法 発展",
+      "description": "指数関数との積を微分し、符号から極値を判断する発展パターンです。",
+      "patterns": [
+        {
+          "id": "math3-differentiation-pattern-product-extrema",
+          "title": "積の微分後に正の因子を分離して符号を読む",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["積の微分", "指数関数", "増減", "極値"],
+          "thinking": {
+            "title": "常に正の指数因子は符号判定から外せる",
+            "body": ["f'(x)にe^xのような常に正の因子が含まれる場合、導関数の符号は残りの因子だけで決まります。積の微分をした後に因数分解すると増減を読みやすくなります。"],
+            "checkpoints": ["積の微分を正確に行う", "共通因子でくくる", "常に正の因子を除いて符号を判断する"]
+          },
+          "example": {
+            "statement": ["f(x)=xe^x を実数全体で考える。"],
+            "question": "極値を求めよ。",
+            "solution": {
+              "strategy": "f'=e^x(x+1)と因数分解し、x+1の符号を見る。",
+              "steps": ["f'(x)=e^x+xe^x=e^x(x+1)。", "e^x>0なのでf'の符号はx+1で決まる。x=−1で負から正へ変わる。", "f(−1)=−1/e。"],
+              "answer": "x=−1で最小値−1/e。"
+            }
+          },
+          "guidedPractice": {
+            "title": "指数因子を残して符号を整理する",
+            "statement": ["f(x)=xe^{2x}を考える。"],
+            "question": "極小となるxと値を求めよう。",
+            "steps": [
+              {"prompt": "f'(x)を因数分解した形で書いてください。", "answers": ["e^(2x)(1+2x)", "e^{2x}(1+2x)"]},
+              {"prompt": "極小となるxを求めてください。", "answers": ["-1/2", "−1/2"]},
+              {"prompt": "極小値を求めてください。", "answers": ["-1/(2e)", "−1/(2e)"]}
+            ],
+            "hint": "e^{2x}は常に正です。"
+          },
+          "practice": {
+            "statement": ["f(x)=(x−2)e^xを考える。"],
+            "question": "極値を求めよ。",
+            "solution": {
+              "steps": ["f'(x)=e^x+(x−2)e^x=e^x(x−1)。", "x=1で導関数は負から正へ変わる。", "f(1)=−e。"],
+              "answer": "x=1で最小値−e。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    },
+    {
+      "course": "math3",
+      "topic": "integration",
+      "areaTitle": "積分法",
+      "title": "積分法 発展",
+      "description": "回転体の体積を断面積の積分へ変換する発展パターンです。",
+      "patterns": [
+        {
+          "id": "math3-integration-pattern-volume-revolution",
+          "title": "回転体はπy²を断面積として積分する",
+          "level": "advanced",
+          "estimatedMinutes": 18,
+          "skills": ["定積分", "回転体", "体積"],
+          "thinking": {
+            "title": "x軸回転では各xの断面が半径|y|の円になる",
+            "body": ["曲線y=f(x)とx軸で囲まれた部分をx軸のまわりに回転すると、xで切った断面積はπf(x)²です。体積はその断面積を区間全体で積分します。"],
+            "checkpoints": ["回転軸を確認する", "断面積πy²を作る", "指定区間で定積分する"]
+          },
+          "example": {
+            "statement": ["0≤x≤1でy=x²とx軸に囲まれた部分をx軸のまわりに回転する。"],
+            "question": "できる立体の体積を求めよ。",
+            "solution": {
+              "strategy": "断面積πx⁴を0から1まで積分する。",
+              "steps": ["V=π∫₀¹(x²)²dx。", "=π∫₀¹x⁴dx。", "=π[x⁵/5]₀¹=π/5。"],
+              "answer": "π/5。"
+            }
+          },
+          "guidedPractice": {
+            "title": "関数を2乗して断面積を作る",
+            "statement": ["0≤x≤2でy=xをx軸のまわりに回転する。"],
+            "question": "体積を求めよう。",
+            "steps": [
+              {"prompt": "積分する式を書いてください。", "answers": ["π∫0^2x²dx", "pi∫0^2x^2dx"]},
+              {"prompt": "体積を求めてください。", "answers": ["8π/3", "8pi/3"]}
+            ],
+            "hint": "V=π∫₀²x²dxです。"
+          },
+          "practice": {
+            "statement": ["0≤x≤4でy=√xとx軸に囲まれた部分をx軸のまわりに回転する。"],
+            "question": "体積を求めよ。",
+            "solution": {
+              "steps": ["断面積はπ(√x)²=πx。", "V=π∫₀⁴x dx。", "=π[x²/2]₀⁴=8π。"],
+              "answer": "8π。"
+            }
+          },
+          "rights": {"origin": "original", "reviewStatus": "reviewed", "reviewedAt": "2026-08-29"}
+        }
+      ]
+    }
+  ]
+}
