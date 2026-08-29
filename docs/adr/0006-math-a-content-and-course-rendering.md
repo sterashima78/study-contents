@@ -3,6 +3,7 @@
 - Status: Accepted
 - Date: 2026-08-29
 - Related: ADR 0001, ADR 0002, ADR 0003, ADR 0004, ADR 0005
+- Superseded in part by: ADR 0007（科目ホームとトップページのナビゲーション）
 
 ## Context
 
