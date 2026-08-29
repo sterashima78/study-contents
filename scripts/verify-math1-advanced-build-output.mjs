@@ -46,7 +46,9 @@ for (const filename of contentFiles) {
     }
 
     if (html.includes("application-diagram")) {
-      issues.push(`${fileURLToPath(pageUrl)}: 図解停止中ですが application-diagram が出力されています。`);
+      issues.push(
+        `${fileURLToPath(pageUrl)}: 図解停止中ですが application-diagram が出力されています。`,
+      );
     }
   }
 }
