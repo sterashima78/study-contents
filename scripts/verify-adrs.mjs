@@ -29,7 +29,9 @@ for (const entry of adrFiles) {
   });
 }
 
-records.sort((left, right) => left.number - right.number || left.filename.localeCompare(right.filename));
+records.sort(
+  (left, right) => left.number - right.number || left.filename.localeCompare(right.filename),
+);
 
 const filenamesByNumber = new Map();
 for (const record of records) {
@@ -40,7 +42,9 @@ for (const record of records) {
 
 for (const [number, filenames] of filenamesByNumber) {
   if (filenames.length > 1) {
-    issues.push(`ADR ${String(number).padStart(4, "0")}: 採番が重複しています: ${filenames.join(", ")}`);
+    issues.push(
+      `ADR ${String(number).padStart(4, "0")}: 採番が重複しています: ${filenames.join(", ")}`,
+    );
   }
 }
 
@@ -92,15 +96,21 @@ for (const record of records) {
   }
 
   if (status === "Superseded" && supersededByMatches.length !== 1) {
-    issues.push(`${record.filename}: Status が Superseded の場合は「- Superseded by: ADR NNNN」が必要です。`);
+    issues.push(
+      `${record.filename}: Status が Superseded の場合は「- Superseded by: ADR NNNN」が必要です。`,
+    );
   }
 
   if (status && status !== "Superseded" && supersededByMatches.length > 0) {
-    issues.push(`${record.filename}: 「Superseded by」は Status が Superseded のADRだけに指定できます。`);
+    issues.push(
+      `${record.filename}: 「Superseded by」は Status が Superseded のADRだけに指定できます。`,
+    );
   }
 
   if (supersededByMatches.length === 1 && !/^ADR \d{4}$/.test(supersededByMatches[0][1])) {
-    issues.push(`${record.filename}: 「Superseded by」は「ADR NNNN」形式で1件だけ指定してください。`);
+    issues.push(
+      `${record.filename}: 「Superseded by」は「ADR NNNN」形式で1件だけ指定してください。`,
+    );
   }
 
   const missingReferences = new Set();
@@ -129,5 +139,7 @@ if (issues.length > 0) {
 function isValidDate(value) {
   const [year, month, day] = value.split("-").map(Number);
   const date = new Date(Date.UTC(year, month - 1, day));
-  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+  return (
+    date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day
+  );
 }
