@@ -1,10 +1,10 @@
 @scope ([data-exercise-set], [data-physics-exercise-set]) {
   .exercise-set {
     margin-top: 2rem;
-    padding: clamp(1.1rem, 3vw, 2rem);
-    border: 1px solid var(--color-border-soft, #d8d8d8);
-    border-radius: 1rem;
-    background: var(--surface, #fff);
+    padding: clamp(1.1rem, 3vw, 1.8rem);
+    border: 1px solid var(--color-border-soft, #e4dfd7);
+    border-radius: 0.3rem;
+    background: var(--surface, #fffefa);
   }
 
   .exercise-heading,
@@ -22,54 +22,62 @@
   }
 
   .exercise-heading .section-label {
-    margin: 0 0 0.75rem;
-    color: var(--color-accent, #3f7050);
-    font-size: 0.78rem;
-    font-weight: 800;
+    margin: 0 0 0.55rem;
+    color: var(--color-accent, #887657);
+    font-size: 0.7rem;
+    font-weight: 750;
     letter-spacing: 0.16em;
   }
 
   .exercise-heading h2 {
     margin: 0;
-    font-size: clamp(1.75rem, 4vw, 2.8rem);
-    line-height: 1.25;
-    letter-spacing: -0.035em;
+    color: var(--color-text-strong, #1f1d1a);
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", ui-serif, serif;
+    font-size: clamp(1.55rem, 3.4vw, 2.35rem);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.025em;
   }
 
   .exercise-heading > p {
-    max-width: 34rem;
+    max-width: 32rem;
     margin: 0;
-    color: var(--color-muted, #5f6368);
+    color: var(--color-muted, #7a746b);
+    font-size: 0.88rem;
     line-height: 1.8;
   }
 
   .exercise-toolbar {
-    margin: 1.25rem 0;
+    margin: 1.15rem 0;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--color-border-soft, #e4dfd7);
+    border-bottom: 1px solid var(--color-border-soft, #e4dfd7);
   }
 
   .exercise-count-note {
     margin: 0;
-    color: var(--color-muted, #5f6368);
+    color: var(--color-muted, #7a746b);
+    font-size: 0.82rem;
   }
 
   .exercise-list {
     display: grid;
-    gap: 1rem;
+    gap: 0.7rem;
   }
 
   .exercise-question {
     padding: 1rem;
-    border: 1px solid var(--color-border-soft, #d8d8d8);
-    border-radius: 0.8rem;
-    background: var(--surface-subtle, #fafafa);
+    border: 1px solid var(--color-border-soft, #e4dfd7);
+    border-radius: 0.25rem;
+    background: var(--surface, #fffefa);
   }
 
   .exercise-question.is-correct {
-    border-color: #2f7d4a;
+    border-color: #56745c;
   }
 
   .exercise-question.is-error {
-    border-color: #b43c3c;
+    border-color: #9a6259;
   }
 
   .exercise-question-header {
@@ -80,15 +88,16 @@
   .exercise-difficulty {
     display: inline-flex;
     align-items: center;
-    min-height: 1.8rem;
-    padding: 0.2rem 0.55rem;
-    border-radius: 999px;
-    font-size: 0.82rem;
+    min-height: 1.75rem;
+    padding: 0.2rem 0.48rem;
+    border-radius: 0.25rem;
+    font-size: 0.74rem;
     font-weight: 700;
   }
 
   .exercise-number {
-    background: #eceff3;
+    color: var(--color-accent-strong, #655438);
+    background: var(--surface-accent, #f2eee6);
   }
 
   .exercise-difficulty {
@@ -96,27 +105,29 @@
   }
 
   .difficulty-basic {
-    color: #315f87;
+    color: #5a6574;
   }
 
   .difficulty-applied {
-    color: #7a5a18;
+    color: #756038;
   }
 
   .difficulty-challenge {
-    color: #8a3434;
+    color: #80514b;
   }
 
   .exercise-prompt {
     margin: 0.9rem 0 0.45rem;
-    font-size: 1.05rem;
+    color: var(--color-text-strong, #1f1d1a);
+    font-size: 1rem;
     font-weight: 650;
+    line-height: 1.75;
   }
 
   .exercise-mapping {
     margin: 0 0 0.8rem;
-    color: var(--color-muted, #5f6368);
-    font-size: 0.9rem;
+    color: var(--color-muted, #7a746b);
+    font-size: 0.82rem;
   }
 
   .exercise-answer-label {
@@ -125,15 +136,16 @@
   }
 
   .exercise-answer-label > label {
-    font-size: 0.9rem;
+    color: var(--color-text-soft, #514d46);
+    font-size: 0.84rem;
     font-weight: 700;
   }
 
   .exercise-answer-editor {
     width: min(100%, 34rem);
-    min-height: 2.8rem;
-    border: 1px solid #aeb4bc;
-    border-radius: 0.55rem;
+    min-height: 2.9rem;
+    border: 1px solid var(--color-border-strong, #cfc7bb);
+    border-radius: 0.25rem;
     background: #fff;
   }
 
@@ -151,30 +163,30 @@
     display: block;
     padding: 0.55rem 0.7rem;
     font-size: 1.15rem;
-    --caret-color: #1f5e93;
-    --selection-background-color: #dcecff;
+    --caret-color: var(--color-accent-strong, #655438);
+    --selection-background-color: #eee7db;
   }
 
   .exercise-math-input:focus-within,
   .exercise-text-input:focus {
-    outline: 2px solid #315f87;
-    outline-offset: 2px;
+    outline: 3px solid var(--focus-ring, rgb(136 118 87 / 28%));
+    outline-offset: 1px;
   }
 
   .exercise-answer-editor.is-correct {
-    border-color: #2f7d4a;
-    outline-color: #2f7d4a;
+    border-color: #56745c;
+    outline-color: #56745c;
   }
 
   .exercise-answer-editor.is-error {
-    border-color: #b43c3c;
-    outline-color: #b43c3c;
+    border-color: #9a6259;
+    outline-color: #9a6259;
   }
 
   .exercise-input-help {
     margin: 0;
-    color: var(--color-muted, #5f6368);
-    font-size: 0.82rem;
+    color: var(--color-muted, #7a746b);
+    font-size: 0.78rem;
   }
 
   .exercise-symbol-toolbar {
@@ -186,23 +198,19 @@
 
   .exercise-symbol-button {
     min-width: 2.9rem;
-    min-height: 2.35rem;
+    min-height: 2.4rem;
     padding: 0.35rem 0.65rem;
-    border: 1px solid #b9c1ca;
-    border-radius: 0.5rem;
-    color: inherit;
+    border: 1px solid var(--color-border-strong, #cfc7bb);
+    border-radius: 0.25rem;
+    color: var(--color-text-soft, #514d46);
     background: #fff;
     font: inherit;
     font-weight: 700;
     cursor: pointer;
   }
 
-  .exercise-symbol-button:hover {
-    background: #f1f5f8;
-  }
-
   .exercise-symbol-button:focus-visible {
-    outline: 2px solid #315f87;
+    outline: 3px solid var(--focus-ring, rgb(136 118 87 / 28%));
     outline-offset: 2px;
   }
 
@@ -212,53 +220,56 @@
 
   .exercise-hint summary {
     cursor: pointer;
+    color: var(--color-link, #5f4e34);
     font-weight: 700;
   }
 
   .exercise-hint p {
     margin-bottom: 0;
+    color: var(--color-text-soft, #514d46);
+    line-height: 1.75;
   }
 
   .exercise-actions {
     justify-content: flex-start;
-    margin-top: 1.25rem;
+    margin-top: 1.1rem;
   }
 
   .primary-button,
   .secondary-button {
-    min-height: 2.75rem;
+    min-height: 2.85rem;
     padding: 0.65rem 0.95rem;
-    border-radius: 0.65rem;
+    border-radius: 0.25rem;
     font: inherit;
-    font-size: 0.86rem;
-    font-weight: 750;
+    font-size: 0.82rem;
+    font-weight: 700;
     cursor: pointer;
   }
 
   .primary-button {
-    border: 1px solid #315f3f;
+    border: 1px solid var(--color-accent-medium, #806d4f);
     color: #fff;
-    background: #315f3f;
+    background: var(--color-accent-medium, #806d4f);
   }
 
   .secondary-button {
-    border: 1px solid #bdc9bf;
-    color: #344b3a;
+    border: 1px solid var(--color-border-strong, #cfc7bb);
+    color: var(--color-text-soft, #514d46);
     background: #fff;
   }
 
   .primary-button:focus-visible,
   .secondary-button:focus-visible {
-    outline: 3px solid var(--focus-ring, rgb(63 112 80 / 28%));
+    outline: 3px solid var(--focus-ring, rgb(136 118 87 / 28%));
     outline-offset: 0.2rem;
   }
 
   .feedback {
     margin: 1rem 0 0;
-    padding: 0.85rem 1rem;
-    border-radius: 0.7rem;
-    font-size: 0.88rem;
-    line-height: 1.7;
+    padding: 0.8rem 0.9rem;
+    border-left: 2px solid var(--color-border-strong, #cfc7bb);
+    font-size: 0.84rem;
+    line-height: 1.75;
   }
 
   .feedback:empty {
@@ -266,13 +277,13 @@
   }
 
   .feedback.is-correct {
-    color: #244e31;
-    background: #eaf4ec;
+    color: #35523b;
+    background: #eff5f0;
   }
 
   .feedback.is-error {
-    color: #744037;
-    background: #f8edeb;
+    color: #6f4039;
+    background: #f9efed;
   }
 
   .exercise-feedback {
@@ -280,22 +291,22 @@
   }
 
   .exercise-diagnostic {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border-soft, #d8d8d8);
+    margin-top: 1.4rem;
+    padding-top: 1.3rem;
+    border-top: 1px solid var(--color-border-soft, #e4dfd7);
   }
 
   .diagnostic-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.8rem;
-    margin-top: 1rem;
+    gap: 0.65rem;
+    margin-top: 0.9rem;
   }
 
   .diagnostic-item {
-    padding: 0.9rem;
-    border: 1px solid var(--color-border-soft, #d8d8d8);
-    border-radius: 0.7rem;
+    padding: 0.85rem;
+    border: 1px solid var(--color-border-soft, #e4dfd7);
+    border-radius: 0.25rem;
   }
 
   .diagnostic-item h4,
@@ -309,37 +320,39 @@
   }
 
   .diagnostic-status {
-    font-size: 0.9rem;
+    font-size: 0.84rem;
     font-weight: 700;
   }
 
   .diagnostic-status.is-strong {
-    color: #2f7d4a;
+    color: #4b6b52;
   }
 
   .diagnostic-status.is-weak {
-    color: #9a4a22;
+    color: #8b5439;
   }
 
   .diagnostic-link {
-    color: var(--color-link, #245c37);
+    color: var(--color-link, #5f4e34);
     font-weight: 700;
   }
 
   @media (pointer: coarse) {
     .exercise-symbol-button {
       min-width: 3.3rem;
-      min-height: 2.8rem;
+      min-height: 2.9rem;
     }
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .primary-button:hover {
-      background: #244c32;
+    .exercise-symbol-button:hover,
+    .secondary-button:hover {
+      background: var(--surface-accent, #f2eee6);
     }
 
-    .secondary-button:hover {
-      background: var(--surface-accent, #f1f5f1);
+    .primary-button:hover {
+      border-color: var(--color-accent-strong, #655438);
+      background: var(--color-accent-strong, #655438);
     }
   }
 
@@ -357,6 +370,11 @@
     .exercise-answer-editor,
     .exercise-symbol-toolbar {
       width: 100%;
+    }
+
+    .exercise-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
   }
 }
