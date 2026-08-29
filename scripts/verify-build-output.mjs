@@ -5,7 +5,7 @@ const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
     markers: [
-      "学習する科目",
+      "科目からはじめる",
       "数学I",
       "数学A",
       "数学II",
@@ -16,7 +16,7 @@ const checks = [
       "CHEMISTRY",
       "物理基礎",
       "PHYSICS",
-      "科目の目次を見る",
+      "目次へ →",
     ],
   },
   {
