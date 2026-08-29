@@ -51,7 +51,9 @@ export const createBiologyExerciseRegistry = (prefix: string, areas: MathArea[])
   });
 
   const generateLessonExercises = (unitKey: string, lessonKey: string, count = 3) =>
-    shuffle(sources.filter((source) => source.unitKey === unitKey && source.lessonKey === lessonKey))
+    shuffle(
+      sources.filter((source) => source.unitKey === unitKey && source.lessonKey === lessonKey),
+    )
       .slice(0, count)
       .map(toExercise);
 
