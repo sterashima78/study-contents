@@ -165,7 +165,7 @@ const checks = [
   },
   {
     path: new URL("../dist/physics-basics/index.html", import.meta.url),
-    markers: ["物理基礎", "学習する5つの領域", "全18小教材", "科目一覧へ"],
+    markers: ["物理基礎", "学習する5つの領域", "全19小教材", "科目一覧へ"],
   },
   {
     path: new URL(
