@@ -28,12 +28,14 @@ type Props = {
   course?: MathCourseInfo;
 };
 
-const { topicSet: _topicSet, areaTitle: _areaTitle, course: _course = math1Course } =
-  Astro.props as Props;
+const {
+  topicSet: _topicSet,
+  areaTitle: _areaTitle,
+  course: _course = math1Course,
+} = Astro.props as Props;
 const _base = import.meta.env.BASE_URL;
 const _levelLabel = (level: string) => (level === "advanced" ? "発展" : "応用");
-const _patternSlug = (id: string) =>
-  id.replace(`${_course.key}-${_topicSet.topic}-pattern-`, "");
+const _patternSlug = (id: string) => id.replace(`${_course.key}-${_topicSet.topic}-pattern-`, "");
 const _applicationCount = _topicSet.patterns.filter(
   (pattern) => pattern.level === "application",
 ).length;
