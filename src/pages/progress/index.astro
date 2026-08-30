@@ -1,8 +1,8 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import StudyPage from "../../components/ui/StudyPage.astro";
-// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentHero from "../../components/ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "../../components/ui/StudyPage.astro";
 
 const _base = import.meta.env.BASE_URL;
 ---
@@ -327,7 +327,7 @@ const _base = import.meta.env.BASE_URL;
   render();
 </script>
 
-<style>
+<style is:global>
   .record-toolbar,
   .record-empty,
   .record-section,
@@ -344,7 +344,8 @@ const _base = import.meta.env.BASE_URL;
     gap: 1rem;
   }
 
-  .section-label {
+  .record-toolbar .section-label,
+  [data-record-dashboard] .section-label {
     margin: 0 0 0.25rem;
     color: var(--color-accent);
     font-size: 0.72rem;
@@ -352,8 +353,12 @@ const _base = import.meta.env.BASE_URL;
     letter-spacing: 0.12em;
   }
 
-  h2,
-  p {
+  .record-toolbar h2,
+  .record-toolbar p,
+  .record-empty h2,
+  .record-empty p,
+  [data-record-dashboard] h2,
+  [data-record-dashboard] p {
     margin-top: 0;
   }
 
@@ -363,9 +368,10 @@ const _base = import.meta.env.BASE_URL;
     gap: 0.65rem;
   }
 
-  .primary-link,
-  .secondary-button,
-  .danger-button {
+  .record-toolbar .primary-link,
+  .record-empty .primary-link,
+  .record-toolbar .secondary-button,
+  .record-toolbar .danger-button {
     display: inline-flex;
     min-height: 2.7rem;
     padding: 0.62rem 0.85rem;
@@ -377,20 +383,21 @@ const _base = import.meta.env.BASE_URL;
     cursor: pointer;
   }
 
-  .primary-link {
+  .record-toolbar .primary-link,
+  .record-empty .primary-link {
     border: 1px solid var(--color-accent-strong);
     background: var(--color-accent-strong);
     color: #fff;
   }
 
-  .secondary-button,
-  .danger-button {
+  .record-toolbar .secondary-button,
+  .record-toolbar .danger-button {
     border: 1px solid var(--color-border-strong);
     background: var(--surface);
     color: var(--color-text-strong);
   }
 
-  .danger-button {
+  .record-toolbar .danger-button {
     color: #7c3e35;
   }
 
@@ -485,21 +492,21 @@ const _base = import.meta.env.BASE_URL;
     overflow-x: auto;
   }
 
-  table {
+  [data-record-dashboard] table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.88rem;
   }
 
-  th,
-  td {
+  [data-record-dashboard] th,
+  [data-record-dashboard] td {
     padding: 0.72rem 0.55rem;
     border-top: 1px solid var(--color-border-soft);
     text-align: left;
     vertical-align: top;
   }
 
-  th {
+  [data-record-dashboard] th {
     color: var(--color-muted-strong);
     font-size: 0.75rem;
   }
