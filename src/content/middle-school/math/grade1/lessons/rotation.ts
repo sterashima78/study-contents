@@ -23,15 +23,26 @@ export const rotationLesson: MathLesson = {
     steps: [
       { expression: "OA' = 6 cm", note: "回転では中心から点までの距離は変わりません。" },
       { expression: "∠AOA' = 90°", note: "回転角は90°です。" },
-      { expression: "向きは反時計回り", note: "同じ90°でも回転の向きによって移る位置が変わります。" },
+      {
+        expression: "向きは反時計回り",
+        note: "同じ90°でも回転の向きによって移る位置が変わります。",
+      },
     ],
   },
   practice: {
     title: "練習: 半回転を考える",
     problem: "点PをOのまわりに半回転してP'へ移します。",
     steps: [
-      { prompt: "半回転の回転角を答えてください。", answers: ["180", "180°", "180度"], placeholder: "角度" },
-      { prompt: "OP = 8 cmのとき、OP'を答えてください。", answers: ["8", "8cm", "8 cm"], placeholder: "長さ" },
+      {
+        prompt: "半回転の回転角を答えてください。",
+        answers: ["180", "180°", "180度"],
+        placeholder: "角度",
+      },
+      {
+        prompt: "OP = 8 cmのとき、OP'を答えてください。",
+        answers: ["8", "8cm", "8 cm"],
+        placeholder: "長さ",
+      },
     ],
     hint: "半回転は180°で、中心からの距離は変わりません。",
   },

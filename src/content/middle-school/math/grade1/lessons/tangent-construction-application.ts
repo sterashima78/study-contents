@@ -30,7 +30,11 @@ export const tangentConstructionApplicationLesson: MathLesson = {
     title: "練習: 接線と半径の角度",
     problem: "円の接点Tにおける接線lと、接点を通る半径OTについて考えます。",
     steps: [
-      { prompt: "OTとlのなす角を答えてください。", answers: ["90", "90°", "90度"], placeholder: "角度" },
+      {
+        prompt: "OTとlのなす角を答えてください。",
+        answers: ["90", "90°", "90度"],
+        placeholder: "角度",
+      },
       { prompt: "OTとlの関係を表す記号を答えてください。", answers: ["⊥"], placeholder: "記号" },
     ],
     hint: "接線は接点を通る半径に垂直です。",

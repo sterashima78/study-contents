@@ -1,7 +1,4 @@
-import type {
-  MiddleMathExercise,
-  MiddleMathExerciseDifficulty,
-} from "./exercise-registry";
+import type { MiddleMathExercise, MiddleMathExerciseDifficulty } from "./exercise-registry";
 
 type Generator = () => Omit<MiddleMathExercise, "id" | "lessonTitles" | "difficulty">;
 

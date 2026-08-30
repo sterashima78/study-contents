@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const perpendicularConstructionLesson: MathLesson = {
   key: "perpendicular-construction",
   title: "垂線を作図する",
-  description: "直線上または直線外の点を通り、もとの直線と90°で交わる直線を対称性を使って作図します。",
+  description:
+    "直線上または直線外の点を通り、もとの直線と90°で交わる直線を対称性を使って作図します。",
   goals: [
     "与えられた点を通る垂線を定規とコンパスで作図する考え方を説明できる。",
     "垂線がもとの直線と90°で交わることを確認できる。",
@@ -30,7 +31,11 @@ export const perpendicularConstructionLesson: MathLesson = {
     title: "練習: 垂線の性質を確認する",
     problem: "直線mは点Pを通る直線lの垂線です。",
     steps: [
-      { prompt: "mとlのなす角を答えてください。", answers: ["90", "90°", "90度"], placeholder: "角度" },
+      {
+        prompt: "mとlのなす角を答えてください。",
+        answers: ["90", "90°", "90度"],
+        placeholder: "角度",
+      },
       { prompt: "mとlの関係を表す記号を答えてください。", answers: ["⊥"], placeholder: "記号" },
     ],
     hint: "垂直な二直線がつくる角は90°です。",

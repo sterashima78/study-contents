@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const perpendicularBisectorConstructionLesson: MathLesson = {
   key: "perpendicular-bisector-construction",
   title: "線分の垂直二等分線を作図する",
-  description: "線分の両端から等距離にある点を二つつくり、その二点を結んで垂直二等分線を作図します。",
+  description:
+    "線分の両端から等距離にある点を二つつくり、その二点を結んで垂直二等分線を作図します。",
   goals: [
     "線分の垂直二等分線を定規とコンパスで作図できる。",
     "垂直二等分線上の点が線分の両端から等距離にあることを説明できる。",
@@ -30,7 +31,11 @@ export const perpendicularBisectorConstructionLesson: MathLesson = {
     problem: "点Qは線分CDの垂直二等分線上にあり、QC = 9 cmです。",
     steps: [
       { prompt: "QDの長さを答えてください。", answers: ["9", "9cm", "9 cm"], placeholder: "長さ" },
-      { prompt: "垂直二等分線とCDのなす角を答えてください。", answers: ["90", "90°", "90度"], placeholder: "角度" },
+      {
+        prompt: "垂直二等分線とCDのなす角を答えてください。",
+        answers: ["90", "90°", "90度"],
+        placeholder: "角度",
+      },
     ],
     hint: "垂直二等分線は線分を垂直に二等分します。",
   },

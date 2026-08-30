@@ -23,15 +23,26 @@ export const angleBisectorConstructionLesson: MathLesson = {
     steps: [
       { expression: "OA = OB", note: "Oを中心とする同じ円弧で、二つの辺上にA、Bを取ります。" },
       { expression: "AP = BP", note: "A、Bを中心とする同じ半径の円弧の交点をPとします。" },
-      { expression: "∠XOP = ∠POY = 40°", note: "OPは角の対称軸なので、80°を二つの等しい角に分けます。" },
+      {
+        expression: "∠XOP = ∠POY = 40°",
+        note: "OPは角の対称軸なので、80°を二つの等しい角に分けます。",
+      },
     ],
   },
   practice: {
     title: "練習: 二等分後の角を求める",
     problem: "∠AOB = 66°の角の二等分線OPを作図しました。",
     steps: [
-      { prompt: "∠AOPの大きさを答えてください。", answers: ["33", "33°", "33度"], placeholder: "角度" },
-      { prompt: "∠POBの大きさを答えてください。", answers: ["33", "33°", "33度"], placeholder: "角度" },
+      {
+        prompt: "∠AOPの大きさを答えてください。",
+        answers: ["33", "33°", "33度"],
+        placeholder: "角度",
+      },
+      {
+        prompt: "∠POBの大きさを答えてください。",
+        answers: ["33", "33°", "33度"],
+        placeholder: "角度",
+      },
     ],
     hint: "二等分線は一つの角を等しい二つの角に分けます。",
   },

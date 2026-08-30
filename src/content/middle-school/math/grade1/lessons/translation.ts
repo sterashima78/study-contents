@@ -22,16 +22,31 @@ export const translationLesson: MathLesson = {
     problem: "△ABCを右へ4 cm平行移動して△A'B'C'をつくります。",
     steps: [
       { expression: "AA' = BB' = CC' = 4 cm", note: "全ての頂点を同じ距離だけ移します。" },
-      { expression: "AA' ∥ BB' ∥ CC'", note: "全て同じ方向へ移るので、対応点を結ぶ線分は平行です。" },
-      { expression: "△ABCと△A'B'C'は同じ形・同じ大きさ", note: "移動では辺の長さや角の大きさは変わりません。" },
+      {
+        expression: "AA' ∥ BB' ∥ CC'",
+        note: "全て同じ方向へ移るので、対応点を結ぶ線分は平行です。",
+      },
+      {
+        expression: "△ABCと△A'B'C'は同じ形・同じ大きさ",
+        note: "移動では辺の長さや角の大きさは変わりません。",
+      },
     ],
   },
   practice: {
     title: "練習: 平行移動を決める条件",
     problem: "図形を左へ3 cm平行移動します。",
     steps: [
-      { prompt: "各点が動く距離を答えてください。", answers: ["3", "3cm", "3 cm"], placeholder: "距離" },
-      { prompt: "移動前後で図形の大きさは変わりますか。「変わる」または「変わらない」で答えてください。", answers: ["変わらない"], placeholder: "答え" },
+      {
+        prompt: "各点が動く距離を答えてください。",
+        answers: ["3", "3cm", "3 cm"],
+        placeholder: "距離",
+      },
+      {
+        prompt:
+          "移動前後で図形の大きさは変わりますか。「変わる」または「変わらない」で答えてください。",
+        answers: ["変わらない"],
+        placeholder: "答え",
+      },
     ],
     hint: "平行移動は形や大きさを変えず、全ての点を同じ向き・同じ距離だけ動かします。",
   },
