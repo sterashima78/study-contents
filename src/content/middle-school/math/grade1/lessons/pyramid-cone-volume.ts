@@ -4,10 +4,7 @@ export const pyramidConeVolumeLesson: MathLesson = {
   key: "pyramid-cone-volume",
   title: "錐体・円錐の体積",
   description: "同じ底面積・高さの柱体との関係から、錐体や円錐の体積を求めます。",
-  goals: [
-    "錐体の体積が底面積×高さ÷3になることを使える。",
-    "円錐の体積を(1/3)πr²hで求められる。",
-  ],
+  goals: ["錐体の体積が底面積×高さ÷3になることを使える。", "円錐の体積を(1/3)πr²hで求められる。"],
   concepts: [
     {
       title: "錐体の体積は対応する柱体の3分の1",
@@ -38,8 +35,5 @@ export const pyramidConeVolumeLesson: MathLesson = {
     ],
     hint: "底面積×高さを3で割ります。",
   },
-  summary: [
-    "錐体の体積はV = Sh/3で求める。",
-    "円錐ではV = πr²h/3となり、底面に垂直な高さを使う。",
-  ],
+  summary: ["錐体の体積はV = Sh/3で求める。", "円錐ではV = πr²h/3となり、底面に垂直な高さを使う。"],
 };
