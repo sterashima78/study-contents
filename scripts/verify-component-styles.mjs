@@ -20,6 +20,18 @@ const forbiddenLegacyClasses = [
   "entrance-footer-nav",
   "application-pattern",
 ];
+const exerciseComponents = [
+  "src/components/ExerciseSet.astro",
+  "src/components/MiddleMathExerciseSet.astro",
+  "src/components/PhysicsExerciseSet.astro",
+  "src/components/SocialExerciseSet.astro",
+];
+const exerciseScopeRoots = [
+  "[data-exercise-set]",
+  "[data-middle-math-exercise-set]",
+  "[data-physics-exercise-set]",
+  "[data-social-exercise-set]",
+];
 const requiredScopedComponents = [
   "src/components/ui/StudyPage.astro",
   "src/components/ui/CurriculumReference.astro",
@@ -47,14 +59,7 @@ for (const file of astroFiles) {
     }
   }
 
-  if (
-    source.includes("styles/exercise.css") &&
-    ![
-      "src/components/ExerciseSet.astro",
-      "src/components/PhysicsExerciseSet.astro",
-      "src/components/SocialExerciseSet.astro",
-    ].includes(relative)
-  ) {
+  if (source.includes("styles/exercise.css") && !exerciseComponents.includes(relative)) {
     issues.push(`${relative}: exercise.css は演習コンポーネント以外からimportできません。`);
   }
 
@@ -81,12 +86,10 @@ if (!studyPageSource.includes("--color-text")) {
 }
 
 const exerciseCss = await readFile(exerciseCssUrl, "utf8");
-if (
-  !exerciseCss.includes(
-    "@scope ([data-exercise-set], [data-physics-exercise-set], [data-social-exercise-set])",
-  )
-) {
-  issues.push("src/styles/exercise.css: 演習ルートを指定した @scope が必要です。");
+for (const scopeRoot of exerciseScopeRoots) {
+  if (!exerciseCss.includes(scopeRoot)) {
+    issues.push(`src/styles/exercise.css: 演習ルート ${scopeRoot} を @scope に含めてください。`);
+  }
 }
 
 for (const componentPath of requiredScopedComponents) {
