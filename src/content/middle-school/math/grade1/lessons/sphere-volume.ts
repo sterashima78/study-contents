@@ -4,10 +4,7 @@ export const sphereVolumeLesson: MathLesson = {
   key: "sphere-volume",
   title: "球の体積",
   description: "球の半径から、体積を(4/3)πr³で求めます。",
-  goals: [
-    "球の体積を(4/3)πr³で求められる。",
-    "面積の公式と体積の公式で、r²とr³を区別できる。",
-  ],
+  goals: ["球の体積を(4/3)πr³で求められる。", "面積の公式と体積の公式で、r²とr³を区別できる。"],
   concepts: [
     {
       title: "球の体積は4πr³/3",
