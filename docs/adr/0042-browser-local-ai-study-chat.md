@@ -1,7 +1,8 @@
 # ADR 0042: ブラウザ内AIを教材共通の学習チューターとして提供する
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-30
+- Superseded by: ADR 0047
 - Related: ADR 0005, ADR 0022, ADR 0040, ADR 0041
 
 ## Context
