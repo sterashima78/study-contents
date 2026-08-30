@@ -1,5 +1,5 @@
-const PAGE_CONTEXT_LIMIT = 3200;
-const FOCUS_CONTEXT_LIMIT = 1600;
+const PAGE_CONTEXT_LIMIT = 1400;
+const FOCUS_CONTEXT_LIMIT = 700;
 const removableSelector = [
   "script",
   "style",
