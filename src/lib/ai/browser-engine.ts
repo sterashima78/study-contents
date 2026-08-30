@@ -1,3 +1,9 @@
+import {
+  STUDY_AI_MODEL_DTYPE,
+  STUDY_AI_MODEL_ID,
+  STUDY_AI_MODEL_REVISION,
+} from "./model-config";
+
 export { STUDY_AI_MODEL_ID } from "./model-config";
 
 export type StudyAIProgressReport = {
@@ -8,6 +14,14 @@ type StudyAIMessage = {
   role: "system" | "user" | "assistant";
   content: string;
 };
+
+type StudyAIStage =
+  | "tokenizer"
+  | "model"
+  | "warmup"
+  | "generation"
+  | "worker"
+  | "unknown";
 
 type StudyAICompletionRequest = {
   messages: StudyAIMessage[];
@@ -39,11 +53,34 @@ type WorkerResponse = {
   requestId: number;
   chunk?: string;
   error?: string;
+  stage?: StudyAIStage;
   progress?: number;
   report?: {
     progress?: number;
   };
 };
+
+type GPUAdapterLike = {
+  features?: {
+    has(feature: string): boolean;
+  };
+};
+
+type NavigatorWithGPU = Navigator & {
+  gpu?: {
+    requestAdapter(): Promise<GPUAdapterLike | null>;
+  };
+};
+
+class StudyAIRuntimeError extends Error {
+  readonly stage: StudyAIStage;
+
+  constructor(message: string, stage: StudyAIStage) {
+    super(message);
+    this.name = "StudyAIRuntimeError";
+    this.stage = stage;
+  }
+}
 
 let worker: Worker | undefined;
 let enginePromise: Promise<StudyAIEngineInterface> | undefined;
@@ -52,6 +89,24 @@ let activeGenerationRequestId: number | undefined;
 
 export function supportsStudyAI() {
   return typeof navigator !== "undefined" && "gpu" in navigator && typeof Worker !== "undefined";
+}
+
+export async function buildStudyAIDiagnostics(error: unknown) {
+  const stage = error instanceof StudyAIRuntimeError ? error.stage : "unknown";
+  const message = sanitizeDiagnosticMessage(error instanceof Error ? error.message : String(error));
+  const gpu = await inspectWebGPU();
+
+  return [
+    `stage: ${stage}`,
+    `runtime: Transformers.js / ONNX Runtime WebGPU`,
+    `model: ${STUDY_AI_MODEL_ID}`,
+    `revision: ${STUDY_AI_MODEL_REVISION}`,
+    `dtype: ${STUDY_AI_MODEL_DTYPE}`,
+    `webgpu: ${gpu.webgpu}`,
+    `adapter: ${gpu.adapter}`,
+    `shader-f16: ${gpu.shaderF16}`,
+    `error: ${message}`,
+  ].join("\n");
 }
 
 export async function getStudyAIEngine(
@@ -98,13 +153,18 @@ async function loadEngine(
       }
       if (response.status === "error") {
         cleanup();
-        reject(new Error(response.error ?? "Failed to load the AI model."));
+        reject(
+          new StudyAIRuntimeError(
+            response.error ?? "Failed to load the AI model.",
+            response.stage ?? "unknown",
+          ),
+        );
       }
     };
 
     const onError = (event: ErrorEvent) => {
       cleanup();
-      reject(new Error(event.message || "Study AI worker failed."));
+      reject(new StudyAIRuntimeError(event.message || "Study AI worker failed.", "worker"));
     };
 
     const cleanup = () => {
@@ -130,7 +190,7 @@ async function createCompletion(
   request: StudyAICompletionRequest,
 ): Promise<AsyncIterable<StudyAICompletionChunk>> {
   if (activeGenerationRequestId !== undefined) {
-    throw new Error("AI generation is already running.");
+    throw new StudyAIRuntimeError("AI generation is already running.", "generation");
   }
 
   const runtimeWorker = getWorker();
@@ -161,13 +221,18 @@ async function createCompletion(
       return;
     }
     if (response.status === "error") {
-      queue.fail(new Error(response.error ?? "AI generation failed."));
+      queue.fail(
+        new StudyAIRuntimeError(
+          response.error ?? "AI generation failed.",
+          response.stage ?? "generation",
+        ),
+      );
       cleanup();
     }
   };
 
   const onError = (event: ErrorEvent) => {
-    queue.fail(new Error(event.message || "Study AI worker failed."));
+    queue.fail(new StudyAIRuntimeError(event.message || "Study AI worker failed.", "worker"));
     cleanup();
   };
 
@@ -222,6 +287,41 @@ function normalizeProgress(value: number | undefined) {
   const finiteValue = value ?? 0;
   const normalized = finiteValue > 1 ? finiteValue / 100 : finiteValue;
   return Math.min(Math.max(normalized, 0), 1);
+}
+
+function sanitizeDiagnosticMessage(value: string) {
+  return value
+    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, " ")
+    .replace(/([?&](?:token|access_token|auth)=)[^&\s]+/gi, "$1[redacted]")
+    .replace(/Bearer\s+[A-Za-z0-9._~+\/-]+=*/gi, "Bearer [redacted]")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 1200);
+}
+
+async function inspectWebGPU() {
+  if (typeof navigator === "undefined" || !("gpu" in navigator)) {
+    return { webgpu: "unavailable", adapter: "unavailable", shaderF16: "unknown" };
+  }
+
+  const gpu = (navigator as NavigatorWithGPU).gpu;
+  if (!gpu) {
+    return { webgpu: "unavailable", adapter: "unavailable", shaderF16: "unknown" };
+  }
+
+  try {
+    const adapter = await gpu.requestAdapter();
+    if (!adapter) {
+      return { webgpu: "available", adapter: "unavailable", shaderF16: "unknown" };
+    }
+    return {
+      webgpu: "available",
+      adapter: "available",
+      shaderF16: adapter.features?.has("shader-f16") ? "available" : "unavailable",
+    };
+  } catch {
+    return { webgpu: "available", adapter: "error", shaderF16: "unknown" };
+  }
 }
 
 class AsyncQueue<T> implements AsyncIterable<T> {
