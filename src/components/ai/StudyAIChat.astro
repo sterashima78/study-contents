@@ -1,0 +1,572 @@
+<div class="study-ai" data-study-ai-root data-study-ai-exclude>
+  <button
+    class="study-ai-trigger"
+    type="button"
+    aria-expanded="false"
+    aria-controls="study-ai-panel"
+    data-study-ai-trigger
+  >
+    AIに質問
+  </button>
+
+  <aside
+    class="study-ai-panel"
+    id="study-ai-panel"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="study-ai-title"
+    hidden
+    data-study-ai-panel
+  >
+    <header class="study-ai-header">
+      <div>
+        <p class="study-ai-kicker">LOCAL AI TUTOR</p>
+        <h2 id="study-ai-title">この教材について質問</h2>
+      </div>
+      <div class="study-ai-header-actions">
+        <button type="button" class="study-ai-text-button" data-study-ai-clear>履歴を消す</button>
+        <button type="button" class="study-ai-close" aria-label="AIチャットを閉じる" data-study-ai-close>
+          ×
+        </button>
+      </div>
+    </header>
+
+    <div class="study-ai-notice">
+      <p>回答は端末内のAIモデルで生成します。初回利用時はモデルのダウンロードが必要です。</p>
+      <p>AIは誤ることがあります。教材本文と照らして確認してください。</p>
+    </div>
+
+    <div
+      class="study-ai-messages"
+      role="log"
+      aria-live="polite"
+      aria-relevant="additions text"
+      data-study-ai-messages
+    ></div>
+
+    <div class="study-ai-runtime">
+      <p class="study-ai-status" data-study-ai-status>質問を送信するとAIモデルを読み込みます。</p>
+      <progress class="study-ai-progress" max="1" value="0" hidden data-study-ai-progress></progress>
+    </div>
+
+    <form class="study-ai-form" data-study-ai-form>
+      <label for="study-ai-input">質問</label>
+      <textarea
+        id="study-ai-input"
+        name="question"
+        rows="3"
+        maxlength="1000"
+        placeholder="例: この公式をなぜ使うの？"
+        required
+        data-study-ai-input
+      ></textarea>
+      <div class="study-ai-form-actions">
+        <button type="button" class="study-ai-stop" hidden data-study-ai-stop>停止</button>
+        <button type="submit" class="study-ai-send" data-study-ai-send>送信</button>
+      </div>
+    </form>
+  </aside>
+</div>
+
+<script>
+  import {
+    getStudyAIEngine,
+    interruptStudyAI,
+    supportsStudyAI,
+  } from "../../lib/ai/browser-engine";
+  import { buildStudyContext } from "../../lib/ai/study-context";
+  import { buildStudySystemPrompt } from "../../lib/ai/system-prompt";
+
+  type ChatMessage = {
+    role: "user" | "assistant";
+    content: string;
+  };
+
+  const root = document.querySelector<HTMLElement>("[data-study-ai-root]");
+  if (root) {
+    const trigger = root.querySelector<HTMLButtonElement>("[data-study-ai-trigger]");
+    const panel = root.querySelector<HTMLElement>("[data-study-ai-panel]");
+    const closeButton = root.querySelector<HTMLButtonElement>("[data-study-ai-close]");
+    const clearButton = root.querySelector<HTMLButtonElement>("[data-study-ai-clear]");
+    const messages = root.querySelector<HTMLElement>("[data-study-ai-messages]");
+    const status = root.querySelector<HTMLElement>("[data-study-ai-status]");
+    const progress = root.querySelector<HTMLProgressElement>("[data-study-ai-progress]");
+    const form = root.querySelector<HTMLFormElement>("[data-study-ai-form]");
+    const input = root.querySelector<HTMLTextAreaElement>("[data-study-ai-input]");
+    const sendButton = root.querySelector<HTMLButtonElement>("[data-study-ai-send]");
+    const stopButton = root.querySelector<HTMLButtonElement>("[data-study-ai-stop]");
+
+    if (
+      trigger &&
+      panel &&
+      closeButton &&
+      clearButton &&
+      messages &&
+      status &&
+      progress &&
+      form &&
+      input &&
+      sendButton &&
+      stopButton
+    ) {
+      const storageKey = `study-ai-chat:${window.location.pathname}`;
+      let history = loadHistory(storageKey);
+      let generating = false;
+
+      const scrollToLatest = () => {
+        messages.scrollTop = messages.scrollHeight;
+      };
+
+      const appendMessage = (message: ChatMessage) => {
+        const article = document.createElement("article");
+        article.className = `study-ai-message is-${message.role}`;
+        const label = document.createElement("p");
+        label.className = "study-ai-message-label";
+        label.textContent = message.role === "user" ? "あなた" : "AIチューター";
+        const body = document.createElement("p");
+        body.className = "study-ai-message-body";
+        body.textContent = message.content;
+        article.append(label, body);
+        messages.append(article);
+        scrollToLatest();
+        return body;
+      };
+
+      const renderHistory = () => {
+        messages.replaceChildren();
+        if (history.length === 0) {
+          appendMessage({
+            role: "assistant",
+            content: "このページの内容をもとに説明します。分からない箇所をそのまま質問してください。",
+          });
+          return;
+        }
+        for (const message of history) appendMessage(message);
+      };
+
+      const setGenerating = (value: boolean) => {
+        generating = value;
+        input.disabled = value;
+        sendButton.disabled = value;
+        stopButton.hidden = !value;
+      };
+
+      const openPanel = () => {
+        panel.hidden = false;
+        trigger.setAttribute("aria-expanded", "true");
+        if (!supportsStudyAI()) {
+          status.textContent =
+            "このブラウザはWebGPUに対応していないため、端末内AIを利用できません。";
+          input.disabled = true;
+          sendButton.disabled = true;
+        }
+        window.setTimeout(() => input.focus(), 0);
+      };
+
+      const closePanel = () => {
+        panel.hidden = true;
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.focus();
+      };
+
+      trigger.addEventListener("click", () => {
+        if (panel.hidden) openPanel();
+        else closePanel();
+      });
+      closeButton.addEventListener("click", closePanel);
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !panel.hidden) closePanel();
+      });
+
+      clearButton.addEventListener("click", () => {
+        history = [];
+        saveHistory(storageKey, history);
+        renderHistory();
+        status.textContent = "会話履歴を消去しました。";
+      });
+
+      stopButton.addEventListener("click", async () => {
+        if (!generating) return;
+        stopButton.disabled = true;
+        status.textContent = "生成を停止しています…";
+        try {
+          await interruptStudyAI();
+        } finally {
+          stopButton.disabled = false;
+        }
+      });
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (generating || !supportsStudyAI()) return;
+        const question = input.value.trim();
+        if (!question) return;
+
+        const userMessage: ChatMessage = { role: "user", content: question };
+        history.push(userMessage);
+        history = history.slice(-10);
+        saveHistory(storageKey, history);
+        appendMessage(userMessage);
+        input.value = "";
+        setGenerating(true);
+
+        const assistantBody = appendMessage({ role: "assistant", content: "考えています…" });
+        let answer = "";
+        try {
+          const engine = await getStudyAIEngine((report) => {
+            progress.hidden = false;
+            progress.value = Number.isFinite(report.progress) ? report.progress : 0;
+            const percent = Math.round(progress.value * 100);
+            status.textContent = `AIモデルを読み込み中… ${percent}%`;
+          });
+          progress.hidden = true;
+          status.textContent = "このページの内容を参照して回答しています…";
+
+          const recentHistory = history.slice(-3).map((message) => ({
+            ...message,
+            content: message.content.slice(0, 600),
+          }));
+          const stream = await engine.chat.completions.create({
+            messages: [
+              { role: "system", content: buildStudySystemPrompt(buildStudyContext()) },
+              ...recentHistory,
+            ],
+            stream: true,
+            temperature: 0.4,
+            top_p: 0.9,
+            max_tokens: 320,
+            enable_thinking: false,
+          });
+
+          for await (const chunk of stream) {
+            answer += chunk.choices[0]?.delta?.content ?? "";
+            assistantBody.textContent = visibleAssistantText(answer) || "考えています…";
+            scrollToLatest();
+          }
+
+          const visibleAnswer = visibleAssistantText(answer).trim();
+          if (!visibleAnswer) throw new Error("The model returned an empty response.");
+          assistantBody.textContent = visibleAnswer;
+          history.push({ role: "assistant", content: visibleAnswer });
+          history = history.slice(-10);
+          saveHistory(storageKey, history);
+          status.textContent = "端末内AIで回答しました。";
+        } catch (error) {
+          console.error("Study AI failed", error);
+          progress.hidden = true;
+          assistantBody.textContent = studyAIErrorMessage(error);
+          status.textContent = "AIの実行に失敗しました。";
+        } finally {
+          setGenerating(false);
+          input.focus();
+        }
+      });
+
+      renderHistory();
+    }
+  }
+
+  function visibleAssistantText(value: string) {
+    return value
+      .replace(/<think>[\s\S]*?<\/think>\s*/gi, "")
+      .replace(/^<think>[\s\S]*$/gi, "")
+      .trimStart();
+  }
+
+  function loadHistory(key: string): ChatMessage[] {
+    try {
+      const raw = sessionStorage.getItem(key);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return [];
+      return parsed
+        .filter(
+          (item): item is ChatMessage =>
+            item &&
+            (item.role === "user" || item.role === "assistant") &&
+            typeof item.content === "string",
+        )
+        .map((item) => ({ ...item, content: item.content.slice(0, 4000) }))
+        .slice(-10);
+    } catch {
+      return [];
+    }
+  }
+
+  function saveHistory(key: string, history: ChatMessage[]) {
+    try {
+      sessionStorage.setItem(key, JSON.stringify(history));
+    } catch {
+      // Storage can be unavailable in privacy modes. Chat still works without persistence.
+    }
+  }
+
+  function studyAIErrorMessage(error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (/WebGPU|GPUAdapter|shader-f16/i.test(message)) {
+      return "この端末のWebGPU環境ではAIモデルを実行できませんでした。対応ブラウザとGPU設定を確認してください。";
+    }
+    if (/device lost|device hung|disposed/i.test(message)) {
+      return "WebGPUの処理が停止しました。ブラウザを再起動してから、もう一度試してください。";
+    }
+    return "AIの実行に失敗しました。端末の空きメモリや通信状態を確認して、もう一度試してください。";
+  }
+</script>
+
+<style>
+  .study-ai-trigger {
+    position: fixed;
+    right: clamp(1rem, 3vw, 1.75rem);
+    bottom: clamp(1rem, 3vw, 1.75rem);
+    z-index: 40;
+    min-height: 2.9rem;
+    padding: 0.72rem 1rem;
+    border: 1px solid var(--color-accent-strong);
+    border-radius: 999px;
+    color: var(--surface);
+    background: var(--color-accent-strong);
+    font-size: 0.88rem;
+    font-weight: 750;
+    cursor: pointer;
+    box-shadow: 0 0.5rem 1.6rem rgb(40 38 34 / 18%);
+  }
+
+  .study-ai-trigger:focus-visible,
+  .study-ai-panel button:focus-visible,
+  .study-ai-panel textarea:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 0.2rem;
+  }
+
+  .study-ai-panel {
+    position: fixed;
+    right: clamp(1rem, 3vw, 1.75rem);
+    bottom: 5.2rem;
+    z-index: 41;
+    display: grid;
+    grid-template-rows: auto auto minmax(8rem, 1fr) auto auto;
+    width: min(29rem, calc(100vw - 2rem));
+    height: min(40rem, calc(100vh - 7rem));
+    overflow: hidden;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 1rem;
+    background: var(--surface);
+    box-shadow: 0 1rem 3rem rgb(40 38 34 / 20%);
+  }
+
+  .study-ai-panel[hidden] {
+    display: none;
+  }
+
+  .study-ai-header {
+    display: flex;
+    padding: 1rem 1rem 0.85rem;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .study-ai-kicker {
+    margin: 0 0 0.18rem;
+    color: var(--color-accent);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .study-ai-header h2 {
+    margin: 0;
+    color: var(--color-text-strong);
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .study-ai-header-actions,
+  .study-ai-form-actions {
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .study-ai-text-button,
+  .study-ai-close,
+  .study-ai-stop,
+  .study-ai-send {
+    border: 1px solid var(--color-border-strong);
+    border-radius: 0.55rem;
+    background: var(--surface);
+    color: var(--color-text-strong);
+    cursor: pointer;
+  }
+
+  .study-ai-text-button {
+    padding: 0.42rem 0.55rem;
+    color: var(--color-muted-strong);
+    font-size: 0.7rem;
+  }
+
+  .study-ai-close {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .study-ai-notice {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--color-border-soft);
+    background: var(--surface-subtle);
+    color: var(--color-muted-strong);
+    font-size: 0.7rem;
+    line-height: 1.55;
+  }
+
+  .study-ai-notice p {
+    margin: 0;
+  }
+
+  .study-ai-notice p + p {
+    margin-top: 0.2rem;
+  }
+
+  .study-ai-messages {
+    overflow-y: auto;
+    padding: 0.9rem 1rem;
+    background: var(--surface);
+  }
+
+  .study-ai-runtime {
+    padding: 0.55rem 1rem;
+    border-top: 1px solid var(--color-border-soft);
+    color: var(--color-muted-strong);
+    background: var(--surface-subtle);
+  }
+
+  .study-ai-status {
+    margin: 0;
+    font-size: 0.68rem;
+    line-height: 1.45;
+  }
+
+  .study-ai-progress {
+    width: 100%;
+    height: 0.35rem;
+    margin-top: 0.4rem;
+  }
+
+  .study-ai-form {
+    display: grid;
+    padding: 0.85rem 1rem 1rem;
+    gap: 0.5rem;
+    border-top: 1px solid var(--color-border-soft);
+  }
+
+  .study-ai-form label {
+    color: var(--color-text-strong);
+    font-size: 0.72rem;
+    font-weight: 750;
+  }
+
+  .study-ai-form textarea {
+    width: 100%;
+    min-height: 4.8rem;
+    resize: vertical;
+    padding: 0.65rem 0.7rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 0.65rem;
+    color: var(--color-text);
+    background: var(--surface);
+    line-height: 1.55;
+  }
+
+  .study-ai-form-actions {
+    justify-content: flex-end;
+  }
+
+  .study-ai-stop,
+  .study-ai-send {
+    min-height: 2.35rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 750;
+  }
+
+  .study-ai-send {
+    border-color: var(--color-accent-strong);
+    color: var(--surface);
+    background: var(--color-accent-strong);
+  }
+
+  .study-ai-panel button:disabled,
+  .study-ai-panel textarea:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .study-ai-trigger:hover,
+    .study-ai-send:hover {
+      background: var(--color-link-hover);
+    }
+
+    .study-ai-text-button:hover,
+    .study-ai-close:hover,
+    .study-ai-stop:hover {
+      border-color: var(--color-accent);
+      color: var(--color-link-hover);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .study-ai-trigger {
+      right: 0.85rem;
+      bottom: 0.85rem;
+    }
+
+    .study-ai-panel {
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: min(88vh, 46rem);
+      border-right: 0;
+      border-bottom: 0;
+      border-left: 0;
+      border-radius: 1rem 1rem 0 0;
+    }
+  }
+</style>
+
+<style is:global>
+  [data-study-ai-root] .study-ai-message {
+    max-width: 92%;
+    margin: 0 0 0.8rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 0.8rem;
+    background: var(--surface-subtle);
+  }
+
+  [data-study-ai-root] .study-ai-message.is-user {
+    margin-left: auto;
+    background: var(--surface-accent);
+  }
+
+  [data-study-ai-root] .study-ai-message-label {
+    margin: 0 0 0.25rem;
+    color: var(--color-muted-strong);
+    font-size: 0.68rem;
+    font-weight: 750;
+  }
+
+  [data-study-ai-root] .study-ai-message-body {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 0.84rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+</style>

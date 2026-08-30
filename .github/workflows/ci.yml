@@ -47,6 +47,9 @@ jobs:
       - name: Verify component style boundaries
         run: pnpm check:component-styles
 
+      - name: Verify study AI boundaries
+        run: pnpm check:study-ai
+
       - name: Build
         run: pnpm build
 

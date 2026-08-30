@@ -1,6 +1,8 @@
 ---
 import { getCurriculumReference } from "../../content/curriculum-references.js";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyAIChat from "../ai/StudyAIChat.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import CurriculumReference from "./CurriculumReference.astro";
 
 type Props = {
@@ -46,6 +48,7 @@ const _curriculumReference = getCurriculumReference(_courseKey);
         <slot />
         {_curriculumReference && <CurriculumReference reference={_curriculumReference} />}
       </main>
+      <StudyAIChat />
     </div>
   </body>
 </html>
