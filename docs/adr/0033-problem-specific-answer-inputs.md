@@ -27,7 +27,7 @@
 
 この移行用設計層は問題内容を推測して新しい正解を生成するものではない。既存の正解候補に選択肢が含まれることを確認できた場合だけ選択式へ変換し、正解候補と整合しない場合は従来の自由入力へ戻す。
 
-同じ回答設計を、例題直後の GuidedPractice、理解確認問題、単元末演習に適用する。これにより同じ内容の問題が場所によって異なる不自然な入力方法になることを避ける。
+同じ回答設計を、例題直後の GuidedPractice、理解確認問題、単元末演習、応用・発展ページのステップ練習に適用する。これにより同じ内容の問題が場所によって異なる不自然な入力方法になることを避ける。
 
 数学の式回答では MathLive を利用し、LaTeX 表現差を吸収する正規化を行う。スマートフォンでは MathLive の仮想数式キーボードを利用でき、PCでは物理キーボード入力を維持する。
 
@@ -44,7 +44,7 @@
 
 - `GuidedPractice.astro` は回答方式に応じて適切なコントロールを描画する。
 - `answer-input-design.ts` は既存設問の回答方式を監査・移行する共通設計層とする。
-- `MathLesson.astro`、`PhysicsLesson.astro`、`EnglishLesson.astro` は GuidedPractice に渡す前に回答設計を適用する。
+- `MathLesson.astro`、`PhysicsLesson.astro`、`EnglishLesson.astro`、`AdvancedPatternPage.astro` は GuidedPractice に渡す前に回答設計を適用する。
 - `ExerciseSet.astro`、`PhysicsExerciseSet.astro`、`SocialExerciseSet.astro` は生成された確認・演習問題にも同じ回答設計を適用する。
 - 数式回答は MathLive の値を採点時に正規化する。
 - 選択肢の正解値は表示ラベルから分離できるようにする。
