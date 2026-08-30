@@ -7,8 +7,6 @@ import ContentIndex from "./ui/ContentIndex.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentSection from "./ui/ContentSection.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import LearningFlow from "./ui/LearningFlow.astro";
-// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PageFooter from "./ui/PageFooter.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import SectionHeading from "./ui/SectionHeading.astro";
@@ -52,12 +50,7 @@ const _totalLessonCount = _areas.reduce(
     title="国語"
     description="現代文・古文・漢文を、文章のどこを根拠に読むか、どの文法・句法を使うかが分かる小さな教材に分けて学びます。"
     variant="display"
-  >
-    <LearningFlow
-      label="各小教材の学習の流れ"
-      steps={["読み方・ルール", "短い例", "根拠を確認", "確認問題", "まとめ"]}
-    />
-  </ContentHero>
+  />
 
   <ContentSection labelledby="japanese-areas-title">
     <SectionHeading

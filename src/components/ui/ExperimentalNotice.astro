@@ -1,6 +1,5 @@
 <aside class="notice" aria-label="この教材について">
   <div class="heading">
-    <span class="label">EXPERIMENTAL</span>
     <h2>生成AIを使った学習コンテンツ制作の実験です</h2>
   </div>
   <div class="body">
@@ -21,20 +20,6 @@
     border-bottom: 1px solid var(--color-border-soft);
   }
 
-  .heading {
-    display: grid;
-    grid-template-columns: minmax(6.8rem, auto) minmax(0, 1fr);
-    gap: 0.55rem 1.2rem;
-    align-items: baseline;
-  }
-
-  .label {
-    color: var(--color-accent);
-    font-size: 0.66rem;
-    font-weight: 750;
-    letter-spacing: 0.16em;
-  }
-
   h2 {
     margin: 0;
     color: var(--color-text);
@@ -49,7 +34,6 @@
     gap: 0.45rem;
     max-width: 50rem;
     margin-top: 0.7rem;
-    padding-left: calc(6.8rem + 1.2rem);
   }
 
   p {
@@ -57,16 +41,5 @@
     color: var(--color-muted-strong);
     font-size: 0.8rem;
     line-height: 1.8;
-  }
-
-  @media (max-width: 620px) {
-    .heading {
-      grid-template-columns: 1fr;
-      gap: 0.3rem;
-    }
-
-    .body {
-      padding-left: 0;
-    }
   }
 </style>

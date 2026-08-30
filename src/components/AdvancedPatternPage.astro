@@ -11,8 +11,6 @@ import ContentSection from "./ui/ContentSection.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import GuidedPractice from "./ui/GuidedPractice.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import LearningFlow from "./ui/LearningFlow.astro";
-// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PageNavigation from "./ui/PageNavigation.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PracticeProblem from "./ui/PracticeProblem.astro";
@@ -79,13 +77,6 @@ const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_topicSet.topic}/`;
 const _topicHref = `${_base}${_course.routeBase}/entrance/${_topicSet.topic}/`;
 const _patternHref = (pattern: Pattern) => `${_topicHref}${_patternSlug(pattern)}/`;
-const _flow = [
-  "考え方",
-  "例題",
-  "ステップ練習",
-  "実践",
-  ...(_pattern.generatorKey ? ["別問題で反復"] : []),
-];
 ---
 
 <StudyPage
@@ -108,7 +99,6 @@ const _flow = [
     compact
   >
     <TagList items={_pattern.skills} ariaLabel="このパターンで使う主な技能" />
-    <LearningFlow steps={_flow} label="このページの学習の流れ" />
   </ContentHero>
 
   <ContentSection labelledby="thinking-title">

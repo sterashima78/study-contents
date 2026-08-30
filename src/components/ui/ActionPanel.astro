@@ -1,23 +1,16 @@
 ---
 type Props = {
-  label: string;
+  label?: string;
   title: string;
   description: string;
   href?: string;
   action?: string;
 };
 
-const {
-  label: _label,
-  title: _title,
-  description: _description,
-  href: _href,
-  action: _action,
-} = Astro.props;
+const { title: _title, description: _description, href: _href, action: _action } = Astro.props;
 ---
 
 <section class="panel">
-  <p class="label">{_label}</p>
   <h2>{_title}</h2>
   <p class="description">{_description}</p>
   {_href && _action && <a href={_href}>{_action}</a>}
@@ -28,14 +21,6 @@ const {
   .panel {
     padding: clamp(2rem, 5vw, 3rem) 0;
     border-top: 1px solid var(--color-border);
-  }
-
-  .label {
-    margin: 0 0 0.75rem;
-    color: var(--color-accent);
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
   }
 
   h2 {
