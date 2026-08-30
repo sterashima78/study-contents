@@ -1,0 +1,89 @@
+---
+import type {
+  DiagramEditorHelpers,
+  DiagramEditorTool,
+  DiagramScene,
+} from "../../lib/diagram/types";
+import DiagramEditor from "./DiagramEditor.astro";
+
+type Props = {
+  title: string;
+  prompt: string;
+  initialScene: DiagramScene;
+  modelAnswer: DiagramScene;
+  tools: DiagramEditorTool[];
+  helpers?: DiagramEditorHelpers;
+  hint?: string;
+};
+
+const {
+  title: _title,
+  prompt: _prompt,
+  initialScene: _initialScene,
+  modelAnswer: _modelAnswer,
+  tools: _tools,
+  helpers: _helpers,
+  hint: _hint,
+} = Astro.props;
+---
+
+<article class="diagram-exercise">
+  <h3>{_title}</h3>
+  <p class="prompt">{_prompt}</p>
+  <DiagramEditor
+    scene={_initialScene}
+    modelAnswer={_modelAnswer}
+    tools={_tools}
+    helpers={_helpers}
+    label={`${_title}の作図回答`}
+  />
+  {
+    _hint && (
+      <details>
+        <summary>ヒント</summary>
+        <p>{_hint}</p>
+      </details>
+    )
+  }
+</article>
+
+<style>
+  .diagram-exercise {
+    margin-top: 1rem;
+    padding: clamp(1.1rem, 3vw, 1.7rem);
+    border: 1px solid var(--color-border-strong, #b8c0c4);
+    border-radius: 0.3rem;
+    background: var(--surface, #fff);
+  }
+
+  h3 {
+    margin: 0 0 0.8rem;
+    color: var(--color-text-strong, #27343b);
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif CJK JP", ui-serif, serif;
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.55;
+  }
+
+  .prompt {
+    margin: 0;
+    color: var(--color-text-soft, #46525a);
+    line-height: 1.85;
+  }
+
+  details {
+    margin-top: 0.85rem;
+    color: var(--color-muted-strong, #68737a);
+    font-size: 0.82rem;
+    line-height: 1.75;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 650;
+  }
+
+  details p {
+    margin: 0.55rem 0 0;
+  }
+</style>

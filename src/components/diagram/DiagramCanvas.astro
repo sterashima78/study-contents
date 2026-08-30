@@ -1,0 +1,171 @@
+---
+import { randomUUID } from "node:crypto";
+import { expandDiagramElement } from "../../lib/diagram/symbols";
+import type { AxesElement, CoreDiagramElement, DiagramScene } from "../../lib/diagram/types";
+import { assertDiagramScene } from "../../lib/diagram/validate.mjs";
+
+type Props = {
+  scene: DiagramScene;
+  tone?: "answer" | "model";
+  class?: string;
+};
+
+const { scene: _scene, tone: _tone = "answer", class: _class } = Astro.props;
+assertDiagramScene(_scene, { source: "DiagramCanvas" });
+const _elements = _scene.elements.flatMap(expandDiagramElement);
+const _markerId = `diagram-arrow-${randomUUID()}`;
+
+const lineExtent = (element: CoreDiagramElement) => {
+  if (element.kind !== "line") return null;
+  const dx = element.to.x - element.from.x;
+  const dy = element.to.y - element.from.y;
+  const length = Math.hypot(dx, dy) || 1;
+  const scale = (Math.max(_scene.width, _scene.height) * 2) / length;
+  return {
+    x1: element.from.x - dx * scale,
+    y1: element.from.y - dy * scale,
+    x2: element.to.x + dx * scale,
+    y2: element.to.y + dy * scale,
+  };
+};
+
+const arcPath = (element: CoreDiagramElement) => {
+  if (element.kind !== "arc") return "";
+  const start = (element.startAngle * Math.PI) / 180;
+  const end = (element.endAngle * Math.PI) / 180;
+  const x1 = element.center.x + Math.cos(start) * element.radius;
+  const y1 = element.center.y + Math.sin(start) * element.radius;
+  const x2 = element.center.x + Math.cos(end) * element.radius;
+  const y2 = element.center.y + Math.sin(end) * element.radius;
+  const span = ((element.endAngle - element.startAngle) % 360 + 360) % 360;
+  return `M ${x1} ${y1} A ${element.radius} ${element.radius} 0 ${span > 180 ? 1 : 0} 1 ${x2} ${y2}`;
+};
+
+const gridLines = (element: AxesElement) => {
+  if (!element.grid) return [];
+  const step = element.gridStep ?? 20;
+  const lines: Array<{ x1: number; y1: number; x2: number; y2: number }> = [];
+  for (let x = element.origin.x; x <= element.xMax; x += step) {
+    lines.push({ x1: x, y1: element.yMin, x2: x, y2: element.yMax });
+  }
+  for (let x = element.origin.x - step; x >= element.xMin; x -= step) {
+    lines.push({ x1: x, y1: element.yMin, x2: x, y2: element.yMax });
+  }
+  for (let y = element.origin.y; y <= element.yMax; y += step) {
+    lines.push({ x1: element.xMin, y1: y, x2: element.xMax, y2: y });
+  }
+  for (let y = element.origin.y - step; y >= element.yMin; y -= step) {
+    lines.push({ x1: element.xMin, y1: y, x2: element.xMax, y2: y });
+  }
+  return lines;
+};
+---
+
+<svg
+  class:list={["diagram-canvas", _tone === "model" && "is-model", _class]}
+  viewBox={`0 0 ${_scene.width} ${_scene.height}`}
+  role="img"
+  aria-label={_scene.ariaLabel}
+  preserveAspectRatio="xMidYMid meet"
+>
+  <defs>
+    <marker id={_markerId} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" class="arrow-head"></path>
+    </marker>
+  </defs>
+  {
+    _elements.map((element) => (
+      <g data-element-id={element.id}>
+        {element.kind === "point" && (
+          <circle cx={element.x} cy={element.y} r={element.radius ?? 3.5} class="point" />
+        )}
+        {element.kind === "segment" && (
+          <line x1={element.from.x} y1={element.from.y} x2={element.to.x} y2={element.to.y} />
+        )}
+        {element.kind === "line" && (() => {
+          const extent = lineExtent(element);
+          return extent && <line {...extent} />;
+        })()}
+        {element.kind === "circle" && (
+          <circle cx={element.center.x} cy={element.center.y} r={element.radius} />
+        )}
+        {element.kind === "ellipse" && (
+          <ellipse cx={element.center.x} cy={element.center.y} rx={element.radiusX} ry={element.radiusY} />
+        )}
+        {element.kind === "polygon" && (
+          <polygon points={element.points.map((value) => `${value.x},${value.y}`).join(" ")} />
+        )}
+        {element.kind === "arrow" && (
+          <line
+            x1={element.from.x}
+            y1={element.from.y}
+            x2={element.to.x}
+            y2={element.to.y}
+            marker-end={`url(#${_markerId})`}
+          />
+        )}
+        {element.kind === "arc" && <path d={arcPath(element)} />}
+        {element.kind === "label" && (
+          <text x={element.at.x} y={element.at.y} text-anchor={element.align ?? "middle"}>
+            {element.text}
+          </text>
+        )}
+        {element.kind === "axes" && (
+          <>
+            <g class="grid">
+              {gridLines(element).map((line) => <line {...line} />)}
+            </g>
+            <line x1={element.xMin} y1={element.origin.y} x2={element.xMax} y2={element.origin.y} />
+            <line x1={element.origin.x} y1={element.yMin} x2={element.origin.x} y2={element.yMax} />
+          </>
+        )}
+        {element.kind === "functionPlot" && (
+          <polyline points={element.samples.map((value) => `${value.x},${value.y}`).join(" ")} />
+        )}
+      </g>
+    ))
+  }
+</svg>
+
+<style>
+  .diagram-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: #39464f;
+    background: #fff;
+  }
+
+  .diagram-canvas.is-model {
+    color: #9a5b46;
+  }
+
+  line,
+  circle,
+  ellipse,
+  polygon,
+  polyline,
+  path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .point,
+  .arrow-head {
+    fill: currentColor;
+    stroke: currentColor;
+  }
+
+  .grid line {
+    stroke: #d8dde0;
+    stroke-width: 1;
+  }
+
+  text {
+    fill: currentColor;
+    font-family: "Times New Roman", "Yu Mincho", serif;
+    font-size: 15px;
+  }
+</style>

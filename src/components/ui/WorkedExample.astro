@@ -1,8 +1,12 @@
 ---
+import type { DiagramScene } from "../../lib/diagram/types";
+import DiagramView from "../diagram/DiagramView.astro";
+
 type WorkedStep = {
   expression?: string;
   note?: string;
   text?: string;
+  diagram?: DiagramScene;
 };
 
 type Props = {
@@ -13,6 +17,7 @@ type Props = {
   strategy?: string;
   steps: WorkedStep[];
   answer?: string;
+  diagram?: DiagramScene;
 };
 
 const {
@@ -22,6 +27,7 @@ const {
   strategy: _strategy,
   steps: _steps,
   answer: _answer,
+  diagram: _diagram,
 } = Astro.props;
 ---
 
@@ -30,6 +36,7 @@ const {
   {_introduction && <p class="introduction">{_introduction}</p>}
   {_problem && <p class="problem">{_problem}</p>}
   {_strategy && <p class="strategy"><strong>方針:</strong> {_strategy}</p>}
+  {_diagram && <DiagramView scene={_diagram} />}
   <ol class="steps">
     {
       _steps.map((step) => (
@@ -37,6 +44,11 @@ const {
           {step.expression && <div class="expression">{step.expression}</div>}
           {step.text && <div class="text-step">{step.text}</div>}
           {step.note && <p>{step.note}</p>}
+          {step.diagram && (
+            <div class="step-diagram">
+              <DiagramView scene={step.diagram} />
+            </div>
+          )}
         </li>
       ))
     }
@@ -140,6 +152,11 @@ const {
     color: var(--color-muted-strong);
     font-size: 0.88rem;
     line-height: 1.8;
+  }
+
+  .step-diagram {
+    grid-column: 2;
+    min-width: 0;
   }
 
   .answer {

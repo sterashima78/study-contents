@@ -11,13 +11,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "biome ci . && pnpm check:adr && pnpm check:curriculum && pnpm check:formulas && pnpm check:entrance-content && pnpm check:component-styles",
+    "check": "biome ci . && pnpm check:adr && pnpm check:curriculum && pnpm check:formulas && pnpm check:entrance-content && pnpm check:diagrams && pnpm check:component-styles",
     "check:write": "biome check --write .",
     "check:adr": "node scripts/verify-adrs.mjs",
     "check:curriculum": "node scripts/verify-curriculum-references.mjs",
     "check:curriculum-build": "node scripts/verify-curriculum-build-output.mjs",
     "check:formulas": "node scripts/verify-formula-coverage.mjs",
     "check:entrance-content": "node scripts/verify-entrance-content.mjs",
+    "check:diagrams": "node scripts/verify-diagrams.mjs",
     "check:component-styles": "node scripts/verify-component-styles.mjs"
   },
   "dependencies": {

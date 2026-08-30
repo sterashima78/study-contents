@@ -1,0 +1,212 @@
+---
+import { randomUUID } from "node:crypto";
+import type {
+  DiagramEditorHelpers,
+  DiagramEditorTool,
+  DiagramScene,
+} from "../../lib/diagram/types";
+import { assertDiagramScene } from "../../lib/diagram/validate.mjs";
+import DiagramCanvas from "./DiagramCanvas.astro";
+
+type Props = {
+  scene: DiagramScene;
+  tools: DiagramEditorTool[];
+  modelAnswer?: DiagramScene;
+  helpers?: DiagramEditorHelpers;
+  label?: string;
+};
+
+const {
+  scene: _scene,
+  tools: _tools,
+  modelAnswer: _modelAnswer,
+  helpers: _helpers = {},
+  label: _label = "作図エリア",
+} = Astro.props;
+assertDiagramScene(_scene, { source: "DiagramEditor.scene" });
+if (_modelAnswer) assertDiagramScene(_modelAnswer, { source: "DiagramEditor.modelAnswer" });
+const _editorId = randomUUID();
+---
+
+<section
+  class="diagram-editor"
+  data-diagram-editor
+  data-editor-id={_editorId}
+  data-scene={JSON.stringify(_scene)}
+  data-model-answer={_modelAnswer ? JSON.stringify(_modelAnswer) : undefined}
+  data-tools={JSON.stringify(_tools)}
+  data-helpers={JSON.stringify(_helpers)}
+  tabindex="0"
+  aria-label={_label}
+>
+  <div class="toolbar" aria-label="作図ツール">
+    <button type="button" data-select-tool data-edit-control aria-pressed="true">選択</button>
+    {
+      _tools.map((tool, index) => (
+        <button
+          type="button"
+          data-tool-index={index}
+          data-edit-control
+          aria-pressed="false"
+        >
+          {tool.label}
+        </button>
+      ))
+    }
+    <button type="button" data-cancel-tool data-edit-control hidden>キャンセル</button>
+    <button type="button" data-finish-shape data-edit-control hidden>図形を確定</button>
+  </div>
+
+  <div class="secondary-toolbar" aria-label="編集と表示">
+    <div class="edit-controls">
+      <button type="button" data-undo data-edit-control disabled>元に戻す</button>
+      <button type="button" data-redo data-edit-control disabled>やり直す</button>
+      <button type="button" data-delete data-edit-control disabled>削除</button>
+      <button type="button" data-shrink data-edit-control disabled>縮小</button>
+      <button type="button" data-grow data-edit-control disabled>拡大</button>
+      <button type="button" data-rotate data-edit-control disabled>回転</button>
+    </div>
+    <div class="view-controls">
+      <button type="button" data-pan-tool aria-pressed="false">表示移動</button>
+      <button type="button" data-zoom-out aria-label="表示を縮小">−</button>
+      <button type="button" data-zoom-reset>全体</button>
+      <button type="button" data-zoom-in aria-label="表示を拡大">＋</button>
+    </div>
+  </div>
+
+  <div class="viewport" data-editor-viewport>
+    <DiagramCanvas scene={_scene} />
+  </div>
+
+  <div class="footer">
+    <p class="status" data-editor-status aria-live="polite">ツールを選んで作図できます。</p>
+    {_modelAnswer && <button type="button" class="answer-button" data-answer-toggle>答えを見る</button>}
+  </div>
+</section>
+
+<script>
+  import { initializeDiagramEditors } from "../../lib/diagram/editor-client";
+  initializeDiagramEditors();
+</script>
+
+<style>
+  .diagram-editor {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    outline: none;
+  }
+
+  .diagram-editor:focus-visible {
+    outline: 3px solid var(--focus-ring, #bfd3dc);
+    outline-offset: 3px;
+  }
+
+  .toolbar,
+  .secondary-toolbar,
+  .edit-controls,
+  .view-controls,
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .secondary-toolbar,
+  .footer {
+    justify-content: space-between;
+  }
+
+  button {
+    min-height: 2.7rem;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--color-border-strong, #aeb8bd);
+    border-radius: 0.25rem;
+    color: var(--color-text-soft, #46525a);
+    background: var(--surface, #fff);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+
+  button[aria-pressed="true"] {
+    border-color: #315f78;
+    color: #244c62;
+    background: #edf4f7;
+  }
+
+  button:disabled {
+    cursor: default;
+    opacity: 0.42;
+  }
+
+  button:focus-visible {
+    outline: 3px solid var(--focus-ring, #bfd3dc);
+    outline-offset: 2px;
+  }
+
+  .viewport {
+    min-height: 18rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border-soft, #d7dcdf);
+    border-radius: 0.3rem;
+    background: #fff;
+    touch-action: none;
+  }
+
+  .viewport :global(svg) {
+    width: 100%;
+    min-height: 18rem;
+    max-height: 34rem;
+    cursor: crosshair;
+    user-select: none;
+  }
+
+  .status {
+    flex: 1 1 18rem;
+    margin: 0;
+    color: var(--color-muted-strong, #68737a);
+    font-size: 0.78rem;
+    line-height: 1.6;
+  }
+
+  .answer-button {
+    border-color: var(--color-accent-medium, #526d7c);
+    color: #fff;
+    background: var(--color-accent-medium, #526d7c);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    button:not(:disabled):hover {
+      background: var(--surface-accent, #f1f5f6);
+    }
+
+    .answer-button:not(:disabled):hover {
+      background: var(--color-accent-strong, #405b69);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .toolbar,
+    .edit-controls,
+    .view-controls {
+      gap: 0.35rem;
+    }
+
+    button {
+      min-height: 2.85rem;
+      padding-inline: 0.68rem;
+    }
+
+    .viewport,
+    .viewport :global(svg) {
+      min-height: 16rem;
+    }
+
+    .answer-button {
+      width: 100%;
+    }
+  }
+</style>
