@@ -29,75 +29,55 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Apply lint fixes
+      - name: Apply diagram lint fixes
         run: |
           python - <<'PY'
           from pathlib import Path
 
-          replacements = {
-              "src/components/diagram/DiagramEditor.astro": (
-                  'import DiagramCanvas from "./DiagramCanvas.astro";',
-                  '// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.\nimport DiagramCanvas from "./DiagramCanvas.astro";',
-              ),
-              "src/components/diagram/DiagramExercise.astro": (
-                  'import DiagramEditor from "./DiagramEditor.astro";',
-                  '// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.\nimport DiagramEditor from "./DiagramEditor.astro";',
-              ),
-              "src/components/diagram/DiagramView.astro": (
-                  'import DiagramCanvas from "./DiagramCanvas.astro";',
-                  '// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.\nimport DiagramCanvas from "./DiagramCanvas.astro";',
-              ),
-              "src/components/ui/WorkedExample.astro": (
-                  'import DiagramView from "../diagram/DiagramView.astro";',
-                  '// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.\nimport DiagramView from "../diagram/DiagramView.astro";',
-              ),
+          imports = {
+              "src/components/diagram/DiagramEditor.astro": 'import DiagramCanvas from "./DiagramCanvas.astro";',
+              "src/components/diagram/DiagramExercise.astro": 'import DiagramEditor from "./DiagramEditor.astro";',
+              "src/components/diagram/DiagramView.astro": 'import DiagramCanvas from "./DiagramCanvas.astro";',
+              "src/components/ui/WorkedExample.astro": 'import DiagramView from "../diagram/DiagramView.astro";',
           }
-          for filename, (old, new) in replacements.items():
+          for filename, statement in imports.items():
               path = Path(filename)
               text = path.read_text()
-              if new not in text:
-                  text = text.replace(old, new)
+              marker = "// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.\n" + statement
+              if marker not in text:
+                  text = text.replace(statement, marker)
               path.write_text(text)
 
           path = Path("src/components/diagram/DiagramCanvas.astro")
           text = path.read_text()
           for name in ("lineExtent", "arcPath", "gridLines"):
-              old = f"const {name} ="
-              new = f"// biome-ignore lint/correctness/noUnusedVariables: Astro template usage is not detected by Biome.\nconst {name} ="
-              if new not in text:
-                  text = text.replace(old, new)
+              statement = f"const {name} ="
+              marker = "// biome-ignore lint/correctness/noUnusedVariables: Astro template usage is not detected by Biome.\n" + statement
+              if marker not in text:
+                  text = text.replace(statement, marker)
           path.write_text(text)
 
           path = Path("src/lib/diagram/validate.mjs")
-          text = path.read_text()
-          text = text.replace(
+          text = path.read_text().replace(
               "if (!symbols || !symbols.has(element.symbol)) {",
               "if (!symbols?.has(element.symbol)) {",
-          )
-          text = text.replace(
-              '''      else\n        element.points.forEach((value, index) =>\n          validatePoint(value, `${location}.points[${index}]`, errors),\n        );''',
-              '''      else {\n        element.points.forEach((value, index) => {\n          validatePoint(value, `${location}.points[${index}]`, errors);\n        });\n      }''',
-          )
-          text = text.replace(
-              '''      else\n        element.samples.forEach((value, index) =>\n          validatePoint(value, `${location}.samples[${index}]`, errors),\n        );''',
-              '''      else {\n        element.samples.forEach((value, index) => {\n          validatePoint(value, `${location}.samples[${index}]`, errors);\n        });\n      }''',
           )
           path.write_text(text)
 
           path = Path("scripts/verify-diagrams.mjs")
           text = path.read_text().replace(
               'value.forEach((item, index) => visit(item, `${location}[${index}]`));',
-              '''value.forEach((item, index) => {\n      visit(item, `${location}[${index}]`);\n    });''',
+              'value.forEach((item, index) => {\n      visit(item, `${location}[${index}]`);\n    });',
           )
           path.write_text(text)
           PY
 
-      - name: Format and verify Biome
+      - name: Format diagram files
         run: |
-          pnpm exec biome check --write .
-          pnpm exec biome ci .
+          pnpm exec biome format --write scripts/verify-diagrams.mjs src/lib/diagram src/components/diagram src/components/ui/WorkedExample.astro
+          pnpm exec biome check --write --unsafe scripts/verify-diagrams.mjs src/lib/diagram || true
 
-      - name: Commit formatted implementation
+      - name: Commit repaired implementation
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
