@@ -86,8 +86,7 @@ export const middleMath1Areas: MathArea[] = [
   {
     key: "functions",
     title: "関数",
-    description:
-      "二つの数量の変化と対応に着目し、比例・反比例を表、式、座標、グラフで捉えます。",
+    description: "二つの数量の変化と対応に着目し、比例・反比例を表、式、座標、グラフで捉えます。",
     units: [
       {
         key: "proportion-inverse-proportion",
