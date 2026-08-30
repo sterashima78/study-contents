@@ -15,6 +15,8 @@ type StudyAIMessage = {
   content: string;
 };
 
+type StudyAIStage = "tokenizer" | "model" | "warmup" | "generation";
+
 type LoadMessage = {
   type: "load";
   requestId: number;
@@ -37,6 +39,16 @@ type InterruptMessage = {
 
 type WorkerRequest = LoadMessage | GenerateMessage | InterruptMessage;
 
+class StudyAIStageError extends Error {
+  readonly stage: StudyAIStage;
+
+  constructor(stage: StudyAIStage, error: unknown) {
+    super(serializeError(error));
+    this.name = "StudyAIStageError";
+    this.stage = stage;
+  }
+}
+
 let tokenizerPromise: ReturnType<typeof AutoTokenizer.from_pretrained> | undefined;
 let modelPromise: ReturnType<typeof AutoModelForCausalLM.from_pretrained> | undefined;
 let modelReady = false;
@@ -48,20 +60,46 @@ function post(status: string, requestId: number, data: Record<string, unknown> =
 }
 
 function serializeError(error: unknown) {
-  return error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  return stripControlCharacters(message).slice(0, 1200);
+}
+
+function stripControlCharacters(value: string) {
+  return Array.from(value)
+    .filter((character) => {
+      const code = character.charCodeAt(0);
+      return (code >= 32 && code !== 127) || code === 9 || code === 10 || code === 13;
+    })
+    .join("");
+}
+
+function stageOf(error: unknown, fallback: StudyAIStage) {
+  return error instanceof StudyAIStageError ? error.stage : fallback;
+}
+
+function withStage<T>(stage: StudyAIStage, promise: Promise<T>) {
+  return promise.catch((error) => {
+    throw new StudyAIStageError(stage, error);
+  });
 }
 
 function getModel(progressCallback?: (report: Record<string, unknown>) => void) {
-  tokenizerPromise ??= AutoTokenizer.from_pretrained(STUDY_AI_MODEL_ID, {
-    revision: STUDY_AI_MODEL_REVISION,
-    progress_callback: progressCallback,
-  });
-  modelPromise ??= AutoModelForCausalLM.from_pretrained(STUDY_AI_MODEL_ID, {
-    revision: STUDY_AI_MODEL_REVISION,
-    device: "webgpu",
-    dtype: STUDY_AI_MODEL_DTYPE,
-    progress_callback: progressCallback,
-  });
+  tokenizerPromise ??= withStage(
+    "tokenizer",
+    AutoTokenizer.from_pretrained(STUDY_AI_MODEL_ID, {
+      revision: STUDY_AI_MODEL_REVISION,
+      progress_callback: progressCallback,
+    }),
+  );
+  modelPromise ??= withStage(
+    "model",
+    AutoModelForCausalLM.from_pretrained(STUDY_AI_MODEL_ID, {
+      revision: STUDY_AI_MODEL_REVISION,
+      device: "webgpu",
+      dtype: STUDY_AI_MODEL_DTYPE,
+      progress_callback: progressCallback,
+    }),
+  );
   return Promise.all([tokenizerPromise, modelPromise]);
 }
 
@@ -78,21 +116,31 @@ async function load(requestId: number) {
     });
 
     post("loading", requestId, { label: "WebGPU向けにモデルを準備しています…" });
-    const warmupInputs = tokenizer("こんにちは");
-    await model.generate({ ...warmupInputs, max_new_tokens: 1 });
+    try {
+      const warmupInputs = tokenizer("こんにちは");
+      await model.generate({ ...warmupInputs, max_new_tokens: 1 });
+    } catch (error) {
+      throw new StudyAIStageError("warmup", error);
+    }
     modelReady = true;
     post("ready", requestId, { progress: 1 });
   } catch (error) {
     tokenizerPromise = undefined;
     modelPromise = undefined;
     modelReady = false;
-    post("error", requestId, { error: serializeError(error) });
+    post("error", requestId, {
+      stage: stageOf(error, "model"),
+      error: serializeError(error),
+    });
   }
 }
 
 async function generate(requestId: number, data: GenerateMessage["data"]) {
   if (generating) {
-    post("error", requestId, { error: "AI generation is already running." });
+    post("error", requestId, {
+      stage: "generation",
+      error: "AI generation is already running.",
+    });
     return;
   }
 
@@ -130,7 +178,10 @@ async function generate(requestId: number, data: GenerateMessage["data"]) {
     });
     post("complete", requestId, { answer });
   } catch (error) {
-    post("error", requestId, { error: serializeError(error) });
+    post("error", requestId, {
+      stage: stageOf(error, "generation"),
+      error: serializeError(error),
+    });
   } finally {
     generating = false;
   }
