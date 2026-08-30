@@ -1,6 +1,7 @@
 import type { MathArea } from "../../../math1/types";
 import { additionLesson } from "./lessons/addition";
 import { combineLikeTermsLesson } from "./lessons/combine-like-terms";
+import { coordinatesLesson } from "./lessons/coordinates";
 import { divisionLesson } from "./lessons/division";
 import { divisionNotationLesson } from "./lessons/division-notation";
 import { equalityPropertiesLesson } from "./lessons/equality-properties";
@@ -10,6 +11,10 @@ import { equationMeaningLesson } from "./lessons/equation-meaning";
 import { equationMultiplyDivideLesson } from "./lessons/equation-multiply-divide";
 import { equationWordProblemsLesson } from "./lessons/equation-word-problems";
 import { expressRelationsLesson } from "./lessons/express-relations";
+import { functionMeaningLesson } from "./lessons/function-meaning";
+import { functionRepresentationsApplicationLesson } from "./lessons/function-representations-application";
+import { inverseProportionGraphLesson } from "./lessons/inverse-proportion-graph";
+import { inverseProportionTableExpressionLesson } from "./lessons/inverse-proportion-table-expression";
 import { lettersMeaningLesson } from "./lessons/letters-meaning";
 import { linearExpressionAdditionSubtractionLesson } from "./lessons/linear-expression-addition-subtraction";
 import { multiplicationLesson } from "./lessons/multiplication";
@@ -17,10 +22,13 @@ import { multiplicationNotationLesson } from "./lessons/multiplication-notation"
 import { numberLineAbsoluteValueLesson } from "./lessons/number-line-absolute-value";
 import { positiveNegativeMeaningLesson } from "./lessons/positive-negative-meaning";
 import { proportionEquationsLesson } from "./lessons/proportion-equations";
+import { proportionGraphLesson } from "./lessons/proportion-graph";
+import { proportionTableExpressionLesson } from "./lessons/proportion-table-expression";
 import { substitutionValueLesson } from "./lessons/substitution-value";
 import { subtractionLesson } from "./lessons/subtraction";
 import { termsCoefficientsLesson } from "./lessons/terms-coefficients";
 import { transpositionLesson } from "./lessons/transposition";
+import { variablesDomainLesson } from "./lessons/variables-domain";
 
 export const middleMath1Areas: MathArea[] = [
   {
@@ -71,6 +79,30 @@ export const middleMath1Areas: MathArea[] = [
           equationBothSidesLesson,
           proportionEquationsLesson,
           equationWordProblemsLesson,
+        ],
+      },
+    ],
+  },
+  {
+    key: "functions",
+    title: "関数",
+    description:
+      "二つの数量の変化と対応に着目し、比例・反比例を表、式、座標、グラフで捉えます。",
+    units: [
+      {
+        key: "proportion-inverse-proportion",
+        title: "比例・反比例",
+        description:
+          "関数関係の意味から、比例・反比例の式とグラフ、表・式・グラフを用いた活用まで学びます。",
+        lessons: [
+          functionMeaningLesson,
+          variablesDomainLesson,
+          proportionTableExpressionLesson,
+          coordinatesLesson,
+          proportionGraphLesson,
+          inverseProportionTableExpressionLesson,
+          inverseProportionGraphLesson,
+          functionRepresentationsApplicationLesson,
         ],
       },
     ],
