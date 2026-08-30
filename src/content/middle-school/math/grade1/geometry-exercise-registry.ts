@@ -120,7 +120,8 @@ const generators: Record<string, Generator> = {
     hint: "円の接線は接点を通る半径に垂直です。",
   }),
   "spatial-line-relations": () => ({
-    prompt: "空間にある二直線l、mは交わらず、平行でもありません。この二直線の位置関係を答えてください。",
+    prompt:
+      "空間にある二直線l、mは交わらず、平行でもありません。この二直線の位置関係を答えてください。",
     answers: ["ねじれの位置", "ねじれ"],
     lessonKeys: ["spatial-line-relations"],
     hint: "空間では、交わらず平行でもない二直線があります。",
@@ -138,7 +139,8 @@ const generators: Record<string, Generator> = {
     hint: "交わらない二平面の位置関係です。",
   }),
   "perspective-drawing": () => ({
-    prompt: "立体を斜めから見たように一枚の平面上へ表し、頂点・辺・面のつながりを読むための図を何といいますか。",
+    prompt:
+      "立体を斜めから見たように一枚の平面上へ表し、頂点・辺・面のつながりを読むための図を何といいますか。",
     answers: ["見取図", "みとり図"],
     lessonKeys: ["perspective-drawing"],
     hint: "立体の全体像を一枚に表す図です。",
