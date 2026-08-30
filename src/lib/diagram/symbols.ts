@@ -70,6 +70,7 @@ const withParentMetadata = (
     ...primitive,
     id: parent.id,
     source: parent.source,
+    color: parent.color,
     edit: parent.edit,
     refs: parent.refs,
   }));

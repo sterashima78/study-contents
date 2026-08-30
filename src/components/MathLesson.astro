@@ -1,11 +1,14 @@
 ---
 import { designPracticeSteps } from "../content/answer-input-design";
 import { type MathCourseInfo, math1Course } from "../content/math-courses";
+import { getMath1LessonDiagrams } from "../content/math1/diagrams";
 import { getFormulaDerivation } from "../content/math1/formula-registry";
 import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
 import { getMath3FormulaDerivation } from "../content/math3/formula-derivations";
 import { getMathAFormulaDerivation } from "../content/matha/formula-derivations";
 import { getMathCFormulaDerivation } from "../content/mathc/formula-derivations";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import DiagramView from "./diagram/DiagramView.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
@@ -50,6 +53,7 @@ const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
 const _practiceSteps = designPracticeSteps(_course.key, _lesson.practice.steps);
+const _lessonDiagrams = _course.key === "math1" ? getMath1LessonDiagrams(_lesson.key) : undefined;
 const _socialCourseKey =
   _course.key === "japanese-history" || _course.key === "world-history" || _course.key === "ethics"
     ? _course.key
@@ -100,6 +104,13 @@ const _formulaDerivation = _socialCourseKey
       {_lesson.concepts.map((concept) => <ConceptCard {...concept} />)}
     </div>
     {
+      _lessonDiagrams?.rule && (
+        <div class="rule-diagram">
+          <DiagramView scene={_lessonDiagrams.rule} />
+        </div>
+      )
+    }
+    {
       _formulaDerivation && (
         <div class="derivation">
           <WorkedExample
@@ -120,7 +131,12 @@ const _formulaDerivation = _socialCourseKey
     <SectionHeading label="EXAMPLE" title={_lesson.example.title} id="example-title" />
     <WorkedExample
       problem={_lesson.example.problem}
-      steps={_lesson.example.steps.map((step) => ({ expression: step.expression, note: step.note }))}
+      diagram={_lessonDiagrams?.example}
+      steps={_lesson.example.steps.map((step, index) => ({
+        expression: step.expression,
+        note: step.note,
+        diagram: _lessonDiagrams?.exampleSteps?.[index],
+      }))}
     />
     <GuidedPractice
       title={_lesson.practice.title}
@@ -179,6 +195,7 @@ const _formulaDerivation = _socialCourseKey
     gap: 1rem;
   }
 
+  .rule-diagram,
   .derivation {
     margin-top: 1rem;
   }
