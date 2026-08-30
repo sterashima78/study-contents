@@ -10,11 +10,17 @@ const validFixture = {
   height: 220,
   ariaLabel: "三角形と補助線の検証用図",
   elements: [
-    { kind: "point", id: "a", x: 60, y: 170 },
+    { kind: "point", id: "a", x: 60, y: 170, color: "#2563eb" },
     { kind: "point", id: "b", x: 260, y: 170 },
     { kind: "point", id: "c", x: 160, y: 50 },
     { kind: "segment", id: "ab", from: { x: 60, y: 170 }, to: { x: 260, y: 170 } },
-    { kind: "segment", id: "ac", from: { x: 60, y: 170 }, to: { x: 160, y: 50 } },
+    {
+      kind: "segment",
+      id: "ac",
+      from: { x: 60, y: 170 },
+      to: { x: 160, y: 50 },
+      color: "oklch(62% 0.19 28)",
+    },
     { kind: "symbol", domain: "circuit", symbol: "resistor", at: { x: 160, y: 200 } },
   ],
   constraints: [{ kind: "order", axis: "x", elements: ["a", "c", "b"] }],
@@ -30,6 +36,18 @@ const invalidFixture = {
 };
 if (validateDiagramScene(invalidFixture, { source: "invalid fixture" }).errors.length === 0) {
   issues.push("invalid fixture: 未対応の rawSvg が拒否されませんでした。");
+}
+
+const invalidColorFixture = {
+  width: 200,
+  height: 120,
+  ariaLabel: "不正な色指定の検出用",
+  elements: [{ kind: "point", x: 20, y: 20, color: { value: "red" } }],
+};
+if (
+  validateDiagramScene(invalidColorFixture, { source: "invalid color fixture" }).errors.length === 0
+) {
+  issues.push("invalid color fixture: 文字列ではない color が拒否されませんでした。");
 }
 
 const missingRefFixture = {
