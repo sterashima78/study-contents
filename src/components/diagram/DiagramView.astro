@@ -24,7 +24,7 @@ const _allowScroll = _scene.responsive?.allowHorizontalScroll ?? true;
     <button type="button" data-zoom-in aria-label="拡大">＋</button>
   </div>
   <div class="viewport" data-viewport>
-    <div class="stage" data-stage>
+    <div class="stage" data-stage data-base-min-width={_minWidth}>
       <DiagramCanvas scene={_scene} />
     </div>
   </div>
@@ -32,6 +32,10 @@ const _allowScroll = _scene.responsive?.allowHorizontalScroll ?? true;
 </figure>
 
 <script>
+  const MIN_ZOOM = 0.75;
+  const MAX_ZOOM = 2.5;
+  const ZOOM_STEP = 0.25;
+
   for (const root of document.querySelectorAll("[data-diagram-view]")) {
     if (!(root instanceof HTMLElement) || root.dataset.diagramReady === "true") continue;
     root.dataset.diagramReady = "true";
@@ -41,23 +45,30 @@ const _allowScroll = _scene.responsive?.allowHorizontalScroll ?? true;
     const zoomOut = root.querySelector("[data-zoom-out]");
     if (!(stage instanceof HTMLElement) || !(reset instanceof HTMLButtonElement)) continue;
 
+    const baseMinWidth = Number(stage.dataset.baseMinWidth);
+    if (!Number.isFinite(baseMinWidth) || baseMinWidth <= 0) continue;
+
     let zoom = 1;
     const apply = () => {
       stage.style.width = `${zoom * 100}%`;
+      stage.style.minWidth = `${baseMinWidth * zoom}px`;
       reset.textContent = `${Math.round(zoom * 100)}%`;
+      if (zoomOut instanceof HTMLButtonElement) zoomOut.disabled = zoom <= MIN_ZOOM;
+      if (zoomIn instanceof HTMLButtonElement) zoomIn.disabled = zoom >= MAX_ZOOM;
     };
     zoomIn?.addEventListener("click", () => {
-      zoom = Math.min(2.5, zoom + 0.25);
+      zoom = Math.min(MAX_ZOOM, zoom + ZOOM_STEP);
       apply();
     });
     zoomOut?.addEventListener("click", () => {
-      zoom = Math.max(0.75, zoom - 0.25);
+      zoom = Math.max(MIN_ZOOM, zoom - ZOOM_STEP);
       apply();
     });
     reset.addEventListener("click", () => {
       zoom = 1;
       apply();
     });
+    apply();
   }
 </script>
 
@@ -87,6 +98,11 @@ const _allowScroll = _scene.responsive?.allowHorizontalScroll ?? true;
     cursor: pointer;
   }
 
+  button:disabled {
+    cursor: default;
+    opacity: 0.45;
+  }
+
   button:focus-visible {
     outline: 3px solid var(--focus-ring, #bfd3dc);
     outline-offset: 2px;
@@ -102,7 +118,9 @@ const _allowScroll = _scene.responsive?.allowHorizontalScroll ?? true;
   .stage {
     width: 100%;
     min-width: var(--diagram-min-width);
-    transition: width 120ms ease-out;
+    transition:
+      width 120ms ease-out,
+      min-width 120ms ease-out;
   }
 
   figcaption {
