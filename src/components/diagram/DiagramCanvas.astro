@@ -3,6 +3,8 @@ import { randomUUID } from "node:crypto";
 import { expandDiagramElement } from "../../lib/diagram/symbols";
 import type { AxesElement, CoreDiagramElement, DiagramScene } from "../../lib/diagram/types";
 import { assertDiagramScene } from "../../lib/diagram/validate.mjs";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { toPortableMathText } from "../../lib/math-display";
 
 type Props = {
   scene: DiagramScene;
@@ -110,7 +112,7 @@ const gridLines = (element: AxesElement) => {
         {element.kind === "arc" && <path d={arcPath(element)} />}
         {element.kind === "label" && (
           <text x={element.at.x} y={element.at.y} text-anchor={element.align ?? "middle"}>
-            {element.text}
+            {toPortableMathText(element.text)}
           </text>
         )}
         {element.kind === "axes" && (

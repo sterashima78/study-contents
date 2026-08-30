@@ -1,0 +1,45 @@
+---
+import { convertLatexToMarkup } from "mathlive/ssr";
+import "mathlive/static.css";
+import { legacyUnicodeMathToLatex, toPortableMathText } from "../../lib/math-display";
+
+type Props = {
+  value: string;
+  block?: boolean;
+  class?: string;
+  ariaLabel?: string;
+};
+
+const { value: _value, block: _block = false, class: _class, ariaLabel: _ariaLabel } = Astro.props;
+const _markup = convertLatexToMarkup(legacyUnicodeMathToLatex(_value));
+const _accessibleLabel = _ariaLabel ?? toPortableMathText(_value);
+---
+
+{
+  _block ? (
+    <div
+      class:list={["static-math", "is-block", _class]}
+      role="math"
+      aria-label={_accessibleLabel}
+      set:html={_markup}
+    />
+  ) : (
+    <span class:list={["static-math", _class]} role="math" aria-label={_accessibleLabel} set:html={_markup} />
+  )
+}
+
+<style>
+  .static-math {
+    color: inherit;
+    font-size: inherit;
+    line-height: 1.45;
+  }
+
+  .static-math.is-block {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.1rem 0;
+  }
+</style>
