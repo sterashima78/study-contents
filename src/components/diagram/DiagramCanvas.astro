@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { expandDiagramElement } from "../../lib/diagram/symbols";
 import type { AxesElement, CoreDiagramElement, DiagramScene } from "../../lib/diagram/types";
 import { assertDiagramScene } from "../../lib/diagram/validate.mjs";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { toPortableMathText } from "../../lib/math-display";
 
 type Props = {
