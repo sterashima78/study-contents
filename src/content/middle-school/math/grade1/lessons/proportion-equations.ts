@@ -3,8 +3,12 @@ import type { MathLesson } from "../../../../math1/types";
 export const proportionEquationsLesson: MathLesson = {
   key: "proportion-equations",
   title: "比例式を解く",
-  description: "外項の積と内項の積が等しいことを使い、簡単な比例式を一元一次方程式へ直して解きます。",
-  goals: ["比例式から外項の積と内項の積が等しい式を作れる。", "比例式を一元一次方程式に直して解ける。"],
+  description:
+    "外項の積と内項の積が等しいことを使い、簡単な比例式を一元一次方程式へ直して解きます。",
+  goals: [
+    "比例式から外項の積と内項の積が等しい式を作れる。",
+    "比例式を一元一次方程式に直して解ける。",
+  ],
   concepts: [
     {
       title: "外項の積と内項の積は等しい",
@@ -37,5 +41,8 @@ export const proportionEquationsLesson: MathLesson = {
     ],
     hint: "3と8が外項、xと6が内項です。",
   },
-  summary: ["比例式では外項の積と内項の積が等しい。", "比例式を一元一次方程式へ直したあとは、これまでと同じ手順で解く。"],
+  summary: [
+    "比例式では外項の積と内項の積が等しい。",
+    "比例式を一元一次方程式へ直したあとは、これまでと同じ手順で解く。",
+  ],
 };
