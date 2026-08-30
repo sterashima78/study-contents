@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const functionRepresentationsApplicationLesson: MathLesson = {
   key: "function-representations-application",
   title: "表・式・グラフを結び付けて活用する",
-  description: "具体的な事象を比例・反比例として捉え、表・式・グラフを使い分けて特徴や値を説明します。",
+  description:
+    "具体的な事象を比例・反比例として捉え、表・式・グラフを使い分けて特徴や値を説明します。",
   goals: [
     "具体的な数量の関係が比例か反比例かを判断できる。",
     "表・式・グラフの特徴を結び付け、必要な値や変化の様子を説明できる。",
