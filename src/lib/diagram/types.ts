@@ -15,6 +15,7 @@ export type DiagramEditPermissions = {
 export type DiagramElementBase = {
   id?: string;
   source?: "authored" | "learner";
+  color?: string;
   edit?: DiagramEditPermissions;
   refs?: string[];
 };
