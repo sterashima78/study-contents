@@ -29,15 +29,23 @@ import { perpendicularConstructionLesson } from "./lessons/perpendicular-constru
 import { perspectiveDrawingLesson } from "./lessons/perspective-drawing";
 import { planePlaneRelationsLesson } from "./lessons/plane-plane-relations";
 import { positiveNegativeMeaningLesson } from "./lessons/positive-negative-meaning";
+import { prismCylinderSurfaceAreaLesson } from "./lessons/prism-cylinder-surface-area";
+import { prismCylinderVolumeLesson } from "./lessons/prism-cylinder-volume";
 import { projectionsLesson } from "./lessons/projections";
 import { proportionEquationsLesson } from "./lessons/proportion-equations";
 import { proportionGraphLesson } from "./lessons/proportion-graph";
 import { proportionTableExpressionLesson } from "./lessons/proportion-table-expression";
+import { pyramidConeSurfaceAreaLesson } from "./lessons/pyramid-cone-surface-area";
+import { pyramidConeVolumeLesson } from "./lessons/pyramid-cone-volume";
 import { reflectionLesson } from "./lessons/reflection";
 import { rotationLesson } from "./lessons/rotation";
+import { sectorArcLengthLesson } from "./lessons/sector-arc-length";
+import { sectorAreaLesson } from "./lessons/sector-area";
 import { solidByTranslationLesson } from "./lessons/solid-by-translation";
 import { solidsOfRevolutionLesson } from "./lessons/solids-of-revolution";
 import { spatialLineRelationsLesson } from "./lessons/spatial-line-relations";
+import { sphereSurfaceAreaLesson } from "./lessons/sphere-surface-area";
+import { sphereVolumeLesson } from "./lessons/sphere-volume";
 import { substitutionValueLesson } from "./lessons/substitution-value";
 import { subtractionLesson } from "./lessons/subtraction";
 import { tangentConstructionApplicationLesson } from "./lessons/tangent-construction-application";
@@ -102,7 +110,7 @@ export const middleMath1Areas: MathArea[] = [
   {
     key: "geometry",
     title: "図形",
-    description: "平面図形の作図と移動から、空間図形の位置関係や平面上での表現へ広げます。",
+    description: "平面図形の作図と移動から、空間図形の位置関係・表現・計量へ広げます。",
     units: [
       {
         key: "plane-geometry",
@@ -134,6 +142,22 @@ export const middleMath1Areas: MathArea[] = [
           projectionsLesson,
           solidByTranslationLesson,
           solidsOfRevolutionLesson,
+        ],
+      },
+      {
+        key: "solid-measurement",
+        title: "空間図形：計量",
+        description:
+          "扇形の弧・面積から、柱体・錐体・球の表面積と体積まで、図の分解と公式を結び付けて学びます。",
+        lessons: [
+          sectorArcLengthLesson,
+          sectorAreaLesson,
+          prismCylinderSurfaceAreaLesson,
+          pyramidConeSurfaceAreaLesson,
+          prismCylinderVolumeLesson,
+          pyramidConeVolumeLesson,
+          sphereSurfaceAreaLesson,
+          sphereVolumeLesson,
         ],
       },
     ],
