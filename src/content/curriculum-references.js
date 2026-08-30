@@ -9,6 +9,8 @@ const MATH_COMMENTARY_URL = "https://www.mext.go.jp/content/20260115-mxt_kyoiku0
 const SCIENCE_COMMENTARY_URL =
   "https://www.mext.go.jp/content/20250311-mxt_kyoiku02-100002620_05.pdf";
 const ENGLISH_COMMENTARY_URL = "https://www.mext.go.jp/content/1407073_09_1_2.pdf";
+const MIDDLE_MATH_COMMENTARY_URL =
+  "https://www.mext.go.jp/component/a_menu/education/micro_detail/__icsFiles/afieldfile/2019/03/18/1387018_004.pdf";
 const LAST_VERIFIED = "2026-08-30";
 
 function createReference({
@@ -17,17 +19,21 @@ function createReference({
   curriculumCourse,
   commentaryTitle,
   commentaryUrl,
+  guidelineTitle = "高等学校学習指導要領（平成30年告示）",
+  guidelineUrl = GUIDELINE_INDEX_URL,
+  routeBase,
   note,
 }) {
   return Object.freeze({
     courseTitle,
     subjectTitle,
     curriculumCourse,
-    guidelineTitle: "高等学校学習指導要領（平成30年告示）",
-    guidelineUrl: GUIDELINE_INDEX_URL,
+    guidelineTitle,
+    guidelineUrl,
     commentaryTitle,
     commentaryUrl,
     lastVerified: LAST_VERIFIED,
+    ...(routeBase ? { routeBase } : {}),
     ...(note ? { note } : {}),
   });
 }
@@ -110,6 +116,17 @@ export const curriculumReferences = Object.freeze({
     curriculumCourse: "数学Ｃ",
     commentaryTitle: mathCommentaryTitle,
     commentaryUrl: MATH_COMMENTARY_URL,
+  }),
+  "middle-math1": createReference({
+    courseTitle: "中学数学 1年",
+    subjectTitle: "数学",
+    curriculumCourse: "第1学年",
+    guidelineTitle: "中学校学習指導要領（平成29年告示）",
+    guidelineUrl: GUIDELINE_INDEX_URL,
+    commentaryTitle: "中学校学習指導要領（平成29年告示）解説 数学編",
+    commentaryUrl: MIDDLE_MATH_COMMENTARY_URL,
+    routeBase: "middle-school/math/grade1",
+    note: "現在は第1学年「A 数と式」のうち「正の数・負の数」から段階的に公開しています。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
