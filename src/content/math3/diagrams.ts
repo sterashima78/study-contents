@@ -182,7 +182,6 @@ function createVolumeScene(): DiagramScene {
   const width = 580;
   const height = 350;
   const graphOrigin = point(70, 270);
-  const graphEnd = point(285, 270);
   const lineEnd = point(285, 75);
   const sampleX = 220;
   const sampleY = 135;
