@@ -3,7 +3,7 @@ import { curriculumReferences } from "../src/content/curriculum-references.js";
 
 const pagesDirectory = new URL("../src/pages/", import.meta.url);
 const allowedHost = "www.mext.go.jp";
-const nonCoursePageDirectories = new Set(["middle-school"]);
+const nonCoursePageDirectories = new Set(["middle-school", "practice", "progress"]);
 const requiredFields = [
   "courseTitle",
   "subjectTitle",
