@@ -36,7 +36,8 @@ export const middleMath1Areas: MathArea[] = [
       {
         key: "literal-expressions",
         title: "文字と式",
-        description: "文字で数量を一般的に表し、表記・代入・一次式の加減・数量関係の表現を学びます。",
+        description:
+          "文字で数量を一般的に表し、表記・代入・一次式の加減・数量関係の表現を学びます。",
         lessons: [
           lettersMeaningLesson,
           multiplicationNotationLesson,
