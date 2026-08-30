@@ -61,7 +61,16 @@ function post(status: string, requestId: number, data: Record<string, unknown> =
 
 function serializeError(error: unknown) {
   const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
-  return message.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, " ").slice(0, 1200);
+  return stripControlCharacters(message).slice(0, 1200);
+}
+
+function stripControlCharacters(value: string) {
+  return Array.from(value)
+    .filter((character) => {
+      const code = character.charCodeAt(0);
+      return (code >= 32 && code !== 127) || code === 9 || code === 10 || code === 13;
+    })
+    .join("");
 }
 
 function stageOf(error: unknown, fallback: StudyAIStage) {
