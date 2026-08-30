@@ -20,7 +20,9 @@ const pageEntries = await readdir(pagesDirectory, { withFileTypes: true });
 const courseKeys = pageEntries
   .filter(
     (entry) =>
-      entry.isDirectory() && !entry.name.startsWith("[") && !nonCoursePageDirectories.has(entry.name),
+      entry.isDirectory() &&
+      !entry.name.startsWith("[") &&
+      !nonCoursePageDirectories.has(entry.name),
   )
   .map((entry) => entry.name)
   .sort();
