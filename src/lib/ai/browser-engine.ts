@@ -1,5 +1,3 @@
-import { STUDY_AI_MODEL_ID } from "./model-config";
-
 export { STUDY_AI_MODEL_ID } from "./model-config";
 
 export type StudyAIProgressReport = {
@@ -276,5 +274,3 @@ class AsyncQueue<T> implements AsyncIterable<T> {
     });
   }
 }
-
-void STUDY_AI_MODEL_ID;
