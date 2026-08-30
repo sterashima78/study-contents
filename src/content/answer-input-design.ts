@@ -70,12 +70,32 @@ const extractQuotedChoices = (prompt: string, answers: string[]) => {
   return validChoiceLabels(splitChoiceLabels(match[1]), answers);
 };
 
-const trimInlineChoice = (value: string) => value.replace(/^.*(?:は|を|が|の|で)/, "").trim();
+const trimInlineChoice = (value: string) => {
+  let result = value.trim();
+  for (const marker of ["では", "として", "なら", "は", "を", "が", "で"]) {
+    const index = result.lastIndexOf(marker);
+    if (index >= 0) result = result.slice(index + marker.length);
+  }
+  return result.replace(/^[「『]|[」』]$/g, "").trim();
+};
+
+const extractQuotedPair = (prompt: string, answers: string[]) => {
+  const match = prompt.match(/[「『]([^」』]+)[」』]と[「『]([^」』]+)[」』]のどちら/);
+  if (!match) return undefined;
+  return validChoiceLabels([match[1], match[2]], answers);
+};
 
 const extractBinaryInlineChoices = (prompt: string, answers: string[]) => {
-  const match = prompt.match(/([^、。?？\s]{1,24})(?:・|／|\/)([^、。?？\s]{1,24})のどちら/);
+  const match = prompt.match(/([^、。?？\s]{1,24})(?:・|／|\/|と)([^、。?？\s]{1,24})のどちら/);
   if (!match) return undefined;
   return validChoiceLabels([trimInlineChoice(match[1]), trimInlineChoice(match[2])], answers);
+};
+
+const extractNaryInlineChoices = (prompt: string, answers: string[]) => {
+  const match = prompt.match(/([^。?？]{3,80})のどれか/);
+  if (!match || !/[・／/、]/.test(match[1])) return undefined;
+  const labels = splitChoiceLabels(match[1]).map(trimInlineChoice);
+  return validChoiceLabels(labels, answers);
 };
 
 const strongPlaceholderChoiceCue =
@@ -94,11 +114,31 @@ const fixedChoiceLabels = (source: AnswerDesignSource): string[] | undefined => 
 
   if (/真か偽|真偽/.test(text)) return validChoiceLabels(["真", "偽"], source.answers);
 
+  if (/正しいか誤りか/.test(text)) {
+    return validChoiceLabels(["正しい", "誤り"], source.answers);
+  }
+
+  if (/必要か/.test(text)) {
+    return validChoiceLabels(["必要", "不要"], source.answers);
+  }
+
+  if (/高くなるか低くなるか/.test(text)) {
+    return validChoiceLabels(["高くなる", "低くなる"], source.answers);
+  }
+
+  if (/増加するか減少するか/.test(text)) {
+    return validChoiceLabels(["増加する", "減少する"], source.answers);
+  }
+
+  if (/大きくなるか小さくなるか/.test(text)) {
+    return validChoiceLabels(["大きくなる", "小さくなる"], source.answers);
+  }
+
   if (/最初に使う定理/.test(text)) {
     return validChoiceLabels(["正弦定理", "余弦定理"], source.answers);
   }
 
-  if (/必要条件|十分条件/.test(text) && /関係|判定|分類|どちら/.test(text)) {
+  if (/何条件/.test(text) || (/必要条件|十分条件/.test(text) && /関係|判定|分類|どちら/.test(text))) {
     return validChoiceLabels(
       ["必要条件", "十分条件", "必要十分条件", "どちらでもない"],
       source.answers,
@@ -170,7 +210,9 @@ const inferChoiceDesign = (source: AnswerDesignSource): AnswerInputDesign | unde
     extractQuotedChoices(source.prompt, source.answers) ??
     extractPlaceholderChoices(source) ??
     fixedChoiceLabels(source) ??
-    extractBinaryInlineChoices(source.prompt, source.answers);
+    extractQuotedPair(source.prompt, source.answers) ??
+    extractBinaryInlineChoices(source.prompt, source.answers) ??
+    extractNaryInlineChoices(source.prompt, source.answers);
   return labels ? choiceDesign(labels, source.prompt) : undefined;
 };
 
