@@ -1,0 +1,263 @@
+---
+import "../styles/exercise.css";
+
+type Props = {
+  mode: "lesson" | "unit";
+  areaKey: string;
+  unitKey: string;
+  lessonKey?: string;
+  routeBase: string;
+};
+
+const {
+  mode: _mode,
+  areaKey: _areaKey,
+  unitKey: _unitKey,
+  lessonKey: _lessonKey,
+  routeBase: _routeBase,
+} = Astro.props;
+const _base = import.meta.env.BASE_URL;
+const _isUnit = _mode === "unit";
+---
+
+<section
+  class:list={["exercise-set", _isUnit && "unit-exercise-set"]}
+  data-middle-math-exercise-set
+  data-mode={_mode}
+  data-area-key={_areaKey}
+  data-unit-key={_unitKey}
+  data-lesson-key={_lessonKey}
+  data-route-base={_routeBase}
+  data-base={_base}
+  aria-labelledby={_isUnit ? "unit-exercise-title" : "lesson-check-title"}
+>
+  <div class="exercise-heading">
+    <div>
+      <p class="section-label">{_isUnit ? "UNIT EXERCISE" : "CHECK"}</p>
+      <h2 id={_isUnit ? "unit-exercise-title" : "lesson-check-title"}>
+        {_isUnit ? "単元末演習" : "理解を確認する3問"}
+      </h2>
+    </div>
+    <p>
+      {
+        _isUnit
+          ? "単元全体から8問を出題し、小単元ごとの理解度を確認します。"
+          : "例題と練習のあとに、誘導なしで3問解いて確認します。"
+      }
+    </p>
+  </div>
+
+  <div class="exercise-toolbar">
+    <p class="exercise-count-note">{_isUnit ? "全8問 · 対応小単元を表示" : "全3問"}</p>
+    <button type="button" class="secondary-button exercise-regenerate">別の問題を作る</button>
+  </div>
+
+  <form class="exercise-form">
+    <div class="exercise-list" data-exercise-list></div>
+    <div class="exercise-actions">
+      <button type="submit" class="primary-button">採点する</button>
+      <button type="reset" class="secondary-button">回答を消す</button>
+    </div>
+  </form>
+
+  <p class="feedback exercise-feedback" aria-live="polite"></p>
+  <section class="exercise-diagnostic" data-exercise-diagnostic hidden aria-labelledby="diagnostic-title">
+    <h3 id="diagnostic-title">小単元ごとの理解度</h3>
+    <p>不正解がある小単元は、復習リンクから説明と例題へ戻れます。</p>
+    <div class="diagnostic-list" data-diagnostic-list></div>
+  </section>
+
+  <noscript>演習問題の生成と採点には JavaScript が必要です。</noscript>
+</section>
+
+<script>
+  import {
+    generateMiddleMath1LessonExercises,
+    generateMiddleMath1UnitExercises,
+    type MiddleMathExercise,
+  } from "../content/middle-school/math/grade1/exercise-registry";
+
+  const difficultyLabel: Record<MiddleMathExercise["difficulty"], string> = {
+    basic: "基礎",
+    applied: "応用",
+    challenge: "難問",
+  };
+
+  const normalizeAnswer = (value: string) =>
+    value
+      .trim()
+      .toLowerCase()
+      .replaceAll(/\s+/g, "")
+      .replaceAll("−", "-")
+      .replaceAll("–", "-")
+      .replaceAll("—", "-")
+      .replaceAll("＋", "+")
+      .replaceAll("℃", "")
+      .replaceAll("ｍ", "m");
+
+  const createElement = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  };
+
+  for (const section of document.querySelectorAll<HTMLElement>("[data-middle-math-exercise-set]")) {
+    const mode = section.dataset.mode;
+    const areaKey = section.dataset.areaKey;
+    const unitKey = section.dataset.unitKey;
+    const lessonKey = section.dataset.lessonKey;
+    const routeBase = section.dataset.routeBase;
+    const base = section.dataset.base ?? "/";
+    const form = section.querySelector<HTMLFormElement>(".exercise-form");
+    const list = section.querySelector<HTMLElement>("[data-exercise-list]");
+    const feedback = section.querySelector<HTMLElement>(".exercise-feedback");
+    const regenerate = section.querySelector<HTMLButtonElement>(".exercise-regenerate");
+    const diagnostic = section.querySelector<HTMLElement>("[data-exercise-diagnostic]");
+    const diagnosticList = section.querySelector<HTMLElement>("[data-diagnostic-list]");
+    if (!areaKey || !unitKey || !routeBase || !form || !list || !feedback || !regenerate || !diagnostic || !diagnosticList) {
+      continue;
+    }
+
+    let exercises: MiddleMathExercise[] = [];
+
+    const makeExercises = () =>
+      mode === "unit"
+        ? generateMiddleMath1UnitExercises(unitKey)
+        : lessonKey
+          ? generateMiddleMath1LessonExercises(lessonKey)
+          : [];
+
+    const renderExercises = () => {
+      exercises = makeExercises();
+      list.replaceChildren();
+      diagnostic.hidden = true;
+      diagnosticList.replaceChildren();
+      feedback.textContent = "";
+      feedback.className = "feedback exercise-feedback";
+
+      for (const [index, exercise] of exercises.entries()) {
+        const article = createElement("article", "exercise-question");
+        const header = createElement("div", "exercise-question-header");
+        header.append(
+          createElement("span", "exercise-number", `問${index + 1}`),
+          createElement(
+            "span",
+            `exercise-difficulty difficulty-${exercise.difficulty}`,
+            difficultyLabel[exercise.difficulty],
+          ),
+        );
+        const prompt = createElement("p", "exercise-prompt", exercise.prompt);
+        article.append(header, prompt);
+
+        if (mode === "unit") {
+          article.append(
+            createElement("p", "exercise-mapping", `対応: ${exercise.lessonTitles.join(" / ")}`),
+          );
+        }
+
+        const answerBlock = createElement("div", "exercise-answer-label");
+        const answerId = `middle-math-answer-${index}`;
+        const label = createElement("label", undefined, "答え");
+        label.htmlFor = answerId;
+        const input = document.createElement("input");
+        input.id = answerId;
+        input.type = "text";
+        input.className = "exercise-answer-editor exercise-text-input";
+        input.autocomplete = "off";
+        input.inputMode = "text";
+        input.required = true;
+        input.setAttribute("aria-label", `問${index + 1}の答え`);
+        answerBlock.append(label, input);
+        article.append(answerBlock);
+
+        if (exercise.hint) {
+          const details = createElement("details", "exercise-hint");
+          details.append(
+            createElement("summary", undefined, "ヒント"),
+            createElement("p", undefined, exercise.hint),
+          );
+          article.append(details);
+        }
+        list.append(article);
+      }
+    };
+
+    const renderDiagnostic = (results: Map<string, { title: string; correct: number; total: number }>) => {
+      diagnosticList.replaceChildren();
+      for (const [key, result] of [...results.entries()].sort(([, a], [, b]) => a.correct / a.total - b.correct / b.total)) {
+        const item = createElement("article", "diagnostic-item");
+        const ratio = result.total === 0 ? 0 : result.correct / result.total;
+        const link = createElement("a", "diagnostic-link", "この小単元を復習する");
+        link.href = `${base}${routeBase}/${areaKey}/${unitKey}/${key}/`;
+        item.append(
+          createElement("h4", undefined, result.title),
+          createElement("p", "diagnostic-score", `${result.correct}/${result.total} 正解`),
+          createElement(
+            "p",
+            ratio === 1 ? "diagnostic-status is-strong" : "diagnostic-status is-weak",
+            ratio === 1 ? "理解できています" : "復習候補",
+          ),
+          link,
+        );
+        diagnosticList.append(item);
+      }
+      diagnostic.hidden = false;
+    };
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let correctCount = 0;
+      const lessonResults = new Map<string, { title: string; correct: number; total: number }>();
+      const articles = [...list.querySelectorAll<HTMLElement>(".exercise-question")];
+
+      for (const [index, article] of articles.entries()) {
+        const exercise = exercises[index];
+        const input = article.querySelector<HTMLInputElement>("input");
+        if (!exercise || !input) continue;
+        const isCorrect = exercise.answers.map(normalizeAnswer).includes(normalizeAnswer(input.value));
+        article.classList.toggle("is-correct", isCorrect);
+        article.classList.toggle("is-error", !isCorrect);
+        input.classList.toggle("is-correct", isCorrect);
+        input.classList.toggle("is-error", !isCorrect);
+        if (isCorrect) correctCount += 1;
+
+        for (const [lessonIndex, key] of exercise.lessonKeys.entries()) {
+          const current = lessonResults.get(key) ?? {
+            title: exercise.lessonTitles[lessonIndex] ?? key,
+            correct: 0,
+            total: 0,
+          };
+          current.total += 1;
+          if (isCorrect) current.correct += 1;
+          lessonResults.set(key, current);
+        }
+      }
+
+      feedback.textContent = `全${exercises.length}問中 ${correctCount}問正解です。`;
+      feedback.className = `feedback exercise-feedback ${correctCount === exercises.length ? "is-correct" : "is-error"}`;
+      if (mode === "unit") renderDiagnostic(lessonResults);
+    });
+
+    form.addEventListener("reset", () => {
+      window.setTimeout(() => {
+        for (const article of list.querySelectorAll<HTMLElement>(".exercise-question")) {
+          article.classList.remove("is-correct", "is-error");
+          const input = article.querySelector<HTMLInputElement>("input");
+          input?.classList.remove("is-correct", "is-error");
+        }
+        feedback.textContent = "";
+        feedback.className = "feedback exercise-feedback";
+        diagnostic.hidden = true;
+        diagnosticList.replaceChildren();
+      }, 0);
+    });
+
+    regenerate.addEventListener("click", () => {
+      renderExercises();
+      feedback.textContent = "別の問題を生成しました。";
+    });
+
+    renderExercises();
+  }
+</script>

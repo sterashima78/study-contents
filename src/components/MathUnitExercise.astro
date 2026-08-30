@@ -1,8 +1,15 @@
 ---
-import { type MathCourseInfo, math1Course } from "../content/math-courses";
+import {
+  getCourseCurriculumKey,
+  getCourseScopeLabel,
+  type MathCourseInfo,
+  math1Course,
+} from "../content/math-courses";
 import type { MathArea, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MiddleMathExerciseSet from "./MiddleMathExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import SocialExerciseSet from "./SocialExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
@@ -25,6 +32,8 @@ const _base = import.meta.env.BASE_URL;
 const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
+const _scopeLabel = getCourseScopeLabel(_course);
+const _curriculumKey = getCourseCurriculumKey(_course);
 const _socialCourseKey =
   _course.key === "japanese-history" || _course.key === "world-history" || _course.key === "ethics"
     ? _course.key
@@ -33,7 +42,8 @@ const _socialCourseKey =
 
 <StudyPage
   title={`単元末演習 | ${_unit.title} | ${_course.title}`}
-  description={`高校${_course.title}「${_unit.title}」の単元末演習。基礎・応用・難問を自動採点し、小単元ごとの弱点を確認します。`}
+  description={`${_scopeLabel}「${_unit.title}」の単元末演習。問題を自動採点し、小単元ごとの弱点を確認します。`}
+  curriculumKey={_curriculumKey}
 >
   <BreadcrumbTrail
     items={[
@@ -55,6 +65,13 @@ const _socialCourseKey =
       <SocialExerciseSet
         mode="unit"
         courseKey={_socialCourseKey}
+        areaKey={_area.key}
+        unitKey={_unit.key}
+      />
+    ) : _course.key === "middle-math1" ? (
+      <MiddleMathExerciseSet
+        mode="unit"
+        routeBase={_course.routeBase}
         areaKey={_area.key}
         unitKey={_unit.key}
       />

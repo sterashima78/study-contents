@@ -1,0 +1,68 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "../../../components/ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "../../../components/ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "../../../components/ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "../../../components/ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "../../../components/ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "../../../components/ui/StudyPage.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SummaryPoints from "../../../components/ui/SummaryPoints.astro";
+
+const _base = import.meta.env.BASE_URL;
+---
+
+<StudyPage
+  title="中学数学 | 学習コンテンツ"
+  description="中学1〜3年の数学を学年別に学ぶための入口です。現在は中学1年を実装しています。"
+  width="wide"
+>
+  <ContentHero
+    kicker="JUNIOR HIGH MATHEMATICS"
+    title="中学数学"
+    description="数と式、図形、関数、データの活用を、学年ごとの既習事項に合わせて学びます。高校数学の教材とは説明・例題・演習を分けて管理します。"
+    variant="display"
+  />
+
+  <ContentSection labelledby="grades-title">
+    <SectionHeading
+      label="GRADES"
+      title="学年からはじめる"
+      id="grades-title"
+      description="まず1年の教材から公開し、同じ構成で2年・3年へ広げます。"
+    />
+    <ContentIndex
+      items={[
+        {
+          marker: "01",
+          title: "中学1年",
+          href: `${_base}middle-school/math/grade1/`,
+          description: "正の数・負の数から始め、文字式、方程式、比例・反比例、図形、データへ進みます。",
+          tags: ["正の数・負の数 公開中", "1ページ1技能"],
+          action: "1年の目次へ →",
+        },
+      ]}
+      variant="grid"
+    />
+  </ContentSection>
+
+  <ContentSection labelledby="planned-title" compact>
+    <SectionHeading label="PLANNED" title="続けて追加する学年" id="planned-title" />
+    <SummaryPoints
+      items={[
+        "中学2年: 式の計算、連立方程式、一次関数、図形の性質と証明、確率・データ。",
+        "中学3年: 平方根、多項式、二次方程式、関数 y=ax²、相似、円、三平方の定理、標本調査。",
+      ]}
+    />
+  </ContentSection>
+
+  <PageNavigation
+    previous={{ label: "← 中学校", href: `${_base}middle-school/` }}
+    next={{ label: "中学1年へ →", href: `${_base}middle-school/math/grade1/` }}
+  />
+</StudyPage>

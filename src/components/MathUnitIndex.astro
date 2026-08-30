@@ -1,5 +1,10 @@
 ---
-import { type MathCourseInfo, math1Course } from "../content/math-courses";
+import {
+  getCourseCurriculumKey,
+  getCourseScopeLabel,
+  type MathCourseInfo,
+  math1Course,
+} from "../content/math-courses";
 import type { MathArea, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ActionPanel from "./ui/ActionPanel.astro";
@@ -31,6 +36,8 @@ const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
 const _exerciseHref = `${_unitHref}exercise/`;
+const _scopeLabel = getCourseScopeLabel(_course);
+const _curriculumKey = getCourseCurriculumKey(_course);
 const _lessonItems = _unit.lessons.map((lesson, index) => ({
   marker: String(index + 1).padStart(2, "0"),
   title: lesson.title,
@@ -42,7 +49,8 @@ const _lessonItems = _unit.lessons.map((lesson, index) => ({
 
 <StudyPage
   title={`${_unit.title} | ${_area.title} | ${_course.title}`}
-  description={`高校${_course.title}「${_unit.title}」の小単元一覧。1ページ1テーマで学習し、最後に単元末演習で弱点を確認します。`}
+  description={`${_scopeLabel}「${_unit.title}」の小単元一覧。1ページ1テーマで学習し、最後に単元末演習で弱点を確認します。`}
+  curriculumKey={_curriculumKey}
 >
   <BreadcrumbTrail
     items={[

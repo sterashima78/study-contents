@@ -1,7 +1,12 @@
 ---
 import { designPracticeSteps } from "../content/answer-input-design";
 import { getLessonDiagrams } from "../content/lesson-diagrams";
-import { type MathCourseInfo, math1Course } from "../content/math-courses";
+import {
+  getCourseCurriculumKey,
+  getCourseScopeLabel,
+  type MathCourseInfo,
+  math1Course,
+} from "../content/math-courses";
 import { getFormulaDerivation } from "../content/math1/formula-registry";
 import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
 import { getMath3FormulaDerivation } from "../content/math3/formula-derivations";
@@ -12,6 +17,8 @@ import { toPortableMathText } from "../lib/math-display";
 import DiagramView from "./diagram/DiagramView.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MiddleMathExerciseSet from "./MiddleMathExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import SocialExerciseSet from "./SocialExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
@@ -53,7 +60,10 @@ const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
-const _practiceSteps = designPracticeSteps(_course.key, _lesson.practice.steps);
+const _practiceSteps = designPracticeSteps(
+  _course.key === "middle-math1" ? "math1" : _course.key,
+  _lesson.practice.steps,
+);
 const _portablePracticeSteps = _practiceSteps.map((step) => ({
   ...step,
   prompt: toPortableMathText(step.prompt),
@@ -61,24 +71,28 @@ const _portablePracticeSteps = _practiceSteps.map((step) => ({
   options: step.options?.map((option) => ({ ...option, label: toPortableMathText(option.label) })),
 }));
 const _lessonDiagrams = getLessonDiagrams(_course.key, _lesson.key);
+const _scopeLabel = getCourseScopeLabel(_course);
+const _curriculumKey = getCourseCurriculumKey(_course);
 const _socialCourseKey =
   _course.key === "japanese-history" || _course.key === "world-history" || _course.key === "ethics"
     ? _course.key
     : undefined;
-const _formulaDerivation = _socialCourseKey
-  ? undefined
-  : _course.key === "matha"
-    ? getMathAFormulaDerivation(_lesson.key)
-    : _course.key === "mathc"
-      ? getMathCFormulaDerivation(_lesson.key)
-      : _course.key === "math3"
-        ? getMath3FormulaDerivation(_lesson.key)
-        : getFormulaDerivation(_lesson.key);
+const _formulaDerivation =
+  _socialCourseKey || _course.key === "middle-math1"
+    ? undefined
+    : _course.key === "matha"
+      ? getMathAFormulaDerivation(_lesson.key)
+      : _course.key === "mathc"
+        ? getMathCFormulaDerivation(_lesson.key)
+        : _course.key === "math3"
+          ? getMath3FormulaDerivation(_lesson.key)
+          : getFormulaDerivation(_lesson.key);
 ---
 
 <StudyPage
   title={`${_lesson.title} | ${_unit.title} | ${_course.title}`}
-  description={`高校${_course.title}「${_lesson.title}」の教材。考え方、例題直後の練習問題、3問の確認演習、まとめで学習します。`}
+  description={`${_scopeLabel}「${_lesson.title}」の教材。考え方、例題直後の練習問題、3問の確認演習、まとめで学習します。`}
+  curriculumKey={_curriculumKey}
 >
   <BreadcrumbTrail
     items={[
@@ -161,6 +175,14 @@ const _formulaDerivation = _socialCourseKey
       <SocialExerciseSet
         mode="lesson"
         courseKey={_socialCourseKey}
+        areaKey={_area.key}
+        unitKey={_unit.key}
+        lessonKey={_lesson.key}
+      />
+    ) : _course.key === "middle-math1" ? (
+      <MiddleMathExerciseSet
+        mode="lesson"
+        routeBase={_course.routeBase}
         areaKey={_area.key}
         unitKey={_unit.key}
         lessonKey={_lesson.key}

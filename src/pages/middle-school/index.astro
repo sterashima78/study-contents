@@ -1,0 +1,69 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "../../components/ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "../../components/ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "../../components/ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "../../components/ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "../../components/ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "../../components/ui/StudyPage.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SummaryPoints from "../../components/ui/SummaryPoints.astro";
+
+const _base = import.meta.env.BASE_URL;
+---
+
+<StudyPage
+  title="中学校 | 学習コンテンツ"
+  description="中学1〜3年の数学・理科・英語を対象にした学習コンテンツです。まず中学数学から公開します。"
+  width="wide"
+>
+  <ContentHero
+    kicker="LOWER SECONDARY"
+    title="中学校"
+    description="中学1〜3年の数学・理科・英語を、1ページ1技能の短い教材で学べるように整備します。現在は中学数学から実装しています。"
+    variant="display"
+  />
+
+  <ContentSection labelledby="subjects-title">
+    <SectionHeading
+      label="SUBJECTS"
+      title="教科からはじめる"
+      id="subjects-title"
+      description="最初の公開対象は中学数学です。理科・英語は同じ基盤へ順次追加します。"
+    />
+    <ContentIndex
+      items={[
+        {
+          marker: "01",
+          title: "数学",
+          href: `${_base}middle-school/math/`,
+          description: "学年ごとに、数と式・図形・関数・データの活用を小さな技能へ分けて学びます。",
+          tags: ["1年から公開", "自動採点", "高校数学へ接続"],
+          action: "中学数学へ →",
+        },
+      ]}
+      variant="grid"
+    />
+  </ContentSection>
+
+  <ContentSection labelledby="scope-title" compact>
+    <SectionHeading label="SCOPE" title="一旦の対象" id="scope-title" />
+    <SummaryPoints
+      items={[
+        "中学数学: 1〜3年。現在は1年の「正の数・負の数」から公開。",
+        "中学理科: 1〜3年。数学の基盤を確認後に追加予定。",
+        "中学英語: 1〜3年。理科に続いて追加予定。",
+      ]}
+    />
+  </ContentSection>
+
+  <PageNavigation
+    previous={{ label: "← 学習コンテンツ", href: _base }}
+    next={{ label: "中学数学へ →", href: `${_base}middle-school/math/` }}
+  />
+</StudyPage>

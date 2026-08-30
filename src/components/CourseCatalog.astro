@@ -25,9 +25,12 @@ type CourseItem = {
 
 type Props = {
   courses: CourseItem[];
+  middleSchoolHref?: string;
 };
 
-const { courses: _courses } = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const { courses: _courses, middleSchoolHref: _middleSchoolHref = `${_base}middle-school/` } =
+  Astro.props as Props;
 const _items = _courses.map((course, index) => ({
   marker: String(index + 1).padStart(2, "0"),
   kicker: course.kicker,
@@ -41,28 +44,52 @@ const _items = _courses.map((course, index) => ({
 ---
 
 <StudyPage
-  title="高校学習コンテンツ"
-  description="生成AIを使って、高校範囲の学習コンテンツを構成・改善する実験です。"
+  title="学習コンテンツ"
+  description="生成AIを使って、中学校・高等学校範囲の学習コンテンツを構成・改善する実験です。"
   width="wide"
 >
   <ContentHero
-    kicker="EXPERIMENTAL HIGH SCHOOL STUDY CONTENTS"
-    title="高校学習コンテンツ"
-    description="生成AIを使って、高校範囲の学習コンテンツを構成・改善する実験です。教材は科目・領域・単元・小単元ごとに公開しています。"
+    kicker="EXPERIMENTAL STUDY CONTENTS"
+    title="学習コンテンツ"
+    description="生成AIを使って、中学校・高等学校範囲の学習コンテンツを構成・改善する実験です。教材は学校段階・教科・領域・単元・小単元ごとに公開しています。"
     variant="display"
   />
 
   <ExperimentalNotice />
 
+  <ContentSection labelledby="middle-school-title" compact>
+    <SectionHeading
+      label="LOWER SECONDARY"
+      title="中学校"
+      id="middle-school-title"
+      description="中学数学から整備を始め、理科・英語へ順次広げます。"
+    />
+    <ContentIndex
+      items={[
+        {
+          marker: "01",
+          title: "中学生向け教材",
+          href: _middleSchoolHref,
+          description: "数学・理科・英語を対象に、学年ごとの基礎を1ページ1技能で学べるようにします。",
+          tags: ["数学", "理科", "英語"],
+          meta: "中学1〜3年",
+          action: "中学校の教材へ →",
+        },
+      ]}
+      variant="grid"
+      density="compact"
+    />
+  </ContentSection>
+
   <ContentSection labelledby="courses-title" compact>
     <SectionHeading
-      label="COURSES"
-      title="科目からはじめる"
+      label="UPPER SECONDARY"
+      title="高校の科目からはじめる"
       id="courses-title"
       description="学びたい科目を選んでください。各科目の目次から、領域・単元・小単元へ進めます。"
     />
     <ContentIndex items={_items} variant="grid" density="compact" />
   </ContentSection>
 
-  <PageFooter items={["高校学習コンテンツ", "生成AIを使った実験的な学習コンテンツ"]} />
+  <PageFooter items={["学習コンテンツ", "生成AIを使った実験的な学習コンテンツ"]} />
 </StudyPage>

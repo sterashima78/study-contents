@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleMath1Course } from "../../../../content/math-courses";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleMath1Areas } from "../../../../content/middle-school/math/grade1/catalog";
+---
+
+<CourseHome
+  course={middleMath1Course}
+  areas={middleMath1Areas}
+  description="中学1年の数学を、既習事項を確かめながら1ページ1技能で学びます。まず「正の数・負の数」を公開し、同じ粒度で範囲を広げます。"
+  metaDescription="中学1年数学の学習コンテンツ。現行の中学校学習指導要領を基準に、正の数・負の数から1ページ1技能で学びます。"
+  footerDescription="現行の中学校学習指導要領を基準に、段階的に教材を追加します。"
+/>
