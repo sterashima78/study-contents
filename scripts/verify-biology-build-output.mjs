@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: ["生物基礎", "BASIC BIOLOGY", "生物", "BIOLOGY"],
+    markers: ['href="/study-contents/biology-basic/"', 'href="/study-contents/biology/"'],
   },
   {
     path: new URL("../dist/biology-basic/index.html", import.meta.url),

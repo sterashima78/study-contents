@@ -12,8 +12,6 @@ import ContentIndex from "./ui/ContentIndex.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentSection from "./ui/ContentSection.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import LearningFlow from "./ui/LearningFlow.astro";
-// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PageNavigation from "./ui/PageNavigation.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import SectionHeading from "./ui/SectionHeading.astro";
@@ -54,14 +52,6 @@ const _lessonItems = _unit.lessons.map((lesson, index) => ({
     ]}
   />
   <ContentHero kicker={_area.title} title={_unit.title} description={_unit.description} />
-
-  <ActionPanel
-    label="LEARNING FLOW"
-    title="小さく区切って順番に学ぶ"
-    description="各ページは1つのテーマだけを扱います。考え方を確認し、例題で整理した直後に練習し、3問の確認演習で自力で説明・解答できるか確かめます。"
-  >
-    <LearningFlow steps={["考え方", "例題", "直後の練習", "3問確認", "まとめ"]} />
-  </ActionPanel>
 
   <ContentSection labelledby="lessons-title">
     <SectionHeading

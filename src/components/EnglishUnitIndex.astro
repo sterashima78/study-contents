@@ -2,8 +2,6 @@
 import type { EnglishCourseInfo } from "../content/english/course";
 import type { EnglishArea, EnglishUnit } from "../content/english/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import ActionPanel from "./ui/ActionPanel.astro";
-// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentHero from "./ui/ContentHero.astro";
@@ -11,8 +9,6 @@ import ContentHero from "./ui/ContentHero.astro";
 import ContentIndex from "./ui/ContentIndex.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentSection from "./ui/ContentSection.astro";
-// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import LearningFlow from "./ui/LearningFlow.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PageNavigation from "./ui/PageNavigation.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
@@ -53,14 +49,6 @@ const _lessonItems = _unit.lessons.map((lesson, index) => ({
     ]}
   />
   <ContentHero kicker={_area.title} title={_unit.title} description={_unit.description} />
-
-  <ActionPanel
-    label="LEARNING FLOW"
-    title="英文の役割を確認してから使う"
-    description="ルールを単独で暗記するのではなく、英文の中で何を手掛かりに判断するかを確認し、例題の直後に同じ技能を使います。"
-  >
-    <LearningFlow steps={["要点", "英文・例文", "分析", "直後の練習", "まとめ"]} />
-  </ActionPanel>
 
   <ContentSection labelledby="lessons-title">
     <SectionHeading

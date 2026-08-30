@@ -1,19 +1,16 @@
 ---
 type Props = {
-  label: string;
+  label?: string;
   title: string;
   description?: string;
   id?: string;
 };
 
-const { label: _label, title: _title, description: _description, id: _id } = Astro.props;
+const { title: _title, description: _description, id: _id } = Astro.props;
 ---
 
 <div class="heading">
-  <div>
-    <p class="label">{_label}</p>
-    <h2 id={_id}>{_title}</h2>
-  </div>
+  <h2 id={_id}>{_title}</h2>
   {_description && <p class="description">{_description}</p>}
 </div>
 
@@ -24,14 +21,6 @@ const { label: _label, title: _title, description: _description, id: _id } = Ast
     gap: clamp(1.2rem, 4vw, 3rem);
     align-items: end;
     margin-bottom: 1.8rem;
-  }
-
-  .label {
-    margin: 0 0 0.55rem;
-    color: var(--color-accent);
-    font-size: 0.7rem;
-    font-weight: 750;
-    letter-spacing: 0.18em;
   }
 
   h2 {

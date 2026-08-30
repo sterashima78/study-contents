@@ -37,10 +37,7 @@ const {
   data-error-message={_errorMessage}
 >
   <div class="header">
-    <div>
-      <p class="label">PRACTICE</p>
-      <h3>{_title}</h3>
-    </div>
+    <h3>{_title}</h3>
     {_position && <p class="position">{_position}</p>}
   </div>
 
@@ -173,14 +170,6 @@ const {
     align-items: start;
     justify-content: space-between;
     margin-bottom: 1rem;
-  }
-
-  .label {
-    margin: 0 0 0.35rem;
-    color: var(--color-accent);
-    font-size: 0.7rem;
-    font-weight: 750;
-    letter-spacing: 0.14em;
   }
 
   h3 {
