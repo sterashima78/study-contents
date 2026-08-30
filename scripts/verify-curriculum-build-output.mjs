@@ -6,13 +6,14 @@ const issues = [];
 let checkedPages = 0;
 
 for (const [courseKey, reference] of Object.entries(curriculumReferences)) {
-  const courseDirectory = new URL(`${courseKey}/`, distDirectory);
+  const routeBase = reference.routeBase ?? courseKey;
+  const courseDirectory = new URL(`${routeBase}/`, distDirectory);
   let htmlFiles;
 
   try {
     htmlFiles = await findHtmlFiles(courseDirectory);
   } catch {
-    issues.push(`${courseKey}: ビルド出力ディレクトリが存在しません。`);
+    issues.push(`${courseKey}: ビルド出力ディレクトリ ${routeBase}/ が存在しません。`);
     continue;
   }
 
