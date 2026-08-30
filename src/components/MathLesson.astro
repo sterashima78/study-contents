@@ -12,6 +12,7 @@ import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
 import { getMath3FormulaDerivation } from "../content/math3/formula-derivations";
 import { getMathAFormulaDerivation } from "../content/matha/formula-derivations";
 import { getMathCFormulaDerivation } from "../content/mathc/formula-derivations";
+import { toPortableMathText } from "../lib/math-display";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import DiagramView from "./diagram/DiagramView.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
@@ -63,6 +64,12 @@ const _practiceSteps = designPracticeSteps(
   _course.key === "middle-math1" ? "math1" : _course.key,
   _lesson.practice.steps,
 );
+const _portablePracticeSteps = _practiceSteps.map((step) => ({
+  ...step,
+  prompt: toPortableMathText(step.prompt),
+  placeholder: step.placeholder ? toPortableMathText(step.placeholder) : step.placeholder,
+  options: step.options?.map((option) => ({ ...option, label: toPortableMathText(option.label) })),
+}));
 const _lessonDiagrams = getLessonDiagrams(_course.key, _lesson.key);
 const _scopeLabel = getCourseScopeLabel(_course);
 const _curriculumKey = getCourseCurriculumKey(_course);
@@ -98,13 +105,13 @@ const _formulaDerivation =
   <ContentHero
     kicker={`${_area.title} · ${String(_lessonIndex + 1).padStart(2, "0")}`}
     title={_lesson.title}
-    description={_lesson.description}
+    description={toPortableMathText(_lesson.description)}
     compact
   />
 
   <ContentSection labelledby="goal-title" compact>
     <SectionHeading label="GOAL" title="このページでできるようになること" id="goal-title" />
-    <SummaryPoints items={_lesson.goals} />
+    <SummaryPoints items={_lesson.goals.map(toPortableMathText)} />
   </ContentSection>
 
   <ContentSection labelledby="rule-title">
@@ -154,9 +161,9 @@ const _formulaDerivation =
     />
     <GuidedPractice
       title={_lesson.practice.title}
-      problem={_lesson.practice.problem}
-      steps={_practiceSteps}
-      hint={_lesson.practice.hint}
+      problem={toPortableMathText(_lesson.practice.problem)}
+      steps={_portablePracticeSteps}
+      hint={toPortableMathText(_lesson.practice.hint)}
       position="例題の直後に確認"
       successMessage="すべて正解です。例題の考え方を自分で再現できています。"
       errorMessage="赤く表示された項目を例題と比べて確認してください。"
@@ -193,7 +200,7 @@ const _formulaDerivation =
 
   <ContentSection labelledby="summary-title" compact>
     <SectionHeading label="SUMMARY" title="このページのポイント" id="summary-title" />
-    <SummaryPoints items={_lesson.summary} />
+    <SummaryPoints items={_lesson.summary.map(toPortableMathText)} />
   </ContentSection>
 
   <PageNavigation
