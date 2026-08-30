@@ -8,8 +8,6 @@ import ContentIndex from "./ui/ContentIndex.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentSection from "./ui/ContentSection.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import LearningFlow from "./ui/LearningFlow.astro";
-// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PageFooter from "./ui/PageFooter.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import SectionHeading from "./ui/SectionHeading.astro";
@@ -87,12 +85,7 @@ const _advancedItems = _advancedAreas?.map((area, index) => ({
     title={_course.title}
     description={_description}
     variant="display"
-  >
-    <LearningFlow
-      label="各小単元の学習の流れ"
-      steps={["考え方", "導出・根拠", "例題", "直後の練習", "3問確認", "まとめ"]}
-    />
-  </ContentHero>
+  />
 
   <ContentSection labelledby="curriculum-title">
     <SectionHeading

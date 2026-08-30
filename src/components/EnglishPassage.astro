@@ -8,7 +8,6 @@ const { title: _title, paragraphs: _paragraphs } = Astro.props as Props;
 ---
 
 <article class="english-passage" lang="en">
-  <p class="label">ORIGINAL ENGLISH</p>
   <h3>{_title}</h3>
   <div class="body">
     {_paragraphs.map((paragraph) => <p>{paragraph}</p>)}
@@ -21,14 +20,6 @@ const { title: _title, paragraphs: _paragraphs } = Astro.props as Props;
     border: 1px solid var(--color-border-soft);
     border-radius: 1.15rem;
     background: rgb(255 255 255 / 82%);
-  }
-
-  .label {
-    margin: 0 0 0.7rem;
-    color: var(--color-accent);
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.16em;
   }
 
   h3 {

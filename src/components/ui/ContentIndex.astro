@@ -34,7 +34,6 @@ const { items: _items, variant: _variant = "rows", density: _density = "normal" 
         <div class="heading">
           {item.marker && <span class="marker" aria-hidden="true">{item.marker}</span>}
           <div class="title-group">
-            {item.kicker && <p class="kicker">{item.kicker}</p>}
             <h3><a href={item.href}>{item.title}</a></h3>
           </div>
           {item.badge && <span class:list={["badge", item.badgeTone === "advanced" && "is-advanced"]}>{item.badge}</span>}
@@ -130,18 +129,6 @@ const { items: _items, variant: _variant = "rows", density: _density = "normal" 
   .density-compact.variant-grid .marker {
     min-width: 1.55rem;
     font-size: 0.7rem;
-  }
-
-  .kicker {
-    margin: 0 0 0.28rem;
-    color: var(--color-muted);
-    font-size: 0.67rem;
-    font-weight: 750;
-    letter-spacing: 0.13em;
-  }
-
-  .density-compact .kicker {
-    font-size: 0.63rem;
   }
 
   h3 {

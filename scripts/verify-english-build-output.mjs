@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: ["英語", "ENGLISH", "英語基礎", "長文読解"],
+    markers: ["英語", "英語基礎", "長文読解"],
   },
   {
     path: new URL("../dist/english/index.html", import.meta.url),
@@ -22,7 +22,7 @@ const checks = [
       "../dist/english/reading/exam-reading/inference-paraphrase/index.html",
       import.meta.url,
     ),
-    markers: ["言い換えから推論する", "ORIGINAL ENGLISH", "Nora usually cycled to school"],
+    markers: ["言い換えから推論する", "Nora usually cycled to school"],
   },
   {
     path: new URL(

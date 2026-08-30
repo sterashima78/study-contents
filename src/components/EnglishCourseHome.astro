@@ -10,8 +10,6 @@ import ContentIndex from "./ui/ContentIndex.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentSection from "./ui/ContentSection.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import LearningFlow from "./ui/LearningFlow.astro";
-// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import PageFooter from "./ui/PageFooter.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import SectionHeading from "./ui/SectionHeading.astro";
@@ -55,12 +53,7 @@ const _totalLessonCount = _areas.reduce(
     title={_course.title}
     description="文法事項を単独で暗記するだけでなく、英文の構造を読み、情報を取り出し、論理的に表現するところまでを一続きで学びます。"
     variant="display"
-  >
-    <LearningFlow
-      label="各小単元の学習の流れ"
-      steps={["要点", "英文・例文", "構造分析", "直後の練習", "まとめ"]}
-    />
-  </ContentHero>
+  />
 
   <ContentSection labelledby="curriculum-title">
     <SectionHeading

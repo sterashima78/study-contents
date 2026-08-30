@@ -1,6 +1,6 @@
 ---
 type Props = {
-  kicker: string;
+  kicker?: string;
   title: string;
   description: string;
   variant?: "display" | "lesson";
@@ -8,7 +8,6 @@ type Props = {
 };
 
 const {
-  kicker: _kicker,
   title: _title,
   description: _description,
   variant: _variant = "lesson",
@@ -17,7 +16,6 @@ const {
 ---
 
 <header class:list={["hero", `variant-${_variant}`, _compact && "is-compact"]}>
-  <p class="kicker">{_kicker}</p>
   <h1>{_title}</h1>
   <p class="description">{_description}</p>
   <slot />
@@ -36,14 +34,6 @@ const {
   .variant-display {
     max-width: 50rem;
     padding-bottom: clamp(2rem, 4vw, 3rem);
-  }
-
-  .kicker {
-    margin: 0 0 0.75rem;
-    color: var(--color-accent);
-    font-size: 0.68rem;
-    font-weight: 750;
-    letter-spacing: 0.18em;
   }
 
   h1 {

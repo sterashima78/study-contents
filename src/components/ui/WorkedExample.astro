@@ -16,7 +16,6 @@ type Props = {
 };
 
 const {
-  label: _label,
   title: _title,
   introduction: _introduction,
   problem: _problem,
@@ -27,7 +26,6 @@ const {
 ---
 
 <article class="worked-example">
-  {_label && <p class="label">{_label}</p>}
   {_title && <h3>{_title}</h3>}
   {_introduction && <p class="introduction">{_introduction}</p>}
   {_problem && <p class="problem">{_problem}</p>}
@@ -52,14 +50,6 @@ const {
     border: 1px solid var(--color-border-soft);
     border-radius: 0.3rem;
     background: var(--surface);
-  }
-
-  .label {
-    margin: 0 0 0.55rem;
-    color: var(--color-accent);
-    font-size: 0.7rem;
-    font-weight: 750;
-    letter-spacing: 0.16em;
   }
 
   h3 {
