@@ -5,10 +5,18 @@ export type PracticeOption = {
   label: string;
 };
 
-export type PracticeStep = {
+type PracticeStepBase = {
   prompt: string;
   answers: string[];
   placeholder?: string;
-  input?: PracticeInputKind;
-  options?: PracticeOption[];
 };
+
+export type PracticeStep =
+  | (PracticeStepBase & {
+      input?: "text" | "math";
+      options?: never;
+    })
+  | (PracticeStepBase & {
+      input: "radio" | "select" | "checkbox";
+      options: PracticeOption[];
+    });
