@@ -1,0 +1,683 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "../../components/ui/StudyPage.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "../../components/ui/ContentHero.astro";
+import { biologyAreas } from "../../content/biology/catalog";
+import { biologyBasicAreas } from "../../content/biology-basic/catalog";
+import { chemistryAreas } from "../../content/chemistry/catalog";
+import { chemistryBasicAreas } from "../../content/chemistry-basic/catalog";
+import { englishAreas } from "../../content/english/catalog";
+import { ethicsAreas } from "../../content/ethics/catalog";
+import { japaneseAreas } from "../../content/japanese/catalog";
+import { japaneseHistoryAreas } from "../../content/japanese-history/catalog";
+import { math1Areas } from "../../content/math1/catalog";
+import { math2Areas } from "../../content/math2/catalog";
+import { math3Areas } from "../../content/math3/catalog";
+import { mathAAreas } from "../../content/matha/catalog";
+import { mathBAreas } from "../../content/mathb/catalog";
+import { mathCAreas } from "../../content/mathc/catalog";
+import { physicsAreas } from "../../content/physics/catalog";
+import { physicsBasicsAreas } from "../../content/physics-basics/catalog";
+import { worldHistoryAreas } from "../../content/world-history/catalog";
+
+const _base = import.meta.env.BASE_URL;
+const _courses = [
+  { key: "math1", title: "数学I", areas: math1Areas },
+  { key: "matha", title: "数学A", areas: mathAAreas },
+  { key: "math2", title: "数学II", areas: math2Areas },
+  { key: "mathb", title: "数学B", areas: mathBAreas },
+  { key: "mathc", title: "数学C", areas: mathCAreas },
+  { key: "math3", title: "数学III", areas: math3Areas },
+  { key: "chemistry-basic", title: "化学基礎", areas: chemistryBasicAreas },
+  { key: "chemistry", title: "化学", areas: chemistryAreas },
+  { key: "physics-basics", title: "物理基礎", areas: physicsBasicsAreas },
+  { key: "physics", title: "物理", areas: physicsAreas },
+  { key: "biology-basic", title: "生物基礎", areas: biologyBasicAreas },
+  { key: "biology", title: "生物", areas: biologyAreas },
+  { key: "japanese", title: "国語", areas: japaneseAreas },
+  { key: "english", title: "英語", areas: englishAreas },
+  { key: "japanese-history", title: "日本史", areas: japaneseHistoryAreas },
+  { key: "world-history", title: "世界史", areas: worldHistoryAreas },
+  { key: "ethics", title: "倫理", areas: ethicsAreas },
+];
+
+const _questionBank = _courses.map((course) => ({
+  key: course.key,
+  title: course.title,
+  areas: course.areas.map((area) => ({
+    key: area.key,
+    title: area.title,
+    questions: area.units.flatMap((unit) =>
+      unit.lessons.flatMap((lesson) =>
+        lesson.practice.steps.map((step, stepIndex) => ({
+          id: `${course.key}:${area.key}:${unit.key}:${lesson.key}:${stepIndex}`,
+          unitKey: unit.key,
+          unitTitle: unit.title,
+          lessonKey: lesson.key,
+          lessonTitle: lesson.title,
+          prompt: step.prompt,
+          answers: step.answers,
+          input: step.input ?? "text",
+          options: step.options ?? [],
+          placeholder: step.placeholder ?? "",
+          hint: lesson.practice.hint,
+        })),
+      ),
+    ),
+  })),
+}));
+---
+
+<StudyPage
+  title="演習問題 | 高校学習コンテンツ"
+  description="科目と領域、問題数を選び、10〜30問程度の演習に取り組めます。結果はブラウザ内の学習記録に保存されます。"
+  width="wide"
+>
+  <ContentHero
+    kicker="PRACTICE"
+    title="領域を選んで演習する"
+    description="科目と領域を選び、10〜30問から問題数を指定します。採点結果はこのブラウザにだけ保存され、学習記録ページで強みと復習候補を確認できます。"
+    compact
+  />
+
+  <section class="practice-config" aria-labelledby="practice-config-title">
+    <div class="practice-config-heading">
+      <div>
+        <p class="section-label">SETUP</p>
+        <h2 id="practice-config-title">出題範囲を設定</h2>
+      </div>
+      <a class="record-link" href={`${_base}progress/`}>学習記録を見る</a>
+    </div>
+    <div class="practice-controls">
+      <label>
+        <span>科目</span>
+        <select data-course-select></select>
+      </label>
+      <label>
+        <span>領域</span>
+        <select data-area-select></select>
+      </label>
+      <label>
+        <span>問題数</span>
+        <select data-count-select>
+          <option value="10">10問</option>
+          <option value="15">15問</option>
+          <option value="20" selected>20問</option>
+          <option value="25">25問</option>
+          <option value="30">30問</option>
+        </select>
+      </label>
+      <button type="button" class="primary-button" data-start-practice>問題を作る</button>
+    </div>
+    <p class="practice-availability" data-availability aria-live="polite"></p>
+  </section>
+
+  <section class="practice-session" data-practice-session hidden aria-labelledby="practice-session-title">
+    <div class="practice-session-heading">
+      <div>
+        <p class="section-label">QUESTION SET</p>
+        <h2 id="practice-session-title" data-session-title>演習問題</h2>
+      </div>
+      <p data-session-count></p>
+    </div>
+    <form data-practice-form>
+      <div class="practice-list" data-practice-list></div>
+      <div class="practice-actions">
+        <button type="submit" class="primary-button">採点して記録する</button>
+        <button type="button" class="secondary-button" data-new-set>別の問題を作る</button>
+      </div>
+    </form>
+    <div class="practice-result" data-practice-result hidden aria-live="polite"></div>
+  </section>
+
+  <script type="application/json" id="practice-question-bank" set:html={JSON.stringify(_questionBank)}></script>
+  <noscript>演習問題の生成、採点、学習記録の保存には JavaScript が必要です。</noscript>
+</StudyPage>
+
+<script>
+  import { MathfieldElement } from "mathlive";
+  import "mathlive/fonts.css";
+  import { addLearningAttempt, type LearningQuestionResult } from "../../lib/learning-records";
+
+  type PracticeOption = { value: string; label: string };
+  type PracticeQuestion = {
+    id: string;
+    unitKey: string;
+    unitTitle: string;
+    lessonKey: string;
+    lessonTitle: string;
+    prompt: string;
+    answers: string[];
+    input: "text" | "math" | "radio" | "select" | "checkbox";
+    options: PracticeOption[];
+    placeholder: string;
+    hint: string;
+  };
+  type PracticeArea = { key: string; title: string; questions: PracticeQuestion[] };
+  type PracticeCourse = { key: string; title: string; areas: PracticeArea[] };
+
+  MathfieldElement.soundsDirectory = null;
+
+  const bankElement = document.querySelector<HTMLScriptElement>("#practice-question-bank");
+  const courses = bankElement ? (JSON.parse(bankElement.textContent ?? "[]") as PracticeCourse[]) : [];
+  const courseSelect = document.querySelector<HTMLSelectElement>("[data-course-select]");
+  const areaSelect = document.querySelector<HTMLSelectElement>("[data-area-select]");
+  const countSelect = document.querySelector<HTMLSelectElement>("[data-count-select]");
+  const startButton = document.querySelector<HTMLButtonElement>("[data-start-practice]");
+  const availability = document.querySelector<HTMLElement>("[data-availability]");
+  const session = document.querySelector<HTMLElement>("[data-practice-session]");
+  const sessionTitle = document.querySelector<HTMLElement>("[data-session-title]");
+  const sessionCount = document.querySelector<HTMLElement>("[data-session-count]");
+  const form = document.querySelector<HTMLFormElement>("[data-practice-form]");
+  const list = document.querySelector<HTMLElement>("[data-practice-list]");
+  const result = document.querySelector<HTMLElement>("[data-practice-result]");
+  const newSetButton = document.querySelector<HTMLButtonElement>("[data-new-set]");
+
+  let currentQuestions: PracticeQuestion[] = [];
+  let currentCourse: PracticeCourse | undefined;
+  let currentArea: PracticeArea | undefined;
+  let requestedCount = 20;
+  let recorded = false;
+
+  const createElement = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  };
+
+  const shuffle = <T>(values: readonly T[]) => {
+    const result = [...values];
+    for (let index = result.length - 1; index > 0; index -= 1) {
+      const target = Math.floor(Math.random() * (index + 1));
+      [result[index], result[target]] = [result[target], result[index]];
+    }
+    return result;
+  };
+
+  const normalizeAnswer = (value: string) => {
+    let normalized = value
+      .trim()
+      .toLowerCase()
+      .replaceAll(/\s+/g, "")
+      .replaceAll("\\left", "")
+      .replaceAll("\\right", "")
+      .replaceAll(/\\[,;:!]/g, "")
+      .replaceAll("\\cdot", "*")
+      .replaceAll("\\times", "*")
+      .replaceAll("\\pm", "±")
+      .replaceAll("\\leqslant", "≤")
+      .replaceAll("\\leq", "≤")
+      .replaceAll("\\le", "≤")
+      .replaceAll("\\geqslant", "≥")
+      .replaceAll("\\geq", "≥")
+      .replaceAll("\\ge", "≥")
+      .replaceAll("−", "-")
+      .replaceAll("–", "-")
+      .replaceAll("—", "-")
+      .replaceAll("×", "*")
+      .replaceAll("·", "*")
+      .replaceAll("，", ",")
+      .replaceAll("（", "(")
+      .replaceAll("）", ")")
+      .replaceAll("オーム", "ω")
+      .replaceAll("ohm", "ω")
+      .replaceAll("°c", "℃");
+    let previous = "";
+    while (previous !== normalized) {
+      previous = normalized;
+      normalized = normalized.replace(/\\sqrt\{([^{}]+)\}/g, "√$1");
+    }
+    previous = "";
+    while (previous !== normalized) {
+      previous = normalized;
+      normalized = normalized.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, "$1/$2");
+    }
+    return normalized.replaceAll("^{2}", "²").replaceAll("^2", "²");
+  };
+
+  const isCorrectAnswer = (value: string | string[], answers: string[]) => {
+    if (Array.isArray(value)) {
+      return value.map(normalizeAnswer).sort().join("\u0000") === answers.map(normalizeAnswer).sort().join("\u0000");
+    }
+    return answers.map(normalizeAnswer).includes(normalizeAnswer(value));
+  };
+
+  const renderCourseOptions = () => {
+    if (!courseSelect) return;
+    courseSelect.replaceChildren(...courses.map((course) => new Option(course.title, course.key)));
+    renderAreaOptions();
+  };
+
+  const renderAreaOptions = () => {
+    if (!courseSelect || !areaSelect) return;
+    const course = courses.find((item) => item.key === courseSelect.value) ?? courses[0];
+    areaSelect.replaceChildren(...(course?.areas ?? []).map((area) => new Option(area.title, area.key)));
+    updateAvailability();
+  };
+
+  const updateAvailability = () => {
+    if (!courseSelect || !areaSelect || !availability) return;
+    const course = courses.find((item) => item.key === courseSelect.value);
+    const area = course?.areas.find((item) => item.key === areaSelect.value);
+    const count = area?.questions.length ?? 0;
+    availability.textContent = `${area?.title ?? "選択した領域"}には ${count} 問の問題データがあります。指定数より少ない場合は利用可能な問題をすべて出題します。`;
+  };
+
+  const createAnswerEditor = (question: PracticeQuestion, index: number) => {
+    const id = `practice-answer-${index}`;
+    const label = createElement("label", "practice-answer-label", "答え");
+    label.htmlFor = id;
+    const wrapper = createElement("div", "practice-answer-control");
+
+    if (question.input === "math") {
+      const field = new MathfieldElement();
+      field.id = id;
+      field.className = "practice-math-input";
+      field.placeholder = question.placeholder || "\\text{答えを入力}";
+      field.mathVirtualKeyboardPolicy = "auto";
+      field.dataset.answerEditor = "math";
+      field.setAttribute("aria-label", `問${index + 1}の答え`);
+      wrapper.append(label, field);
+      return wrapper;
+    }
+
+    if (question.input === "select") {
+      const select = document.createElement("select");
+      select.id = id;
+      select.dataset.answerEditor = "select";
+      select.required = true;
+      select.append(new Option("選択してください", ""));
+      for (const option of question.options) select.append(new Option(option.label, option.value));
+      wrapper.append(label, select);
+      return wrapper;
+    }
+
+    if (question.input === "radio" || question.input === "checkbox") {
+      const fieldset = document.createElement("fieldset");
+      fieldset.dataset.answerEditor = question.input;
+      const legend = createElement("legend", undefined, "答え");
+      fieldset.append(legend);
+      const choices = createElement("div", "practice-choices");
+      for (const [optionIndex, option] of question.options.entries()) {
+        const optionLabel = createElement("label", "practice-choice");
+        const input = document.createElement("input");
+        input.type = question.input;
+        input.name = question.input === "radio" ? id : `${id}-${optionIndex}`;
+        input.value = option.value;
+        if (question.input === "radio") input.required = true;
+        optionLabel.append(input, document.createTextNode(option.label));
+        choices.append(optionLabel);
+      }
+      fieldset.append(choices);
+      wrapper.append(fieldset);
+      return wrapper;
+    }
+
+    const input = document.createElement("input");
+    input.id = id;
+    input.type = "text";
+    input.dataset.answerEditor = "text";
+    input.placeholder = question.placeholder;
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.required = true;
+    wrapper.append(label, input);
+    return wrapper;
+  };
+
+  const readAnswer = (article: HTMLElement, inputKind: PracticeQuestion["input"]) => {
+    if (inputKind === "math") {
+      return article.querySelector<MathfieldElement>("math-field[data-answer-editor='math']")?.getValue("latex-unstyled") ?? "";
+    }
+    if (inputKind === "select") {
+      return article.querySelector<HTMLSelectElement>("select[data-answer-editor='select']")?.value ?? "";
+    }
+    if (inputKind === "radio") {
+      return article.querySelector<HTMLInputElement>('input[type="radio"]:checked')?.value ?? "";
+    }
+    if (inputKind === "checkbox") {
+      return [...article.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked')].map((input) => input.value);
+    }
+    return article.querySelector<HTMLInputElement>("input[data-answer-editor='text']")?.value ?? "";
+  };
+
+  const renderQuestions = () => {
+    if (!courseSelect || !areaSelect || !countSelect || !list || !session || !sessionTitle || !sessionCount || !result) {
+      return;
+    }
+    currentCourse = courses.find((item) => item.key === courseSelect.value);
+    currentArea = currentCourse?.areas.find((item) => item.key === areaSelect.value);
+    requestedCount = Math.max(10, Math.min(30, Number(countSelect.value) || 20));
+    currentQuestions = shuffle(currentArea?.questions ?? []).slice(0, requestedCount);
+    recorded = false;
+    list.replaceChildren();
+    result.hidden = true;
+    result.replaceChildren();
+
+    for (const [index, question] of currentQuestions.entries()) {
+      const article = createElement("article", "practice-question");
+      article.dataset.input = question.input;
+      const header = createElement("div", "practice-question-header");
+      header.append(
+        createElement("span", "practice-number", `問${index + 1}`),
+        createElement("span", "practice-mapping", `${question.unitTitle} / ${question.lessonTitle}`),
+      );
+      article.append(header, createElement("p", "practice-prompt", question.prompt), createAnswerEditor(question, index));
+      if (question.hint) {
+        const details = createElement("details", "practice-hint");
+        details.append(createElement("summary", undefined, "ヒント"), createElement("p", undefined, question.hint));
+        article.append(details);
+      }
+      list.append(article);
+    }
+
+    sessionTitle.textContent = `${currentCourse?.title ?? ""}・${currentArea?.title ?? ""}`;
+    sessionCount.textContent = `全${currentQuestions.length}問`;
+    session.hidden = false;
+    session.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  courseSelect?.addEventListener("change", renderAreaOptions);
+  areaSelect?.addEventListener("change", updateAvailability);
+  startButton?.addEventListener("click", renderQuestions);
+  newSetButton?.addEventListener("click", renderQuestions);
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!list || !result || !currentCourse || !currentArea || recorded || currentQuestions.length === 0) return;
+    const questionResults: LearningQuestionResult[] = [];
+    let correctCount = 0;
+
+    for (const [index, article] of [...list.querySelectorAll<HTMLElement>(".practice-question")].entries()) {
+      const question = currentQuestions[index];
+      if (!question) continue;
+      const answer = readAnswer(article, question.input);
+      const correct = isCorrectAnswer(answer, question.answers);
+      article.classList.toggle("is-correct", correct);
+      article.classList.toggle("is-error", !correct);
+      correctCount += correct ? 1 : 0;
+      questionResults.push({
+        lessonKey: question.lessonKey,
+        lessonTitle: question.lessonTitle,
+        unitKey: question.unitKey,
+        unitTitle: question.unitTitle,
+        correct,
+      });
+    }
+
+    const completedAt = new Date().toISOString();
+    const id = typeof crypto.randomUUID === "function" ? crypto.randomUUID() : `${completedAt}-${Math.random().toString(36).slice(2)}`;
+    try {
+      addLearningAttempt({
+        id,
+        completedAt,
+        courseKey: currentCourse.key,
+        courseTitle: currentCourse.title,
+        areaKey: currentArea.key,
+        areaTitle: currentArea.title,
+        requestedCount,
+        totalCount: currentQuestions.length,
+        correctCount,
+        results: questionResults,
+      });
+      recorded = true;
+      const ratio = Math.round((correctCount / currentQuestions.length) * 100);
+      const heading = createElement("h3", undefined, `${currentQuestions.length}問中 ${correctCount}問正解（${ratio}%）`);
+      const note = createElement("p", undefined, "結果をこのブラウザの学習記録に保存しました。解答内容そのものは保存していません。");
+      const link = createElement("a", "record-link", "強み・弱みを確認する");
+      link.href = `${window.location.origin}${window.location.pathname.replace(/practice\/?$/, "progress/")}`;
+      result.replaceChildren(heading, note, link);
+      result.hidden = false;
+      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } catch {
+      result.replaceChildren(
+        createElement("h3", undefined, `${currentQuestions.length}問中 ${correctCount}問正解`),
+        createElement("p", undefined, "採点は完了しましたが、ブラウザへの学習記録の保存に失敗しました。"),
+      );
+      result.hidden = false;
+    }
+  });
+
+  renderCourseOptions();
+</script>
+
+<style>
+  .practice-config,
+  .practice-session {
+    margin-top: 2rem;
+    padding: clamp(1.1rem, 3vw, 1.7rem);
+    border: 1px solid var(--color-border);
+    border-radius: 0.9rem;
+    background: var(--surface);
+  }
+
+  .practice-config-heading,
+  .practice-session-heading {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  .section-label {
+    margin: 0 0 0.25rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+
+  .practice-controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    gap: 0.9rem;
+    align-items: end;
+    margin-top: 1.25rem;
+  }
+
+  .practice-controls label {
+    display: grid;
+    gap: 0.35rem;
+    color: var(--color-text-soft);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  select,
+  input,
+  math-field {
+    width: 100%;
+    min-height: 2.8rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 0.55rem;
+    background: var(--surface);
+    color: var(--color-text-strong);
+  }
+
+  select,
+  input {
+    padding: 0.65rem 0.75rem;
+  }
+
+  math-field {
+    padding: 0.35rem 0.55rem;
+    font-size: 1.08rem;
+  }
+
+  .primary-button,
+  .secondary-button,
+  .record-link {
+    min-height: 2.8rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 0.55rem;
+    font-weight: 750;
+  }
+
+  .primary-button,
+  .secondary-button {
+    cursor: pointer;
+  }
+
+  .primary-button {
+    border: 1px solid var(--color-accent-strong);
+    background: var(--color-accent-strong);
+    color: #fff;
+  }
+
+  .secondary-button {
+    border: 1px solid var(--color-border-strong);
+    background: var(--surface);
+    color: var(--color-text-strong);
+  }
+
+  .record-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-link);
+  }
+
+  .practice-availability {
+    margin: 0.8rem 0 0;
+    color: var(--color-muted-strong);
+    font-size: 0.82rem;
+  }
+
+  .practice-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+
+  .practice-question {
+    padding: 1.1rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 0.75rem;
+    background: var(--surface-subtle);
+  }
+
+  .practice-question.is-correct {
+    border-color: #7c9a78;
+  }
+
+  .practice-question.is-error {
+    border-color: #b6877e;
+  }
+
+  .practice-question-header {
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.65rem;
+  }
+
+  .practice-number {
+    font-weight: 800;
+  }
+
+  .practice-mapping {
+    color: var(--color-muted-strong);
+    font-size: 0.75rem;
+    text-align: right;
+  }
+
+  .practice-prompt {
+    white-space: pre-wrap;
+  }
+
+  .practice-answer-control {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.85rem;
+  }
+
+  .practice-answer-label,
+  legend {
+    color: var(--color-text-soft);
+    font-size: 0.78rem;
+    font-weight: 750;
+  }
+
+  fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .practice-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 0.4rem;
+  }
+
+  .practice-choice {
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.55rem;
+    background: var(--surface);
+  }
+
+  .practice-choice input {
+    width: auto;
+    min-height: auto;
+  }
+
+  .practice-hint {
+    margin-top: 0.85rem;
+    color: var(--color-text-soft);
+  }
+
+  .practice-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.2rem;
+  }
+
+  .practice-result {
+    margin-top: 1.2rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 0.7rem;
+    background: var(--surface-accent);
+  }
+
+  .practice-result p {
+    margin-bottom: 0.55rem;
+  }
+
+  @media (max-width: 760px) {
+    .practice-config-heading,
+    .practice-session-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .practice-controls {
+      grid-template-columns: 1fr;
+    }
+
+    .practice-question-header {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .practice-mapping {
+      text-align: left;
+    }
+  }
+</style>
