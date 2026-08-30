@@ -76,6 +76,10 @@ const _isUnit = _mode === "unit";
     generateMiddleMath1UnitExercises,
     type MiddleMathExercise,
   } from "../content/middle-school/math/grade1/exercise-registry";
+  import {
+    generateMiddleMath1GeometryLessonExercises,
+    generateMiddleMath1GeometryUnitExercises,
+  } from "../content/middle-school/math/grade1/geometry-exercise-registry";
 
   const difficultyLabel: Record<MiddleMathExercise["difficulty"], string> = {
     basic: "基礎",
@@ -95,7 +99,11 @@ const _isUnit = _mode === "unit";
       .replaceAll("℃", "")
       .replaceAll("ｍ", "m");
 
-  const createElement = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
+  const createElement = <K extends keyof HTMLElementTagNameMap>(
+    tag: K,
+    className?: string,
+    text?: string,
+  ) => {
     const element = document.createElement(tag);
     if (className) element.className = className;
     if (text !== undefined) element.textContent = text;
@@ -115,18 +123,36 @@ const _isUnit = _mode === "unit";
     const regenerate = section.querySelector<HTMLButtonElement>(".exercise-regenerate");
     const diagnostic = section.querySelector<HTMLElement>("[data-exercise-diagnostic]");
     const diagnosticList = section.querySelector<HTMLElement>("[data-diagnostic-list]");
-    if (!areaKey || !unitKey || !routeBase || !form || !list || !feedback || !regenerate || !diagnostic || !diagnosticList) {
+    if (
+      !areaKey ||
+      !unitKey ||
+      !routeBase ||
+      !form ||
+      !list ||
+      !feedback ||
+      !regenerate ||
+      !diagnostic ||
+      !diagnosticList
+    ) {
       continue;
     }
 
     let exercises: MiddleMathExercise[] = [];
 
-    const makeExercises = () =>
-      mode === "unit"
+    const makeExercises = () => {
+      if (areaKey === "geometry") {
+        return mode === "unit"
+          ? generateMiddleMath1GeometryUnitExercises(unitKey)
+          : lessonKey
+            ? generateMiddleMath1GeometryLessonExercises(lessonKey)
+            : [];
+      }
+      return mode === "unit"
         ? generateMiddleMath1UnitExercises(unitKey)
         : lessonKey
           ? generateMiddleMath1LessonExercises(lessonKey)
           : [];
+    };
 
     const renderExercises = () => {
       exercises = makeExercises();
@@ -158,8 +184,8 @@ const _isUnit = _mode === "unit";
 
         const answerBlock = createElement("div", "exercise-answer-label");
         const answerId = `middle-math-answer-${index}`;
-        const label = createElement("label", undefined, "答え");
-        label.htmlFor = answerId;
+        const answerLabel = createElement("label", undefined, "答え");
+        answerLabel.htmlFor = answerId;
         const input = document.createElement("input");
         input.id = answerId;
         input.type = "text";
@@ -168,7 +194,7 @@ const _isUnit = _mode === "unit";
         input.inputMode = "text";
         input.required = true;
         input.setAttribute("aria-label", `問${index + 1}の答え`);
-        answerBlock.append(label, input);
+        answerBlock.append(answerLabel, input);
         article.append(answerBlock);
 
         if (exercise.hint) {
@@ -183,9 +209,13 @@ const _isUnit = _mode === "unit";
       }
     };
 
-    const renderDiagnostic = (results: Map<string, { title: string; correct: number; total: number }>) => {
+    const renderDiagnostic = (
+      results: Map<string, { title: string; correct: number; total: number }>,
+    ) => {
       diagnosticList.replaceChildren();
-      for (const [key, result] of [...results.entries()].sort(([, a], [, b]) => a.correct / a.total - b.correct / b.total)) {
+      for (const [key, result] of [...results.entries()].sort(
+        ([, a], [, b]) => a.correct / a.total - b.correct / b.total,
+      )) {
         const item = createElement("article", "diagnostic-item");
         const ratio = result.total === 0 ? 0 : result.correct / result.total;
         const link = createElement("a", "diagnostic-link", "この小単元を復習する");
