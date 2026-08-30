@@ -1,19 +1,19 @@
-name: CI review fix
+name: CI review repair
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - feature/shared-diagram-components
 
 permissions:
   contents: write
 
 jobs:
   repair:
-    if: github.actor == 'sterashima78' && github.head_ref == 'feature/shared-diagram-components'
+    if: github.actor == 'sterashima78'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout PR branch
+      - name: Checkout branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: feature/shared-diagram-components
@@ -31,232 +31,10 @@ jobs:
 
       - name: Apply review fixes
         run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          # Correlate symbol domains and symbols in the editor tool type.
-          path = Path("src/lib/diagram/types.ts")
-          text = path.read_text()
-          start = text.index("export type DiagramEditorTool =")
-          end = text.index("\n\nexport type DiagramEditorHelpers", start)
-          replacement = '''export type DiagramSymbolTool = {
-  kind: "symbol";
-  label: string;
-  width?: number;
-  height?: number;
-  edit?: DiagramEditPermissions;
-} & (
-  | { domain: "physics"; symbol: PhysicsSymbol }
-  | { domain: "circuit"; symbol: CircuitSymbol }
-  | { domain: "chemistry"; symbol: ChemistrySymbol }
-  | { domain: "biology"; symbol: BiologySymbol }
-);
-
-export type DiagramEditorTool =
-  | { kind: "point"; label: string; edit?: DiagramEditPermissions }
-  | { kind: "segment"; label: string; edit?: DiagramEditPermissions }
-  | { kind: "line"; label: string; edit?: DiagramEditPermissions }
-  | { kind: "circle"; label: string; edit?: DiagramEditPermissions }
-  | { kind: "polygon"; label: string; edit?: DiagramEditPermissions }
-  | { kind: "arrow"; label: string; edit?: DiagramEditPermissions }
-  | DiagramSymbolTool;'''
-          path.write_text(text[:start] + replacement + text[end:])
-
-          # Fix SVG coordinate mapping, model-answer scaling, and symbol construction.
-          path = Path("src/lib/diagram/editor-client.ts")
-          text = path.read_text()
-          text = text.replace(
-              '''  modelAnswer?: DiagramScene;\n  tools: DiagramEditorTool[];''',
-              '''  modelAnswer?: DiagramScene;\n  responsiveScale: number;\n  tools: DiagramEditorTool[];''',
-          )
-          text = text.replace(
-              '''      modelAnswer: modelAnswer ? ensureRuntimeIds(clone(modelAnswer), "model") : undefined,\n      tools,''',
-              '''      modelAnswer: modelAnswer ? ensureRuntimeIds(clone(modelAnswer), "model") : undefined,\n      responsiveScale: 1,\n      tools,''',
-          )
-          text = text.replace(
-              '''    const scale = Math.max(\n      minimumScale,\n      Math.min(1, (available - padding) / state.baseScene.width),\n    );\n    const learner''',
-              '''    const scale = Math.max(\n      minimumScale,\n      Math.min(1, (available - padding) / state.baseScene.width),\n    );\n    state.responsiveScale = scale;\n    const learner''',
-          )
-
-          symbol_start = text.index('  if (tool.kind === "symbol") {')
-          symbol_end = text.index('  if (tool.kind === "polygon") {', symbol_start)
-          symbol_block = '''  if (tool.kind === "symbol") {
-    commit(state, () => {
-      const common = {
-        kind: "symbol" as const,
-        at: snapped.point,
-        width: tool.width,
-        height: tool.height,
-        refs: snapped.ref ? [snapped.ref] : [],
-      };
-      let element: DomainSymbolElement;
-      if (tool.domain === "physics") {
-        element = { ...common, domain: "physics", symbol: tool.symbol };
-      } else if (tool.domain === "circuit") {
-        element = { ...common, domain: "circuit", symbol: tool.symbol };
-      } else if (tool.domain === "chemistry") {
-        element = { ...common, domain: "chemistry", symbol: tool.symbol };
-      } else {
-        element = { ...common, domain: "biology", symbol: tool.symbol };
-      }
-      addLearnerElement(state, tool, element);
-    });
-    return;
-  }
-'''
-          text = text[:symbol_start] + symbol_block + text[symbol_end:]
-
-          model_start = text.index('  if (state.modelAnswer && state.answerRevealed && state.modelVisible) {')
-          model_end = text.index('  renderDraft(state, markerId);', model_start)
-          model_block = '''  if (state.modelAnswer && state.answerRevealed && state.modelVisible) {
-    const modelMarker = `${markerId}-model`;
-    const modelScene = {
-      ...state.modelAnswer,
-      elements: state.modelAnswer.elements.map((element) =>
-        scaleElementFromOrigin(element, state.responsiveScale),
-      ),
-    };
-    state.svg.append(createMarker(modelMarker, MODEL_COLOR));
-    const modelGroup = renderSceneGroup(modelScene, modelMarker, MODEL_COLOR, null);
-    modelGroup.setAttribute("pointer-events", "none");
-    modelGroup.setAttribute("aria-hidden", "true");
-    state.svg.append(modelGroup);
-  }
-'''
-          text = text[:model_start] + model_block + text[model_end:]
-
-          point_start = text.index('const eventPoint = (')
-          point_end = text.index('\n\nconst ensureRuntimeIds', point_start)
-          point_block = '''const eventPoint = (
-  state: EditorState,
-  event: MouseEvent | PointerEvent | WheelEvent,
-): DiagramPoint => {
-  const matrix = state.svg.getScreenCTM();
-  if (matrix) {
-    const point = state.svg.createSVGPoint();
-    point.x = event.clientX;
-    point.y = event.clientY;
-    const transformed = point.matrixTransform(matrix.inverse());
-    return { x: transformed.x, y: transformed.y };
-  }
-
-  const rect = state.svg.getBoundingClientRect();
-  return {
-    x: state.view.x + ((event.clientX - rect.left) / Math.max(rect.width, 1)) * state.view.width,
-    y: state.view.y + ((event.clientY - rect.top) / Math.max(rect.height, 1)) * state.view.height,
-  };
-};'''
-          path.write_text(text[:point_start] + point_block + text[point_end:])
-
-          # Validate element refs and use an actual point-in-polygon test.
-          path = Path("src/lib/diagram/validate.mjs")
-          text = path.read_text()
-          marker = '''  if (scene.constraints !== undefined && !Array.isArray(scene.constraints)) {'''
-          refs_check = '''  for (const [index, element] of scene.elements.entries()) {
-    if (!Array.isArray(element?.refs)) continue;
-    for (const ref of element.refs) {
-      if (typeof ref === "string" && !ids.has(ref)) {
-        errors.push(`${source}.elements[${index}]: 参照先 id「${ref}」がありません。`);
-      }
-    }
-  }
-
-'''
-          if refs_check not in text:
-              text = text.replace(marker, refs_check + marker)
-
-          polygon_start = text.index('  if (outer.kind === "polygon") {', text.index('function contains'))
-          polygon_end = text.index('  return true;', polygon_start)
-          text = text[:polygon_start] + '''  if (outer.kind === "polygon") return pointInPolygon(outer.points, inner);\n''' + text[polygon_end:]
-
-          pair_marker = 'function pairDistance(pair, ids) {'
-          polygon_helpers = '''function pointInPolygon(points, point) {
-  let inside = false;
-  for (let index = 0, previous = points.length - 1; index < points.length; previous = index++) {
-    const currentPoint = points[index];
-    const previousPoint = points[previous];
-    if (pointOnSegment(point, previousPoint, currentPoint)) return true;
-    const intersects =
-      currentPoint.y > point.y !== previousPoint.y > point.y &&
-      point.x <
-        ((previousPoint.x - currentPoint.x) * (point.y - currentPoint.y)) /
-          (previousPoint.y - currentPoint.y) +
-          currentPoint.x;
-    if (intersects) inside = !inside;
-  }
-  return inside;
-}
-
-function pointOnSegment(point, start, end) {
-  const cross =
-    (point.y - start.y) * (end.x - start.x) - (point.x - start.x) * (end.y - start.y);
-  if (Math.abs(cross) > 1e-9) return false;
-  const dot =
-    (point.x - start.x) * (point.x - end.x) + (point.y - start.y) * (point.y - end.y);
-  return dot <= 1e-9;
-}
-
-'''
-          if polygon_helpers not in text:
-              text = text.replace(pair_marker, polygon_helpers + pair_marker)
-          path.write_text(text)
-
-          # Add validator regression fixtures for refs and polygon containment.
-          path = Path("scripts/verify-diagrams.mjs")
-          text = path.read_text()
-          insertion_marker = '\nfor (const file of await findJsonFiles(contentDirectory)) {'
-          fixtures = '''
-const missingRefFixture = {
-  width: 200,
-  height: 120,
-  ariaLabel: "存在しない参照の検出用",
-  elements: [
-    { kind: "point", id: "a", x: 20, y: 20 },
-    {
-      kind: "segment",
-      id: "line",
-      from: { x: 20, y: 20 },
-      to: { x: 120, y: 20 },
-      refs: ["missing"],
-    },
-  ],
-};
-if (validateDiagramScene(missingRefFixture, { source: "missing ref fixture" }).errors.length === 0) {
-  issues.push("missing ref fixture: 存在しない refs が拒否されませんでした。");
-}
-
-const polygonContainmentFixture = {
-  width: 120,
-  height: 120,
-  ariaLabel: "多角形包含判定の検証用",
-  elements: [
-    {
-      kind: "polygon",
-      id: "triangle",
-      points: [
-        { x: 0, y: 0 },
-        { x: 100, y: 0 },
-        { x: 0, y: 100 },
-      ],
-    },
-    { kind: "point", id: "outside", x: 90, y: 90 },
-  ],
-  constraints: [{ kind: "inside", inner: "outside", outer: "triangle" }],
-};
-if (
-  validateDiagramScene(polygonContainmentFixture, { source: "polygon containment fixture" })
-    .warnings.length === 0
-) {
-  issues.push("polygon containment fixture: 多角形外の点が inside と判定されました。");
-}
-'''
-          if 'const missingRefFixture =' not in text:
-              text = text.replace(insertion_marker, fixtures + insertion_marker)
-          path.write_text(text)
-          PY
-
-      - name: Format review fixes
-        run: pnpm exec biome format --write src/lib/diagram/types.ts src/lib/diagram/editor-client.ts src/lib/diagram/validate.mjs scripts/verify-diagrams.mjs
+          printf '%s' 'ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgojIENvcnJlbGF0ZSBzeW1ib2wgZG9tYWlucyBhbmQgc3ltYm9scyBpbiB0aGUgZWRpdG9yIHRvb2wgdHlwZS4KcGF0aCA9IFBhdGgoInNyYy9saWIvZGlhZ3JhbS90eXBlcy50cyIpCnRleHQgPSBwYXRoLnJlYWRfdGV4dCgpCnN0YXJ0ID0gdGV4dC5pbmRleCgiZXhwb3J0IHR5cGUgRGlhZ3JhbUVkaXRvclRvb2wgPSIpCmVuZCA9IHRleHQuaW5kZXgoIlxuXG5leHBvcnQgdHlwZSBEaWFncmFtRWRpdG9ySGVscGVycyIsIHN0YXJ0KQpyZXBsYWNlbWVudCA9ICcnJ2V4cG9ydCB0eXBlIERpYWdyYW1TeW1ib2xUb29sID0gewogIGtpbmQ6ICJzeW1ib2wiOwogIGxhYmVsOiBzdHJpbmc7CiAgd2lkdGg/OiBudW1iZXI7CiAgaGVpZ2h0PzogbnVtYmVyOwogIGVkaXQ/OiBEaWFncmFtRWRpdFBlcm1pc3Npb25zOwp9ICYgKAogIHwgeyBkb21haW46ICJwaHlzaWNzIjsgc3ltYm9sOiBQaHlzaWNzU3ltYm9sIH0KICB8IHsgZG9tYWluOiAiY2lyY3VpdCI7IHN5bWJvbDogQ2lyY3VpdFN5bWJvbCB9CiAgfCB7IGRvbWFpbjogImNoZW1pc3RyeSI7IHN5bWJvbDogQ2hlbWlzdHJ5U3ltYm9sIH0KICB8IHsgZG9tYWluOiAiYmlvbG9neSI7IHN5bWJvbDogQmlvbG9neVN5bWJvbCB9Cik7CgpleHBvcnQgdHlwZSBEaWFncmFtRWRpdG9yVG9vbCA9CiAgfCB7IGtpbmQ6ICJwb2ludCI7IGxhYmVsOiBzdHJpbmc7IGVkaXQ/OiBEaWFncmFtRWRpdFBlcm1pc3Npb25zIH0KICB8IHsga2luZDogInNlZ21lbnQiOyBsYWJlbDogc3RyaW5nOyBlZGl0PzogRGlhZ3JhbUVkaXRQZXJtaXNzaW9ucyB9CiAgfCB7IGtpbmQ6ICJsaW5lIjsgbGFiZWw6IHN0cmluZzsgZWRpdD86IERpYWdyYW1FZGl0UGVybWlzc2lvbnMgfQogIHwgeyBraW5kOiAiY2lyY2xlIjsgbGFiZWw6IHN0cmluZzsgZWRpdD86IERpYWdyYW1FZGl0UGVybWlzc2lvbnMgfQogIHwgeyBraW5kOiAicG9seWdvbiI7IGxhYmVsOiBzdHJpbmc7IGVkaXQ/OiBEaWFncmFtRWRpdFBlcm1pc3Npb25zIH0KICB8IHsga2luZDogImFycm93IjsgbGFiZWw6IHN0cmluZzsgZWRpdD86IERpYWdyYW1FZGl0UGVybWlzc2lvbnMgfQogIHwgRGlhZ3JhbVN5bWJvbFRvb2w7JycnCnBhdGgud3JpdGVfdGV4dCh0ZXh0WzpzdGFydF0gKyByZXBsYWNlbWVudCArIHRleHRbZW5kOl0pCgojIEZpeCBTVkcgY29vcmRpbmF0ZSBtYXBwaW5nLCBtb2RlbC1hbnN3ZXIgc2NhbGluZywgYW5kIHN5bWJvbCBjb25zdHJ1Y3Rpb24uCnBhdGggPSBQYXRoKCJzcmMvbGliL2RpYWdyYW0vZWRpdG9yLWNsaWVudC50cyIpCnRleHQgPSBwYXRoLnJlYWRfdGV4dCgpCnRleHQgPSB0ZXh0LnJlcGxhY2UoCiAgICAnJycgIG1vZGVsQW5zd2VyPzogRGlhZ3JhbVNjZW5lO1xuICB0b29sczogRGlhZ3JhbUVkaXRvclRvb2xbXTsnJycsCiAgICAnJycgIG1vZGVsQW5zd2VyPzogRGlhZ3JhbVNjZW5lO1xuICByZXNwb25zaXZlU2NhbGU6IG51bWJlcjtcbiAgdG9vbHM6IERpYWdyYW1FZGl0b3JUb29sW107JycnLAopCnRleHQgPSB0ZXh0LnJlcGxhY2UoCiAgICAnJycgICAgICBtb2RlbEFuc3dlcjogbW9kZWxBbnN3ZXIgPyBlbnN1cmVSdW50aW1lSWRzKGNsb25lKG1vZGVsQW5zd2VyKSwgIm1vZGVsIikgOiB1bmRlZmluZWQsXG4gICAgICB0b29scywnJycsCiAgICAnJycgICAgICBtb2RlbEFuc3dlcjogbW9kZWxBbnN3ZXIgPyBlbnN1cmVSdW50aW1lSWRzKGNsb25lKG1vZGVsQW5zd2VyKSwgIm1vZGVsIikgOiB1bmRlZmluZWQsXG4gICAgICByZXNwb25zaXZlU2NhbGU6IDEsXG4gICAgICB0b29scywnJycsCikKdGV4dCA9IHRleHQucmVwbGFjZSgKICAgICcnJyAgICBjb25zdCBzY2FsZSA9IE1hdGgubWF4KFxuICAgICAgbWluaW11bVNjYWxlLFxuICAgICAgTWF0aC5taW4oMSwgKGF2YWlsYWJsZSAtIHBhZGRpbmcpIC8gc3RhdGUuYmFzZVNjZW5lLndpZHRoKSxcbiAgICApO1xuICAgIGNvbnN0IGxlYXJuZXInJycsCiAgICAnJycgICAgY29uc3Qgc2NhbGUgPSBNYXRoLm1heChcbiAgICAgIG1pbmltdW1TY2FsZSxcbiAgICAgIE1hdGgubWluKDEsIChhdmFpbGFibGUgLSBwYWRkaW5nKSAvIHN0YXRlLmJhc2VTY2VuZS53aWR0aCksXG4gICAgKTtcbiAgICBzdGF0ZS5yZXNwb25zaXZlU2NhbGUgPSBzY2FsZTtcbiAgICBjb25zdCBsZWFybmVyJycnLAopCgpzeW1ib2xfc3RhcnQgPSB0ZXh0LmluZGV4KCcgIGlmICh0b29sLmtpbmQgPT09ICJzeW1ib2wiKSB7JykKc3ltYm9sX2VuZCA9IHRleHQuaW5kZXgoJyAgaWYgKHRvb2wua2luZCA9PT0gInBvbHlnb24iKSB7Jywgc3ltYm9sX3N0YXJ0KQpzeW1ib2xfYmxvY2sgPSAnJycgIGlmICh0b29sLmtpbmQgPT09ICJzeW1ib2wiKSB7CiAgICBjb21taXQoc3RhdGUsICgpID0+IHsKICAgICAgY29uc3QgY29tbW9uID0gewogICAgICAgIGtpbmQ6ICJzeW1ib2wiIGFzIGNvbnN0LAogICAgICAgIGF0OiBzbmFwcGVkLnBvaW50LAogICAgICAgIHdpZHRoOiB0b29sLndpZHRoLAogICAgICAgIGhlaWdodDogdG9vbC5oZWlnaHQsCiAgICAgICAgcmVmczogc25hcHBlZC5yZWYgPyBbc25hcHBlZC5yZWZdIDogW10sCiAgICAgIH07CiAgICAgIGxldCBlbGVtZW50OiBEb21haW5TeW1ib2xFbGVtZW50OwogICAgICBpZiAodG9vbC5kb21haW4gPT09ICJwaHlzaWNzIikgewogICAgICAgIGVsZW1lbnQgPSB7IC4uLmNvbW1vbiwgZG9tYWluOiAicGh5c2ljcyIsIHN5bWJvbDogdG9vbC5zeW1ib2wgfTsKICAgICAgfSBlbHNlIGlmICh0b29sLmRvbWFpbiA9PT0gImNpcmN1aXQiKSB7CiAgICAgICAgZWxlbWVudCA9IHsgLi4uY29tbW9uLCBkb21haW46ICJjaXJjdWl0Iiwgc3ltYm9sOiB0b29sLnN5bWJvbCB9OwogICAgICB9IGVsc2UgaWYgKHRvb2wuZG9tYWluID09PSAiY2hlbWlzdHJ5IikgewogICAgICAgIGVsZW1lbnQgPSB7IC4uLmNvbW1vbiwgZG9tYWluOiAiY2hlbWlzdHJ5Iiwgc3ltYm9sOiB0b29sLnN5bWJvbCB9OwogICAgICB9IGVsc2UgewogICAgICAgIGVsZW1lbnQgPSB7IC4uLmNvbW1vbiwgZG9tYWluOiAiYmlvbG9neSIsIHN5bWJvbDogdG9vbC5zeW1ib2wgfTsKICAgICAgfQogICAgICBhZGRMZWFybmVyRWxlbWVudChzdGF0ZSwgdG9vbCwgZWxlbWVudCk7CiAgICB9KTsKICAgIHJldHVybjsKICB9CicnJwp0ZXh0ID0gdGV4dFs6c3ltYm9sX3N0YXJ0XSArIHN5bWJvbF9ibG9jayArIHRleHRbc3ltYm9sX2VuZDpdCgptb2RlbF9zdGFydCA9IHRleHQuaW5kZXgoJyAgaWYgKHN0YXRlLm1vZGVsQW5zd2VyICYmIHN0YXRlLmFuc3dlclJldmVhbGVkICYmIHN0YXRlLm1vZGVsVmlzaWJsZSkgeycpCm1vZGVsX2VuZCA9IHRleHQuaW5kZXgoJyAgcmVuZGVyRHJhZnQoc3RhdGUsIG1hcmtlcklkKTsnLCBtb2RlbF9zdGFydCkKbW9kZWxfYmxvY2sgPSAnJycgIGlmIChzdGF0ZS5tb2RlbEFuc3dlciAmJiBzdGF0ZS5hbnN3ZXJSZXZlYWxlZCAmJiBzdGF0ZS5tb2RlbFZpc2libGUpIHsKICAgIGNvbnN0IG1vZGVsTWFya2VyID0gYCR7bWFya2VySWR9LW1vZGVsYDsKICAgIGNvbnN0IG1vZGVsU2NlbmUgPSB7CiAgICAgIC4uLnN0YXRlLm1vZGVsQW5zd2VyLAogICAgICBlbGVtZW50czogc3RhdGUubW9kZWxBbnN3ZXIuZWxlbWVudHMubWFwKChlbGVtZW50KSA9PgogICAgICAgIHNjYWxlRWxlbWVudEZyb21PcmlnaW4oZWxlbWVudCwgc3RhdGUucmVzcG9uc2l2ZVNjYWxlKSwKICAgICAgKSwKICAgIH07CiAgICBzdGF0ZS5zdmcuYXBwZW5kKGNyZWF0ZU1hcmtlcihtb2RlbE1hcmtlciwgTU9ERUxfQ09MT1IpKTsKICAgIGNvbnN0IG1vZGVsR3JvdXAgPSByZW5kZXJTY2VuZUdyb3VwKG1vZGVsU2NlbmUsIG1vZGVsTWFya2VyLCBNT0RFTF9DT0xPUiwgbnVsbCk7CiAgICBtb2RlbEdyb3VwLnNldEF0dHJpYnV0ZSgicG9pbnRlci1ldmVudHMiLCAibm9uZSIpOwogICAgbW9kZWxHcm91cC5zZXRBdHRyaWJ1dGUoImFyaWEtaGlkZGVuIiwgInRydWUiKTsKICAgIHN0YXRlLnN2Zy5hcHBlbmQobW9kZWxHcm91cCk7CiAgfQonJycKdGV4dCA9IHRleHRbOm1vZGVsX3N0YXJ0XSArIG1vZGVsX2Jsb2NrICsgdGV4dFttb2RlbF9lbmQ6XQoKcG9pbnRfc3RhcnQgPSB0ZXh0LmluZGV4KCdjb25zdCBldmVudFBvaW50ID0gKCcpCnBvaW50X2VuZCA9IHRleHQuaW5kZXgoJ1xuXG5jb25zdCBlbnN1cmVSdW50aW1lSWRzJywgcG9pbnRfc3RhcnQpCnBvaW50X2Jsb2NrID0gJycnY29uc3QgZXZlbnRQb2ludCA9ICgKICBzdGF0ZTogRWRpdG9yU3RhdGUsCiAgZXZlbnQ6IE1vdXNlRXZlbnQgfCBQb2ludGVyRXZlbnQgfCBXaGVlbEV2ZW50LAopOiBEaWFncmFtUG9pbnQgPT4gewogIGNvbnN0IG1hdHJpeCA9IHN0YXRlLnN2Zy5nZXRTY3JlZW5DVE0oKTsKICBpZiAobWF0cml4KSB7CiAgICBjb25zdCBwb2ludCA9IHN0YXRlLnN2Zy5jcmVhdGVTVkdQb2ludCgpOwogICAgcG9pbnQueCA9IGV2ZW50LmNsaWVudFg7CiAgICBwb2ludC55ID0gZXZlbnQuY2xpZW50WTsKICAgIGNvbnN0IHRyYW5zZm9ybWVkID0gcG9pbnQubWF0cml4VHJhbnNmb3JtKG1hdHJpeC5pbnZlcnNlKCkpOwogICAgcmV0dXJuIHsgeDogdHJhbnNmb3JtZWQueCwgeTogdHJhbnNmb3JtZWQueSB9OwogIH0KCiAgY29uc3QgcmVjdCA9IHN0YXRlLnN2Zy5nZXRCb3VuZGluZ0NsaWVudFJlY3QoKTsKICByZXR1cm4gewogICAgeDogc3RhdGUudmlldy54ICsgKChldmVudC5jbGllbnRYIC0gcmVjdC5sZWZ0KSAvIE1hdGgubWF4KHJlY3Qud2lkdGgsIDEpKSAqIHN0YXRlLnZpZXcud2lkdGgsCiAgICB5OiBzdGF0ZS52aWV3LnkgKyAoKGV2ZW50LmNsaWVudFkgLSByZWN0LnRvcCkgLyBNYXRoLm1heChyZWN0LmhlaWdodCwgMSkpICogc3RhdGUudmlldy5oZWlnaHQsCiAgfTsKfTsnJycKcGF0aC53cml0ZV90ZXh0KHRleHRbOnBvaW50X3N0YXJ0XSArIHBvaW50X2Jsb2NrICsgdGV4dFtwb2ludF9lbmQ6XSkKCiMgVmFsaWRhdGUgZWxlbWVudCByZWZzIGFuZCB1c2UgYW4gYWN0dWFsIHBvaW50LWluLXBvbHlnb24gdGVzdC4KcGF0aCA9IFBhdGgoInNyYy9saWIvZGlhZ3JhbS92YWxpZGF0ZS5tanMiKQp0ZXh0ID0gcGF0aC5yZWFkX3RleHQoKQptYXJrZXIgPSAnJycgIGlmIChzY2VuZS5jb25zdHJhaW50cyAhPT0gdW5kZWZpbmVkICYmICFBcnJheS5pc0FycmF5KHNjZW5lLmNvbnN0cmFpbnRzKSkgeycnJwpyZWZzX2NoZWNrID0gJycnICBmb3IgKGNvbnN0IFtpbmRleCwgZWxlbWVudF0gb2Ygc2NlbmUuZWxlbWVudHMuZW50cmllcygpKSB7CiAgICBpZiAoIUFycmF5LmlzQXJyYXkoZWxlbWVudD8ucmVmcykpIGNvbnRpbnVlOwogICAgZm9yIChjb25zdCByZWYgb2YgZWxlbWVudC5yZWZzKSB7CiAgICAgIGlmICh0eXBlb2YgcmVmID09PSAic3RyaW5nIiAmJiAhaWRzLmhhcyhyZWYpKSB7CiAgICAgICAgZXJyb3JzLnB1c2goYCR7c291cmNlfS5lbGVtZW50c1ske2luZGV4fV06IOWPgueFp+WFiCBpZOOAjCR7cmVmfeOAjeOBjOOBguOCiuOBvuOBm+OCk+OAgmApOwogICAgICB9CiAgICB9CiAgfQoKJycnCmlmIHJlZnNfY2hlY2sgbm90IGluIHRleHQ6CiAgICB0ZXh0ID0gdGV4dC5yZXBsYWNlKG1hcmtlciwgcmVmc19jaGVjayArIG1hcmtlcikKCnBvbHlnb25fc3RhcnQgPSB0ZXh0LmluZGV4KCcgIGlmIChvdXRlci5raW5kID09PSAicG9seWdvbiIpIHsnLCB0ZXh0LmluZGV4KCdmdW5jdGlvbiBjb250YWlucycpKQpwb2x5Z29uX2VuZCA9IHRleHQuaW5kZXgoJyAgcmV0dXJuIHRydWU7JywgcG9seWdvbl9zdGFydCkKdGV4dCA9IHRleHRbOnBvbHlnb25fc3RhcnRdICsgJyAgaWYgKG91dGVyLmtpbmQgPT09ICJwb2x5Z29uIikgcmV0dXJuIHBvaW50SW5Qb2x5Z29uKG91dGVyLnBvaW50cywgaW5uZXIpO1xuJyArIHRleHRbcG9seWdvbl9lbmQ6XQoKcGFpcl9tYXJrZXIgPSAnZnVuY3Rpb24gcGFpckRpc3RhbmNlKHBhaXIsIGlkcykgeycKcG9seWdvbl9oZWxwZXJzID0gJycnZnVuY3Rpb24gcG9pbnRJblBvbHlnb24ocG9pbnRzLCBwb2ludCkgewogIGxldCBpbnNpZGUgPSBmYWxzZTsKICBmb3IgKGxldCBpbmRleCA9IDAsIHByZXZpb3VzID0gcG9pbnRzLmxlbmd0aCAtIDE7IGluZGV4IDwgcG9pbnRzLmxlbmd0aDsgcHJldmlvdXMgPSBpbmRleCsrKSB7CiAgICBjb25zdCBjdXJyZW50UG9pbnQgPSBwb2ludHNbaW5kZXhdOwogICAgY29uc3QgcHJldmlvdXNQb2ludCA9IHBvaW50c1twcmV2aW91c107CiAgICBpZiAocG9pbnRPblNlZ21lbnQocG9pbnQsIHByZXZpb3VzUG9pbnQsIGN1cnJlbnRQb2ludCkpIHJldHVybiB0cnVlOwogICAgY29uc3QgaW50ZXJzZWN0cyA9CiAgICAgIGN1cnJlbnRQb2ludC55ID4gcG9pbnQueSAhPT0gcHJldmlvdXNQb2ludC55ID4gcG9pbnQueSAmJgogICAgICBwb2ludC54IDwKICAgICAgICAoKHByZXZpb3VzUG9pbnQueCAtIGN1cnJlbnRQb2ludC54KSAqIChwb2ludC55IC0gY3VycmVudFBvaW50LnkpKSAvCiAgICAgICAgICAocHJldmlvdXNQb2ludC55IC0gY3VycmVudFBvaW50LnkpICsKICAgICAgICAgIGN1cnJlbnRQb2ludC54OwogICAgaWYgKGludGVyc2VjdHMpIGluc2lkZSA9ICFpbnNpZGU7CiAgfQogIHJldHVybiBpbnNpZGU7Cn0KCmZ1bmN0aW9uIHBvaW50T25TZWdtZW50KHBvaW50LCBzdGFydCwgZW5kKSB7CiAgY29uc3QgY3Jvc3MgPQogICAgKHBvaW50LnkgLSBzdGFydC55KSAqIChlbmQueCAtIHN0YXJ0LngpIC0gKHBvaW50LnggLSBzdGFydC54KSAqIChlbmQueSAtIHN0YXJ0LnkpOwogIGlmIChNYXRoLmFicyhjcm9zcykgPiAxZS05KSByZXR1cm4gZmFsc2U7CiAgY29uc3QgZG90ID0KICAgIChwb2ludC54IC0gc3RhcnQueCkgKiAocG9pbnQueCAtIGVuZC54KSArIChwb2ludC55IC0gc3RhcnQueSkgKiAocG9pbnQueSAtIGVuZC55KTsKICByZXR1cm4gZG90IDw9IDFlLTk7Cn0KCicnJwppZiBwb2x5Z29uX2hlbHBlcnMgbm90IGluIHRleHQ6CiAgICB0ZXh0ID0gdGV4dC5yZXBsYWNlKHBhaXJfbWFya2VyLCBwb2x5Z29uX2hlbHBlcnMgKyBwYWlyX21hcmtlcikKcGF0aC53cml0ZV90ZXh0KHRleHQpCgojIEFkZCB2YWxpZGF0b3IgcmVncmVzc2lvbiBmaXh0dXJlcyBmb3IgcmVmcyBhbmQgcG9seWdvbiBjb250YWlubWVudC4KcGF0aCA9IFBhdGgoInNjcmlwdHMvdmVyaWZ5LWRpYWdyYW1zLm1qcyIpCnRleHQgPSBwYXRoLnJlYWRfdGV4dCgpCmluc2VydGlvbl9tYXJrZXIgPSAnXG5mb3IgKGNvbnN0IGZpbGUgb2YgYXdhaXQgZmluZEpzb25GaWxlcyhjb250ZW50RGlyZWN0b3J5KSkgeycKZml4dHVyZXMgPSAnJycKY29uc3QgbWlzc2luZ1JlZkZpeHR1cmUgPSB7CiAgd2lkdGg6IDIwMCwKICBoZWlnaHQ6IDEyMCwKICBhcmlhTGFiZWw6ICLlrZjlnKjjgZfjgarjgYTlj4Lnhafjga7mpJzlh7rnlKgiLAogIGVsZW1lbnRzOiBbCiAgICB7IGtpbmQ6ICJwb2ludCIsIGlkOiAiYSIsIHg6IDIwLCB5OiAyMCB9LAogICAgewogICAgICBraW5kOiAic2VnbWVudCIsCiAgICAgIGlkOiAibGluZSIsCiAgICAgIGZyb206IHsgeDogMjAsIHk6IDIwIH0sCiAgICAgIHRvOiB7IHg6IDEyMCwgeTogMjAgfSwKICAgICAgcmVmczogWyJtaXNzaW5nIl0sCiAgICB9LAogIF0sCn07CmlmICh2YWxpZGF0ZURpYWdyYW1TY2VuZShtaXNzaW5nUmVmRml4dHVyZSwgeyBzb3VyY2U6ICJtaXNzaW5nIHJlZiBmaXh0dXJlIiB9KS5lcnJvcnMubGVuZ3RoID09PSAwKSB7CiAgaXNzdWVzLnB1c2goIm1pc3NpbmcgcmVmIGZpeHR1cmU6IOWtmOWcqOOBl+OBquOBhCByZWZzIOOBjOaLkuWQpuOBleOCjOOBvuOBm+OCk+OBp+OBl+OBn+OAgiIpOwp9Cgpjb25zdCBwb2x5Z29uQ29udGFpbm1lbnRGaXh0dXJlID0gewogIHdpZHRoOiAxMjAsCiAgaGVpZ2h0OiAxMjAsCiAgYXJpYUxhYmVsOiAi5aSa6KeS5b2i5YyF5ZCr5Yik5a6a44Gu5qSc6Ki855SoIiwKICBlbGVtZW50czogWwogICAgewogICAgICBraW5kOiAicG9seWdvbiIsCiAgICAgIGlkOiAidHJpYW5nbGUiLAogICAgICBwb2ludHM6IFsKICAgICAgICB7IHg6IDAsIHk6IDAgfSwKICAgICAgICB7IHg6IDEwMCwgeTogMCB9LAogICAgICAgIHsgeDogMCwgeTogMTAwIH0sCiAgICAgIF0sCiAgICB9LAogICAgeyBraW5kOiAicG9pbnQiLCBpZDogIm91dHNpZGUiLCB4OiA5MCwgeTogOTAgfSwKICBdLAogIGNvbnN0cmFpbnRzOiBbeyBraW5kOiAiaW5zaWRlIiwgaW5uZXI6ICJvdXRzaWRlIiwgb3V0ZXI6ICJ0cmlhbmdsZSIgfV0sCn07CmlmICgKICB2YWxpZGF0ZURpYWdyYW1TY2VuZShwb2x5Z29uQ29udGFpbm1lbnRGaXh0dXJlLCB7IHNvdXJjZTogInBvbHlnb24gY29udGFpbm1lbnQgZml4dHVyZSIgfSkKICAgIC53YXJuaW5ncy5sZW5ndGggPT09IDAKKSB7CiAgaXNzdWVzLnB1c2goInBvbHlnb24gY29udGFpbm1lbnQgZml4dHVyZTog5aSa6KeS5b2i5aSW44Gu54K544GMIGluc2lkZSDjgajliKTlrprjgZXjgozjgb7jgZfjgZ/jgIIiKTsKfQonJycKaWYgJ2NvbnN0IG1pc3NpbmdSZWZGaXh0dXJlID0nIG5vdCBpbiB0ZXh0OgogICAgdGV4dCA9IHRleHQucmVwbGFjZShpbnNlcnRpb25fbWFya2VyLCBmaXh0dXJlcyArIGluc2VydGlvbl9tYXJrZXIpCnBhdGgud3JpdGVfdGV4dCh0ZXh0KQo=' | base64 -d > /tmp/fix_review.py
+          python /tmp/fix_review.py
+          pnpm exec biome format --write src/lib/diagram/types.ts src/lib/diagram/editor-client.ts src/lib/diagram/validate.mjs scripts/verify-diagrams.mjs
+          pnpm exec biome ci src/lib/diagram/types.ts src/lib/diagram/editor-client.ts src/lib/diagram/validate.mjs scripts/verify-diagrams.mjs
 
       - name: Commit review fixes
         run: |
