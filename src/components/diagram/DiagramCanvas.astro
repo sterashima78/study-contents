@@ -78,7 +78,7 @@ const gridLines = (element: AxesElement) => {
   </defs>
   {
     _elements.map((element) => (
-      <g data-element-id={element.id}>
+      <g data-element-id={element.id} color={_tone === "answer" ? element.color : undefined}>
         {element.kind === "point" && (
           <circle cx={element.x} cy={element.y} r={element.radius ?? 3.5} class="point" />
         )}
