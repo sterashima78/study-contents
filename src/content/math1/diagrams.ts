@@ -230,10 +230,187 @@ function createDoubleParabolaExample(): DiagramScene {
   };
 }
 
+function createRightTriangleScene(mode: "rule" | "example"): DiagramScene {
+  const width = 520;
+  const height = 330;
+  const a = point(100, 265);
+  const b = point(380, 265);
+  const c = point(380, 55);
+  const isExample = mode === "example";
+
+  return {
+    width,
+    height,
+    ariaLabel: isExample
+      ? "3-4-5の直角三角形。角θのとなり側が4、向かい側が3、斜辺が5である。"
+      : "直角三角形で角θを基準に、となり側、向かい側、斜辺の位置を示した図。",
+    responsive: { minWidth: 430, allowHorizontalScroll: true },
+    elements: [
+      { kind: "segment", from: a, to: b, color: BLUE },
+      { kind: "segment", from: b, to: c, color: ORANGE },
+      { kind: "segment", from: c, to: a, color: GREEN },
+      {
+        kind: "arc",
+        center: a,
+        radius: 43,
+        startAngle: 323,
+        endAngle: 360,
+        color: PURPLE,
+      },
+      { kind: "segment", from: point(358, 265), to: point(358, 243), color: AXIS_COLOR },
+      { kind: "segment", from: point(358, 243), to: point(380, 243), color: AXIS_COLOR },
+      {
+        kind: "label",
+        at: point(145, 247),
+        text: "θ",
+        align: "start",
+        color: PURPLE,
+      },
+      {
+        kind: "label",
+        at: point(240, 294),
+        text: isExample ? "となり側 4" : "となり側",
+        color: BLUE,
+      },
+      {
+        kind: "label",
+        at: point(402, 165),
+        text: isExample ? "向かい側 3" : "向かい側",
+        align: "start",
+        color: ORANGE,
+      },
+      {
+        kind: "label",
+        at: point(218, 142),
+        text: isExample ? "斜辺 5" : "斜辺",
+        color: GREEN,
+      },
+      {
+        kind: "label",
+        at: point(389, 250),
+        text: "直角",
+        align: "start",
+        color: AXIS_COLOR,
+      },
+    ],
+  };
+}
+
+type BoxPlotStats = {
+  min: number;
+  q1: number;
+  q2: number;
+  q3: number;
+  max: number;
+};
+
+function linearPosition(value: number, min: number, max: number, from: number, to: number) {
+  if (!(max > min)) throw new Error("box plot scale requires max > min");
+  return from + ((value - min) / (max - min)) * (to - from);
+}
+
+function createBoxPlotScene(
+  stats: BoxPlotStats,
+  options: { ariaLabel: string; numeric: boolean },
+): DiagramScene {
+  const width = 520;
+  const height = 300;
+  const left = 60;
+  const right = 460;
+  const centerY = 150;
+  const top = 105;
+  const bottom = 195;
+  const scaleMin = stats.min;
+  const scaleMax = stats.max;
+  const x = (value: number) => linearPosition(value, scaleMin, scaleMax, left, right);
+  const xMin = x(stats.min);
+  const xQ1 = x(stats.q1);
+  const xQ2 = x(stats.q2);
+  const xQ3 = x(stats.q3);
+  const xMax = x(stats.max);
+
+  const labels = options.numeric
+    ? [
+        { x: xMin, text: String(stats.min) },
+        { x: xQ1, text: `Q1=${stats.q1}` },
+        { x: xQ2, text: `Q2=${stats.q2}` },
+        { x: xQ3, text: `Q3=${stats.q3}` },
+        { x: xMax, text: String(stats.max) },
+      ]
+    : [
+        { x: xMin, text: "最小値" },
+        { x: xQ1, text: "Q1" },
+        { x: xQ2, text: "Q2" },
+        { x: xQ3, text: "Q3" },
+        { x: xMax, text: "最大値" },
+      ];
+
+  return {
+    width,
+    height,
+    ariaLabel: options.ariaLabel,
+    responsive: { minWidth: 450, allowHorizontalScroll: true },
+    elements: [
+      { kind: "segment", from: point(xMin, centerY), to: point(xQ1, centerY), color: BLUE },
+      { kind: "segment", from: point(xQ3, centerY), to: point(xMax, centerY), color: BLUE },
+      { kind: "segment", from: point(xMin, top + 18), to: point(xMin, bottom - 18), color: BLUE },
+      { kind: "segment", from: point(xMax, top + 18), to: point(xMax, bottom - 18), color: BLUE },
+      {
+        kind: "polygon",
+        points: [point(xQ1, top), point(xQ3, top), point(xQ3, bottom), point(xQ1, bottom)],
+        color: BLUE,
+      },
+      { kind: "segment", from: point(xQ2, top), to: point(xQ2, bottom), color: PURPLE },
+      { kind: "segment", from: point(xQ1, 224), to: point(xQ3, 224), color: ORANGE },
+      {
+        kind: "label",
+        at: point((xQ1 + xQ3) / 2, 247),
+        text: options.numeric ? `四分位範囲 ${stats.q3 - stats.q1}` : "中央50% = Q3−Q1",
+        color: ORANGE,
+      },
+      ...labels.map<DiagramElement>((label) => ({
+        kind: "label",
+        at: point(label.x, 85),
+        text: label.text,
+        color: label.x === xQ2 ? PURPLE : AXIS_COLOR,
+      })),
+    ],
+  };
+}
+
+function createQuartileRuleScene(): DiagramScene {
+  return createBoxPlotScene(
+    { min: 0, q1: 25, q2: 50, q3: 75, max: 100 },
+    {
+      ariaLabel:
+        "箱ひげ図で最小値、第1四分位数Q1、中央値Q2、第3四分位数Q3、最大値を示し、Q1からQ3が中央50パーセントであることを示した図。",
+      numeric: false,
+    },
+  );
+}
+
+function createQuartileExampleScene(): DiagramScene {
+  return createBoxPlotScene(
+    { min: 2, q1: 4, q2: 7, q3: 10, max: 12 },
+    {
+      ariaLabel: "データ2,4,5,7,8,10,12の箱ひげ図。Q1は4、Q2は7、Q3は10で、四分位範囲は6。",
+      numeric: true,
+    },
+  );
+}
+
 const lessonDiagrams: Record<string, MathLessonDiagrams> = {
   "basic-parabola": {
     rule: createBasicParabolaComparison(),
     example: createDoubleParabolaExample(),
+  },
+  "right-triangle-trig": {
+    rule: createRightTriangleScene("rule"),
+    example: createRightTriangleScene("example"),
+  },
+  "quartiles-boxplot": {
+    rule: createQuartileRuleScene(),
+    example: createQuartileExampleScene(),
   },
 };
 
