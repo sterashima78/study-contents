@@ -223,7 +223,10 @@
           progress.hidden = true;
           status.textContent = "このページの内容を参照して回答しています…";
 
-          const recentHistory = history.slice(-8);
+          const recentHistory = history.slice(-3).map((message) => ({
+            ...message,
+            content: message.content.slice(0, 600),
+          }));
           const stream = await engine.chat.completions.create({
             messages: [
               { role: "system", content: buildStudySystemPrompt(buildStudyContext()) },
