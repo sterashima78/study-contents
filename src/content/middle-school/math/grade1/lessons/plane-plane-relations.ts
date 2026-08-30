@@ -29,12 +29,13 @@ export const planePlaneRelationsLesson: MathLesson = {
     title: "練習: 二平面の交わりを読む",
     problem: "二つの平面P、Qが交わっています。",
     steps: [
-      { prompt: "PとQの共通部分は何になりますか。", answers: ["直線", "1本の直線", "一つの直線"], placeholder: "図形" },
+      {
+        prompt: "PとQの共通部分は何になりますか。",
+        answers: ["直線", "1本の直線", "一つの直線"],
+        placeholder: "図形",
+      },
     ],
     hint: "空間で二つの平面が交わると、その交わりは線になります。",
   },
-  summary: [
-    "二平面が交わると、その共通部分は一つの直線になる。",
-    "交わらない二平面は平行である。",
-  ],
+  summary: ["二平面が交わると、その共通部分は一つの直線になる。", "交わらない二平面は平行である。"],
 };
