@@ -27,7 +27,8 @@ export type MathCourseInfo = {
 export const getCourseScopeLabel = (course: MathCourseInfo) =>
   course.scopeLabel ?? `高校${course.title}`;
 
-export const getCourseCurriculumKey = (course: MathCourseInfo) => course.curriculumKey ?? course.key;
+export const getCourseCurriculumKey = (course: MathCourseInfo) =>
+  course.curriculumKey ?? course.key;
 
 export const math1Course: MathCourseInfo = {
   key: "math1",
