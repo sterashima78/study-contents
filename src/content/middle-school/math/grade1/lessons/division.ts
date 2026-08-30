@@ -4,10 +4,7 @@ export const divisionLesson: MathLesson = {
   key: "division",
   title: "正の数・負の数の除法",
   description: "乗法と同じ符号の規則を使って、正負の数の割り算を行います。",
-  goals: [
-    "商の符号を2数の符号から判断できる。",
-    "割り切れる正負の数の除法を計算できる。",
-  ],
+  goals: ["商の符号を2数の符号から判断できる。", "割り切れる正負の数の除法を計算できる。"],
   concepts: [
     {
       title: "除法の符号も乗法と同じ",
