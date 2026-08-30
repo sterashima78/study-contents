@@ -181,8 +181,7 @@ function reflectionScene(): DiagramScene {
   return {
     width: 520,
     height: 340,
-    ariaLabel:
-      "中央の直線lを対称軸として、左の三角形ABCを右の三角形A'B'C'へ対称移動する図。",
+    ariaLabel: "中央の直線lを対称軸として、左の三角形ABCを右の三角形A'B'C'へ対称移動する図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       { kind: "line", from: point(260, 45), to: point(260, 310), color: PURPLE },
@@ -214,8 +213,7 @@ function rotationScene(): DiagramScene {
   return {
     width: 520,
     height: 340,
-    ariaLabel:
-      "点Oを中心に青い三角形ABCを反時計回りに90度回転し、橙色の三角形A'B'C'へ移す図。",
+    ariaLabel: "点Oを中心に青い三角形ABCを反時計回りに90度回転し、橙色の三角形A'B'C'へ移す図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       { kind: "polygon", points: original, color: BLUE },
@@ -240,8 +238,7 @@ function tangentScene(): DiagramScene {
   return {
     width: 520,
     height: 340,
-    ariaLabel:
-      "中心O、接点Tの円に、Tを通る接線lが引かれている。半径OTと接線lは90度で交わる。",
+    ariaLabel: "中心O、接点Tの円に、Tを通る接線lが引かれている。半径OTと接線lは90度で交わる。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       { kind: "circle", center: o, radius: 110, color: BLUE },
