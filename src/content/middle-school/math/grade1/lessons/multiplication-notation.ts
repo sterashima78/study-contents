@@ -36,5 +36,8 @@ export const multiplicationNotationLesson: MathLesson = {
     ],
     hint: "−7 を a の前に置きます。",
   },
-  summary: ["数と文字の積では × を省き、数を文字の前に書く。", "係数が1のときは1を省いて文字だけで表せる。"],
+  summary: [
+    "数と文字の積では × を省き、数を文字の前に書く。",
+    "係数が1のときは1を省いて文字だけで表せる。",
+  ],
 };
