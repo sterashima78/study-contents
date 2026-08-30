@@ -19,7 +19,10 @@ export const combineLikeTermsLesson: MathLesson = {
     title: "例題: 4x + 3 − x + 2 を簡単にする",
     problem: "4x + 3 − x + 2",
     steps: [
-      { expression: "4x − x と 3 + 2 に分ける", note: "文字を含む項と数だけの項をそれぞれ集めます。" },
+      {
+        expression: "4x − x と 3 + 2 に分ける",
+        note: "文字を含む項と数だけの項をそれぞれ集めます。",
+      },
       { expression: "(4 − 1)x + 5", note: "x の係数と数だけの項を計算します。" },
       { expression: "= 3x + 5", note: "これ以上まとめられない形にします。" },
     ],
@@ -33,7 +36,11 @@ export const combineLikeTermsLesson: MathLesson = {
         answers: ["4x"],
         placeholder: "4x",
       },
-      { prompt: "式全体を簡単にしてください。", answers: ["4x+3", "3+4x"], placeholder: "最終結果" },
+      {
+        prompt: "式全体を簡単にしてください。",
+        answers: ["4x+3", "3+4x"],
+        placeholder: "最終結果",
+      },
     ],
     hint: "6x−2x と 4−1 を別々に計算します。",
   },
