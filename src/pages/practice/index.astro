@@ -1,8 +1,8 @@
 ---
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import StudyPage from "../../components/ui/StudyPage.astro";
-// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentHero from "../../components/ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "../../components/ui/StudyPage.astro";
 import { biologyAreas } from "../../content/biology/catalog";
 import { biologyBasicAreas } from "../../content/biology-basic/catalog";
 import { chemistryAreas } from "../../content/chemistry/catalog";
@@ -443,7 +443,7 @@ const _questionBank = _courses.map((course) => ({
   renderCourseOptions();
 </script>
 
-<style>
+<style is:global>
   .practice-config,
   .practice-session {
     margin-top: 2rem;
@@ -469,9 +469,12 @@ const _questionBank = _courses.map((course) => ({
     letter-spacing: 0.12em;
   }
 
-  h2,
-  h3,
-  p {
+  .practice-config h2,
+  .practice-config h3,
+  .practice-config p,
+  .practice-session h2,
+  .practice-session h3,
+  .practice-session p {
     margin-top: 0;
   }
 
@@ -491,9 +494,10 @@ const _questionBank = _courses.map((course) => ({
     font-weight: 700;
   }
 
-  select,
-  input,
-  math-field {
+  .practice-config select,
+  .practice-session select,
+  .practice-session input,
+  .practice-session math-field {
     width: 100%;
     min-height: 2.8rem;
     border: 1px solid var(--color-border-strong);
@@ -502,43 +506,49 @@ const _questionBank = _courses.map((course) => ({
     color: var(--color-text-strong);
   }
 
-  select,
-  input {
+  .practice-config select,
+  .practice-session select,
+  .practice-session input {
     padding: 0.65rem 0.75rem;
   }
 
-  math-field {
+  .practice-session math-field {
     padding: 0.35rem 0.55rem;
     font-size: 1.08rem;
   }
 
-  .primary-button,
-  .secondary-button,
-  .record-link {
+  .practice-config .primary-button,
+  .practice-session .primary-button,
+  .practice-session .secondary-button,
+  .practice-config .record-link,
+  .practice-session .record-link {
     min-height: 2.8rem;
     padding: 0.65rem 0.9rem;
     border-radius: 0.55rem;
     font-weight: 750;
   }
 
-  .primary-button,
-  .secondary-button {
+  .practice-config .primary-button,
+  .practice-session .primary-button,
+  .practice-session .secondary-button {
     cursor: pointer;
   }
 
-  .primary-button {
+  .practice-config .primary-button,
+  .practice-session .primary-button {
     border: 1px solid var(--color-accent-strong);
     background: var(--color-accent-strong);
     color: #fff;
   }
 
-  .secondary-button {
+  .practice-session .secondary-button {
     border: 1px solid var(--color-border-strong);
     background: var(--surface);
     color: var(--color-text-strong);
   }
 
-  .record-link {
+  .practice-config .record-link,
+  .practice-session .record-link {
     display: inline-flex;
     align-items: center;
     color: var(--color-link);
@@ -600,13 +610,13 @@ const _questionBank = _courses.map((course) => ({
   }
 
   .practice-answer-label,
-  legend {
+  .practice-session legend {
     color: var(--color-text-soft);
     font-size: 0.78rem;
     font-weight: 750;
   }
 
-  fieldset {
+  .practice-session fieldset {
     min-width: 0;
     margin: 0;
     padding: 0;
