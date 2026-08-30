@@ -17,6 +17,8 @@ import DiagramView from "./diagram/DiagramView.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MiddleMathExerciseSet from "./MiddleMathExerciseSet.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import SocialExerciseSet from "./SocialExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
@@ -57,7 +59,10 @@ const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
-const _practiceSteps = designPracticeSteps(_course.key, _lesson.practice.steps);
+const _practiceSteps = designPracticeSteps(
+  _course.key === "middle-math1" ? "math1" : _course.key,
+  _lesson.practice.steps,
+);
 const _lessonDiagrams = getLessonDiagrams(_course.key, _lesson.key);
 const _scopeLabel = getCourseScopeLabel(_course);
 const _curriculumKey = getCourseCurriculumKey(_course);
@@ -166,11 +171,18 @@ const _formulaDerivation = _socialCourseKey || _course.key === "middle-math1"
         unitKey={_unit.key}
         lessonKey={_lesson.key}
       />
+    ) : _course.key === "middle-math1" ? (
+      <MiddleMathExerciseSet
+        mode="lesson"
+        routeBase={_course.routeBase}
+        areaKey={_area.key}
+        unitKey={_unit.key}
+        lessonKey={_lesson.key}
+      />
     ) : (
       <ExerciseSet
         mode="lesson"
         courseKey={_course.key}
-        routeBase={_course.routeBase}
         areaKey={_area.key}
         unitKey={_unit.key}
         lessonKey={_lesson.key}
