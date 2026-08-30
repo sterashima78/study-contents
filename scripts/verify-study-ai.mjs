@@ -45,8 +45,8 @@ for (const requiredExclusion of ['"script"', '"template"', '"[data-study-ai-excl
     issues.push(`study-context.ts: ${requiredExclusion} を教材コンテキストから除外してください。`);
   }
 }
-if (!modelConfig.includes('"onnx-community/Qwen3-1.7B-ONNX"')) {
-  issues.push("model-config.ts: 許可済みQwen3 ONNXモデルを固定してください。");
+if (!modelConfig.includes('"onnx-community/Qwen3-0.6B-ONNX"')) {
+  issues.push("model-config.ts: Android検証対象のQwen3 0.6B ONNXモデルを固定してください。");
 }
 if (!/STUDY_AI_MODEL_REVISION\s*=\s*"[0-9a-f]{40}"/.test(modelConfig)) {
   issues.push("model-config.ts: Hugging Faceモデルを40桁のcommit idで固定してください。");
