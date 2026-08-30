@@ -22,15 +22,25 @@ export const solidsOfRevolutionLesson: MathLesson = {
     problem: "長方形ABCDを辺ADを軸として1回転させます。",
     steps: [
       { expression: "ADが回転の軸", note: "軸上の点は回転しても位置が変わりません。" },
-      { expression: "ABが底面の半径になる", note: "軸から反対側の辺までの距離が円の半径になります。" },
-      { expression: "円柱ができる", note: "長方形の回転によって円柱の側面と二つの底面が構成されます。" },
+      {
+        expression: "ABが底面の半径になる",
+        note: "軸から反対側の辺までの距離が円の半径になります。",
+      },
+      {
+        expression: "円柱ができる",
+        note: "長方形の回転によって円柱の側面と二つの底面が構成されます。",
+      },
     ],
   },
   practice: {
     title: "練習: 回転体を対応させる",
     problem: "直角三角形を、直角をはさむ一辺を軸として1回転させます。",
     steps: [
-      { prompt: "できる立体の名称を答えてください。", answers: ["円錐", "円すい"], placeholder: "立体名" },
+      {
+        prompt: "できる立体の名称を答えてください。",
+        answers: ["円錐", "円すい"],
+        placeholder: "立体名",
+      },
     ],
     hint: "頂点から底面の円へ広がる回転体になります。",
   },
