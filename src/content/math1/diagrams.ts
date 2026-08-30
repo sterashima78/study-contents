@@ -1,8 +1,8 @@
 import {
+  type CartesianTransform,
   createCartesianAxes,
   createCartesianTransform,
   createQuadraticPlot,
-  type CartesianTransform,
   type DiagramElement,
   type DiagramPoint,
   type DiagramScene,
@@ -185,8 +185,7 @@ function createDoubleParabolaExample(): DiagramScene {
   return {
     width,
     height,
-    ariaLabel:
-      "y=2x² の放物線。頂点は原点で、点 (−1,2) と (1,2) を通り、y軸について対称である。",
+    ariaLabel: "y=2x² の放物線。頂点は原点で、点 (−1,2) と (1,2) を通り、y軸について対称である。",
     responsive: { minWidth: 460, allowHorizontalScroll: true },
     elements: [
       ...createAxisDecorations(transform, [-2, -1, 1, 2], [2, 4, 6, 8]),
