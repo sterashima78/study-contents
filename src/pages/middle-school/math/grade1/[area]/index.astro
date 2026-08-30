@@ -1,0 +1,23 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MathAreaIndex from "../../../../../components/MathAreaIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleMath1Course } from "../../../../../content/math-courses";
+import { middleMath1Areas } from "../../../../../content/middle-school/math/grade1/catalog";
+import type { MathArea } from "../../../../../content/math1/types";
+
+export function getStaticPaths() {
+  return middleMath1Areas.map((area) => ({
+    params: { area: area.key },
+    props: { area },
+  }));
+}
+
+type Props = {
+  area: MathArea;
+};
+
+const { area: _area } = Astro.props;
+---
+
+<MathAreaIndex area={_area} course={middleMath1Course} />
