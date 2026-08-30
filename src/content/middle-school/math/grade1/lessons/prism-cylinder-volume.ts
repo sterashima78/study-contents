@@ -4,10 +4,7 @@ export const prismCylinderVolumeLesson: MathLesson = {
   key: "prism-cylinder-volume",
   title: "柱体・円柱の体積",
   description: "底面積と高さに着目し、柱体や円柱の体積を求めます。",
-  goals: [
-    "柱体の体積を底面積×高さで求められる。",
-    "円柱の体積をπr²hで求められる。",
-  ],
+  goals: ["柱体の体積を底面積×高さで求められる。", "円柱の体積をπr²hで求められる。"],
   concepts: [
     {
       title: "柱体の体積は底面積×高さ",
@@ -37,8 +34,5 @@ export const prismCylinderVolumeLesson: MathLesson = {
     ],
     hint: "底面積πr²に高さを掛けます。",
   },
-  summary: [
-    "柱体の体積は底面積×高さで求める。",
-    "円柱の体積はV = πr²hで求める。",
-  ],
+  summary: ["柱体の体積は底面積×高さで求める。", "円柱の体積はV = πr²hで求める。"],
 };
