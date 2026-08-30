@@ -32,6 +32,17 @@ const literalExpressionLessonKeys = [
   "express-relations",
 ] as const;
 
+const linearEquationLessonKeys = [
+  "equation-meaning",
+  "equality-properties",
+  "equation-add-subtract",
+  "equation-multiply-divide",
+  "transposition",
+  "equation-both-sides",
+  "proportion-equations",
+  "equation-word-problems",
+] as const;
+
 const lessonTitles: Record<string, string> = {
   "positive-negative-meaning": "正の数・負の数の意味",
   "number-line-absolute-value": "数直線と絶対値",
@@ -47,11 +58,20 @@ const lessonTitles: Record<string, string> = {
   "combine-like-terms": "同じ文字の項をまとめる",
   "linear-expression-addition-subtraction": "一次式の加法と減法",
   "express-relations": "数量の関係を式で表す",
+  "equation-meaning": "方程式と解の意味",
+  "equality-properties": "等式の性質",
+  "equation-add-subtract": "加法・減法で方程式を解く",
+  "equation-multiply-divide": "乗法・除法で方程式を解く",
+  transposition: "移項を使って解く",
+  "equation-both-sides": "両辺に文字を含む方程式",
+  "proportion-equations": "比例式を解く",
+  "equation-word-problems": "方程式を文章題に利用する",
 };
 
 const unitLessonKeys: Record<string, readonly string[]> = {
   "positive-negative-numbers": positiveNegativeLessonKeys,
   "literal-expressions": literalExpressionLessonKeys,
+  "linear-equations": linearEquationLessonKeys,
 };
 
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -76,6 +96,8 @@ const linearExpression = (coefficient: number, constant: number) => {
   return `${term}${constant > 0 ? `+${constant}` : `−${Math.abs(constant)}`}`;
 };
 
+const numericAnswers = (value: number) => [String(value), signed(value)];
+
 const generators: Record<string, Generator> = {
   "positive-negative-meaning": () => {
     const distance = randomInt(2, 12);
@@ -83,7 +105,7 @@ const generators: Record<string, Generator> = {
     const value = isBelow ? -distance : distance;
     return {
       prompt: `0を基準に、${isBelow ? "低い" : "高い"}向きへ${distance}だけ離れた位置を符号を付けた数で表してください。`,
-      answers: [String(value), signed(value)],
+      answers: numericAnswers(value),
       lessonKeys: ["positive-negative-meaning"],
       hint: `${isBelow ? "低い" : "高い"}向きを${isBelow ? "負" : "正"}で表します。`,
     };
@@ -103,7 +125,7 @@ const generators: Record<string, Generator> = {
     const answer = a + b;
     return {
       prompt: `(${signed(a)}) + (${signed(b)}) を計算してください。`,
-      answers: [String(answer), signed(answer)],
+      answers: numericAnswers(answer),
       lessonKeys: ["addition"],
       hint: "同符号なら絶対値を足し、異符号なら絶対値の差を考えます。",
     };
@@ -114,7 +136,7 @@ const generators: Record<string, Generator> = {
     const answer = a - b;
     return {
       prompt: `(${signed(a)}) − (${signed(b)}) を計算してください。`,
-      answers: [String(answer), signed(answer)],
+      answers: numericAnswers(answer),
       lessonKeys: ["subtraction"],
       hint: "引く数の符号を反対にして、加法へ直します。",
     };
@@ -125,7 +147,7 @@ const generators: Record<string, Generator> = {
     const answer = a * b;
     return {
       prompt: `(${signed(a)}) × (${signed(b)}) を計算してください。`,
-      answers: [String(answer), signed(answer)],
+      answers: numericAnswers(answer),
       lessonKeys: ["multiplication"],
       hint: "同符号の積は正、異符号の積は負です。",
     };
@@ -136,7 +158,7 @@ const generators: Record<string, Generator> = {
     const dividend = quotient * divisor;
     return {
       prompt: `(${signed(dividend)}) ÷ (${signed(divisor)}) を計算してください。`,
-      answers: [String(quotient), signed(quotient)],
+      answers: numericAnswers(quotient),
       lessonKeys: ["division"],
       hint: "符号を決めてから絶対値どうしを割ります。",
     };
@@ -175,7 +197,7 @@ const generators: Record<string, Generator> = {
     const answer = coefficient * value + constant;
     return {
       prompt: `x = ${signed(value)} のとき、${linearExpression(coefficient, constant)} の値を求めてください。`,
-      answers: [String(answer), signed(answer)],
+      answers: numericAnswers(answer),
       lessonKeys: ["substitution-value"],
       hint: "x を符号ごと数に置き換え、乗法を先に計算します。",
     };
@@ -185,7 +207,7 @@ const generators: Record<string, Generator> = {
     const constant = nonZeroInt(-9, 9);
     return {
       prompt: `${linearExpression(coefficient, constant)} の x の係数を答えてください。`,
-      answers: [String(coefficient), signed(coefficient)],
+      answers: numericAnswers(coefficient),
       lessonKeys: ["terms-coefficients"],
       hint: "x を含む項で、x に掛かっている数を符号ごと読みます。",
     };
@@ -238,6 +260,103 @@ const generators: Record<string, Generator> = {
       answers: [`x≤${limit}`, `${limit}≥x`],
       lessonKeys: ["express-relations"],
       hint: "『以下』は等しい場合も含むので ≤ を使います。",
+    };
+  },
+  "equation-meaning": () => {
+    const solution = randomInt(-6, 8);
+    const offset = nonZeroInt(-7, 7);
+    const right = solution + offset;
+    const candidateIsSolution = Math.random() < 0.5;
+    const candidate = candidateIsSolution ? solution : solution + nonZeroInt(-3, 3);
+    return {
+      prompt: `x = ${signed(candidate)} は、方程式 x ${offset >= 0 ? "+" : "−"} ${Math.abs(offset)} = ${signed(right)} の解ですか。「解」または「解ではない」で答えてください。`,
+      answers: [candidateIsSolution ? "解" : "解ではない"],
+      lessonKeys: ["equation-meaning"],
+      hint: "候補の値を x に代入して、左辺と右辺が等しくなるか確かめます。",
+    };
+  },
+  "equality-properties": () => {
+    const solution = randomInt(-8, 10);
+    const offset = randomInt(2, 8);
+    const right = solution + offset;
+    return {
+      prompt: `x + ${offset} = ${signed(right)} を、両辺から同じ数を引いて解いてください。x の値を答えてください。`,
+      answers: numericAnswers(solution),
+      lessonKeys: ["equality-properties"],
+      hint: `両辺から${offset}を引くと x だけが残ります。`,
+    };
+  },
+  "equation-add-subtract": () => {
+    const solution = randomInt(-10, 10);
+    const offset = nonZeroInt(-9, 9);
+    const right = solution + offset;
+    return {
+      prompt: `x ${offset >= 0 ? "+" : "−"} ${Math.abs(offset)} = ${signed(right)} を解いてください。`,
+      answers: numericAnswers(solution),
+      lessonKeys: ["equation-add-subtract"],
+      hint: "x の横の数を取り除くため、両辺に反対の加減をします。",
+    };
+  },
+  "equation-multiply-divide": () => {
+    const coefficient = nonZeroInt(-8, 8);
+    const solution = nonZeroInt(-9, 9);
+    const right = coefficient * solution;
+    return {
+      prompt: `${xTerm(coefficient)} = ${signed(right)} を解いてください。`,
+      answers: numericAnswers(solution),
+      lessonKeys: ["equation-multiply-divide"],
+      hint: `両辺を${signed(coefficient)}で割り、x の係数を1にします。`,
+    };
+  },
+  transposition: () => {
+    const coefficient = randomInt(2, 7);
+    const solution = randomInt(-6, 8);
+    const constant = nonZeroInt(-8, 8);
+    const right = coefficient * solution + constant;
+    return {
+      prompt: `${linearExpression(coefficient, constant)} = ${signed(right)} を、移項を使って解いてください。`,
+      answers: numericAnswers(solution),
+      lessonKeys: ["transposition"],
+      hint: "定数項を反対側へ移項してから、x の係数で両辺を割ります。",
+    };
+  },
+  "equation-both-sides": () => {
+    const rightCoefficient = randomInt(1, 4);
+    const leftCoefficient = randomInt(rightCoefficient + 1, 8);
+    const solution = randomInt(-5, 7);
+    const leftConstant = nonZeroInt(-7, 7);
+    const rightConstant =
+      (leftCoefficient - rightCoefficient) * solution + leftConstant;
+    return {
+      prompt: `${linearExpression(leftCoefficient, leftConstant)} = ${linearExpression(rightCoefficient, rightConstant)} を解いてください。`,
+      answers: numericAnswers(solution),
+      lessonKeys: ["equation-both-sides"],
+      hint: "x の項を一方へ、数の項をもう一方へ集めます。",
+    };
+  },
+  "proportion-equations": () => {
+    const solution = randomInt(2, 9);
+    const denominator = randomInt(2, 8);
+    const scale = randomInt(2, 5);
+    const rightNumerator = solution * scale;
+    const rightDenominator = denominator * scale;
+    return {
+      prompt: `x : ${denominator} = ${rightNumerator} : ${rightDenominator} を解いてください。`,
+      answers: numericAnswers(solution),
+      lessonKeys: ["proportion-equations"],
+      hint: "外項の積と内項の積が等しい式を作ります。",
+    };
+  },
+  "equation-word-problems": () => {
+    const price = randomInt(5, 15) * 10;
+    const count = randomInt(2, 9);
+    const extra = randomInt(2, 8) * 10;
+    const total = price * count + extra;
+    return {
+      prompt: `1個${price}円の商品を x 個買い、${extra}円の袋を付けると合計${total}円でした。x の値を求めてください。`,
+      answers: numericAnswers(count),
+      lessonKeys: ["equation-word-problems"],
+      hint: `${price}x + ${extra} = ${total} と立式します。`,
     };
   },
 };
