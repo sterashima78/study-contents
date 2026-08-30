@@ -1,6 +1,7 @@
 import type { MathCourseInfo } from "./math-courses";
 import { getMath1LessonDiagrams, type MathLessonDiagrams } from "./math1/diagrams";
 import { getMath2LessonDiagrams } from "./math2/diagrams";
+import { getMath3LessonDiagrams } from "./math3/diagrams";
 import { getMathCLessonDiagrams } from "./mathc/diagrams";
 import { getPhysicsBasicsLessonDiagrams } from "./physics-basics/diagrams";
 
@@ -10,6 +11,7 @@ const resolvers: Partial<Record<MathCourseInfo["key"], DiagramResolver>> = {
   math1: getMath1LessonDiagrams,
   math2: getMath2LessonDiagrams,
   mathc: getMathCLessonDiagrams,
+  math3: getMath3LessonDiagrams,
   "physics-basics": getPhysicsBasicsLessonDiagrams,
 };
 
