@@ -4,10 +4,7 @@ export const additionLesson: MathLesson = {
   key: "addition",
   title: "正の数・負の数の加法",
   description: "符号と絶対値に注目して、正の数・負の数の足し算を行います。",
-  goals: [
-    "同符号の2数の和を計算できる。",
-    "異符号の2数の和を、絶対値の差を使って計算できる。",
-  ],
+  goals: ["同符号の2数の和を計算できる。", "異符号の2数の和を、絶対値の差を使って計算できる。"],
   concepts: [
     {
       title: "同符号は足し、異符号は差をとる",
