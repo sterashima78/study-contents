@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const perspectiveDrawingLesson: MathLesson = {
   key: "perspective-drawing",
   title: "見取図から立体を読む",
-  description: "見取図に表された辺や面のつながりを読み、見た目だけで長さや角度を判断しないようにします。",
+  description:
+    "見取図に表された辺や面のつながりを読み、見た目だけで長さや角度を判断しないようにします。",
   goals: [
     "見取図から立体の頂点・辺・面のつながりを読み取れる。",
     "見取図では実際の長さや角度がそのまま保たれないことを説明できる。",
@@ -22,16 +23,30 @@ export const perspectiveDrawingLesson: MathLesson = {
     problem: "立方体の見取図で、同じ一つの面をつくる4本の辺を考えます。",
     steps: [
       { expression: "一つの面は正方形", note: "立方体の各面は合同な正方形です。" },
-      { expression: "面を囲む4辺の長さは等しい", note: "見取図で傾いて見える辺でも、実際の辺の長さは等しいです。" },
-      { expression: "隣り合う辺は実際には90°", note: "紙上で90°に見えなくても、正方形の面の角は直角です。" },
+      {
+        expression: "面を囲む4辺の長さは等しい",
+        note: "見取図で傾いて見える辺でも、実際の辺の長さは等しいです。",
+      },
+      {
+        expression: "隣り合う辺は実際には90°",
+        note: "紙上で90°に見えなくても、正方形の面の角は直角です。",
+      },
     ],
   },
   practice: {
     title: "練習: 見取図と実際の性質を区別する",
     problem: "立方体の見取図では、奥行き方向の辺が斜めに描かれています。",
     steps: [
-      { prompt: "立方体の一つの面の形を答えてください。", answers: ["正方形"], placeholder: "図形" },
-      { prompt: "その面の隣り合う辺の実際の角度を答えてください。", answers: ["90", "90°", "90度"], placeholder: "角度" },
+      {
+        prompt: "立方体の一つの面の形を答えてください。",
+        answers: ["正方形"],
+        placeholder: "図形",
+      },
+      {
+        prompt: "その面の隣り合う辺の実際の角度を答えてください。",
+        answers: ["90", "90°", "90度"],
+        placeholder: "角度",
+      },
     ],
     hint: "見取図の紙上の形ではなく、立方体そのものの性質を考えます。",
   },
