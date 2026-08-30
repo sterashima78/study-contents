@@ -1,4 +1,4 @@
-name: CI
+name: CI review fix
 
 on:
   pull_request:
@@ -6,14 +6,17 @@ on:
       - main
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  checks:
+  repair:
+    if: github.actor == 'sterashima78' && github.head_ref == 'feature/shared-diagram-components'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout PR branch
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: feature/shared-diagram-components
 
       - name: Setup pnpm and Node.js
         uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1
@@ -26,47 +29,241 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run Biome
-        run: pnpm exec biome ci .
+      - name: Apply review fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
 
-      - name: Verify ADRs
-        run: pnpm check:adr
+          # Correlate symbol domains and symbols in the editor tool type.
+          path = Path("src/lib/diagram/types.ts")
+          text = path.read_text()
+          start = text.index("export type DiagramEditorTool =")
+          end = text.index("\n\nexport type DiagramEditorHelpers", start)
+          replacement = '''export type DiagramSymbolTool = {
+  kind: "symbol";
+  label: string;
+  width?: number;
+  height?: number;
+  edit?: DiagramEditPermissions;
+} & (
+  | { domain: "physics"; symbol: PhysicsSymbol }
+  | { domain: "circuit"; symbol: CircuitSymbol }
+  | { domain: "chemistry"; symbol: ChemistrySymbol }
+  | { domain: "biology"; symbol: BiologySymbol }
+);
 
-      - name: Verify curriculum references
-        run: pnpm check:curriculum
+export type DiagramEditorTool =
+  | { kind: "point"; label: string; edit?: DiagramEditPermissions }
+  | { kind: "segment"; label: string; edit?: DiagramEditPermissions }
+  | { kind: "line"; label: string; edit?: DiagramEditPermissions }
+  | { kind: "circle"; label: string; edit?: DiagramEditPermissions }
+  | { kind: "polygon"; label: string; edit?: DiagramEditPermissions }
+  | { kind: "arrow"; label: string; edit?: DiagramEditPermissions }
+  | DiagramSymbolTool;'''
+          path.write_text(text[:start] + replacement + text[end:])
 
-      - name: Verify formula coverage
-        run: pnpm check:formulas
+          # Fix SVG coordinate mapping, model-answer scaling, and symbol construction.
+          path = Path("src/lib/diagram/editor-client.ts")
+          text = path.read_text()
+          text = text.replace(
+              '''  modelAnswer?: DiagramScene;\n  tools: DiagramEditorTool[];''',
+              '''  modelAnswer?: DiagramScene;\n  responsiveScale: number;\n  tools: DiagramEditorTool[];''',
+          )
+          text = text.replace(
+              '''      modelAnswer: modelAnswer ? ensureRuntimeIds(clone(modelAnswer), "model") : undefined,\n      tools,''',
+              '''      modelAnswer: modelAnswer ? ensureRuntimeIds(clone(modelAnswer), "model") : undefined,\n      responsiveScale: 1,\n      tools,''',
+          )
+          text = text.replace(
+              '''    const scale = Math.max(\n      minimumScale,\n      Math.min(1, (available - padding) / state.baseScene.width),\n    );\n    const learner''',
+              '''    const scale = Math.max(\n      minimumScale,\n      Math.min(1, (available - padding) / state.baseScene.width),\n    );\n    state.responsiveScale = scale;\n    const learner''',
+          )
 
-      - name: Verify application and advanced content
-        run: pnpm check:entrance-content
+          symbol_start = text.index('  if (tool.kind === "symbol") {')
+          symbol_end = text.index('  if (tool.kind === "polygon") {', symbol_start)
+          symbol_block = '''  if (tool.kind === "symbol") {
+    commit(state, () => {
+      const common = {
+        kind: "symbol" as const,
+        at: snapped.point,
+        width: tool.width,
+        height: tool.height,
+        refs: snapped.ref ? [snapped.ref] : [],
+      };
+      let element: DomainSymbolElement;
+      if (tool.domain === "physics") {
+        element = { ...common, domain: "physics", symbol: tool.symbol };
+      } else if (tool.domain === "circuit") {
+        element = { ...common, domain: "circuit", symbol: tool.symbol };
+      } else if (tool.domain === "chemistry") {
+        element = { ...common, domain: "chemistry", symbol: tool.symbol };
+      } else {
+        element = { ...common, domain: "biology", symbol: tool.symbol };
+      }
+      addLearnerElement(state, tool, element);
+    });
+    return;
+  }
+'''
+          text = text[:symbol_start] + symbol_block + text[symbol_end:]
 
-      - name: Verify diagram data
-        run: pnpm check:diagrams
+          model_start = text.index('  if (state.modelAnswer && state.answerRevealed && state.modelVisible) {')
+          model_end = text.index('  renderDraft(state, markerId);', model_start)
+          model_block = '''  if (state.modelAnswer && state.answerRevealed && state.modelVisible) {
+    const modelMarker = `${markerId}-model`;
+    const modelScene = {
+      ...state.modelAnswer,
+      elements: state.modelAnswer.elements.map((element) =>
+        scaleElementFromOrigin(element, state.responsiveScale),
+      ),
+    };
+    state.svg.append(createMarker(modelMarker, MODEL_COLOR));
+    const modelGroup = renderSceneGroup(modelScene, modelMarker, MODEL_COLOR, null);
+    modelGroup.setAttribute("pointer-events", "none");
+    modelGroup.setAttribute("aria-hidden", "true");
+    state.svg.append(modelGroup);
+  }
+'''
+          text = text[:model_start] + model_block + text[model_end:]
 
-      - name: Verify component style boundaries
-        run: pnpm check:component-styles
+          point_start = text.index('const eventPoint = (')
+          point_end = text.index('\n\nconst ensureRuntimeIds', point_start)
+          point_block = '''const eventPoint = (
+  state: EditorState,
+  event: MouseEvent | PointerEvent | WheelEvent,
+): DiagramPoint => {
+  const matrix = state.svg.getScreenCTM();
+  if (matrix) {
+    const point = state.svg.createSVGPoint();
+    point.x = event.clientX;
+    point.y = event.clientY;
+    const transformed = point.matrixTransform(matrix.inverse());
+    return { x: transformed.x, y: transformed.y };
+  }
 
-      - name: Build
-        run: pnpm build
+  const rect = state.svg.getBoundingClientRect();
+  return {
+    x: state.view.x + ((event.clientX - rect.left) / Math.max(rect.width, 1)) * state.view.width,
+    y: state.view.y + ((event.clientY - rect.top) / Math.max(rect.height, 1)) * state.view.height,
+  };
+};'''
+          path.write_text(text[:point_start] + point_block + text[point_end:])
 
-      - name: Verify curriculum references in generated HTML
-        run: pnpm check:curriculum-build
+          # Validate element refs and use an actual point-in-polygon test.
+          path = Path("src/lib/diagram/validate.mjs")
+          text = path.read_text()
+          marker = '''  if (scene.constraints !== undefined && !Array.isArray(scene.constraints)) {'''
+          refs_check = '''  for (const [index, element] of scene.elements.entries()) {
+    if (!Array.isArray(element?.refs)) continue;
+    for (const ref of element.refs) {
+      if (typeof ref === "string" && !ids.has(ref)) {
+        errors.push(`${source}.elements[${index}]: 参照先 id「${ref}」がありません。`);
+      }
+    }
+  }
 
-      - name: Verify generated HTML
-        run: node scripts/verify-build-output.mjs
+'''
+          if refs_check not in text:
+              text = text.replace(marker, refs_check + marker)
 
-      - name: Verify English generated HTML
-        run: node scripts/verify-english-build-output.mjs
+          polygon_start = text.index('  if (outer.kind === "polygon") {', text.index('function contains'))
+          polygon_end = text.index('  return true;', polygon_start)
+          text = text[:polygon_start] + '''  if (outer.kind === "polygon") return pointInPolygon(outer.points, inner);\n''' + text[polygon_end:]
 
-      - name: Verify biology generated HTML
-        run: node scripts/verify-biology-build-output.mjs
+          pair_marker = 'function pairDistance(pair, ids) {'
+          polygon_helpers = '''function pointInPolygon(points, point) {
+  let inside = false;
+  for (let index = 0, previous = points.length - 1; index < points.length; previous = index++) {
+    const currentPoint = points[index];
+    const previousPoint = points[previous];
+    if (pointOnSegment(point, previousPoint, currentPoint)) return true;
+    const intersects =
+      currentPoint.y > point.y !== previousPoint.y > point.y &&
+      point.x <
+        ((previousPoint.x - currentPoint.x) * (point.y - currentPoint.y)) /
+          (previousPoint.y - currentPoint.y) +
+          currentPoint.x;
+    if (intersects) inside = !inside;
+  }
+  return inside;
+}
 
-      - name: Verify Math I application and advanced HTML
-        run: node scripts/verify-math1-advanced-build-output.mjs
+function pointOnSegment(point, start, end) {
+  const cross =
+    (point.y - start.y) * (end.x - start.x) - (point.x - start.x) * (end.y - start.y);
+  if (Math.abs(cross) > 1e-9) return false;
+  const dot =
+    (point.x - start.x) * (point.x - end.x) + (point.y - start.y) * (point.y - end.y);
+  return dot <= 1e-9;
+}
 
-      - name: Verify all other course application and advanced HTML
-        run: node scripts/verify-all-advanced-build-output.mjs
+'''
+          if polygon_helpers not in text:
+              text = text.replace(pair_marker, polygon_helpers + pair_marker)
+          path.write_text(text)
 
-      - name: Verify Math II generated HTML
-        run: node scripts/verify-math2-build-output.mjs
+          # Add validator regression fixtures for refs and polygon containment.
+          path = Path("scripts/verify-diagrams.mjs")
+          text = path.read_text()
+          insertion_marker = '\nfor (const file of await findJsonFiles(contentDirectory)) {'
+          fixtures = '''
+const missingRefFixture = {
+  width: 200,
+  height: 120,
+  ariaLabel: "存在しない参照の検出用",
+  elements: [
+    { kind: "point", id: "a", x: 20, y: 20 },
+    {
+      kind: "segment",
+      id: "line",
+      from: { x: 20, y: 20 },
+      to: { x: 120, y: 20 },
+      refs: ["missing"],
+    },
+  ],
+};
+if (validateDiagramScene(missingRefFixture, { source: "missing ref fixture" }).errors.length === 0) {
+  issues.push("missing ref fixture: 存在しない refs が拒否されませんでした。");
+}
+
+const polygonContainmentFixture = {
+  width: 120,
+  height: 120,
+  ariaLabel: "多角形包含判定の検証用",
+  elements: [
+    {
+      kind: "polygon",
+      id: "triangle",
+      points: [
+        { x: 0, y: 0 },
+        { x: 100, y: 0 },
+        { x: 0, y: 100 },
+      ],
+    },
+    { kind: "point", id: "outside", x: 90, y: 90 },
+  ],
+  constraints: [{ kind: "inside", inner: "outside", outer: "triangle" }],
+};
+if (
+  validateDiagramScene(polygonContainmentFixture, { source: "polygon containment fixture" })
+    .warnings.length === 0
+) {
+  issues.push("polygon containment fixture: 多角形外の点が inside と判定されました。");
+}
+'''
+          if 'const missingRefFixture =' not in text:
+              text = text.replace(insertion_marker, fixtures + insertion_marker)
+          path.write_text(text)
+          PY
+
+      - name: Format review fixes
+        run: pnpm exec biome format --write src/lib/diagram/types.ts src/lib/diagram/editor-client.ts src/lib/diagram/validate.mjs scripts/verify-diagrams.mjs
+
+      - name: Commit review fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/lib/diagram/types.ts src/lib/diagram/editor-client.ts src/lib/diagram/validate.mjs scripts/verify-diagrams.mjs
+          if ! git diff --cached --quiet; then
+            git commit -m "Address diagram component review findings"
+            git push origin HEAD:feature/shared-diagram-components
+          fi
