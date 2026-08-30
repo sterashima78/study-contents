@@ -325,8 +325,7 @@ const generators: Record<string, Generator> = {
     const leftCoefficient = randomInt(rightCoefficient + 1, 8);
     const solution = randomInt(-5, 7);
     const leftConstant = nonZeroInt(-7, 7);
-    const rightConstant =
-      (leftCoefficient - rightCoefficient) * solution + leftConstant;
+    const rightConstant = (leftCoefficient - rightCoefficient) * solution + leftConstant;
     return {
       prompt: `${linearExpression(leftCoefficient, leftConstant)} = ${linearExpression(rightCoefficient, rightConstant)} を解いてください。`,
       answers: numericAnswers(solution),
