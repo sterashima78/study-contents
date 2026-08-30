@@ -70,6 +70,14 @@ Transformers.js + Qwen3-1.7Bで自然な日本語が安定して生成でき、�
 
 モデルを変更する場合は、採用理由、モデルrevision、容量、言語性能、Android実機結果を別ADRに記録する。
 
+### 7. ブラウザ用途で不要な依存パッケージのinstall scriptは実行しない
+
+Transformers.js 4.2.0はパッケージとしてNode.js向け依存も含み、`pnpm install` 時には `onnxruntime-node@1.24.3`、`protobufjs@7.6.6`、`sharp@0.34.5` のbuild scriptが検出される。しかし本サイトのAI推論はブラウザ内のWebGPU経路だけを使用し、これらNode.js向けbuild scriptの実行を必要としない。
+
+公開リポジトリのサプライチェーン境界を狭くするため、`pnpm-workspace.yaml` の `allowBuilds` で上記3パッケージを明示的に `false` とする。既存ビルドに必要な `esbuild@0.28.2` だけを `true` のまま維持する。
+
+必要性を確認せずbuild scriptを許可することはしない。将来Transformers.jsやビルド方式の変更によりNode.js側処理が必要になった場合は、対象スクリプトの用途とリスクを確認してから本ADRを更新する。
+
 ## Consequences
 
 ### Positive
@@ -79,6 +87,7 @@ Transformers.js + Qwen3-1.7Bで自然な日本語が安定して生成でき、�
 - APIキーやサーバーAIを追加せず、静的サイト構成と端末内推論を維持できる。
 - モデルrevisionをcommitで固定し、モデル成果物の参照先を再現可能にできる。
 - ADR 0042の教材コンテキスト、HTML出力、履歴保存に関する安全境界を維持できる。
+- ブラウザ実行に不要なNode.js依存のinstall scriptを実行せず、依存導入時の実行権限を最小化できる。
 
 ### Negative
 
@@ -93,6 +102,7 @@ Transformers.js + Qwen3-1.7Bで自然な日本語が安定して生成でき、�
 自動検証では次を確認する。
 
 - `pnpm install` で `@huggingface/transformers@4.2.0` とlockfileが一致し、`@mlc-ai/web-llm` が残っていないこと。
+- `pnpm install` が、不要な `onnxruntime-node`、`protobufjs`、`sharp` のbuild scriptを許可せず成功すること。
 - `pnpm check` が通ること。
 - `pnpm build` が通り、Transformers.jsを含むWeb Workerを静的ビルドできること。
 - `scripts/verify-study-ai.mjs` がモデルID、40桁commit revision、`q4f16`、Web Worker、WebGPU、thinking無効化、HTML非評価の境界を検証すること。
