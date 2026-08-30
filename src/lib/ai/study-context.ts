@@ -40,7 +40,8 @@ function findViewportContext(main: HTMLElement) {
 
 export function buildStudyContext() {
   const main = document.querySelector<HTMLElement>("main.study-page");
-  const description = document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content ?? "";
+  const description =
+    document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content ?? "";
   const focusText = main ? findViewportContext(main) : "";
   const pageText = extractText(main, PAGE_CONTEXT_LIMIT);
   const parts = [
