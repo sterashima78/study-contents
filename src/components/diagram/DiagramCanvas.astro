@@ -15,6 +15,7 @@ assertDiagramScene(_scene, { source: "DiagramCanvas" });
 const _elements = _scene.elements.flatMap(expandDiagramElement);
 const _markerId = `diagram-arrow-${randomUUID()}`;
 
+// biome-ignore lint/correctness/noUnusedVariables: Astro template usage is not detected by Biome.
 const lineExtent = (element: CoreDiagramElement) => {
   if (element.kind !== "line") return null;
   const dx = element.to.x - element.from.x;
@@ -29,6 +30,7 @@ const lineExtent = (element: CoreDiagramElement) => {
   };
 };
 
+// biome-ignore lint/correctness/noUnusedVariables: Astro template usage is not detected by Biome.
 const arcPath = (element: CoreDiagramElement) => {
   if (element.kind !== "arc") return "";
   const start = (element.startAngle * Math.PI) / 180;
@@ -37,10 +39,11 @@ const arcPath = (element: CoreDiagramElement) => {
   const y1 = element.center.y + Math.sin(start) * element.radius;
   const x2 = element.center.x + Math.cos(end) * element.radius;
   const y2 = element.center.y + Math.sin(end) * element.radius;
-  const span = ((element.endAngle - element.startAngle) % 360 + 360) % 360;
+  const span = (((element.endAngle - element.startAngle) % 360) + 360) % 360;
   return `M ${x1} ${y1} A ${element.radius} ${element.radius} 0 ${span > 180 ? 1 : 0} 1 ${x2} ${y2}`;
 };
 
+// biome-ignore lint/correctness/noUnusedVariables: Astro template usage is not detected by Biome.
 const gridLines = (element: AxesElement) => {
   if (!element.grid) return [];
   const step = element.gridStep ?? 20;

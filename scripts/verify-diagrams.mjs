@@ -52,19 +52,26 @@ if (issues.length > 0) {
   for (const issue of issues) console.error(`- ${issue}`);
   process.exitCode = 1;
 } else {
-  console.log("Diagram verification passed: structured diagram data and validator fixtures are valid.");
+  console.log(
+    "Diagram verification passed: structured diagram data and validator fixtures are valid.",
+  );
 }
 
 function visit(value, location) {
   if (Array.isArray(value)) {
-    value.forEach((item, index) => visit(item, `${location}[${index}]`));
+    value.forEach((item, index) => {
+      visit(item, `${location}[${index}]`);
+    });
     return;
   }
   if (!value || typeof value !== "object") return;
 
   for (const [key, child] of Object.entries(value)) {
     const childLocation = `${location}.${key}`;
-    if (["diagram", "scene", "initialScene", "modelAnswer"].includes(key) && looksLikeScene(child)) {
+    if (
+      ["diagram", "scene", "initialScene", "modelAnswer"].includes(key) &&
+      looksLikeScene(child)
+    ) {
       collectResult(validateDiagramScene(child, { source: childLocation }));
     }
     visit(child, childLocation);
@@ -77,7 +84,9 @@ function collectResult(result) {
 }
 
 function looksLikeScene(value) {
-  return Boolean(value && typeof value === "object" && !Array.isArray(value) && "elements" in value);
+  return Boolean(
+    value && typeof value === "object" && !Array.isArray(value) && "elements" in value,
+  );
 }
 
 async function findJsonFiles(directory) {

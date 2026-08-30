@@ -1,9 +1,9 @@
 import { expandDiagramElement } from "./symbols";
 import type {
   CoreDiagramElement,
-  DiagramEditPermissions,
   DiagramEditorHelpers,
   DiagramEditorTool,
+  DiagramEditPermissions,
   DiagramElement,
   DiagramPoint,
   DiagramScene,
@@ -119,7 +119,10 @@ const bindControls = (state: EditorState) => {
     state.selectedId = null;
     clearDraft(state);
     updateControls(state);
-    setStatus(state, state.panMode ? "図をドラッグして表示位置を移動できます。" : "表示移動を終了しました。");
+    setStatus(
+      state,
+      state.panMode ? "図をドラッグして表示位置を移動できます。" : "表示移動を終了しました。",
+    );
   });
   root.querySelector("[data-cancel-tool]")?.addEventListener("click", () => selectTool(state));
   root.querySelector("[data-finish-shape]")?.addEventListener("click", () => finishPolygon(state));
@@ -171,7 +174,8 @@ const bindPointerEvents = (state: EditorState) => {
       return;
     }
 
-    const target = event.target instanceof Element ? event.target.closest("[data-element-id]") : null;
+    const target =
+      event.target instanceof Element ? event.target.closest("[data-element-id]") : null;
     const id = target instanceof SVGElement ? target.dataset.elementId : undefined;
     state.selectedId = id || null;
     if (state.selectedId) {
@@ -217,7 +221,10 @@ const bindPointerEvents = (state: EditorState) => {
     state.pointers.delete(event.pointerId);
     if (state.pointers.size < 2) state.pinchDistance = null;
     if (!state.drag) return;
-    if (state.drag.id !== "__pan__" && JSON.stringify(state.drag.before) !== JSON.stringify(state.scene)) {
+    if (
+      state.drag.id !== "__pan__" &&
+      JSON.stringify(state.drag.before) !== JSON.stringify(state.scene)
+    ) {
       state.undo.push(state.drag.before);
       state.redo = [];
     }
@@ -226,10 +233,14 @@ const bindPointerEvents = (state: EditorState) => {
   };
   svg.addEventListener("pointerup", finishPointer);
   svg.addEventListener("pointercancel", finishPointer);
-  svg.addEventListener("wheel", (event) => {
-    event.preventDefault();
-    zoomView(state, event.deltaY > 0 ? 1.1 : 0.9, eventPoint(state, event));
-  }, { passive: false });
+  svg.addEventListener(
+    "wheel",
+    (event) => {
+      event.preventDefault();
+      zoomView(state, event.deltaY > 0 ? 1.1 : 0.9, eventPoint(state, event));
+    },
+    { passive: false },
+  );
 };
 
 const bindResize = (state: EditorState) => {
@@ -240,9 +251,14 @@ const bindResize = (state: EditorState) => {
     if (available <= 0) return;
     const padding = state.baseScene.responsive?.padding ?? 24;
     const minimumScale = 0.72;
-    const scale = Math.max(minimumScale, Math.min(1, (available - padding) / state.baseScene.width));
+    const scale = Math.max(
+      minimumScale,
+      Math.min(1, (available - padding) / state.baseScene.width),
+    );
     const learner = state.scene.elements.filter((element) => element.source === "learner");
-    const authored = state.baseScene.elements.map((element) => scaleElementFromOrigin(element, scale));
+    const authored = state.baseScene.elements.map((element) =>
+      scaleElementFromOrigin(element, scale),
+    );
     state.scene = { ...state.scene, elements: [...authored, ...learner] };
     render(state);
   });
@@ -255,7 +271,14 @@ const handleToolPoint = (state: EditorState, rawPoint: DiagramPoint) => {
   const snapped = snapPoint(state, rawPoint);
 
   if (tool.kind === "point") {
-    commit(state, () => addLearnerElement(state, tool, { kind: "point", x: snapped.point.x, y: snapped.point.y, refs: snapped.ref ? [snapped.ref] : [] }));
+    commit(state, () =>
+      addLearnerElement(state, tool, {
+        kind: "point",
+        x: snapped.point.x,
+        y: snapped.point.y,
+        refs: snapped.ref ? [snapped.ref] : [],
+      }),
+    );
     return;
   }
   if (tool.kind === "symbol") {
@@ -276,7 +299,10 @@ const handleToolPoint = (state: EditorState, rawPoint: DiagramPoint) => {
   if (tool.kind === "polygon") {
     state.polygonDraft.push(snapped);
     updateControls(state);
-    setStatus(state, `${state.polygonDraft.length}点を指定しました。3点以上で「図形を確定」を押します。`);
+    setStatus(
+      state,
+      `${state.polygonDraft.length}点を指定しました。3点以上で「図形を確定」を押します。`,
+    );
     return;
   }
 
@@ -288,7 +314,9 @@ const handleToolPoint = (state: EditorState, rawPoint: DiagramPoint) => {
   }
 
   const adjusted = assistSecondPoint(state, state.draftStart.point, snapped.point);
-  const refs = [state.draftStart.ref, snapped.ref].filter((value): value is string => Boolean(value));
+  const refs = [state.draftStart.ref, snapped.ref].filter((value): value is string =>
+    Boolean(value),
+  );
   commit(state, () => {
     if (tool.kind === "circle") {
       addLearnerElement(state, tool, {
@@ -312,15 +340,22 @@ const handleToolPoint = (state: EditorState, rawPoint: DiagramPoint) => {
 };
 
 const finishPolygon = (state: EditorState) => {
-  if (state.answerRevealed || state.polygonDraft.length < 3 || state.activeToolIndex === null) return;
+  if (state.answerRevealed || state.polygonDraft.length < 3 || state.activeToolIndex === null)
+    return;
   const tool = state.tools[state.activeToolIndex];
   if (tool?.kind !== "polygon") return;
   const draft = [...state.polygonDraft];
-  commit(state, () => addLearnerElement(state, tool, {
-    kind: "polygon",
-    points: draft.map((value) => value.point),
-    refs: [...new Set(draft.map((value) => value.ref).filter((value): value is string => Boolean(value)))],
-  }));
+  commit(state, () =>
+    addLearnerElement(state, tool, {
+      kind: "polygon",
+      points: draft.map((value) => value.point),
+      refs: [
+        ...new Set(
+          draft.map((value) => value.ref).filter((value): value is string => Boolean(value)),
+        ),
+      ],
+    }),
+  );
   state.polygonDraft = [];
   updateControls(state);
   setStatus(state, "多角形を配置しました。同じツールを続けて使えます。");
@@ -353,7 +388,10 @@ const assistSecondPoint = (state: EditorState, start: DiagramPoint, end: Diagram
     const angle = Math.atan2(result.y - start.y, result.x - start.x);
     const step = Math.PI / 12;
     const snappedAngle = Math.round(angle / step) * step;
-    result = { x: start.x + Math.cos(snappedAngle) * radius, y: start.y + Math.sin(snappedAngle) * radius };
+    result = {
+      x: start.x + Math.cos(snappedAngle) * radius,
+      y: start.y + Math.sin(snappedAngle) * radius,
+    };
   }
   return result;
 };
@@ -436,14 +474,18 @@ const resizeSelected = (state: EditorState, factor: number) => {
   if (!state.selectedId || state.answerRevealed) return;
   const element = findElement(state.scene, state.selectedId);
   if (element?.edit?.resizable !== true) return;
-  commit(state, () => replaceElement(state.scene, state.selectedId ?? "", resizeElement(element, factor)));
+  commit(state, () =>
+    replaceElement(state.scene, state.selectedId ?? "", resizeElement(element, factor)),
+  );
 };
 
 const rotateSelected = (state: EditorState, degrees: number) => {
   if (!state.selectedId || state.answerRevealed) return;
   const element = findElement(state.scene, state.selectedId);
   if (element?.edit?.rotatable !== true) return;
-  commit(state, () => replaceElement(state.scene, state.selectedId ?? "", rotateElement(element, degrees)));
+  commit(state, () =>
+    replaceElement(state.scene, state.selectedId ?? "", rotateElement(element, degrees)),
+  );
 };
 
 const toggleAnswer = (state: EditorState) => {
@@ -464,9 +506,15 @@ const toggleAnswer = (state: EditorState) => {
 };
 
 const zoomView = (state: EditorState, factor: number, center?: DiagramPoint) => {
-  const nextWidth = Math.max(state.scene.width * 0.35, Math.min(state.scene.width * 2, state.view.width * factor));
+  const nextWidth = Math.max(
+    state.scene.width * 0.35,
+    Math.min(state.scene.width * 2, state.view.width * factor),
+  );
   const nextHeight = (nextWidth / state.view.width) * state.view.height;
-  const focus = center ?? { x: state.view.x + state.view.width / 2, y: state.view.y + state.view.height / 2 };
+  const focus = center ?? {
+    x: state.view.x + state.view.width / 2,
+    y: state.view.y + state.view.height / 2,
+  };
   const xRatio = (focus.x - state.view.x) / state.view.width;
   const yRatio = (focus.y - state.view.y) / state.view.height;
   state.view = {
@@ -480,7 +528,10 @@ const zoomView = (state: EditorState, factor: number, center?: DiagramPoint) => 
 
 const render = (state: EditorState) => {
   state.svg.replaceChildren();
-  state.svg.setAttribute("viewBox", `${state.view.x} ${state.view.y} ${state.view.width} ${state.view.height}`);
+  state.svg.setAttribute(
+    "viewBox",
+    `${state.view.x} ${state.view.y} ${state.view.width} ${state.view.height}`,
+  );
   state.svg.setAttribute("aria-label", state.scene.ariaLabel);
   const markerId = `diagram-editor-arrow-${state.root.dataset.editorId ?? "default"}`;
   state.svg.append(createMarker(markerId, OWN_COLOR));
@@ -497,7 +548,12 @@ const render = (state: EditorState) => {
   updateControls(state);
 };
 
-const renderSceneGroup = (scene: DiagramScene, markerId: string, color: string, selectedId: string | null) => {
+const renderSceneGroup = (
+  scene: DiagramScene,
+  markerId: string,
+  color: string,
+  selectedId: string | null,
+) => {
   const group = svgElement("g");
   for (const element of scene.elements) {
     for (const primitive of expandDiagramElement(element)) {
@@ -516,7 +572,12 @@ const renderPrimitive = (
 ) => {
   const group = svgElement("g");
   if (element.id) group.dataset.elementId = element.id;
-  const common = { stroke: selected ? SELECT_COLOR : color, "stroke-width": selected ? "3" : "2", fill: "none", "vector-effect": "non-scaling-stroke" };
+  const common = {
+    stroke: selected ? SELECT_COLOR : color,
+    "stroke-width": selected ? "3" : "2",
+    fill: "none",
+    "vector-effect": "non-scaling-stroke",
+  };
   const appendLine = (from: DiagramPoint, to: DiagramPoint, arrow = false) => {
     const line = svgElement("line");
     attrs(line, { ...common, x1: from.x, y1: from.y, x2: to.x, y2: to.y });
@@ -527,7 +588,13 @@ const renderPrimitive = (
   switch (element.kind) {
     case "point": {
       const circle = svgElement("circle");
-      attrs(circle, { cx: element.x, cy: element.y, r: element.radius ?? 3.5, fill: selected ? SELECT_COLOR : color, stroke: selected ? SELECT_COLOR : color });
+      attrs(circle, {
+        cx: element.x,
+        cy: element.y,
+        r: element.radius ?? 3.5,
+        fill: selected ? SELECT_COLOR : color,
+        stroke: selected ? SELECT_COLOR : color,
+      });
       group.append(circle);
       break;
     }
@@ -550,25 +617,44 @@ const renderPrimitive = (
     }
     case "ellipse": {
       const ellipse = svgElement("ellipse");
-      attrs(ellipse, { ...common, cx: element.center.x, cy: element.center.y, rx: element.radiusX, ry: element.radiusY });
+      attrs(ellipse, {
+        ...common,
+        cx: element.center.x,
+        cy: element.center.y,
+        rx: element.radiusX,
+        ry: element.radiusY,
+      });
       group.append(ellipse);
       break;
     }
     case "polygon": {
       const polygon = svgElement("polygon");
-      attrs(polygon, { ...common, points: element.points.map((value) => `${value.x},${value.y}`).join(" ") });
+      attrs(polygon, {
+        ...common,
+        points: element.points.map((value) => `${value.x},${value.y}`).join(" "),
+      });
       group.append(polygon);
       break;
     }
     case "arc": {
       const path = svgElement("path");
-      attrs(path, { ...common, d: arcPath(element.center, element.radius, element.startAngle, element.endAngle) });
+      attrs(path, {
+        ...common,
+        d: arcPath(element.center, element.radius, element.startAngle, element.endAngle),
+      });
       group.append(path);
       break;
     }
     case "label": {
       const text = svgElement("text");
-      attrs(text, { x: element.at.x, y: element.at.y, fill: color, "text-anchor": element.align ?? "middle", "font-size": "15", "font-family": '"Times New Roman", "Yu Mincho", serif' });
+      attrs(text, {
+        x: element.at.x,
+        y: element.at.y,
+        fill: color,
+        "text-anchor": element.align ?? "middle",
+        "font-size": "15",
+        "font-family": '"Times New Roman", "Yu Mincho", serif',
+      });
       text.textContent = element.text;
       group.append(text);
       break;
@@ -577,17 +663,34 @@ const renderPrimitive = (
       if (element.grid) {
         for (const line of axesGridLines(element)) {
           const grid = svgElement("line");
-          attrs(grid, { x1: line.from.x, y1: line.from.y, x2: line.to.x, y2: line.to.y, stroke: GRID_COLOR, "stroke-width": "1", "vector-effect": "non-scaling-stroke" });
+          attrs(grid, {
+            x1: line.from.x,
+            y1: line.from.y,
+            x2: line.to.x,
+            y2: line.to.y,
+            stroke: GRID_COLOR,
+            "stroke-width": "1",
+            "vector-effect": "non-scaling-stroke",
+          });
           group.append(grid);
         }
       }
-      appendLine({ x: element.xMin, y: element.origin.y }, { x: element.xMax, y: element.origin.y });
-      appendLine({ x: element.origin.x, y: element.yMin }, { x: element.origin.x, y: element.yMax });
+      appendLine(
+        { x: element.xMin, y: element.origin.y },
+        { x: element.xMax, y: element.origin.y },
+      );
+      appendLine(
+        { x: element.origin.x, y: element.yMin },
+        { x: element.origin.x, y: element.yMax },
+      );
       break;
     }
     case "functionPlot": {
       const polyline = svgElement("polyline");
-      attrs(polyline, { ...common, points: element.samples.map((value) => `${value.x},${value.y}`).join(" ") });
+      attrs(polyline, {
+        ...common,
+        points: element.samples.map((value) => `${value.x},${value.y}`).join(" "),
+      });
       group.append(polyline);
       break;
     }
@@ -599,7 +702,12 @@ const renderDraft = (state: EditorState, markerId: string) => {
   if (state.answerRevealed) return;
   if (state.draftStart) {
     const point = svgElement("circle");
-    attrs(point, { cx: state.draftStart.point.x, cy: state.draftStart.point.y, r: 4, fill: SELECT_COLOR });
+    attrs(point, {
+      cx: state.draftStart.point.x,
+      cy: state.draftStart.point.y,
+      r: 4,
+      fill: SELECT_COLOR,
+    });
     point.setAttribute("pointer-events", "none");
     state.svg.append(point);
   }
@@ -626,30 +734,66 @@ const updateControls = (state: EditorState) => {
   });
   setDisabled(state.root, "[data-undo]", state.answerRevealed || state.undo.length === 0);
   setDisabled(state.root, "[data-redo]", state.answerRevealed || state.redo.length === 0);
-  setDisabled(state.root, "[data-delete]", state.answerRevealed || selected?.edit?.deletable !== true);
-  setDisabled(state.root, "[data-shrink]", state.answerRevealed || selected?.edit?.resizable !== true);
-  setDisabled(state.root, "[data-grow]", state.answerRevealed || selected?.edit?.resizable !== true);
-  setDisabled(state.root, "[data-rotate]", state.answerRevealed || selected?.edit?.rotatable !== true);
+  setDisabled(
+    state.root,
+    "[data-delete]",
+    state.answerRevealed || selected?.edit?.deletable !== true,
+  );
+  setDisabled(
+    state.root,
+    "[data-shrink]",
+    state.answerRevealed || selected?.edit?.resizable !== true,
+  );
+  setDisabled(
+    state.root,
+    "[data-grow]",
+    state.answerRevealed || selected?.edit?.resizable !== true,
+  );
+  setDisabled(
+    state.root,
+    "[data-rotate]",
+    state.answerRevealed || selected?.edit?.rotatable !== true,
+  );
 
   const finish = state.root.querySelector("[data-finish-shape]");
-  if (finish instanceof HTMLButtonElement) finish.hidden = state.polygonDraft.length < 3 || state.answerRevealed;
+  if (finish instanceof HTMLButtonElement)
+    finish.hidden = state.polygonDraft.length < 3 || state.answerRevealed;
   const cancel = state.root.querySelector("[data-cancel-tool]");
-  if (cancel instanceof HTMLButtonElement) cancel.hidden = state.activeToolIndex === null && !state.panMode;
+  if (cancel instanceof HTMLButtonElement)
+    cancel.hidden = state.activeToolIndex === null && !state.panMode;
 
-  state.root.querySelectorAll("[aria-pressed][data-tool-index], [data-select-tool], [data-pan-tool]").forEach((button) => {
-    if (!(button instanceof HTMLButtonElement)) return;
-    if (button.hasAttribute("data-select-tool")) button.setAttribute("aria-pressed", String(state.activeToolIndex === null && !state.panMode));
-    else if (button.hasAttribute("data-pan-tool")) button.setAttribute("aria-pressed", String(state.panMode));
-    else button.setAttribute("aria-pressed", String(Number(button.dataset.toolIndex) === state.activeToolIndex));
-  });
+  state.root
+    .querySelectorAll("[aria-pressed][data-tool-index], [data-select-tool], [data-pan-tool]")
+    .forEach((button) => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      if (button.hasAttribute("data-select-tool"))
+        button.setAttribute(
+          "aria-pressed",
+          String(state.activeToolIndex === null && !state.panMode),
+        );
+      else if (button.hasAttribute("data-pan-tool"))
+        button.setAttribute("aria-pressed", String(state.panMode));
+      else
+        button.setAttribute(
+          "aria-pressed",
+          String(Number(button.dataset.toolIndex) === state.activeToolIndex),
+        );
+    });
 
   const answer = state.root.querySelector("[data-answer-toggle]");
   if (answer instanceof HTMLButtonElement) {
-    answer.textContent = !state.answerRevealed ? "答えを見る" : state.modelVisible ? "模範図を隠す" : "模範図を表示";
+    answer.textContent = !state.answerRevealed
+      ? "答えを見る"
+      : state.modelVisible
+        ? "模範図を隠す"
+        : "模範図を表示";
   }
 };
 
-const eventPoint = (state: EditorState, event: MouseEvent | PointerEvent | WheelEvent): DiagramPoint => {
+const eventPoint = (
+  state: EditorState,
+  event: MouseEvent | PointerEvent | WheelEvent,
+): DiagramPoint => {
   const rect = state.svg.getBoundingClientRect();
   return {
     x: state.view.x + ((event.clientX - rect.left) / Math.max(rect.width, 1)) * state.view.width,
@@ -666,7 +810,8 @@ const ensureRuntimeIds = (scene: DiagramScene, prefix: string) => {
   return scene;
 };
 
-const findElement = (scene: DiagramScene, id: string) => scene.elements.find((element) => element.id === id);
+const findElement = (scene: DiagramScene, id: string) =>
+  scene.elements.find((element) => element.id === id);
 const replaceElement = (scene: DiagramScene, id: string, replacement: DiagramElement) => {
   scene.elements = scene.elements.map((element) => (element.id === id ? replacement : element));
 };
@@ -674,47 +819,80 @@ const replaceElement = (scene: DiagramScene, id: string, replacement: DiagramEle
 const translateElement = (element: DiagramElement, dx: number, dy: number): DiagramElement => {
   const move = (value: DiagramPoint) => ({ x: value.x + dx, y: value.y + dy });
   switch (element.kind) {
-    case "point": return { ...element, x: element.x + dx, y: element.y + dy };
+    case "point":
+      return { ...element, x: element.x + dx, y: element.y + dy };
     case "segment":
     case "line":
-    case "arrow": return { ...element, from: move(element.from), to: move(element.to) };
+    case "arrow":
+      return { ...element, from: move(element.from), to: move(element.to) };
     case "circle":
     case "ellipse":
-    case "arc": return { ...element, center: move(element.center) };
-    case "polygon": return { ...element, points: element.points.map(move) };
-    case "label": return { ...element, at: move(element.at) };
-    case "axes": return { ...element, origin: move(element.origin), xMin: element.xMin + dx, xMax: element.xMax + dx, yMin: element.yMin + dy, yMax: element.yMax + dy };
-    case "functionPlot": return { ...element, samples: element.samples.map(move) };
-    case "symbol": return { ...element, at: move(element.at) };
+    case "arc":
+      return { ...element, center: move(element.center) };
+    case "polygon":
+      return { ...element, points: element.points.map(move) };
+    case "label":
+      return { ...element, at: move(element.at) };
+    case "axes":
+      return {
+        ...element,
+        origin: move(element.origin),
+        xMin: element.xMin + dx,
+        xMax: element.xMax + dx,
+        yMin: element.yMin + dy,
+        yMax: element.yMax + dy,
+      };
+    case "functionPlot":
+      return { ...element, samples: element.samples.map(move) };
+    case "symbol":
+      return { ...element, at: move(element.at) };
   }
 };
 
 const resizeElement = (element: DiagramElement, factor: number): DiagramElement => {
   switch (element.kind) {
-    case "point": return { ...element, radius: (element.radius ?? 3.5) * factor };
-    case "circle": return { ...element, radius: element.radius * factor };
-    case "ellipse": return { ...element, radiusX: element.radiusX * factor, radiusY: element.radiusY * factor };
-    case "arc": return { ...element, radius: element.radius * factor };
-    case "symbol": return { ...element, width: (element.width ?? 54) * factor, height: (element.height ?? 40) * factor };
+    case "point":
+      return { ...element, radius: (element.radius ?? 3.5) * factor };
+    case "circle":
+      return { ...element, radius: element.radius * factor };
+    case "ellipse":
+      return { ...element, radiusX: element.radiusX * factor, radiusY: element.radiusY * factor };
+    case "arc":
+      return { ...element, radius: element.radius * factor };
+    case "symbol":
+      return {
+        ...element,
+        width: (element.width ?? 54) * factor,
+        height: (element.height ?? 40) * factor,
+      };
     case "segment":
     case "line":
     case "arrow": {
       const center = midpoint(element.from, element.to);
-      return { ...element, from: scaleAround(element.from, center, factor), to: scaleAround(element.to, center, factor) };
+      return {
+        ...element,
+        from: scaleAround(element.from, center, factor),
+        to: scaleAround(element.to, center, factor),
+      };
     }
     case "polygon": {
       const center = polygonCenter(element.points);
-      return { ...element, points: element.points.map((value) => scaleAround(value, center, factor)) };
+      return {
+        ...element,
+        points: element.points.map((value) => scaleAround(value, center, factor)),
+      };
     }
     case "label":
     case "axes":
-    case "functionPlot": return element;
+    case "functionPlot":
+      return element;
   }
 };
 
 const rotateElement = (element: DiagramElement, degrees: number): DiagramElement => {
   if (element.kind === "symbol") return { ...element, rotation: (element.rotation ?? 0) + degrees };
-  const rotate = (value: DiagramPoint, center: DiagramPoint) => rotateAround(value, center, degrees);
+  const rotate = (value: DiagramPoint, center: DiagramPoint) =>
+    rotateAround(value, center, degrees);
   if (element.kind === "segment" || element.kind === "line" || element.kind === "arrow") {
     const center = midpoint(element.from, element.to);
     return { ...element, from: rotate(element.from, center), to: rotate(element.to, center) };
@@ -724,49 +902,102 @@ const rotateElement = (element: DiagramElement, degrees: number): DiagramElement
     return { ...element, points: element.points.map((value) => rotate(value, center)) };
   }
   if (element.kind === "ellipse") return element;
-  if (element.kind === "arc") return { ...element, startAngle: element.startAngle + degrees, endAngle: element.endAngle + degrees };
+  if (element.kind === "arc")
+    return {
+      ...element,
+      startAngle: element.startAngle + degrees,
+      endAngle: element.endAngle + degrees,
+    };
   return element;
 };
 
 const scaleElementFromOrigin = (element: DiagramElement, factor: number): DiagramElement => {
   const scale = (value: DiagramPoint) => ({ x: value.x * factor, y: value.y * factor });
   switch (element.kind) {
-    case "point": return { ...element, x: element.x * factor, y: element.y * factor, radius: element.radius ? element.radius * factor : undefined };
+    case "point":
+      return {
+        ...element,
+        x: element.x * factor,
+        y: element.y * factor,
+        radius: element.radius ? element.radius * factor : undefined,
+      };
     case "segment":
     case "line":
-    case "arrow": return { ...element, from: scale(element.from), to: scale(element.to) };
-    case "circle": return { ...element, center: scale(element.center), radius: element.radius * factor };
-    case "ellipse": return { ...element, center: scale(element.center), radiusX: element.radiusX * factor, radiusY: element.radiusY * factor };
-    case "polygon": return { ...element, points: element.points.map(scale) };
-    case "arc": return { ...element, center: scale(element.center), radius: element.radius * factor };
-    case "label": return { ...element, at: scale(element.at) };
-    case "axes": return { ...element, origin: scale(element.origin), xMin: element.xMin * factor, xMax: element.xMax * factor, yMin: element.yMin * factor, yMax: element.yMax * factor, gridStep: element.gridStep ? element.gridStep * factor : undefined };
-    case "functionPlot": return { ...element, samples: element.samples.map(scale) };
-    case "symbol": return { ...element, at: scale(element.at), width: element.width ? element.width * factor : undefined, height: element.height ? element.height * factor : undefined };
+    case "arrow":
+      return { ...element, from: scale(element.from), to: scale(element.to) };
+    case "circle":
+      return { ...element, center: scale(element.center), radius: element.radius * factor };
+    case "ellipse":
+      return {
+        ...element,
+        center: scale(element.center),
+        radiusX: element.radiusX * factor,
+        radiusY: element.radiusY * factor,
+      };
+    case "polygon":
+      return { ...element, points: element.points.map(scale) };
+    case "arc":
+      return { ...element, center: scale(element.center), radius: element.radius * factor };
+    case "label":
+      return { ...element, at: scale(element.at) };
+    case "axes":
+      return {
+        ...element,
+        origin: scale(element.origin),
+        xMin: element.xMin * factor,
+        xMax: element.xMax * factor,
+        yMin: element.yMin * factor,
+        yMax: element.yMax * factor,
+        gridStep: element.gridStep ? element.gridStep * factor : undefined,
+      };
+    case "functionPlot":
+      return { ...element, samples: element.samples.map(scale) };
+    case "symbol":
+      return {
+        ...element,
+        at: scale(element.at),
+        width: element.width ? element.width * factor : undefined,
+        height: element.height ? element.height * factor : undefined,
+      };
   }
 };
 
 const anchorsOf = (element: DiagramElement): DiagramPoint[] => {
   switch (element.kind) {
-    case "point": return [{ x: element.x, y: element.y }];
+    case "point":
+      return [{ x: element.x, y: element.y }];
     case "segment":
     case "line":
-    case "arrow": return [element.from, element.to];
+    case "arrow":
+      return [element.from, element.to];
     case "circle":
     case "ellipse":
-    case "arc": return [element.center];
-    case "polygon": return element.points;
+    case "arc":
+      return [element.center];
+    case "polygon":
+      return element.points;
     case "label":
-    case "symbol": return [element.at];
-    case "axes": return [element.origin];
-    case "functionPlot": return [];
+    case "symbol":
+      return [element.at];
+    case "axes":
+      return [element.origin];
+    case "functionPlot":
+      return [];
   }
 };
 
 const createMarker = (id: string, color: string) => {
   const defs = svgElement("defs");
   const marker = svgElement("marker");
-  attrs(marker, { id, viewBox: "0 0 10 10", refX: "8", refY: "5", markerWidth: "6", markerHeight: "6", orient: "auto-start-reverse" });
+  attrs(marker, {
+    id,
+    viewBox: "0 0 10 10",
+    refX: "8",
+    refY: "5",
+    markerWidth: "6",
+    markerHeight: "6",
+    orient: "auto-start-reverse",
+  });
   const path = svgElement("path");
   attrs(path, { d: "M 0 0 L 10 5 L 0 10 z", fill: color, stroke: color });
   marker.append(path);
@@ -777,10 +1008,14 @@ const createMarker = (id: string, color: string) => {
 const axesGridLines = (element: Extract<CoreDiagramElement, { kind: "axes" }>) => {
   const result: Array<{ from: DiagramPoint; to: DiagramPoint }> = [];
   const step = element.gridStep ?? 20;
-  for (let x = element.origin.x; x <= element.xMax; x += step) result.push({ from: { x, y: element.yMin }, to: { x, y: element.yMax } });
-  for (let x = element.origin.x - step; x >= element.xMin; x -= step) result.push({ from: { x, y: element.yMin }, to: { x, y: element.yMax } });
-  for (let y = element.origin.y; y <= element.yMax; y += step) result.push({ from: { x: element.xMin, y }, to: { x: element.xMax, y } });
-  for (let y = element.origin.y - step; y >= element.yMin; y -= step) result.push({ from: { x: element.xMin, y }, to: { x: element.xMax, y } });
+  for (let x = element.origin.x; x <= element.xMax; x += step)
+    result.push({ from: { x, y: element.yMin }, to: { x, y: element.yMax } });
+  for (let x = element.origin.x - step; x >= element.xMin; x -= step)
+    result.push({ from: { x, y: element.yMin }, to: { x, y: element.yMax } });
+  for (let y = element.origin.y; y <= element.yMax; y += step)
+    result.push({ from: { x: element.xMin, y }, to: { x: element.xMax, y } });
+  for (let y = element.origin.y - step; y >= element.yMin; y -= step)
+    result.push({ from: { x: element.xMin, y }, to: { x: element.xMax, y } });
   return result;
 };
 
@@ -802,7 +1037,7 @@ const arcPath = (center: DiagramPoint, radius: number, startAngle: number, endAn
   const y1 = center.y + Math.sin(start) * radius;
   const x2 = center.x + Math.cos(end) * radius;
   const y2 = center.y + Math.sin(end) * radius;
-  const span = ((endAngle - startAngle) % 360 + 360) % 360;
+  const span = (((endAngle - startAngle) % 360) + 360) % 360;
   return `M ${x1} ${y1} A ${radius} ${radius} 0 ${span > 180 ? 1 : 0} 1 ${x2} ${y2}`;
 };
 
@@ -827,10 +1062,21 @@ const parseJson = <T>(value?: string) => {
     return undefined;
   }
 };
-const distance = (first: DiagramPoint, second: DiagramPoint) => Math.hypot(second.x - first.x, second.y - first.y);
-const midpoint = (first: DiagramPoint, second: DiagramPoint): DiagramPoint => ({ x: (first.x + second.x) / 2, y: (first.y + second.y) / 2 });
-const polygonCenter = (points: DiagramPoint[]) => points.reduce((sum, value) => ({ x: sum.x + value.x / points.length, y: sum.y + value.y / points.length }), { x: 0, y: 0 });
-const scaleAround = (value: DiagramPoint, center: DiagramPoint, factor: number): DiagramPoint => ({ x: center.x + (value.x - center.x) * factor, y: center.y + (value.y - center.y) * factor });
+const distance = (first: DiagramPoint, second: DiagramPoint) =>
+  Math.hypot(second.x - first.x, second.y - first.y);
+const midpoint = (first: DiagramPoint, second: DiagramPoint): DiagramPoint => ({
+  x: (first.x + second.x) / 2,
+  y: (first.y + second.y) / 2,
+});
+const polygonCenter = (points: DiagramPoint[]) =>
+  points.reduce(
+    (sum, value) => ({ x: sum.x + value.x / points.length, y: sum.y + value.y / points.length }),
+    { x: 0, y: 0 },
+  );
+const scaleAround = (value: DiagramPoint, center: DiagramPoint, factor: number): DiagramPoint => ({
+  x: center.x + (value.x - center.x) * factor,
+  y: center.y + (value.y - center.y) * factor,
+});
 const rotateAround = (value: DiagramPoint, center: DiagramPoint, degrees: number): DiagramPoint => {
   const radians = (degrees * Math.PI) / 180;
   const cos = Math.cos(radians);

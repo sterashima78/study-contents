@@ -131,7 +131,12 @@ export const expandDomainSymbol = (element: DomainSymbolElement): CoreDiagramEle
         primitives = [
           {
             kind: "polygon",
-            points: [point(left, top), point(right, top), point(right, bottom), point(left, bottom)],
+            points: [
+              point(left, top),
+              point(right, top),
+              point(right, bottom),
+              point(left, bottom),
+            ],
           },
         ];
         break;
@@ -179,11 +184,17 @@ export const expandDomainSymbol = (element: DomainSymbolElement): CoreDiagramEle
       case "cell":
         primitives = [
           { kind: "ellipse", center: point(x, y), radiusX: width * 0.48, radiusY: height * 0.44 },
-          { kind: "circle", center: point(x + width * 0.12, y), radius: Math.min(width, height) * 0.13 },
+          {
+            kind: "circle",
+            center: point(x + width * 0.12, y),
+            radius: Math.min(width, height) * 0.13,
+          },
         ];
         break;
       case "nucleus":
-        primitives = [{ kind: "circle", center: point(x, y), radius: Math.min(width, height) * 0.35 }];
+        primitives = [
+          { kind: "circle", center: point(x, y), radius: Math.min(width, height) * 0.35 },
+        ];
         break;
       case "chromosome":
         primitives = [
