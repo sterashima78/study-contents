@@ -98,6 +98,7 @@ const _usesCompactUnitSet =
 <script>
   import { MathfieldElement } from "mathlive";
   import "mathlive/fonts.css";
+  import { designAnswerInput, type AnswerCourseKey } from "../content/answer-input-design";
   import {
     generateLessonExercises as generateBiologyLessonExercises,
     generateUnitExercises as generateBiologyUnitExercises,
@@ -131,6 +132,7 @@ const _usesCompactUnitSet =
     generateLessonExercises as generateMath3LessonExercises,
     generateUnitExercises as generateMath3UnitExercises,
   } from "../content/math3/exercise-registry";
+  import type { PracticeInputKind, PracticeOption } from "../content/practice";
 
   MathfieldElement.soundsDirectory = null;
 
@@ -232,9 +234,85 @@ const _usesCompactUnitSet =
     return wrapper;
   };
 
+  const createTextEditor = (id: string, ariaLabel: string) => {
+    const input = document.createElement("input");
+    input.id = id;
+    input.type = "text";
+    input.className = "exercise-answer-editor exercise-text-input";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.required = true;
+    input.dataset.answerEditor = "text";
+    input.setAttribute("aria-label", ariaLabel);
+    return input;
+  };
+
+  const createChoiceEditor = (
+    inputKind: "radio" | "select" | "checkbox",
+    options: PracticeOption[],
+    id: string,
+    ariaLabel: string,
+  ) => {
+    if (inputKind === "select") {
+      const select = document.createElement("select");
+      select.id = id;
+      select.className = "exercise-answer-editor exercise-select-input";
+      select.dataset.answerEditor = "select";
+      select.required = true;
+      select.setAttribute("aria-label", ariaLabel);
+      select.append(new Option("選択してください", ""));
+      for (const option of options) select.append(new Option(option.label, option.value));
+      return select;
+    }
+
+    const fieldset = document.createElement("fieldset");
+    fieldset.className = "exercise-answer-editor exercise-choice-fieldset";
+    fieldset.dataset.answerEditor = inputKind;
+    fieldset.setAttribute("aria-label", ariaLabel);
+    const optionsContainer = createElement("div", "exercise-choice-options");
+    for (const [optionIndex, option] of options.entries()) {
+      const optionLabel = createElement("label", "exercise-choice-option");
+      const input = document.createElement("input");
+      input.type = inputKind;
+      input.name = inputKind === "radio" ? id : `${id}-${optionIndex}`;
+      input.value = option.value;
+      input.required = inputKind === "radio";
+      optionLabel.append(input, document.createTextNode(option.label));
+      optionsContainer.append(optionLabel);
+    }
+    fieldset.append(optionsContainer);
+    return fieldset;
+  };
+
+  const readAnswer = (article: HTMLElement, inputKind: PracticeInputKind) => {
+    if (inputKind === "math") {
+      const field = article.querySelector<MathfieldElement>("math-field[data-answer-editor='math']");
+      return field?.getValue("latex-unstyled") ?? "";
+    }
+    if (inputKind === "select") {
+      return article.querySelector<HTMLSelectElement>("select[data-answer-editor='select']")?.value ?? "";
+    }
+    if (inputKind === "radio") {
+      return article.querySelector<HTMLInputElement>('input[type="radio"]:checked')?.value ?? "";
+    }
+    if (inputKind === "checkbox") {
+      return [...article.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked')].map(
+        (input) => input.value,
+      );
+    }
+    return article.querySelector<HTMLInputElement>("input[data-answer-editor='text']")?.value ?? "";
+  };
+
+  const isCorrectAnswer = (value: string | string[], answers: string[]) => {
+    if (Array.isArray(value)) {
+      return value.map(normalizeAnswer).sort().join("\u0000") === answers.map(normalizeAnswer).sort().join("\u0000");
+    }
+    return answers.map(normalizeAnswer).includes(normalizeAnswer(value));
+  };
+
   for (const section of document.querySelectorAll<HTMLElement>("[data-exercise-set]")) {
     const mode = section.dataset.mode;
-    const courseKey = section.dataset.courseKey ?? "math1";
+    const courseKey = (section.dataset.courseKey ?? "math1") as AnswerCourseKey;
     const areaKey = section.dataset.areaKey;
     const unitKey = section.dataset.unitKey;
     const lessonKey = section.dataset.lessonKey;
@@ -314,32 +392,35 @@ const _usesCompactUnitSet =
       feedback.className = "feedback exercise-feedback";
 
       for (const [index, exercise] of exercises.entries()) {
+        const design = designAnswerInput({
+          courseKey,
+          prompt: exercise.prompt,
+          answers: exercise.answers,
+          requestedInput: exercise.answerMode,
+        });
         const article = createElement("article", "exercise-question");
+        article.dataset.answerInput = design.input;
         const header = createElement("div", "exercise-question-header");
         header.append(
           createElement("span", "exercise-number", `問${index + 1}`),
           createElement("span", `exercise-difficulty difficulty-${exercise.difficulty}`, difficultyLabel[exercise.difficulty]),
         );
-        const prompt = createElement("p", "exercise-prompt", exercise.prompt);
+        const prompt = createElement("p", "exercise-prompt", design.prompt ?? exercise.prompt);
         const mapping = createElement("p", "exercise-mapping", `対応: ${exercise.lessonTitles.join(" / ")}`);
         const answerBlock = createElement("div", "exercise-answer-label");
         const answerId = `exercise-answer-${exercise.id}-${index}`;
         const label = createElement("label", undefined, "答え");
         label.htmlFor = answerId;
 
-        if (exercise.answerMode === "text") {
-          const input = document.createElement("input");
-          input.id = answerId;
-          input.type = "text";
-          input.className = "exercise-answer-editor exercise-text-input";
-          input.autocomplete = "off";
-          input.spellcheck = false;
-          input.required = true;
-          input.dataset.answerEditor = "text";
-          input.setAttribute("aria-label", `問${index + 1}の答え`);
-          answerBlock.append(label, input);
-        } else {
+        if (design.input === "math") {
           answerBlock.append(label, createMathEditor(answerId, `問${index + 1}の数式の答え`));
+        } else if (design.input === "radio" || design.input === "select" || design.input === "checkbox") {
+          answerBlock.append(
+            label,
+            createChoiceEditor(design.input, design.options ?? [], answerId, `問${index + 1}の答え`),
+          );
+        } else {
+          answerBlock.append(label, createTextEditor(answerId, `問${index + 1}の答え`));
         }
 
         article.append(header, prompt, mapping, answerBlock);
@@ -383,16 +464,15 @@ const _usesCompactUnitSet =
       for (const [index, article] of [...list.querySelectorAll<HTMLElement>(".exercise-question")].entries()) {
         const exercise = exercises[index];
         if (!exercise) continue;
-        const mathField = article.querySelector<MathfieldElement>("math-field[data-answer-editor='math']");
-        const textInput = article.querySelector<HTMLInputElement>("input[data-answer-editor='text']");
-        const editor = mathField ?? textInput;
-        if (!editor) continue;
-        const rawAnswer = mathField ? mathField.getValue("latex-unstyled") : (textInput?.value ?? "");
-        const isCorrect = exercise.answers.map(normalizeAnswer).includes(normalizeAnswer(rawAnswer));
+        const inputKind = (article.dataset.answerInput ?? exercise.answerMode) as PracticeInputKind;
+        const rawAnswer = readAnswer(article, inputKind);
+        const isCorrect = isCorrectAnswer(rawAnswer, exercise.answers);
         article.classList.toggle("is-correct", isCorrect);
         article.classList.toggle("is-error", !isCorrect);
-        editor.classList.toggle("is-correct", isCorrect);
-        editor.classList.toggle("is-error", !isCorrect);
+        for (const editor of article.querySelectorAll<HTMLElement>("[data-answer-editor]")) {
+          editor.classList.toggle("is-correct", isCorrect);
+          editor.classList.toggle("is-error", !isCorrect);
+        }
         if (isCorrect) correctCount += 1;
 
         for (const [lessonIndex, key] of exercise.lessonKeys.entries()) {
@@ -417,10 +497,10 @@ const _usesCompactUnitSet =
         for (const article of list.querySelectorAll<HTMLElement>(".exercise-question")) {
           article.classList.remove("is-correct", "is-error");
           const mathField = article.querySelector<MathfieldElement>("math-field[data-answer-editor='math']");
-          const textInput = article.querySelector<HTMLInputElement>("input[data-answer-editor='text']");
           mathField?.setValue("");
-          mathField?.classList.remove("is-correct", "is-error");
-          textInput?.classList.remove("is-correct", "is-error");
+          for (const editor of article.querySelectorAll<HTMLElement>("[data-answer-editor]")) {
+            editor.classList.remove("is-correct", "is-error");
+          }
         }
         feedback.textContent = "";
         feedback.className = "feedback exercise-feedback";

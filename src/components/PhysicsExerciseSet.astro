@@ -74,7 +74,9 @@ const _isUnit = _mode === "unit";
 </section>
 
 <script>
+  import { designAnswerInput, type AnswerCourseKey } from "../content/answer-input-design";
   import type { GeneratedExercise } from "../content/math1/exercise-registry";
+  import type { PracticeInputKind, PracticeOption } from "../content/practice";
   import {
     generateLessonExercises as generatePhysicsBasicsLessonExercises,
     generateUnitExercises as generatePhysicsBasicsUnitExercises,
@@ -118,13 +120,85 @@ const _isUnit = _mode === "unit";
     return element;
   };
 
+  const createTextEditor = (id: string, ariaLabel: string) => {
+    const input = document.createElement("input");
+    input.id = id;
+    input.type = "text";
+    input.className = "exercise-answer-editor exercise-text-input";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.required = true;
+    input.dataset.answerEditor = "text";
+    input.setAttribute("aria-label", ariaLabel);
+    return input;
+  };
+
+  const createChoiceEditor = (
+    inputKind: "radio" | "select" | "checkbox",
+    options: PracticeOption[],
+    id: string,
+    ariaLabel: string,
+  ) => {
+    if (inputKind === "select") {
+      const select = document.createElement("select");
+      select.id = id;
+      select.className = "exercise-answer-editor exercise-select-input";
+      select.dataset.answerEditor = "select";
+      select.required = true;
+      select.setAttribute("aria-label", ariaLabel);
+      select.append(new Option("選択してください", ""));
+      for (const option of options) select.append(new Option(option.label, option.value));
+      return select;
+    }
+
+    const fieldset = document.createElement("fieldset");
+    fieldset.className = "exercise-answer-editor exercise-choice-fieldset";
+    fieldset.dataset.answerEditor = inputKind;
+    fieldset.setAttribute("aria-label", ariaLabel);
+    const optionsContainer = createElement("div", "exercise-choice-options");
+    for (const [optionIndex, option] of options.entries()) {
+      const optionLabel = createElement("label", "exercise-choice-option");
+      const input = document.createElement("input");
+      input.type = inputKind;
+      input.name = inputKind === "radio" ? id : `${id}-${optionIndex}`;
+      input.value = option.value;
+      input.required = inputKind === "radio";
+      optionLabel.append(input, document.createTextNode(option.label));
+      optionsContainer.append(optionLabel);
+    }
+    fieldset.append(optionsContainer);
+    return fieldset;
+  };
+
+  const readAnswer = (article: HTMLElement, inputKind: PracticeInputKind) => {
+    if (inputKind === "select") {
+      return article.querySelector<HTMLSelectElement>("select[data-answer-editor='select']")?.value ?? "";
+    }
+    if (inputKind === "radio") {
+      return article.querySelector<HTMLInputElement>('input[type="radio"]:checked')?.value ?? "";
+    }
+    if (inputKind === "checkbox") {
+      return [...article.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked')].map(
+        (input) => input.value,
+      );
+    }
+    return article.querySelector<HTMLInputElement>("input[data-answer-editor='text']")?.value ?? "";
+  };
+
+  const isCorrectAnswer = (value: string | string[], answers: string[]) => {
+    if (Array.isArray(value)) {
+      return value.map(normalizeAnswer).sort().join("\u0000") === answers.map(normalizeAnswer).sort().join("\u0000");
+    }
+    return answers.map(normalizeAnswer).includes(normalizeAnswer(value));
+  };
+
   for (const section of document.querySelectorAll<HTMLElement>("[data-physics-exercise-set]")) {
     const mode = section.dataset.mode;
     const areaKey = section.dataset.areaKey;
     const unitKey = section.dataset.unitKey;
     const lessonKey = section.dataset.lessonKey;
     const physicsLevel = section.dataset.physicsLevel ?? "basics";
-    const courseRoute = section.dataset.courseRoute ?? "physics-basics";
+    const courseRoute = (section.dataset.courseRoute ?? "physics-basics") as AnswerCourseKey;
     const base = section.dataset.base ?? "/";
     const form = section.querySelector<HTMLFormElement>(".exercise-form");
     const list = section.querySelector<HTMLElement>("[data-exercise-list]");
@@ -161,7 +235,14 @@ const _isUnit = _mode === "unit";
       feedback.className = "feedback exercise-feedback";
 
       for (const [index, exercise] of exercises.entries()) {
+        const design = designAnswerInput({
+          courseKey: courseRoute,
+          prompt: exercise.prompt,
+          answers: exercise.answers,
+          requestedInput: "text",
+        });
         const article = createElement("article", "exercise-question");
+        article.dataset.answerInput = design.input;
         const header = createElement("div", "exercise-question-header");
         header.append(
           createElement("span", "exercise-number", `問${index + 1}`),
@@ -171,7 +252,7 @@ const _isUnit = _mode === "unit";
             difficultyLabel[exercise.difficulty],
           ),
         );
-        const prompt = createElement("p", "exercise-prompt", exercise.prompt);
+        const prompt = createElement("p", "exercise-prompt", design.prompt ?? exercise.prompt);
         const mapping = createElement(
           "p",
           "exercise-mapping",
@@ -181,15 +262,15 @@ const _isUnit = _mode === "unit";
         const answerId = `${courseRoute}-answer-${index}`;
         const label = createElement("label", undefined, "答え");
         label.htmlFor = answerId;
-        const input = document.createElement("input");
-        input.id = answerId;
-        input.type = "text";
-        input.className = "exercise-answer-editor exercise-text-input";
-        input.autocomplete = "off";
-        input.spellcheck = false;
-        input.required = true;
-        input.setAttribute("aria-label", `問${index + 1}の答え`);
-        answerBlock.append(label, input);
+
+        if (design.input === "radio" || design.input === "select" || design.input === "checkbox") {
+          answerBlock.append(
+            label,
+            createChoiceEditor(design.input, design.options ?? [], answerId, `問${index + 1}の答え`),
+          );
+        } else {
+          answerBlock.append(label, createTextEditor(answerId, `問${index + 1}の答え`));
+        }
         article.append(header, prompt, mapping, answerBlock);
 
         if (exercise.hint) {
@@ -239,15 +320,15 @@ const _isUnit = _mode === "unit";
 
       for (const [index, article] of articles.entries()) {
         const exercise = exercises[index];
-        const input = article.querySelector<HTMLInputElement>("input");
-        if (!exercise || !input) continue;
-        const isCorrect = exercise.answers
-          .map(normalizeAnswer)
-          .includes(normalizeAnswer(input.value));
+        if (!exercise) continue;
+        const inputKind = (article.dataset.answerInput ?? "text") as PracticeInputKind;
+        const isCorrect = isCorrectAnswer(readAnswer(article, inputKind), exercise.answers);
         article.classList.toggle("is-correct", isCorrect);
         article.classList.toggle("is-error", !isCorrect);
-        input.classList.toggle("is-correct", isCorrect);
-        input.classList.toggle("is-error", !isCorrect);
+        for (const editor of article.querySelectorAll<HTMLElement>("[data-answer-editor]")) {
+          editor.classList.toggle("is-correct", isCorrect);
+          editor.classList.toggle("is-error", !isCorrect);
+        }
         if (isCorrect) correctCount += 1;
 
         for (const [lessonIndex, key] of exercise.lessonKeys.entries()) {
@@ -273,8 +354,9 @@ const _isUnit = _mode === "unit";
       window.setTimeout(() => {
         for (const article of list.querySelectorAll<HTMLElement>(".exercise-question")) {
           article.classList.remove("is-correct", "is-error");
-          const input = article.querySelector<HTMLInputElement>("input");
-          input?.classList.remove("is-correct", "is-error");
+          for (const editor of article.querySelectorAll<HTMLElement>("[data-answer-editor]")) {
+            editor.classList.remove("is-correct", "is-error");
+          }
         }
         feedback.textContent = "";
         feedback.className = "feedback exercise-feedback";

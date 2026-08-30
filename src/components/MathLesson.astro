@@ -1,4 +1,5 @@
 ---
+import { designPracticeSteps } from "../content/answer-input-design";
 import { type MathCourseInfo, math1Course } from "../content/math-courses";
 import { getFormulaDerivation } from "../content/math1/formula-registry";
 import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
@@ -48,6 +49,7 @@ const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _practiceSteps = designPracticeSteps(_course.key, _lesson.practice.steps);
 const _socialCourseKey =
   _course.key === "japanese-history" || _course.key === "world-history" || _course.key === "ethics"
     ? _course.key
@@ -123,7 +125,7 @@ const _formulaDerivation = _socialCourseKey
     <GuidedPractice
       title={_lesson.practice.title}
       problem={_lesson.practice.problem}
-      steps={_lesson.practice.steps}
+      steps={_practiceSteps}
       hint={_lesson.practice.hint}
       position="例題の直後に確認"
       successMessage="すべて正解です。例題の考え方を自分で再現できています。"

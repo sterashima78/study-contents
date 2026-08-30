@@ -1,8 +1,17 @@
 ---
+type GuidedInputKind = "text" | "math" | "radio" | "select" | "checkbox";
+
+type GuidedOption = {
+  value: string;
+  label: string;
+};
+
 type GuidedStep = {
   prompt: string;
   answers: string[];
   placeholder?: string;
+  input?: GuidedInputKind;
+  options?: GuidedOption[];
 };
 
 type Props = {
@@ -13,6 +22,7 @@ type Props = {
   steps: GuidedStep[];
   hint: string;
   position?: string;
+  defaultInput?: GuidedInputKind;
   successMessage?: string;
   errorMessage?: string;
 };
@@ -25,6 +35,7 @@ const {
   steps: _steps,
   hint: _hint,
   position: _position,
+  defaultInput: _defaultInput = "text",
   successMessage: _successMessage = "すべて正解です。解答手順を自分で再現できています。",
   errorMessage: _errorMessage = "合っていない段階を例題と比べて確認してください。",
 } = Astro.props;
@@ -48,22 +59,69 @@ const {
   <form class="form">
     <ol class="fields">
       {
-        _steps.map((step, index) => (
-          <li>
-            <label>
-              <span>{step.prompt}</span>
-              <input
-                type="text"
-                autocomplete="off"
-                spellcheck="false"
-                placeholder={step.placeholder ?? "答えを入力"}
-                data-answers={JSON.stringify(step.answers)}
-                aria-label={`練習問題 ${index + 1}: ${step.prompt}`}
-                required
-              />
-            </label>
-          </li>
-        ))
+        _steps.map((step, index) => {
+          const input = step.input ?? _defaultInput;
+          const promptId = `guided-practice-prompt-${index}-${step.prompt.length}`;
+          const groupName = `guided-practice-choice-${index}-${step.prompt.length}`;
+          return (
+            <li data-guided-step data-input={input} data-answers={JSON.stringify(step.answers)}>
+              <p class="step-prompt" id={promptId}>{step.prompt}</p>
+              <div class="answer-area">
+                {
+                  input === "math" ? (
+                    <>
+                      <div
+                        class="math-field-host"
+                        data-guided-math-field
+                        data-prompt-id={promptId}
+                        data-aria-label={`練習問題 ${index + 1}: ${step.prompt}`}
+                      />
+                      {step.placeholder && <p class="input-example">入力例: {step.placeholder}</p>}
+                    </>
+                  ) : input === "select" ? (
+                    <select
+                      class="answer-control guided-select"
+                      data-answer-control
+                      aria-labelledby={promptId}
+                      required
+                    >
+                      <option value="">選択してください</option>
+                      {step.options?.map((option) => <option value={option.value}>{option.label}</option>)}
+                    </select>
+                  ) : input === "radio" || input === "checkbox" ? (
+                    <fieldset class="choice-fieldset answer-control" data-answer-control>
+                      <legend class="visually-hidden">{step.prompt}</legend>
+                      <div class="choice-options">
+                        {step.options?.map((option, optionIndex) => (
+                          <label class="choice-option">
+                            <input
+                              type={input === "radio" ? "radio" : "checkbox"}
+                              name={input === "radio" ? groupName : `${groupName}-${optionIndex}`}
+                              value={option.value}
+                              required={input === "radio"}
+                            />
+                            <span>{option.label}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </fieldset>
+                  ) : (
+                    <input
+                      type="text"
+                      class="answer-control guided-text-input"
+                      data-answer-control
+                      autocomplete="off"
+                      spellcheck="false"
+                      placeholder={step.placeholder ?? "答えを入力"}
+                      aria-labelledby={promptId}
+                      required
+                    />
+                  )
+                }
+              </div>
+            </li>
+          );
+        })
       }
     </ol>
     <div class="actions">
@@ -77,11 +135,35 @@ const {
 </article>
 
 <script>
-  const normalizeGuidedAnswer = (value: string) =>
-    value
+  import { MathfieldElement } from "mathlive";
+  import "mathlive/fonts.css";
+
+  MathfieldElement.soundsDirectory = null;
+
+  const normalizeGuidedAnswer = (value: string) => {
+    let normalized = value
       .trim()
       .toLowerCase()
       .replaceAll(/\s+/g, "")
+      .replaceAll("\\left", "")
+      .replaceAll("\\right", "")
+      .replaceAll(/\\[,;:!]/g, "")
+      .replaceAll("\\ ", "")
+      .replaceAll("\\cdot", "*")
+      .replaceAll("\\times", "*")
+      .replaceAll("\\pm", "±")
+      .replaceAll("\\leqslant", "≤")
+      .replaceAll("\\leq", "≤")
+      .replaceAll("\\le", "≤")
+      .replaceAll("\\geqslant", "≥")
+      .replaceAll("\\geq", "≥")
+      .replaceAll("\\ge", "≥")
+      .replaceAll("\\Rightarrow", "⇒")
+      .replaceAll("\\implies", "⇒")
+      .replaceAll("\\lbrace", "{")
+      .replaceAll("\\rbrace", "}")
+      .replaceAll("\\{", "{")
+      .replaceAll("\\}", "}")
       .replaceAll("−", "-")
       .replaceAll("–", "-")
       .replaceAll("—", "-")
@@ -94,8 +176,53 @@ const {
       .replaceAll("｝", "}")
       .replaceAll("オーム", "ω")
       .replaceAll("ohm", "ω")
-      .replaceAll("°c", "℃")
-      .replaceAll("^2", "²");
+      .replaceAll("°c", "℃");
+
+    let previous = "";
+    while (previous !== normalized) {
+      previous = normalized;
+      normalized = normalized.replace(/\\sqrt\{([^{}]+)\}/g, "√$1");
+    }
+    previous = "";
+    while (previous !== normalized) {
+      previous = normalized;
+      normalized = normalized.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, "$1/$2");
+    }
+    normalized = normalized.replaceAll("^{2}", "²").replaceAll("^2", "²");
+    return normalized.startsWith("=") ? normalized.slice(1) : normalized;
+  };
+
+  const readStepAnswer = (step: HTMLElement, input: string) => {
+    if (input === "math") {
+      const field = step.querySelector("math-field");
+      return field instanceof MathfieldElement ? field.value : "";
+    }
+    if (input === "select") {
+      const select = step.querySelector("select[data-answer-control]");
+      return select instanceof HTMLSelectElement ? select.value : "";
+    }
+    if (input === "radio") {
+      const checked = step.querySelector<HTMLInputElement>('input[type="radio"]:checked');
+      return checked?.value ?? "";
+    }
+    if (input === "checkbox") {
+      return [...step.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked')].map((item) => item.value);
+    }
+    const text = step.querySelector("input[data-answer-control]");
+    return text instanceof HTMLInputElement ? text.value : "";
+  };
+
+  const markStep = (step: HTMLElement, isCorrect: boolean) => {
+    step.classList.toggle("is-correct", isCorrect);
+    step.classList.toggle("is-error", !isCorrect);
+    const control = step.querySelector<HTMLElement>("[data-answer-control], math-field");
+    if (!control) return;
+    control.classList.toggle("is-correct", isCorrect);
+    control.classList.toggle("is-error", !isCorrect);
+    if (control instanceof HTMLInputElement || control instanceof HTMLSelectElement || control instanceof MathfieldElement) {
+      control.setAttribute("aria-invalid", String(!isCorrect));
+    }
+  };
 
   for (const card of document.querySelectorAll("[data-guided-practice]")) {
     if (!(card instanceof HTMLElement) || card.dataset.guidedReady === "true") continue;
@@ -111,6 +238,20 @@ const {
       !(hintButton instanceof HTMLButtonElement)
     ) continue;
 
+    for (const host of card.querySelectorAll("[data-guided-math-field]")) {
+      if (!(host instanceof HTMLElement)) continue;
+      const field = new MathfieldElement();
+      field.className = "answer-control guided-math-input";
+      field.dataset.answerControl = "math";
+      field.placeholder = "\\text{答えを入力}";
+      field.mathVirtualKeyboardPolicy = "auto";
+      const promptId = host.dataset.promptId;
+      if (promptId) field.setAttribute("aria-labelledby", promptId);
+      const ariaLabel = host.dataset.ariaLabel;
+      if (ariaLabel) field.setAttribute("aria-label", ariaLabel);
+      host.replaceWith(field);
+    }
+
     hintButton.addEventListener("click", () => {
       hint.hidden = !hint.hidden;
       hintButton.textContent = hint.hidden ? "ヒント" : "ヒントを閉じる";
@@ -118,25 +259,29 @@ const {
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      const inputs = [...form.querySelectorAll("input[data-answers]")].filter(
-        (input): input is HTMLInputElement => input instanceof HTMLInputElement,
+      const steps = [...form.querySelectorAll("[data-guided-step]")].filter(
+        (step): step is HTMLElement => step instanceof HTMLElement,
       );
       let correctCount = 0;
-      for (const input of inputs) {
-        const rawAnswers = input.dataset.answers;
+
+      for (const step of steps) {
+        const rawAnswers = step.dataset.answers;
+        const input = step.dataset.input ?? "text";
         if (!rawAnswers) continue;
         const answers = (JSON.parse(rawAnswers) as string[]).map(normalizeGuidedAnswer);
-        const isCorrect = answers.includes(normalizeGuidedAnswer(input.value));
-        input.classList.toggle("is-correct", isCorrect);
-        input.classList.toggle("is-error", !isCorrect);
+        const value = readStepAnswer(step, input);
+        const isCorrect = Array.isArray(value)
+          ? value.map(normalizeGuidedAnswer).sort().join("\u0000") === answers.slice().sort().join("\u0000")
+          : answers.includes(normalizeGuidedAnswer(value));
+        markStep(step, isCorrect);
         if (isCorrect) correctCount += 1;
       }
 
-      if (correctCount === inputs.length) {
+      if (correctCount === steps.length) {
         feedback.textContent = card.dataset.successMessage ?? "すべて正解です。";
         feedback.className = "feedback is-correct";
       } else {
-        const detail = `全 ${inputs.length} 段階のうち ${correctCount} 段階が合っています。`;
+        const detail = `全 ${steps.length} 段階のうち ${correctCount} 段階が合っています。`;
         feedback.textContent = `${detail}${card.dataset.errorMessage ?? ""}`;
         feedback.className = "feedback is-error";
       }
@@ -144,7 +289,14 @@ const {
 
     form.addEventListener("reset", () => {
       window.setTimeout(() => {
-        for (const input of form.querySelectorAll("input")) input.classList.remove("is-correct", "is-error");
+        for (const field of form.querySelectorAll("math-field")) {
+          if (field instanceof MathfieldElement) field.value = "";
+        }
+        for (const step of form.querySelectorAll("[data-guided-step]")) step.classList.remove("is-correct", "is-error");
+        for (const control of form.querySelectorAll<HTMLElement>("[data-answer-control], math-field")) {
+          control.classList.remove("is-correct", "is-error");
+          control.removeAttribute("aria-invalid");
+        }
         feedback.textContent = "";
         feedback.className = "feedback";
         hint.hidden = true;
@@ -231,19 +383,23 @@ const {
   }
 
   .fields li {
+    display: grid;
+    grid-template-columns: minmax(14rem, 0.9fr) minmax(12rem, 1.1fr);
+    gap: 0.75rem 1rem;
+    align-items: center;
     padding: 0.85rem 0;
     border-top: 1px solid var(--color-border-soft);
     counter-increment: practice-step;
   }
 
-  label {
-    display: grid;
-    grid-template-columns: minmax(14rem, 0.9fr) minmax(12rem, 1.1fr);
-    gap: 0.75rem 1rem;
-    align-items: center;
+  .step-prompt {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 0.88rem;
+    line-height: 1.65;
   }
 
-  label > span::before {
+  .step-prompt::before {
     margin-right: 0.45rem;
     color: var(--color-accent);
     content: counter(practice-step) ".";
@@ -251,35 +407,95 @@ const {
     font-weight: 700;
   }
 
-  label > span {
-    color: var(--color-text-soft);
-    font-size: 0.88rem;
-    line-height: 1.65;
+  .answer-area {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
   }
 
-  input {
+  .answer-control {
     width: 100%;
     min-height: 2.9rem;
-    padding: 0.6rem 0.75rem;
+    box-sizing: border-box;
     border: 1px solid var(--color-border-strong);
     border-radius: 0.25rem;
     color: var(--color-text-strong);
     background: #fff;
+  }
+
+  .guided-text-input,
+  .guided-select {
+    padding: 0.6rem 0.75rem;
     font-family: "Times New Roman", "Yu Mincho", serif;
   }
 
-  input:focus {
+  .guided-math-input {
+    display: block;
+    padding: 0.55rem 0.7rem;
+    font-size: 1rem;
+  }
+
+  .guided-math-input:focus-within,
+  .guided-text-input:focus,
+  .guided-select:focus {
     border-color: var(--color-accent);
     outline: 3px solid var(--focus-ring);
     outline-offset: 1px;
   }
 
-  input.is-correct {
+  .input-example {
+    margin: 0;
+    color: var(--color-muted-strong);
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+
+  .choice-fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0.55rem 0.65rem;
+  }
+
+  .choice-options {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .choice-option {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    color: var(--color-text-soft);
+    font-size: 0.84rem;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .choice-option input {
+    width: 1rem;
+    height: 1rem;
+    margin: 0.15rem 0 0;
+    accent-color: var(--color-accent-medium);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .answer-control.is-correct {
     border-color: #56745c;
     background: #f3f7f3;
   }
 
-  input.is-error {
+  .answer-control.is-error {
     border-color: #9a6259;
     background: #fff7f5;
   }
@@ -312,7 +528,8 @@ const {
     background: var(--surface);
   }
 
-  button:focus-visible {
+  button:focus-visible,
+  .choice-option input:focus-visible {
     outline: 3px solid var(--focus-ring);
     outline-offset: 0.2rem;
   }
@@ -357,7 +574,7 @@ const {
   }
 
   @media (max-width: 760px) {
-    label {
+    .fields li {
       grid-template-columns: 1fr;
     }
   }

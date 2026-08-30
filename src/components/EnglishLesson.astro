@@ -1,4 +1,5 @@
 ---
+import { designPracticeSteps } from "../content/answer-input-design";
 import type { EnglishCourseInfo } from "../content/english/course";
 import type {
   EnglishArea,
@@ -45,6 +46,7 @@ const _nextLesson =
 const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _practiceSteps = designPracticeSteps("english", _lesson.practice.steps);
 ---
 
 <StudyPage
@@ -106,7 +108,7 @@ const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
     <GuidedPractice
       title={_lesson.practice.title}
       problem={_lesson.practice.problem}
-      steps={_lesson.practice.steps}
+      steps={_practiceSteps}
       hint={_lesson.practice.hint}
       position="例題の直後に確認"
       successMessage="すべて正解です。このページの判断手順を再現できています。"

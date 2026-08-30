@@ -1,3 +1,5 @@
+import type { PracticeStep } from "../practice";
+
 export type EnglishConcept = {
   title: string;
   body: string[];
@@ -8,11 +10,7 @@ export type EnglishWorkedStep = {
   note: string;
 };
 
-export type EnglishPracticeStep = {
-  prompt: string;
-  answers: string[];
-  placeholder?: string;
-};
+export type EnglishPracticeStep = PracticeStep;
 
 export type EnglishPassage = {
   title: string;

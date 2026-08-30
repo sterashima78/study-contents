@@ -1,4 +1,5 @@
 ---
+import { designPracticeSteps } from "../content/answer-input-design";
 import { type MathCourseInfo, math1Course } from "../content/math-courses";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
@@ -77,6 +78,7 @@ const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_topicSet.topic}/`;
 const _topicHref = `${_base}${_course.routeBase}/entrance/${_topicSet.topic}/`;
 const _patternHref = (pattern: Pattern) => `${_topicHref}${_patternSlug(pattern)}/`;
+const _guidedPracticeSteps = designPracticeSteps(_course.key, _pattern.guidedPractice.steps);
 ---
 
 <StudyPage
@@ -130,7 +132,7 @@ const _patternHref = (pattern: Pattern) => `${_topicHref}${_patternSlug(pattern)
       title={_pattern.guidedPractice.title}
       statement={_pattern.guidedPractice.statement}
       question={_pattern.guidedPractice.question}
-      steps={_pattern.guidedPractice.steps}
+      steps={_guidedPracticeSteps}
       hint={_pattern.guidedPractice.hint}
       successMessage="すべて正解です。着眼点から解答手順まで再現できています。"
       errorMessage="例題の判断順序と比べて確認してください。"
