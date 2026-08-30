@@ -1,10 +1,10 @@
 import {
   createCartesianAxes,
   createCartesianTransform,
-  sampleFunctionPlot,
   type DiagramElement,
   type DiagramPoint,
   type DiagramScene,
+  sampleFunctionPlot,
 } from "../../lib/diagram";
 import type { MathLessonDiagrams } from "../math1/diagrams";
 
