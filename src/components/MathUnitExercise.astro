@@ -9,6 +9,8 @@ import type { MathArea, MathUnit } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MiddleMathExerciseSet from "./MiddleMathExerciseSet.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import SocialExerciseSet from "./SocialExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
@@ -40,7 +42,7 @@ const _socialCourseKey =
 
 <StudyPage
   title={`単元末演習 | ${_unit.title} | ${_course.title}`}
-  description={`${_scopeLabel}「${_unit.title}」の単元末演習。基礎・応用・難問を自動採点し、小単元ごとの弱点を確認します。`}
+  description={`${_scopeLabel}「${_unit.title}」の単元末演習。問題を自動採点し、小単元ごとの弱点を確認します。`}
   curriculumKey={_curriculumKey}
 >
   <BreadcrumbTrail
@@ -66,14 +68,15 @@ const _socialCourseKey =
         areaKey={_area.key}
         unitKey={_unit.key}
       />
-    ) : (
-      <ExerciseSet
+    ) : _course.key === "middle-math1" ? (
+      <MiddleMathExerciseSet
         mode="unit"
-        courseKey={_course.key}
         routeBase={_course.routeBase}
         areaKey={_area.key}
         unitKey={_unit.key}
       />
+    ) : (
+      <ExerciseSet mode="unit" courseKey={_course.key} areaKey={_area.key} unitKey={_unit.key} />
     )
   }
 
