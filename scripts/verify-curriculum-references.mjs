@@ -3,6 +3,7 @@ import { curriculumReferences } from "../src/content/curriculum-references.js";
 
 const pagesDirectory = new URL("../src/pages/", import.meta.url);
 const allowedHost = "www.mext.go.jp";
+const nonCoursePageKeys = new Set(["practice", "progress"]);
 const requiredFields = [
   "courseTitle",
   "subjectTitle",
@@ -17,7 +18,10 @@ const issues = [];
 
 const pageEntries = await readdir(pagesDirectory, { withFileTypes: true });
 const courseKeys = pageEntries
-  .filter((entry) => entry.isDirectory() && !entry.name.startsWith("["))
+  .filter(
+    (entry) =>
+      entry.isDirectory() && !entry.name.startsWith("[") && !nonCoursePageKeys.has(entry.name),
+  )
   .map((entry) => entry.name)
   .sort();
 const registeredKeys = Object.keys(curriculumReferences).sort();
