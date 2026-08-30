@@ -155,10 +155,14 @@ const gridLines = (element: AxesElement) => {
     vector-effect: non-scaling-stroke;
   }
 
-  .point,
-  .arrow-head {
+  .point {
     fill: currentColor;
     stroke: currentColor;
+  }
+
+  .arrow-head {
+    fill: context-stroke;
+    stroke: context-stroke;
   }
 
   .grid line {
