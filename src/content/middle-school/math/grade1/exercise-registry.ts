@@ -118,7 +118,11 @@ export const generateMiddleMath1LessonExercises = (lessonKey: string, count = 3)
   if (!generator) return [];
   const difficulties: MiddleMathExerciseDifficulty[] = ["basic", "applied", "challenge"];
   return Array.from({ length: count }, (_, index) =>
-    withMetadata(generator(), `${lessonKey}-${Date.now()}-${index}`, difficulties[index % difficulties.length]),
+    withMetadata(
+      generator(),
+      `${lessonKey}-${Date.now()}-${index}`,
+      difficulties[index % difficulties.length],
+    ),
   );
 };
 
