@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const linePlaneRelationsLesson: MathLesson = {
   key: "line-plane-relations",
   title: "直線と平面の位置関係",
-  description: "空間にある直線と平面を、含まれる・交わる・平行の関係に分け、垂直の意味を確認します。",
+  description:
+    "空間にある直線と平面を、含まれる・交わる・平行の関係に分け、垂直の意味を確認します。",
   goals: [
     "直線と平面の位置関係を、含まれる・交わる・平行に分類できる。",
     "直線が平面に垂直であるための考え方を説明できる。",
@@ -30,7 +31,11 @@ export const linePlaneRelationsLesson: MathLesson = {
     title: "練習: 垂直な直線と平面",
     problem: "直線lは平面Pに垂直です。lとPのなす角を考えます。",
     steps: [
-      { prompt: "lとPのなす角を答えてください。", answers: ["90", "90°", "90度"], placeholder: "角度" },
+      {
+        prompt: "lとPのなす角を答えてください。",
+        answers: ["90", "90°", "90度"],
+        placeholder: "角度",
+      },
     ],
     hint: "直線が平面に垂直なら、その交わり方は直角です。",
   },
