@@ -1,8 +1,9 @@
-import { readdir } from "node:fs/promises";
+import { access, readdir } from "node:fs/promises";
 import { curriculumReferences } from "../src/content/curriculum-references.js";
 
 const pagesDirectory = new URL("../src/pages/", import.meta.url);
 const allowedHost = "www.mext.go.jp";
+const nonCoursePageDirectories = new Set(["middle-school"]);
 const requiredFields = [
   "courseTitle",
   "subjectTitle",
@@ -17,7 +18,10 @@ const issues = [];
 
 const pageEntries = await readdir(pagesDirectory, { withFileTypes: true });
 const courseKeys = pageEntries
-  .filter((entry) => entry.isDirectory() && !entry.name.startsWith("["))
+  .filter(
+    (entry) =>
+      entry.isDirectory() && !entry.name.startsWith("[") && !nonCoursePageDirectories.has(entry.name),
+  )
   .map((entry) => entry.name)
   .sort();
 const registeredKeys = Object.keys(curriculumReferences).sort();
@@ -29,14 +33,26 @@ for (const courseKey of courseKeys) {
 }
 
 for (const courseKey of registeredKeys) {
-  if (!courseKeys.includes(courseKey)) {
-    issues.push(`${courseKey}: 対応する src/pages/${courseKey}/ が存在しません。`);
+  const reference = curriculumReferences[courseKey];
+  const routeBase = reference.routeBase ?? courseKey;
+
+  try {
+    await access(new URL(`../src/pages/${routeBase}/`, import.meta.url));
+  } catch {
+    issues.push(`${courseKey}: 対応する src/pages/${routeBase}/ が存在しません。`);
   }
 
-  const reference = curriculumReferences[courseKey];
   for (const field of requiredFields) {
     if (typeof reference[field] !== "string" || reference[field].trim().length === 0) {
       issues.push(`${courseKey}: ${field} は空でない文字列にしてください。`);
+    }
+  }
+
+  if (reference.routeBase !== undefined) {
+    if (typeof reference.routeBase !== "string" || reference.routeBase.trim().length === 0) {
+      issues.push(`${courseKey}: routeBase は指定する場合、空でない文字列にしてください。`);
+    } else if (reference.routeBase.startsWith("/") || reference.routeBase.endsWith("/")) {
+      issues.push(`${courseKey}: routeBase は先頭・末尾に / を付けないでください。`);
     }
   }
 
