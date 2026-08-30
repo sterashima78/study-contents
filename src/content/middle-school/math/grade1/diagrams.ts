@@ -123,14 +123,12 @@ function createCoordinatesScene(): DiagramScene {
         from: p,
         to: transform.toDiagramPoint(point(-2, 0)),
         color: ORANGE,
-        dash: "4 4",
       },
       {
         kind: "segment",
         from: p,
         to: transform.toDiagramPoint(point(0, 3)),
         color: ORANGE,
-        dash: "4 4",
       },
     ],
   };
