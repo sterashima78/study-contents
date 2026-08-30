@@ -70,15 +70,16 @@ const _socialCourseKey =
   _course.key === "japanese-history" || _course.key === "world-history" || _course.key === "ethics"
     ? _course.key
     : undefined;
-const _formulaDerivation = _socialCourseKey || _course.key === "middle-math1"
-  ? undefined
-  : _course.key === "matha"
-    ? getMathAFormulaDerivation(_lesson.key)
-    : _course.key === "mathc"
-      ? getMathCFormulaDerivation(_lesson.key)
-      : _course.key === "math3"
-        ? getMath3FormulaDerivation(_lesson.key)
-        : getFormulaDerivation(_lesson.key);
+const _formulaDerivation =
+  _socialCourseKey || _course.key === "middle-math1"
+    ? undefined
+    : _course.key === "matha"
+      ? getMathAFormulaDerivation(_lesson.key)
+      : _course.key === "mathc"
+        ? getMathCFormulaDerivation(_lesson.key)
+        : _course.key === "math3"
+          ? getMath3FormulaDerivation(_lesson.key)
+          : getFormulaDerivation(_lesson.key);
 ---
 
 <StudyPage
