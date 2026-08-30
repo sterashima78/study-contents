@@ -1,3 +1,4 @@
+import { toPortableMathText } from "../../lib/math-display";
 import type { GeneratedExercise } from "../math1/exercise-registry";
 
 type Difficulty = GeneratedExercise["difficulty"];
@@ -133,13 +134,13 @@ const shuffle = <T>(items: T[]) => {
 
 const toExercise = (lessonKey: string, spec: ExerciseSpec, index: number): GeneratedExercise => ({
   id: `mathc-${lessonKey}-${index}-${Math.random().toString(36).slice(2, 8)}`,
-  prompt: spec.prompt,
+  prompt: toPortableMathText(spec.prompt),
   answers: spec.answers,
   lessonKeys: [lessonKey],
   lessonTitles: [lessonTitles[lessonKey] ?? lessonKey],
   difficulty: spec.difficulty,
   answerMode: spec.answerMode ?? "math",
-  hint: spec.hint,
+  hint: spec.hint ? toPortableMathText(spec.hint) : spec.hint,
 });
 
 export const generateLessonExercises = (_unitKey: string, lessonKey: string, count = 3) => {

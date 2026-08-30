@@ -1,7 +1,11 @@
 ---
 import type { DiagramScene } from "../../lib/diagram/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { hasFragileMathGlyphs, toPortableMathText } from "../../lib/math-display";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import DiagramView from "../diagram/DiagramView.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StaticMath from "./StaticMath.astro";
 
 type WorkedStep = {
   expression?: string;
@@ -34,17 +38,25 @@ const {
 
 <article class="worked-example">
   {_title && <h3>{_title}</h3>}
-  {_introduction && <p class="introduction">{_introduction}</p>}
-  {_problem && <p class="problem">{_problem}</p>}
-  {_strategy && <p class="strategy"><strong>方針:</strong> {_strategy}</p>}
+  {_introduction && <p class="introduction">{toPortableMathText(_introduction)}</p>}
+  {_problem && <p class="problem">{toPortableMathText(_problem)}</p>}
+  {_strategy && <p class="strategy"><strong>方針:</strong> {toPortableMathText(_strategy)}</p>}
   {_diagram && <DiagramView scene={_diagram} />}
   <ol class="steps">
     {
       _steps.map((step) => (
         <li>
-          {step.expression && <div class="expression">{step.expression}</div>}
-          {step.text && <div class="text-step">{step.text}</div>}
-          {step.note && <p>{step.note}</p>}
+          {step.expression && (
+            <div class="expression">
+              {hasFragileMathGlyphs(step.expression) ? (
+                <StaticMath value={step.expression} block />
+              ) : (
+                toPortableMathText(step.expression)
+              )}
+            </div>
+          )}
+          {step.text && <div class="text-step">{toPortableMathText(step.text)}</div>}
+          {step.note && <p>{toPortableMathText(step.note)}</p>}
           {step.diagram && (
             <div class="step-diagram">
               <DiagramView scene={step.diagram} />
@@ -54,7 +66,7 @@ const {
       ))
     }
   </ol>
-  {_answer && <p class="answer">{_answer}</p>}
+  {_answer && <p class="answer">{toPortableMathText(_answer)}</p>}
 </article>
 
 <style>
