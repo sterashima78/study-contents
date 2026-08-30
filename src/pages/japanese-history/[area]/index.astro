@@ -1,0 +1,23 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MathAreaIndex from "../../../components/MathAreaIndex.astro";
+import { japaneseHistoryAreas } from "../../../content/japanese-history/catalog";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { japaneseHistoryCourse } from "../../../content/math-courses";
+import type { MathArea } from "../../../content/math1/types";
+
+export function getStaticPaths() {
+  return japaneseHistoryAreas.map((area) => ({
+    params: { area: area.key },
+    props: { area },
+  }));
+}
+
+type Props = {
+  area: MathArea;
+};
+
+const { area: _area } = Astro.props;
+---
+
+<MathAreaIndex area={_area} course={japaneseHistoryCourse} />

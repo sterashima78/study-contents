@@ -49,9 +49,11 @@ for (const file of astroFiles) {
 
   if (
     source.includes("styles/exercise.css") &&
-    !["src/components/ExerciseSet.astro", "src/components/PhysicsExerciseSet.astro"].includes(
-      relative,
-    )
+    ![
+      "src/components/ExerciseSet.astro",
+      "src/components/PhysicsExerciseSet.astro",
+      "src/components/SocialExerciseSet.astro",
+    ].includes(relative)
   ) {
     issues.push(`${relative}: exercise.css は演習コンポーネント以外からimportできません。`);
   }
@@ -79,7 +81,11 @@ if (!studyPageSource.includes("--color-text")) {
 }
 
 const exerciseCss = await readFile(exerciseCssUrl, "utf8");
-if (!exerciseCss.includes("@scope ([data-exercise-set], [data-physics-exercise-set])")) {
+if (
+  !exerciseCss.includes(
+    "@scope ([data-exercise-set], [data-physics-exercise-set], [data-social-exercise-set])",
+  )
+) {
   issues.push("src/styles/exercise.css: 演習ルートを指定した @scope が必要です。");
 }
 

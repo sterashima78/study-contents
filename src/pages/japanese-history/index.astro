@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { japaneseHistoryAreas } from "../../content/japanese-history/catalog";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { japaneseHistoryCourse } from "../../content/math-courses";
+---
+
+<CourseHome
+  course={japaneseHistoryCourse}
+  areas={japaneseHistoryAreas}
+  description="日本の歴史を、政治制度・社会・経済・文化・東アジアとの関係をつないで学びます。"
+  metaDescription="高校日本史の学習コンテンツ。古代から現代までを因果関係と比較を通して学べます。"
+  footerDescription="古代・中世・近世・近代・現代を、小単元・確認演習・単元末演習で学習できます。"
+/>

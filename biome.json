@@ -28,7 +28,11 @@
         "src/content/chemistry/**/*.ts",
         "src/content/math3/**/*.ts",
         "src/content/physics/**/*.ts",
-        "src/content/japanese/**/*.ts"
+        "src/content/japanese/**/*.ts",
+        "src/content/japanese-history/**/*.ts",
+        "src/content/world-history/**/*.ts",
+        "src/content/ethics/**/*.ts",
+        "src/content/social-*.ts"
       ],
       "formatter": {
         "enabled": false

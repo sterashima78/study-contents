@@ -8,6 +8,8 @@ import { getMathCFormulaDerivation } from "../content/mathc/formula-derivations"
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ExerciseSet from "./ExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SocialExerciseSet from "./SocialExerciseSet.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ConceptCard from "./ui/ConceptCard.astro";
@@ -46,8 +48,13 @@ const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
-const _formulaDerivation =
-  _course.key === "matha"
+const _socialCourseKey =
+  _course.key === "japanese-history" || _course.key === "world-history" || _course.key === "ethics"
+    ? _course.key
+    : undefined;
+const _formulaDerivation = _socialCourseKey
+  ? undefined
+  : _course.key === "matha"
     ? getMathAFormulaDerivation(_lesson.key)
     : _course.key === "mathc"
       ? getMathCFormulaDerivation(_lesson.key)
@@ -58,7 +65,7 @@ const _formulaDerivation =
 
 <StudyPage
   title={`${_lesson.title} | ${_unit.title} | ${_course.title}`}
-  description={`高校${_course.title}「${_lesson.title}」の教材。細かい途中式、例題直後の練習問題、3問の確認演習、まとめで学習します。`}
+  description={`高校${_course.title}「${_lesson.title}」の教材。考え方、例題直後の練習問題、3問の確認演習、まとめで学習します。`}
 >
   <BreadcrumbTrail
     items={[
@@ -119,18 +126,30 @@ const _formulaDerivation =
       steps={_lesson.practice.steps}
       hint={_lesson.practice.hint}
       position="例題の直後に確認"
-      successMessage="すべて正解です。例題と同じ手順を自分で再現できています。"
-      errorMessage="赤く表示された段階を例題と比べて確認してください。"
+      successMessage="すべて正解です。例題の考え方を自分で再現できています。"
+      errorMessage="赤く表示された項目を例題と比べて確認してください。"
     />
   </ContentSection>
 
-  <ExerciseSet
-    mode="lesson"
-    courseKey={_course.key}
-    areaKey={_area.key}
-    unitKey={_unit.key}
-    lessonKey={_lesson.key}
-  />
+  {
+    _socialCourseKey ? (
+      <SocialExerciseSet
+        mode="lesson"
+        courseKey={_socialCourseKey}
+        areaKey={_area.key}
+        unitKey={_unit.key}
+        lessonKey={_lesson.key}
+      />
+    ) : (
+      <ExerciseSet
+        mode="lesson"
+        courseKey={_course.key}
+        areaKey={_area.key}
+        unitKey={_unit.key}
+        lessonKey={_lesson.key}
+      />
+    )
+  }
 
   <ContentSection labelledby="summary-title" compact>
     <SectionHeading label="SUMMARY" title="このページのポイント" id="summary-title" />

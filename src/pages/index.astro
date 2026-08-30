@@ -6,7 +6,9 @@ import { biologyBasicAreas } from "../content/biology-basic/catalog";
 import { chemistryAreas } from "../content/chemistry/catalog";
 import { chemistryBasicAreas } from "../content/chemistry-basic/catalog";
 import { englishAreas } from "../content/english/catalog";
+import { ethicsAreas } from "../content/ethics/catalog";
 import { japaneseAreas } from "../content/japanese/catalog";
+import { japaneseHistoryAreas } from "../content/japanese-history/catalog";
 import { math1Areas } from "../content/math1/catalog";
 import { math2Areas } from "../content/math2/catalog";
 import { math3Areas } from "../content/math3/catalog";
@@ -15,6 +17,7 @@ import { mathBAreas } from "../content/mathb/catalog";
 import { mathCAreas } from "../content/mathc/catalog";
 import { physicsAreas } from "../content/physics/catalog";
 import { physicsBasicsAreas } from "../content/physics-basics/catalog";
+import { worldHistoryAreas } from "../content/world-history/catalog";
 
 type CountableArea = {
   units: ReadonlyArray<{
@@ -124,6 +127,32 @@ const _courses = [
     description: "進化、代謝、遺伝情報、発生、環境応答、生態を、資料と仕組みから学びます。",
     areas: biologyAreas.map((area) => area.title),
     lessonCount: _lessonCount(biologyAreas),
+  },
+  {
+    title: "日本史",
+    kicker: "JAPANESE HISTORY",
+    href: `${_base}japanese-history/`,
+    description:
+      "古代から現代までの日本の歴史を、政治・社会・経済・文化と東アジアとの関係から学びます。",
+    areas: japaneseHistoryAreas.map((area) => area.title),
+    lessonCount: _lessonCount(japaneseHistoryAreas),
+  },
+  {
+    title: "世界史",
+    kicker: "WORLD HISTORY",
+    href: `${_base}world-history/`,
+    description: "古代文明から現代世界までを、地域間交流・比較・因果関係をつないで学びます。",
+    areas: worldHistoryAreas.map((area) => area.title),
+    lessonCount: _lessonCount(worldHistoryAreas),
+  },
+  {
+    title: "倫理",
+    kicker: "ETHICS",
+    href: `${_base}ethics/`,
+    description:
+      "青年期、古今東西の思想、現代の倫理的諸課題を、概念の比較と理由づけを通して学びます。",
+    areas: ethicsAreas.map((area) => area.title),
+    lessonCount: _lessonCount(ethicsAreas),
   },
   {
     title: "英語",

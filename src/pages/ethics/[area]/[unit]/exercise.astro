@@ -1,0 +1,26 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MathUnitExercise from "../../../../components/MathUnitExercise.astro";
+import { ethicsAreas } from "../../../../content/ethics/catalog";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { ethicsCourse } from "../../../../content/math-courses";
+import type { MathArea, MathUnit } from "../../../../content/math1/types";
+
+export function getStaticPaths() {
+  return ethicsAreas.flatMap((area) =>
+    area.units.map((unit) => ({
+      params: { area: area.key, unit: unit.key },
+      props: { area, unit },
+    })),
+  );
+}
+
+type Props = {
+  area: MathArea;
+  unit: MathUnit;
+};
+
+const { area: _area, unit: _unit } = Astro.props;
+---
+
+<MathUnitExercise area={_area} unit={_unit} course={ethicsCourse} />

@@ -1,4 +1,4 @@
-@scope ([data-exercise-set], [data-physics-exercise-set]) {
+@scope ([data-exercise-set], [data-physics-exercise-set], [data-social-exercise-set]) {
   .exercise-set {
     margin-top: 2rem;
     padding: clamp(1.1rem, 3vw, 1.8rem);
