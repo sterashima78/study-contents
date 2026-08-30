@@ -1,4 +1,5 @@
 ---
+import { designPracticeSteps } from "../content/answer-input-design";
 import { type MathCourseInfo, physicsBasicsCourse, physicsCourse } from "../content/math-courses";
 import type { MathArea, MathLesson, MathUnit } from "../content/math1/types";
 import { getPhysicsFormulaDerivation } from "../content/physics/formula-derivations";
@@ -52,6 +53,7 @@ const _areaHref = `${_base}${_resolvedCourse.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _practiceSteps = designPracticeSteps(_resolvedCourse.key, _lesson.practice.steps);
 const _formulaDerivation =
   _physicsLevel === "physics"
     ? getPhysicsFormulaDerivation(_lesson.key)
@@ -118,7 +120,7 @@ const _formulaDerivation =
     <GuidedPractice
       title={_lesson.practice.title}
       problem={_lesson.practice.problem}
-      steps={_lesson.practice.steps}
+      steps={_practiceSteps}
       hint={_lesson.practice.hint}
       position="例題の直後に確認"
       successMessage="すべて正解です。物理量の意味と計算手順を再現できています。"
