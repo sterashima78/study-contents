@@ -393,8 +393,7 @@ function createQuartileExampleScene(): DiagramScene {
   return createBoxPlotScene(
     { min: 2, q1: 4, q2: 7, q3: 10, max: 12 },
     {
-      ariaLabel:
-        "データ2,4,5,7,8,10,12の箱ひげ図。Q1は4、Q2は7、Q3は10で、四分位範囲は6。",
+      ariaLabel: "データ2,4,5,7,8,10,12の箱ひげ図。Q1は4、Q2は7、Q3は10で、四分位範囲は6。",
       numeric: true,
     },
   );
