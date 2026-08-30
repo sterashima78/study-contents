@@ -162,12 +162,16 @@ const _base = import.meta.env.BASE_URL;
 
   const percent = (correct: number, total: number) => (total === 0 ? 0 : Math.round((correct / total) * 100));
 
-  const createElement = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
+  function createElement<K extends keyof HTMLElementTagNameMap>(
+    tag: K,
+    className?: string,
+    text?: string,
+  ) {
     const element = document.createElement(tag);
     if (className) element.className = className;
     if (text !== undefined) element.textContent = text;
     return element;
-  };
+  }
 
   const addAggregate = (map: Map<string, Aggregate>, key: string, courseTitle: string, label: string, correct: boolean) => {
     const item = map.get(key) ?? { courseTitle, label, correct: 0, total: 0 };
