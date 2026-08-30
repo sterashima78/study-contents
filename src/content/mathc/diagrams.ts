@@ -114,10 +114,12 @@ function createVectorAdditionRuleScene(): DiagramScene {
 function createInnerProductScene(mode: "rule" | "example"): DiagramScene {
   const width = 520;
   const height = 330;
-  const o = point(250, 235);
   const isExample = mode === "example";
-  const aEnd = isExample ? point(390, 165) : point(395, 190);
-  const bEnd = isExample ? point(180, 95) : point(185, 115);
+  const o = isExample ? point(220, 120) : point(250, 235);
+  const aEnd = isExample ? point(340, 60) : point(395, 190);
+  const bEnd = isExample ? point(280, 240) : point(185, 115);
+  const arcStart = isExample ? 333.435 : 242;
+  const arcEnd = isExample ? 423.435 : 343;
 
   return {
     width,
@@ -133,13 +135,28 @@ function createInnerProductScene(mode: "rule" | "example"): DiagramScene {
         kind: "arc",
         center: o,
         radius: 52,
-        startAngle: 206,
-        endAngle: 334,
+        startAngle: arcStart,
+        endAngle: arcEnd,
         color: PURPLE,
       },
-      { kind: "label", at: point(338, 192), text: isExample ? "a⃗=(2,1)" : "a⃗", color: BLUE },
-      { kind: "label", at: point(190, 148), text: isExample ? "b⃗=(1,−2)" : "b⃗", color: ORANGE },
-      { kind: "label", at: point(250, 175), text: isExample ? "90°" : "θ", color: PURPLE },
+      {
+        kind: "label",
+        at: isExample ? point(330, 86) : point(338, 192),
+        text: isExample ? "a⃗=(2,1)" : "a⃗",
+        color: BLUE,
+      },
+      {
+        kind: "label",
+        at: isExample ? point(305, 220) : point(190, 148),
+        text: isExample ? "b⃗=(1,−2)" : "b⃗",
+        color: ORANGE,
+      },
+      {
+        kind: "label",
+        at: isExample ? point(275, 145) : point(250, 175),
+        text: isExample ? "90°" : "θ",
+        color: PURPLE,
+      },
       {
         kind: "label",
         at: point(260, 292),
