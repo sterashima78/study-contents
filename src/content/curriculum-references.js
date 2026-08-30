@@ -1,11 +1,15 @@
 const GUIDELINE_INDEX_URL = "https://www.mext.go.jp/a_menu/shotou/new-cs/1384661.htm";
 const JAPANESE_COMMENTARY_URL =
   "https://www.mext.go.jp/content/20250410-mxt_kyoiku01-100002620_02.pdf";
+const GEOGRAPHY_HISTORY_COMMENTARY_URL =
+  "https://www.mext.go.jp/content/20220802-mxt_kyoiku02-100002620_03.pdf";
+const CIVICS_COMMENTARY_URL =
+  "https://www.mext.go.jp/content/20211102-mxt_kyoiku02-100002620_04.pdf";
 const MATH_COMMENTARY_URL = "https://www.mext.go.jp/content/20260115-mxt_kyoiku02-100002620_04.pdf";
 const SCIENCE_COMMENTARY_URL =
   "https://www.mext.go.jp/content/20250311-mxt_kyoiku02-100002620_05.pdf";
 const ENGLISH_COMMENTARY_URL = "https://www.mext.go.jp/content/1407073_09_1_2.pdf";
-const LAST_VERIFIED = "2026-08-29";
+const LAST_VERIFIED = "2026-08-30";
 
 function createReference({
   courseTitle,
@@ -30,6 +34,8 @@ function createReference({
 
 const mathCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 数学編・理数編";
 const scienceCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 理科編・理数編";
+const geographyHistoryCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 地理歴史編";
+const civicsCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 公民編";
 
 export const curriculumReferences = Object.freeze({
   japanese: createReference({
@@ -39,6 +45,29 @@ export const curriculumReferences = Object.freeze({
     commentaryTitle: "高等学校学習指導要領（平成30年告示）解説 国語編",
     commentaryUrl: JAPANESE_COMMENTARY_URL,
     note: "本サイトの「現代文・古文・漢文」は学習用の分類であり、学習指導要領上の科目名とは異なります。",
+  }),
+  "japanese-history": createReference({
+    courseTitle: "日本史",
+    subjectTitle: "地理歴史",
+    curriculumCourse: "日本史探究",
+    commentaryTitle: geographyHistoryCommentaryTitle,
+    commentaryUrl: GEOGRAPHY_HISTORY_COMMENTARY_URL,
+    note: "本サイトでは利用者向けの科目名を「日本史」としていますが、教材範囲は高等学校地理歴史科の「日本史探究」を意識して構成しています。",
+  }),
+  "world-history": createReference({
+    courseTitle: "世界史",
+    subjectTitle: "地理歴史",
+    curriculumCourse: "世界史探究",
+    commentaryTitle: geographyHistoryCommentaryTitle,
+    commentaryUrl: GEOGRAPHY_HISTORY_COMMENTARY_URL,
+    note: "本サイトでは利用者向けの科目名を「世界史」としていますが、教材範囲は高等学校地理歴史科の「世界史探究」を意識して構成しています。",
+  }),
+  ethics: createReference({
+    courseTitle: "倫理",
+    subjectTitle: "公民",
+    curriculumCourse: "倫理",
+    commentaryTitle: civicsCommentaryTitle,
+    commentaryUrl: CIVICS_COMMENTARY_URL,
   }),
   math1: createReference({
     courseTitle: "数学I",
