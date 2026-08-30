@@ -155,10 +155,11 @@ function validateCoreElement(element, location, errors) {
     case "polygon":
       if (!Array.isArray(element.points) || element.points.length < 3)
         errors.push(`${location}.points は3点以上必要です。`);
-      else
-        element.points.forEach((value, index) =>
-          validatePoint(value, `${location}.points[${index}]`, errors),
-        );
+      else {
+        element.points.forEach((value, index) => {
+          validatePoint(value, `${location}.points[${index}]`, errors);
+        });
+      }
       break;
     case "arc":
       validatePoint(element.center, `${location}.center`, errors);
@@ -181,10 +182,11 @@ function validateCoreElement(element, location, errors) {
     case "functionPlot":
       if (!Array.isArray(element.samples) || element.samples.length < 2)
         errors.push(`${location}.samples は2点以上必要です。`);
-      else
-        element.samples.forEach((value, index) =>
-          validatePoint(value, `${location}.samples[${index}]`, errors),
-        );
+      else {
+        element.samples.forEach((value, index) => {
+          validatePoint(value, `${location}.samples[${index}]`, errors);
+        });
+      }
       if (element.expression !== undefined && typeof element.expression !== "string")
         errors.push(`${location}.expression は文字列にしてください。`);
       break;
