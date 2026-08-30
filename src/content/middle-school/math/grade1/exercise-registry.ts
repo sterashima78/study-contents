@@ -43,6 +43,17 @@ const linearEquationLessonKeys = [
   "equation-word-problems",
 ] as const;
 
+const proportionLessonKeys = [
+  "function-meaning",
+  "variables-domain",
+  "proportion-table-expression",
+  "coordinates",
+  "proportion-graph",
+  "inverse-proportion-table-expression",
+  "inverse-proportion-graph",
+  "function-representations-application",
+] as const;
+
 const lessonTitles: Record<string, string> = {
   "positive-negative-meaning": "正の数・負の数の意味",
   "number-line-absolute-value": "数直線と絶対値",
@@ -66,12 +77,21 @@ const lessonTitles: Record<string, string> = {
   "equation-both-sides": "両辺に文字を含む方程式",
   "proportion-equations": "比例式を解く",
   "equation-word-problems": "方程式を文章題に利用する",
+  "function-meaning": "関数関係の意味",
+  "variables-domain": "変数と変域",
+  "proportion-table-expression": "比例を式と表で表す",
+  coordinates: "座標の意味と読み取り",
+  "proportion-graph": "比例のグラフ",
+  "inverse-proportion-table-expression": "反比例を式と表で表す",
+  "inverse-proportion-graph": "反比例のグラフ",
+  "function-representations-application": "表・式・グラフを結び付けて活用する",
 };
 
 const unitLessonKeys: Record<string, readonly string[]> = {
   "positive-negative-numbers": positiveNegativeLessonKeys,
   "literal-expressions": literalExpressionLessonKeys,
   "linear-equations": linearEquationLessonKeys,
+  "proportion-inverse-proportion": proportionLessonKeys,
 };
 
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -356,6 +376,101 @@ const generators: Record<string, Generator> = {
       answers: numericAnswers(count),
       lessonKeys: ["equation-word-problems"],
       hint: `${price}x + ${extra} = ${total} と立式します。`,
+    };
+  },
+  "function-meaning": () => {
+    const price = randomInt(4, 12) * 10;
+    const count = randomInt(2, 9);
+    const total = price * count;
+    return {
+      prompt: `1個${price}円の商品を x 個買うときの代金を y 円とします。x = ${count} のときの y を答えてください。`,
+      answers: numericAnswers(total),
+      lessonKeys: ["function-meaning"],
+      hint: "x を一つ決めると y がただ一つ決まる関係です。単価×個数を計算します。",
+    };
+  },
+  "variables-domain": () => {
+    const maximum = randomInt(5, 20);
+    return {
+      prompt: `長さ${maximum} cmのリボンから x cm切り取ります。0 cm以上、全体の長さ以下だけ切り取れるとき、x の最大値を答えてください。`,
+      answers: numericAnswers(maximum),
+      lessonKeys: ["variables-domain"],
+      hint: "変域は 0 ≤ x ≤ 全体の長さ です。",
+    };
+  },
+  "proportion-table-expression": () => {
+    const coefficient = nonZeroInt(-6, 6);
+    const x = nonZeroInt(-5, 5);
+    const y = coefficient * x;
+    return {
+      prompt: `y は x に比例し、x = ${signed(x)} のとき y = ${signed(y)} です。比例定数 a を求めてください。`,
+      answers: numericAnswers(coefficient),
+      lessonKeys: ["proportion-table-expression"],
+      hint: "比例では a = y/x です。",
+    };
+  },
+  coordinates: () => {
+    const x = nonZeroInt(-5, 5);
+    const y = nonZeroInt(-5, 5);
+    return {
+      prompt: `点 P の x 座標が ${signed(x)}、y 座標が ${signed(y)} です。P の座標を (x,y) の形で答えてください。`,
+      answers: [`(${x},${y})`, `(${signed(x)},${signed(y)})`],
+      lessonKeys: ["coordinates"],
+      hint: "座標は横方向の x、縦方向の y の順に書きます。",
+    };
+  },
+  "proportion-graph": () => {
+    const coefficient = nonZeroInt(-5, 5);
+    const x = nonZeroInt(-4, 4);
+    const y = coefficient * x;
+    return {
+      prompt: `比例 y = ${xTerm(coefficient)} のグラフ上で、x = ${signed(x)} のときの y を求めてください。`,
+      answers: numericAnswers(y),
+      lessonKeys: ["proportion-graph"],
+      hint: "グラフ上の点 (x,y) は比例の式 y = ax を満たします。",
+    };
+  },
+  "inverse-proportion-table-expression": () => {
+    const x = nonZeroInt(-6, 6);
+    const y = nonZeroInt(-6, 6);
+    const coefficient = x * y;
+    return {
+      prompt: `y は x に反比例し、x = ${signed(x)} のとき y = ${signed(y)} です。比例定数 a を求めてください。`,
+      answers: numericAnswers(coefficient),
+      lessonKeys: ["inverse-proportion-table-expression"],
+      hint: "反比例では a = xy です。",
+    };
+  },
+  "inverse-proportion-graph": () => {
+    const x = nonZeroInt(-6, 6);
+    const y = nonZeroInt(-6, 6);
+    const coefficient = x * y;
+    return {
+      prompt: `反比例 y = ${signed(coefficient)}/x のグラフ上で、x = ${signed(x)} のときの y を求めてください。`,
+      answers: numericAnswers(y),
+      lessonKeys: ["inverse-proportion-graph"],
+      hint: "x の値を反比例の式へ代入します。",
+    };
+  },
+  "function-representations-application": () => {
+    if (Math.random() < 0.5) {
+      const rate = randomInt(2, 8);
+      const x = randomInt(2, 10);
+      return {
+        prompt: `毎分${rate} Lずつ水を入れます。x 分後の水の量を y L とすると y = ${rate}x です。x = ${x} のときの y を求めてください。`,
+        answers: numericAnswers(rate * x),
+        lessonKeys: ["function-representations-application"],
+        hint: "一定の割合で増えるので比例です。式へ x の値を代入します。",
+      };
+    }
+    const area = randomInt(3, 12) * 6;
+    const divisorCandidates = [2, 3, 6];
+    const x = divisorCandidates[randomInt(0, divisorCandidates.length - 1)];
+    return {
+      prompt: `面積${area} cm²の長方形で、横を x cm、縦を y cm とすると y = ${area}/x です。x = ${x} のときの y を求めてください。`,
+      answers: numericAnswers(area / x),
+      lessonKeys: ["function-representations-application"],
+      hint: "面積が一定なので縦と横は反比例です。式へ x の値を代入します。",
     };
   },
 };
