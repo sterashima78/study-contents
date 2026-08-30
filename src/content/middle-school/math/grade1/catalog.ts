@@ -18,18 +18,26 @@ import { functionRepresentationsApplicationLesson } from "./lessons/function-rep
 import { inverseProportionGraphLesson } from "./lessons/inverse-proportion-graph";
 import { inverseProportionTableExpressionLesson } from "./lessons/inverse-proportion-table-expression";
 import { lettersMeaningLesson } from "./lessons/letters-meaning";
+import { linePlaneRelationsLesson } from "./lessons/line-plane-relations";
 import { linearExpressionAdditionSubtractionLesson } from "./lessons/linear-expression-addition-subtraction";
 import { multiplicationLesson } from "./lessons/multiplication";
 import { multiplicationNotationLesson } from "./lessons/multiplication-notation";
+import { netsLesson } from "./lessons/nets";
 import { numberLineAbsoluteValueLesson } from "./lessons/number-line-absolute-value";
 import { perpendicularBisectorConstructionLesson } from "./lessons/perpendicular-bisector-construction";
 import { perpendicularConstructionLesson } from "./lessons/perpendicular-construction";
+import { perspectiveDrawingLesson } from "./lessons/perspective-drawing";
+import { planePlaneRelationsLesson } from "./lessons/plane-plane-relations";
 import { positiveNegativeMeaningLesson } from "./lessons/positive-negative-meaning";
+import { projectionsLesson } from "./lessons/projections";
 import { proportionEquationsLesson } from "./lessons/proportion-equations";
 import { proportionGraphLesson } from "./lessons/proportion-graph";
 import { proportionTableExpressionLesson } from "./lessons/proportion-table-expression";
 import { reflectionLesson } from "./lessons/reflection";
 import { rotationLesson } from "./lessons/rotation";
+import { solidByTranslationLesson } from "./lessons/solid-by-translation";
+import { solidsOfRevolutionLesson } from "./lessons/solids-of-revolution";
+import { spatialLineRelationsLesson } from "./lessons/spatial-line-relations";
 import { substitutionValueLesson } from "./lessons/substitution-value";
 import { subtractionLesson } from "./lessons/subtraction";
 import { tangentConstructionApplicationLesson } from "./lessons/tangent-construction-application";
@@ -94,7 +102,7 @@ export const middleMath1Areas: MathArea[] = [
   {
     key: "geometry",
     title: "図形",
-    description: "図形の対称性を根拠に基本作図を考え、平行移動・対称移動・回転移動へ広げます。",
+    description: "平面図形の作図と移動から、空間図形の位置関係や平面上での表現へ広げます。",
     units: [
       {
         key: "plane-geometry",
@@ -110,6 +118,22 @@ export const middleMath1Areas: MathArea[] = [
           reflectionLesson,
           rotationLesson,
           tangentConstructionApplicationLesson,
+        ],
+      },
+      {
+        key: "spatial-relationships-representations",
+        title: "空間図形：位置関係と表現",
+        description:
+          "空間の直線・平面の位置関係を捉え、見取図・展開図・投影図や図形の運動で立体を表します。",
+        lessons: [
+          spatialLineRelationsLesson,
+          linePlaneRelationsLesson,
+          planePlaneRelationsLesson,
+          perspectiveDrawingLesson,
+          netsLesson,
+          projectionsLesson,
+          solidByTranslationLesson,
+          solidsOfRevolutionLesson,
         ],
       },
     ],
