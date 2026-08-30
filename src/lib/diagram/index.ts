@@ -1,15 +1,15 @@
-export {
-  createCartesianAxes,
-  createCartesianTransform,
-  createQuadraticPlot,
-  sampleFunctionPlot,
-} from "./math";
 export type {
   CartesianAxesOptions,
   CartesianTransform,
   CartesianViewport,
   FunctionPlotSamplingOptions,
   QuadraticPlotOptions,
+} from "./math";
+export {
+  createCartesianAxes,
+  createCartesianTransform,
+  createQuadraticPlot,
+  sampleFunctionPlot,
 } from "./math";
 export { expandDiagramElement, expandDomainSymbol } from "./symbols";
 export type {
