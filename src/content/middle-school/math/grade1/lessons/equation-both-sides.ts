@@ -4,7 +4,10 @@ export const equationBothSidesLesson: MathLesson = {
   key: "equation-both-sides",
   title: "両辺に文字を含む方程式",
   description: "文字の項を一方へ、数の項をもう一方へ集めて ax + b = cx + d の形を解きます。",
-  goals: ["文字を含む項を一方の辺へ集められる。", "ax + b = cx + d を Ax = B の形へ整理して解ける。"],
+  goals: [
+    "文字を含む項を一方の辺へ集められる。",
+    "ax + b = cx + d を Ax = B の形へ整理して解ける。",
+  ],
   concepts: [
     {
       title: "文字の項と数の項を分けて集める",
@@ -37,5 +40,8 @@ export const equationBothSidesLesson: MathLesson = {
     ],
     hint: "3xを左辺へ、+1を右辺へ移項します。",
   },
-  summary: ["両辺に文字があるときは文字の項を一方へ集める。", "数の項を反対側へ集め、Ax = B の形に整理する。"],
+  summary: [
+    "両辺に文字があるときは文字の項を一方へ集める。",
+    "数の項を反対側へ集め、Ax = B の形に整理する。",
+  ],
 };
