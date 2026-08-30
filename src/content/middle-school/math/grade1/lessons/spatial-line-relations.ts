@@ -30,7 +30,11 @@ export const spatialLineRelationsLesson: MathLesson = {
     title: "練習: 位置関係を言葉で答える",
     problem: "空間にある二直線l、mは交わらず、平行でもありません。",
     steps: [
-      { prompt: "lとmの位置関係を答えてください。", answers: ["ねじれの位置", "ねじれ"], placeholder: "位置関係" },
+      {
+        prompt: "lとmの位置関係を答えてください。",
+        answers: ["ねじれの位置", "ねじれ"],
+        placeholder: "位置関係",
+      },
     ],
     hint: "空間では、交わらず平行でもない二直線があります。",
   },
