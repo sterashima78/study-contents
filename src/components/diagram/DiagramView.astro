@@ -1,0 +1,119 @@
+---
+import type { DiagramScene } from "../../lib/diagram/types";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import DiagramCanvas from "./DiagramCanvas.astro";
+
+type Props = {
+  scene: DiagramScene;
+  caption?: string;
+};
+
+const { scene: _scene, caption: _caption } = Astro.props;
+const _minWidth = _scene.responsive?.minWidth ?? Math.min(_scene.width, 520);
+const _allowScroll = _scene.responsive?.allowHorizontalScroll ?? true;
+---
+
+<figure
+  class="diagram-view"
+  data-diagram-view
+  style={`--diagram-min-width: ${_minWidth}px; --diagram-overflow: ${_allowScroll ? "auto" : "hidden"};`}
+>
+  <div class="controls" aria-label="図の表示倍率">
+    <button type="button" data-zoom-out aria-label="縮小">−</button>
+    <button type="button" data-zoom-reset>100%</button>
+    <button type="button" data-zoom-in aria-label="拡大">＋</button>
+  </div>
+  <div class="viewport" data-viewport>
+    <div class="stage" data-stage>
+      <DiagramCanvas scene={_scene} />
+    </div>
+  </div>
+  {_caption && <figcaption>{_caption}</figcaption>}
+</figure>
+
+<script>
+  for (const root of document.querySelectorAll("[data-diagram-view]")) {
+    if (!(root instanceof HTMLElement) || root.dataset.diagramReady === "true") continue;
+    root.dataset.diagramReady = "true";
+    const stage = root.querySelector("[data-stage]");
+    const reset = root.querySelector("[data-zoom-reset]");
+    const zoomIn = root.querySelector("[data-zoom-in]");
+    const zoomOut = root.querySelector("[data-zoom-out]");
+    if (!(stage instanceof HTMLElement) || !(reset instanceof HTMLButtonElement)) continue;
+
+    let zoom = 1;
+    const apply = () => {
+      stage.style.width = `${zoom * 100}%`;
+      reset.textContent = `${Math.round(zoom * 100)}%`;
+    };
+    zoomIn?.addEventListener("click", () => {
+      zoom = Math.min(2.5, zoom + 0.25);
+      apply();
+    });
+    zoomOut?.addEventListener("click", () => {
+      zoom = Math.max(0.75, zoom - 0.25);
+      apply();
+    });
+    reset.addEventListener("click", () => {
+      zoom = 1;
+      apply();
+    });
+  }
+</script>
+
+<style>
+  .diagram-view {
+    display: grid;
+    gap: 0.55rem;
+    margin: 1rem 0;
+  }
+
+  .controls {
+    display: flex;
+    gap: 0.35rem;
+    justify-content: flex-end;
+  }
+
+  button {
+    min-width: 2.55rem;
+    min-height: 2.35rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--color-border-soft, #ccd2d5);
+    border-radius: 0.25rem;
+    color: var(--color-text-soft, #46525a);
+    background: var(--surface, #fff);
+    font: inherit;
+    font-size: 0.78rem;
+    cursor: pointer;
+  }
+
+  button:focus-visible {
+    outline: 3px solid var(--focus-ring, #bfd3dc);
+    outline-offset: 2px;
+  }
+
+  .viewport {
+    overflow-x: var(--diagram-overflow);
+    border: 1px solid var(--color-border-soft, #d7dcdf);
+    border-radius: 0.25rem;
+    background: #fff;
+  }
+
+  .stage {
+    width: 100%;
+    min-width: var(--diagram-min-width);
+    transition: width 120ms ease-out;
+  }
+
+  figcaption {
+    color: var(--color-muted-strong, #68737a);
+    font-size: 0.78rem;
+    line-height: 1.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage {
+      transition: none;
+    }
+  }
+</style>
