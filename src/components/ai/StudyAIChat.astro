@@ -47,6 +47,11 @@
     <div class="study-ai-runtime">
       <p class="study-ai-status" data-study-ai-status>質問を送信するとAIモデルを読み込みます。</p>
       <progress class="study-ai-progress" max="1" value="0" hidden data-study-ai-progress></progress>
+      <details class="study-ai-diagnostics" hidden data-study-ai-diagnostics>
+        <summary>診断情報</summary>
+        <p>質問内容や教材本文、会話履歴は含みません。</p>
+        <pre data-study-ai-diagnostics-text></pre>
+      </details>
     </div>
 
     <form class="study-ai-form" data-study-ai-form>
@@ -70,6 +75,7 @@
 
 <script>
   import {
+    buildStudyAIDiagnostics,
     getStudyAIEngine,
     interruptStudyAI,
     supportsStudyAI,
@@ -91,6 +97,8 @@
     const messages = root.querySelector<HTMLElement>("[data-study-ai-messages]");
     const status = root.querySelector<HTMLElement>("[data-study-ai-status]");
     const progress = root.querySelector<HTMLProgressElement>("[data-study-ai-progress]");
+    const diagnostics = root.querySelector<HTMLDetailsElement>("[data-study-ai-diagnostics]");
+    const diagnosticsText = root.querySelector<HTMLElement>("[data-study-ai-diagnostics-text]");
     const form = root.querySelector<HTMLFormElement>("[data-study-ai-form]");
     const input = root.querySelector<HTMLTextAreaElement>("[data-study-ai-input]");
     const sendButton = root.querySelector<HTMLButtonElement>("[data-study-ai-send]");
@@ -104,6 +112,8 @@
       messages &&
       status &&
       progress &&
+      diagnostics &&
+      diagnosticsText &&
       form &&
       input &&
       sendButton &&
@@ -151,6 +161,12 @@
         stopButton.hidden = !value;
       };
 
+      const clearDiagnostics = () => {
+        diagnostics.hidden = true;
+        diagnostics.open = false;
+        diagnosticsText.textContent = "";
+      };
+
       const openPanel = () => {
         panel.hidden = false;
         trigger.setAttribute("aria-expanded", "true");
@@ -183,6 +199,7 @@
         history = [];
         saveHistory(storageKey, history);
         renderHistory();
+        clearDiagnostics();
         status.textContent = "会話履歴を消去しました。";
       });
 
@@ -209,6 +226,7 @@
         saveHistory(storageKey, history);
         appendMessage(userMessage);
         input.value = "";
+        clearDiagnostics();
         setGenerating(true);
 
         const assistantBody = appendMessage({ role: "assistant", content: "考えています…" });
@@ -256,7 +274,10 @@
           console.error("Study AI failed", error);
           progress.hidden = true;
           assistantBody.textContent = studyAIErrorMessage(error);
-          status.textContent = "AIの実行に失敗しました。";
+          diagnosticsText.textContent = await buildStudyAIDiagnostics(error);
+          diagnostics.hidden = false;
+          diagnostics.open = true;
+          status.textContent = "AIの実行に失敗しました。診断情報を確認してください。";
         } finally {
           setGenerating(false);
           input.focus();
@@ -305,12 +326,21 @@
   function studyAIErrorMessage(error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     if (/WebGPU|GPUAdapter|shader-f16/i.test(message)) {
-      return "この端末のWebGPU環境ではAIモデルを実行できませんでした。対応ブラウザとGPU設定を確認してください。";
+      return "この端末のWebGPU環境ではAIモデルを実行できませんでした。診断情報を確認してください。";
     }
     if (/device lost|device hung|disposed/i.test(message)) {
-      return "WebGPUの処理が停止しました。ブラウザを再起動してから、もう一度試してください。";
+      return "WebGPUの処理が停止しました。ブラウザを再起動してから、診断情報を確認してください。";
     }
-    return "AIの実行に失敗しました。端末の空きメモリや通信状態を確認して、もう一度試してください。";
+    if (/out of memory|memory allocation|allocation failed|OOM/i.test(message)) {
+      return "AIモデルの実行に必要なメモリを確保できなかった可能性があります。診断情報を確認してください。";
+    }
+    if (/failed to fetch|network|http error/i.test(message)) {
+      return "AIモデルの取得に失敗した可能性があります。通信状態と診断情報を確認してください。";
+    }
+    if (/onnx|inference session|session creation/i.test(message)) {
+      return "ONNXモデルの初期化に失敗した可能性があります。診断情報を確認してください。";
+    }
+    return "AIの実行に失敗しました。診断情報を確認してください。";
   }
 </script>
 
@@ -455,6 +485,31 @@
     width: 100%;
     height: 0.35rem;
     margin-top: 0.4rem;
+  }
+
+  .study-ai-diagnostics {
+    margin-top: 0.45rem;
+    font-size: 0.68rem;
+  }
+
+  .study-ai-diagnostics summary {
+    color: var(--color-text-strong);
+    cursor: pointer;
+    font-weight: 750;
+  }
+
+  .study-ai-diagnostics p {
+    margin: 0.35rem 0;
+  }
+
+  .study-ai-diagnostics pre {
+    max-height: 9rem;
+    margin: 0;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font: inherit;
+    line-height: 1.45;
   }
 
   .study-ai-form {
