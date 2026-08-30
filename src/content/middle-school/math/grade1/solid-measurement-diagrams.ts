@@ -21,7 +21,8 @@ function sectorScene(): DiagramScene {
   return {
     width: 500,
     height: 330,
-    ariaLabel: "半径r、中心角θの扇形を示し、弧が円周のθ/360、面積が円の面積のθ/360になることを示す図。",
+    ariaLabel:
+      "半径r、中心角θの扇形を示し、弧が円周のθ/360、面積が円の面積のθ/360になることを示す図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       { kind: "segment", from: center, to: point(290, 235), color: BLUE },
@@ -101,7 +102,8 @@ function coneVolumeScene(): DiagramScene {
   return {
     width: 500,
     height: 330,
-    ariaLabel: "同じ底面積Sと高さhをもつ円柱と円錐を並べ、円錐の体積が円柱の3分の1であることを示す図。",
+    ariaLabel:
+      "同じ底面積Sと高さhをもつ円柱と円錐を並べ、円錐の体積が円柱の3分の1であることを示す図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       { kind: "ellipse", center: point(125, 95), radiusX: 72, radiusY: 22, color: BLUE },
