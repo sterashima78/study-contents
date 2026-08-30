@@ -180,21 +180,25 @@ const _questionBank = _courses.map((course) => ({
   let requestedCount = 20;
   let recorded = false;
 
-  const createElement = <K extends keyof HTMLElementTagNameMap>(tag: K, className?: string, text?: string) => {
+  function createElement<K extends keyof HTMLElementTagNameMap>(
+    tag: K,
+    className?: string,
+    text?: string,
+  ) {
     const element = document.createElement(tag);
     if (className) element.className = className;
     if (text !== undefined) element.textContent = text;
     return element;
-  };
+  }
 
-  const shuffle = <T>(values: readonly T[]) => {
+  function shuffle<T>(values: readonly T[]) {
     const result = [...values];
     for (let index = result.length - 1; index > 0; index -= 1) {
       const target = Math.floor(Math.random() * (index + 1));
       [result[index], result[target]] = [result[target], result[index]];
     }
     return result;
-  };
+  }
 
   const normalizeAnswer = (value: string) => {
     let normalized = value
