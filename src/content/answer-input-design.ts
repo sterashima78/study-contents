@@ -75,10 +75,7 @@ const trimInlineChoice = (value: string) => value.replace(/^.*(?:は|を|が|の
 const extractBinaryInlineChoices = (prompt: string, answers: string[]) => {
   const match = prompt.match(/([^、。?？\s]{1,24})(?:・|／|\/)([^、。?？\s]{1,24})のどちら/);
   if (!match) return undefined;
-  return validChoiceLabels(
-    [trimInlineChoice(match[1]), trimInlineChoice(match[2])],
-    answers,
-  );
+  return validChoiceLabels([trimInlineChoice(match[1]), trimInlineChoice(match[2])], answers);
 };
 
 const strongPlaceholderChoiceCue =
@@ -88,7 +85,7 @@ const extractPlaceholderChoices = (source: AnswerDesignSource) => {
   if (!source.placeholder || !strongPlaceholderChoiceCue.test(source.prompt + source.placeholder)) {
     return undefined;
   }
-  if (!/[\/／]/.test(source.placeholder)) return undefined;
+  if (!/[/／]/.test(source.placeholder)) return undefined;
   return validChoiceLabels(splitChoiceLabels(source.placeholder), source.answers);
 };
 
