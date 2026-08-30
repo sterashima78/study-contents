@@ -2,16 +2,17 @@ import { readFile } from "node:fs/promises";
 
 const root = new URL("../", import.meta.url);
 const issues = [];
-const [packageJson, studyPage, chat, context, engine, modelConfig, worker, prompt] = await Promise.all([
-  readJson("package.json"),
-  readText("src/components/ui/StudyPage.astro"),
-  readText("src/components/ai/StudyAIChat.astro"),
-  readText("src/lib/ai/study-context.ts"),
-  readText("src/lib/ai/browser-engine.ts"),
-  readText("src/lib/ai/model-config.ts"),
-  readText("src/workers/study-ai.worker.ts"),
-  readText("src/lib/ai/system-prompt.ts"),
-]);
+const [packageJson, studyPage, chat, context, engine, modelConfig, worker, prompt] =
+  await Promise.all([
+    readJson("package.json"),
+    readText("src/components/ui/StudyPage.astro"),
+    readText("src/components/ai/StudyAIChat.astro"),
+    readText("src/lib/ai/study-context.ts"),
+    readText("src/lib/ai/browser-engine.ts"),
+    readText("src/lib/ai/model-config.ts"),
+    readText("src/workers/study-ai.worker.ts"),
+    readText("src/lib/ai/system-prompt.ts"),
+  ]);
 
 if (packageJson.dependencies?.["@huggingface/transformers"] !== "4.2.0") {
   issues.push("package.json: @huggingface/transformers は検証済みの 4.2.0 に固定してください。");
