@@ -167,6 +167,19 @@ export type DiagramScene = {
   states?: DiagramState[];
 };
 
+export type DiagramSymbolTool = {
+  kind: "symbol";
+  label: string;
+  width?: number;
+  height?: number;
+  edit?: DiagramEditPermissions;
+} & (
+  | { domain: "physics"; symbol: PhysicsSymbol }
+  | { domain: "circuit"; symbol: CircuitSymbol }
+  | { domain: "chemistry"; symbol: ChemistrySymbol }
+  | { domain: "biology"; symbol: BiologySymbol }
+);
+
 export type DiagramEditorTool =
   | { kind: "point"; label: string; edit?: DiagramEditPermissions }
   | { kind: "segment"; label: string; edit?: DiagramEditPermissions }
@@ -174,15 +187,7 @@ export type DiagramEditorTool =
   | { kind: "circle"; label: string; edit?: DiagramEditPermissions }
   | { kind: "polygon"; label: string; edit?: DiagramEditPermissions }
   | { kind: "arrow"; label: string; edit?: DiagramEditPermissions }
-  | {
-      kind: "symbol";
-      label: string;
-      domain: DiagramDomain;
-      symbol: PhysicsSymbol | CircuitSymbol | ChemistrySymbol | BiologySymbol;
-      width?: number;
-      height?: number;
-      edit?: DiagramEditPermissions;
-    };
+  | DiagramSymbolTool;
 
 export type DiagramEditorHelpers = {
   snap?: boolean;

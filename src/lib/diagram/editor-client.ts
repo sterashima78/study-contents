@@ -36,6 +36,7 @@ type EditorState = {
   baseScene: DiagramScene;
   scene: DiagramScene;
   modelAnswer?: DiagramScene;
+  responsiveScale: number;
   tools: DiagramEditorTool[];
   helpers: DiagramEditorHelpers;
   activeToolIndex: number | null;
@@ -73,6 +74,7 @@ export const initializeDiagramEditors = () => {
       baseScene: clone(runtimeScene),
       scene: runtimeScene,
       modelAnswer: modelAnswer ? ensureRuntimeIds(clone(modelAnswer), "model") : undefined,
+      responsiveScale: 1,
       tools,
       helpers,
       activeToolIndex: null,
@@ -255,6 +257,7 @@ const bindResize = (state: EditorState) => {
       minimumScale,
       Math.min(1, (available - padding) / state.baseScene.width),
     );
+    state.responsiveScale = scale;
     const learner = state.scene.elements.filter((element) => element.source === "learner");
     const authored = state.baseScene.elements.map((element) =>
       scaleElementFromOrigin(element, scale),
@@ -283,15 +286,23 @@ const handleToolPoint = (state: EditorState, rawPoint: DiagramPoint) => {
   }
   if (tool.kind === "symbol") {
     commit(state, () => {
-      const element: DomainSymbolElement = {
-        kind: "symbol",
-        domain: tool.domain,
-        symbol: tool.symbol as DomainSymbolElement["symbol"],
+      const common = {
+        kind: "symbol" as const,
         at: snapped.point,
         width: tool.width,
         height: tool.height,
         refs: snapped.ref ? [snapped.ref] : [],
-      } as DomainSymbolElement;
+      };
+      let element: DomainSymbolElement;
+      if (tool.domain === "physics") {
+        element = { ...common, domain: "physics", symbol: tool.symbol };
+      } else if (tool.domain === "circuit") {
+        element = { ...common, domain: "circuit", symbol: tool.symbol };
+      } else if (tool.domain === "chemistry") {
+        element = { ...common, domain: "chemistry", symbol: tool.symbol };
+      } else {
+        element = { ...common, domain: "biology", symbol: tool.symbol };
+      }
       addLearnerElement(state, tool, element);
     });
     return;
@@ -538,8 +549,14 @@ const render = (state: EditorState) => {
   state.svg.append(renderSceneGroup(state.scene, markerId, OWN_COLOR, state.selectedId));
   if (state.modelAnswer && state.answerRevealed && state.modelVisible) {
     const modelMarker = `${markerId}-model`;
+    const modelScene = {
+      ...state.modelAnswer,
+      elements: state.modelAnswer.elements.map((element) =>
+        scaleElementFromOrigin(element, state.responsiveScale),
+      ),
+    };
     state.svg.append(createMarker(modelMarker, MODEL_COLOR));
-    const modelGroup = renderSceneGroup(state.modelAnswer, modelMarker, MODEL_COLOR, null);
+    const modelGroup = renderSceneGroup(modelScene, modelMarker, MODEL_COLOR, null);
     modelGroup.setAttribute("pointer-events", "none");
     modelGroup.setAttribute("aria-hidden", "true");
     state.svg.append(modelGroup);
@@ -794,6 +811,15 @@ const eventPoint = (
   state: EditorState,
   event: MouseEvent | PointerEvent | WheelEvent,
 ): DiagramPoint => {
+  const matrix = state.svg.getScreenCTM();
+  if (matrix) {
+    const point = state.svg.createSVGPoint();
+    point.x = event.clientX;
+    point.y = event.clientY;
+    const transformed = point.matrixTransform(matrix.inverse());
+    return { x: transformed.x, y: transformed.y };
+  }
+
   const rect = state.svg.getBoundingClientRect();
   return {
     x: state.view.x + ((event.clientX - rect.left) / Math.max(rect.width, 1)) * state.view.width,

@@ -57,6 +57,15 @@ export function validateDiagramScene(scene, options = {}) {
     }
   }
 
+  for (const [index, element] of scene.elements.entries()) {
+    if (!Array.isArray(element?.refs)) continue;
+    for (const ref of element.refs) {
+      if (typeof ref === "string" && !ids.has(ref)) {
+        errors.push(`${source}.elements[${index}]: 参照先 id「${ref}」がありません。`);
+      }
+    }
+  }
+
   if (scene.constraints !== undefined && !Array.isArray(scene.constraints)) {
     errors.push(`${source}: constraints は配列にしてください。`);
   } else {
@@ -335,17 +344,32 @@ function contains(outer, inner) {
     const dy = (inner.y - outer.center.y) / outer.radiusY;
     return dx * dx + dy * dy <= 1;
   }
-  if (outer.kind === "polygon") {
-    const xs = outer.points.map((value) => value.x);
-    const ys = outer.points.map((value) => value.y);
-    return (
-      inner.x >= Math.min(...xs) &&
-      inner.x <= Math.max(...xs) &&
-      inner.y >= Math.min(...ys) &&
-      inner.y <= Math.max(...ys)
-    );
-  }
+  if (outer.kind === "polygon") return pointInPolygon(outer.points, inner);
   return true;
+}
+
+function pointInPolygon(points, point) {
+  let inside = false;
+  for (let index = 0, previous = points.length - 1; index < points.length; previous = index++) {
+    const currentPoint = points[index];
+    const previousPoint = points[previous];
+    if (pointOnSegment(point, previousPoint, currentPoint)) return true;
+    const intersects =
+      currentPoint.y > point.y !== previousPoint.y > point.y &&
+      point.x <
+        ((previousPoint.x - currentPoint.x) * (point.y - currentPoint.y)) /
+          (previousPoint.y - currentPoint.y) +
+          currentPoint.x;
+    if (intersects) inside = !inside;
+  }
+  return inside;
+}
+
+function pointOnSegment(point, start, end) {
+  const cross = (point.y - start.y) * (end.x - start.x) - (point.x - start.x) * (end.y - start.y);
+  if (Math.abs(cross) > 1e-9) return false;
+  const dot = (point.x - start.x) * (point.x - end.x) + (point.y - start.y) * (point.y - end.y);
+  return dot <= 1e-9;
 }
 
 function pairDistance(pair, ids) {
