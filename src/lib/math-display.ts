@@ -24,10 +24,10 @@ const SUPERSCRIPT_DIGITS: Record<string, string> = {
   "⁹": "9",
 };
 
-const FRAGILE_MATH_GLYPHS = /[₀₁₂₃₄₅₆₇₈₉⃗]/;
+const SUBSCRIPT_PATTERN = /[₀₁₂₃₄₅₆₇₈₉]/;
 
 export function hasFragileMathGlyphs(value: string): boolean {
-  return FRAGILE_MATH_GLYPHS.test(value);
+  return SUBSCRIPT_PATTERN.test(value) || value.includes("⃗");
 }
 
 export function toPortableMathText(value: string): string {
