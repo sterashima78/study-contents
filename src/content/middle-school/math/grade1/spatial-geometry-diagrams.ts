@@ -52,7 +52,8 @@ function lineRelationsScene(): DiagramScene {
   return {
     width: 500,
     height: 320,
-    ariaLabel: "直方体の見取図で辺ABと辺CGが強調され、二つの辺が交わらず平行でもないねじれの位置にある図。",
+    ariaLabel:
+      "直方体の見取図で辺ABと辺CGが強調され、二つの辺が交わらず平行でもないねじれの位置にある図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       ...cuboidElements(),
@@ -115,7 +116,8 @@ function perspectiveScene(): DiagramScene {
   return {
     width: 500,
     height: 320,
-    ariaLabel: "立方体の見取図。奥行き方向の辺は斜めに描かれているが、実際の各面は正方形であることを示す図。",
+    ariaLabel:
+      "立方体の見取図。奥行き方向の辺は斜めに描かれているが、実際の各面は正方形であることを示す図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       ...cuboidElements(),
@@ -184,13 +186,19 @@ function translatedSolidScene(): DiagramScene {
   return {
     width: 500,
     height: 320,
-    ariaLabel: "長方形を右上へ平行移動し、対応する頂点の軌跡を結ぶことで直方体が構成される様子を示す図。",
+    ariaLabel:
+      "長方形を右上へ平行移動し、対応する頂点の軌跡を結ぶことで直方体が構成される様子を示す図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       { kind: "polygon", points: left, color: BLUE },
       { kind: "polygon", points: right, color: ORANGE },
       ...left.map(
-        (from, index): DiagramElement => ({ kind: "segment", from, to: right[index], color: GREEN }),
+        (from, index): DiagramElement => ({
+          kind: "segment",
+          from,
+          to: right[index],
+          color: GREEN,
+        }),
       ),
       { kind: "arrow", from: point(205, 260), to: point(325, 230), color: PURPLE },
       label(point(255, 278), "平行移動", PURPLE),
@@ -202,7 +210,8 @@ function revolutionScene(): DiagramScene {
   return {
     width: 500,
     height: 330,
-    ariaLabel: "長方形を縦の辺を軸として回転すると円柱になることを、長方形と円柱の模式図で示した図。",
+    ariaLabel:
+      "長方形を縦の辺を軸として回転すると円柱になることを、長方形と円柱の模式図で示した図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       { kind: "line", from: point(115, 55), to: point(115, 265), color: PURPLE },
