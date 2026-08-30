@@ -30,8 +30,16 @@ export const projectionsLesson: MathLesson = {
     title: "練習: 立面図と平面図を区別する",
     problem: "立体を真上から見た図と、正面から見た図があります。",
     steps: [
-      { prompt: "真上から見た図の名称を答えてください。", answers: ["平面図"], placeholder: "名称" },
-      { prompt: "正面から見た図の名称を答えてください。", answers: ["立面図"], placeholder: "名称" },
+      {
+        prompt: "真上から見た図の名称を答えてください。",
+        answers: ["平面図"],
+        placeholder: "名称",
+      },
+      {
+        prompt: "正面から見た図の名称を答えてください。",
+        answers: ["立面図"],
+        placeholder: "名称",
+      },
     ],
     hint: "上から見るのが平面図、前から見るのが立面図です。",
   },
