@@ -34,6 +34,12 @@ for (const unsafeSink of ["innerHTML", "insertAdjacentHTML", "outerHTML"]) {
 if (!chat.includes("enable_thinking: false")) {
   issues.push("StudyAIChat.astro: Qwen3のthinkingを無効化してください。");
 }
+if (!chat.includes("data-study-ai-diagnostics")) {
+  issues.push("StudyAIChat.astro: 実行失敗時の診断情報UIを維持してください。");
+}
+if (!chat.includes("buildStudyAIDiagnostics")) {
+  issues.push("StudyAIChat.astro: 診断情報はbrowser-engineの安全な整形処理を利用してください。");
+}
 for (const requiredExclusion of ['"script"', '"template"', '"[data-study-ai-exclude]"']) {
   if (!context.includes(requiredExclusion)) {
     issues.push(`study-context.ts: ${requiredExclusion} を教材コンテキストから除外してください。`);
@@ -51,11 +57,24 @@ if (!modelConfig.includes('STUDY_AI_MODEL_DTYPE = "q4f16"')) {
 if (!engine.includes("new Worker")) {
   issues.push("browser-engine.ts: 推論はWeb Workerで実行してください。");
 }
+if (!engine.includes("buildStudyAIDiagnostics")) {
+  issues.push("browser-engine.ts: 安全な実行診断情報を生成してください。");
+}
+if (!engine.includes('"shader-f16"')) {
+  issues.push("browser-engine.ts: WebGPUのshader-f16可否を診断してください。");
+}
+if (engine.includes("navigator.userAgent")) {
+  issues.push("browser-engine.ts: 診断情報に完全なUser-Agentを含めないでください。");
+}
 for (const requiredWorkerCode of [
   "AutoModelForCausalLM",
   'device: "webgpu"',
   "STUDY_AI_MODEL_REVISION",
   "enable_thinking: false",
+  '"tokenizer"',
+  '"model"',
+  '"warmup"',
+  '"generation"',
 ]) {
   if (!worker.includes(requiredWorkerCode)) {
     issues.push(`study-ai.worker.ts: ${requiredWorkerCode} を維持してください。`);
