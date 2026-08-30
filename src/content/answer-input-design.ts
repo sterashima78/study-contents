@@ -70,16 +70,19 @@ const extractQuotedChoices = (prompt: string, answers: string[]) => {
   return validChoiceLabels(splitChoiceLabels(match[1]), answers);
 };
 
+const trimInlineChoice = (value: string) => value.replace(/^.*(?:は|を|が|の|で)/, "").trim();
+
 const extractBinaryInlineChoices = (prompt: string, answers: string[]) => {
-  const match = prompt.match(
-    /([A-Za-z一-龠ぁ-んァ-ン]+)(?:・|／|\/)([A-Za-z一-龠ぁ-んァ-ン]+)のどちら/,
-  );
+  const match = prompt.match(/([^、。?？\s]{1,24})(?:・|／|\/)([^、。?？\s]{1,24})のどちら/);
   if (!match) return undefined;
-  return validChoiceLabels([match[1], match[2]], answers);
+  return validChoiceLabels(
+    [trimInlineChoice(match[1]), trimInlineChoice(match[2])],
+    answers,
+  );
 };
 
 const strongPlaceholderChoiceCue =
-  /真か偽|真偽|分類|判定|どちら|選|用法|文型|種類|必要条件|十分条件|有理数|無理数|能動|受動/;
+  /真か偽|真偽|分類|判定|どちら|選|用法|文型|種類|なるか|必要条件|十分条件|有理数|無理数|能動|受動/;
 
 const extractPlaceholderChoices = (source: AnswerDesignSource) => {
   if (!source.placeholder || !strongPlaceholderChoiceCue.test(source.prompt + source.placeholder)) {
@@ -157,7 +160,7 @@ const fixedChoiceLabels = (source: AnswerDesignSource): string[] | undefined => 
 };
 
 const choicePrompt = (prompt: string) =>
-  prompt.replace("から入力してください", "から選んでください").replace("から入力してください。", "から選んでください。");
+  prompt.replace("から入力してください", "から選んでください");
 
 const choiceDesign = (labels: string[], prompt: string): AnswerInputDesign => ({
   input: labels.length <= 4 ? "radio" : "select",
@@ -168,9 +171,9 @@ const choiceDesign = (labels: string[], prompt: string): AnswerInputDesign => ({
 const inferChoiceDesign = (source: AnswerDesignSource): AnswerInputDesign | undefined => {
   const labels =
     extractQuotedChoices(source.prompt, source.answers) ??
-    extractBinaryInlineChoices(source.prompt, source.answers) ??
     extractPlaceholderChoices(source) ??
-    fixedChoiceLabels(source);
+    fixedChoiceLabels(source) ??
+    extractBinaryInlineChoices(source.prompt, source.answers);
   return labels ? choiceDesign(labels, source.prompt) : undefined;
 };
 
