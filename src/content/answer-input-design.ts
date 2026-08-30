@@ -138,7 +138,10 @@ const fixedChoiceLabels = (source: AnswerDesignSource): string[] | undefined => 
     return validChoiceLabels(["正弦定理", "余弦定理"], source.answers);
   }
 
-  if (/何条件/.test(text) || (/必要条件|十分条件/.test(text) && /関係|判定|分類|どちら/.test(text))) {
+  if (
+    /何条件/.test(text) ||
+    (/必要条件|十分条件/.test(text) && /関係|判定|分類|どちら/.test(text))
+  ) {
     return validChoiceLabels(
       ["必要条件", "十分条件", "必要十分条件", "どちらでもない"],
       source.answers,
