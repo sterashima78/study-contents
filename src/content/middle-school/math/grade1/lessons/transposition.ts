@@ -4,7 +4,10 @@ export const transpositionLesson: MathLesson = {
   key: "transposition",
   title: "移項を使って解く",
   description: "等式の性質を短く書く方法として移項を使い、方程式を整理します。",
-  goals: ["移項が等式の性質から導かれることを説明できる。", "項を移項して Ax = B の形へ整理できる。"],
+  goals: [
+    "移項が等式の性質から導かれることを説明できる。",
+    "項を移項して Ax = B の形へ整理できる。",
+  ],
   concepts: [
     {
       title: "移項は両辺への同じ加減を省略した書き方",
@@ -37,5 +40,8 @@ export const transpositionLesson: MathLesson = {
     ],
     hint: "−5 は右辺へ移すと +5 になります。",
   },
-  summary: ["移項は等式の性質を使った変形を短く書く方法。", "移項したあと Ax = B の形にして x の係数を1にする。"],
+  summary: [
+    "移項は等式の性質を使った変形を短く書く方法。",
+    "移項したあと Ax = B の形にして x の係数を1にする。",
+  ],
 };
