@@ -34,8 +34,7 @@ function createReference({
 
 const mathCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 数学編・理数編";
 const scienceCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 理科編・理数編";
-const geographyHistoryCommentaryTitle =
-  "高等学校学習指導要領（平成30年告示）解説 地理歴史編";
+const geographyHistoryCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 地理歴史編";
 const civicsCommentaryTitle = "高等学校学習指導要領（平成30年告示）解説 公民編";
 
 export const curriculumReferences = Object.freeze({
