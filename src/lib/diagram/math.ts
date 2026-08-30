@@ -129,7 +129,9 @@ export function createQuadraticPlot(options: QuadraticPlotOptions): FunctionPlot
     ["b", b],
     ["c", c],
   ] as const) {
-    if (!Number.isFinite(value)) throw new Error(`quadratic plot の ${name} は有限数にしてください。`);
+    if (!Number.isFinite(value)) {
+      throw new Error(`quadratic plot の ${name} は有限数にしてください。`);
+    }
   }
   if (options.a === 0) throw new Error("quadratic plot の a は 0 以外にしてください。");
 
@@ -148,7 +150,9 @@ export function createQuadraticPlot(options: QuadraticPlotOptions): FunctionPlot
 function validateViewport(viewport: CartesianViewport, padding: number) {
   for (const [name, value] of Object.entries(viewport)) {
     if (name === "padding") continue;
-    if (!Number.isFinite(value)) throw new Error(`Cartesian viewport の ${name} は有限数にしてください。`);
+    if (!Number.isFinite(value)) {
+      throw new Error(`Cartesian viewport の ${name} は有限数にしてください。`);
+    }
   }
   if (viewport.width <= 0 || viewport.height <= 0) {
     throw new Error("Cartesian viewport の width と height は正の数にしてください。");
@@ -156,7 +160,11 @@ function validateViewport(viewport: CartesianViewport, padding: number) {
   if (viewport.xMax <= viewport.xMin || viewport.yMax <= viewport.yMin) {
     throw new Error("Cartesian viewport は min < max になる範囲を指定してください。");
   }
-  if (!Number.isFinite(padding) || padding < 0 || padding * 2 >= Math.min(viewport.width, viewport.height)) {
+  if (
+    !Number.isFinite(padding) ||
+    padding < 0 ||
+    padding * 2 >= Math.min(viewport.width, viewport.height)
+  ) {
     throw new Error("Cartesian viewport の padding は描画領域が残る非負の有限数にしてください。");
   }
 }
