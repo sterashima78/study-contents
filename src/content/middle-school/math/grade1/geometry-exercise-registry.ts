@@ -24,6 +24,17 @@ const spatialRepresentationLessonKeys = [
   "solids-of-revolution",
 ] as const;
 
+const solidMeasurementLessonKeys = [
+  "sector-arc-length",
+  "sector-area",
+  "prism-cylinder-surface-area",
+  "pyramid-cone-surface-area",
+  "prism-cylinder-volume",
+  "pyramid-cone-volume",
+  "sphere-surface-area",
+  "sphere-volume",
+] as const;
+
 const lessonTitles: Record<string, string> = {
   "construction-symmetry": "作図と対称性",
   "angle-bisector-construction": "角の二等分線を作図する",
@@ -41,14 +52,31 @@ const lessonTitles: Record<string, string> = {
   projections: "投影図を読む",
   "solid-by-translation": "平面図形の平行移動でできる立体",
   "solids-of-revolution": "回転体",
+  "sector-arc-length": "扇形の弧の長さ",
+  "sector-area": "扇形の面積",
+  "prism-cylinder-surface-area": "柱体・円柱の表面積",
+  "pyramid-cone-surface-area": "錐体・円錐の表面積",
+  "prism-cylinder-volume": "柱体・円柱の体積",
+  "pyramid-cone-volume": "錐体・円錐の体積",
+  "sphere-surface-area": "球の表面積",
+  "sphere-volume": "球の体積",
 };
 
 const unitLessonKeys: Record<string, readonly string[]> = {
   "plane-geometry": planeGeometryLessonKeys,
   "spatial-relationships-representations": spatialRepresentationLessonKeys,
+  "solid-measurement": solidMeasurementLessonKeys,
 };
 
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+const piAnswers = (coefficient: number, unit: "cm" | "cm²" | "cm³") => [
+  `${coefficient}π`,
+  `${coefficient}\\pi`,
+  `${coefficient}pi`,
+  `${coefficient}π${unit}`,
+  `${coefficient}π ${unit}`,
+];
 
 const generators: Record<string, Generator> = {
   "construction-symmetry": () => {
@@ -177,6 +205,92 @@ const generators: Record<string, Generator> = {
       answers: rectangle ? ["円柱"] : ["円錐"],
       lessonKeys: ["solids-of-revolution"],
       hint: rectangle ? "長方形の反対側の辺が円を描きます。" : "斜辺が円錐の側面をつくります。",
+    };
+  },
+  "sector-arc-length": () => {
+    const radius = 2 * randomInt(1, 4);
+    const angle = Math.random() < 0.5 ? 90 : 180;
+    const coefficient = (2 * radius * angle) / 360;
+    return {
+      prompt: `半径${radius} cm、中心角${angle}°の扇形の弧の長さをπを使って答えてください。`,
+      answers: piAnswers(coefficient, "cm"),
+      lessonKeys: ["sector-arc-length"],
+      hint: "円周2πrに中心角/360を掛けます。",
+    };
+  },
+  "sector-area": () => {
+    const radius = 2 * randomInt(1, 3);
+    const angle = Math.random() < 0.5 ? 90 : 180;
+    const coefficient = (radius * radius * angle) / 360;
+    return {
+      prompt: `半径${radius} cm、中心角${angle}°の扇形の面積をπを使って答えてください。`,
+      answers: piAnswers(coefficient, "cm²"),
+      lessonKeys: ["sector-area"],
+      hint: "円の面積πr²に中心角/360を掛けます。",
+    };
+  },
+  "prism-cylinder-surface-area": () => {
+    const radius = randomInt(2, 5);
+    const height = randomInt(3, 7);
+    const coefficient = 2 * radius * radius + 2 * radius * height;
+    return {
+      prompt: `底面の半径${radius} cm、高さ${height} cmの円柱の表面積をπを使って答えてください。`,
+      answers: piAnswers(coefficient, "cm²"),
+      lessonKeys: ["prism-cylinder-surface-area"],
+      hint: "底面2枚の2πr²と側面2πrhを足します。",
+    };
+  },
+  "pyramid-cone-surface-area": () => {
+    const radius = randomInt(2, 5);
+    const slantHeight = randomInt(radius + 2, radius + 6);
+    const coefficient = radius * radius + radius * slantHeight;
+    return {
+      prompt: `底面の半径${radius} cm、母線${slantHeight} cmの円錐の表面積をπを使って答えてください。`,
+      answers: piAnswers(coefficient, "cm²"),
+      lessonKeys: ["pyramid-cone-surface-area"],
+      hint: "底面積πr²と側面積πrlを足します。",
+    };
+  },
+  "prism-cylinder-volume": () => {
+    const radius = randomInt(2, 5);
+    const height = randomInt(3, 8);
+    const coefficient = radius * radius * height;
+    return {
+      prompt: `底面の半径${radius} cm、高さ${height} cmの円柱の体積をπを使って答えてください。`,
+      answers: piAnswers(coefficient, "cm³"),
+      lessonKeys: ["prism-cylinder-volume"],
+      hint: "底面積πr²に高さを掛けます。",
+    };
+  },
+  "pyramid-cone-volume": () => {
+    const radius = randomInt(2, 5);
+    const height = 3 * randomInt(1, 4);
+    const coefficient = (radius * radius * height) / 3;
+    return {
+      prompt: `底面の半径${radius} cm、高さ${height} cmの円錐の体積をπを使って答えてください。`,
+      answers: piAnswers(coefficient, "cm³"),
+      lessonKeys: ["pyramid-cone-volume"],
+      hint: "円柱の体積πr²hを3で割ります。",
+    };
+  },
+  "sphere-surface-area": () => {
+    const radius = randomInt(2, 6);
+    const coefficient = 4 * radius * radius;
+    return {
+      prompt: `半径${radius} cmの球の表面積をπを使って答えてください。`,
+      answers: piAnswers(coefficient, "cm²"),
+      lessonKeys: ["sphere-surface-area"],
+      hint: "球の表面積は4πr²です。",
+    };
+  },
+  "sphere-volume": () => {
+    const radius = Math.random() < 0.5 ? 3 : 6;
+    const coefficient = (4 * radius * radius * radius) / 3;
+    return {
+      prompt: `半径${radius} cmの球の体積をπを使って答えてください。`,
+      answers: piAnswers(coefficient, "cm³"),
+      lessonKeys: ["sphere-volume"],
+      hint: "球の体積は4πr³/3です。",
     };
   },
 };
