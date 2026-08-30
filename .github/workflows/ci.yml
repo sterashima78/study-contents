@@ -23,21 +23,26 @@ jobs:
           install: false
           cache: false
 
-      - name: Capture Biome diagnostics
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Capture formatted implementation
         run: |
           set +e
           pnpm exec biome check --write . > /tmp/biome.log 2>&1
           echo "exit_code=$?" >> /tmp/biome.log
-          git diff --binary > /tmp/biome.patch
+          mkdir -p /tmp/biome-files
+          cp --parents scripts/verify-diagrams.mjs /tmp/biome-files
+          cp --parents src/lib/diagram/*.ts src/lib/diagram/*.mjs /tmp/biome-files
+          cp --parents src/components/diagram/*.astro src/components/ui/WorkedExample.astro /tmp/biome-files
+          cp /tmp/biome.log /tmp/biome-files/biome.log
           exit 0
 
-      - name: Upload Biome diagnostics
+      - name: Upload formatted implementation
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: biome-diagnostics
-          path: |
-            /tmp/biome.log
-            /tmp/biome.patch
+          name: biome-formatted-files
+          path: /tmp/biome-files
           if-no-files-found: error
 
       - name: Run Biome
