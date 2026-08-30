@@ -105,7 +105,11 @@ const parseAttempt = (value: unknown): LearningAttempt | undefined => {
 };
 
 export const parseLearningRecords = (value: unknown): LearningRecords => {
-  if (!isRecord(value) || value.schemaVersion !== LEARNING_RECORDS_SCHEMA_VERSION || !Array.isArray(value.attempts)) {
+  if (
+    !isRecord(value) ||
+    value.schemaVersion !== LEARNING_RECORDS_SCHEMA_VERSION ||
+    !Array.isArray(value.attempts)
+  ) {
     throw new Error("対応していない学習記録ファイルです。");
   }
   if (value.attempts.length > MAX_STORED_ATTEMPTS) {
@@ -115,7 +119,10 @@ export const parseLearningRecords = (value: unknown): LearningRecords => {
   if (attempts.some((attempt) => !attempt)) {
     throw new Error("学習記録ファイルの内容が不正です。");
   }
-  return { schemaVersion: LEARNING_RECORDS_SCHEMA_VERSION, attempts: attempts as LearningAttempt[] };
+  return {
+    schemaVersion: LEARNING_RECORDS_SCHEMA_VERSION,
+    attempts: attempts as LearningAttempt[],
+  };
 };
 
 export const loadLearningRecords = (): LearningRecords => {
