@@ -1,6 +1,11 @@
 ---
 import { findAdvancedTopicSet } from "../content/entrance/advanced-topic-sets";
-import { type MathCourseInfo, math1Course } from "../content/math-courses";
+import {
+  getCourseCurriculumKey,
+  getCourseScopeLabel,
+  type MathCourseInfo,
+  math1Course,
+} from "../content/math-courses";
 import type { MathArea } from "../content/math1/types";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
@@ -34,6 +39,8 @@ const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _lessonCount = _area.units.reduce((sum, unit) => sum + unit.lessons.length, 0);
 const _advancedTopicSet = findAdvancedTopicSet(_course.key, _area.key);
+const _scopeLabel = getCourseScopeLabel(_course);
+const _curriculumKey = getCourseCurriculumKey(_course);
 const _resolvedAdvanced =
   _advanced ??
   (_advancedTopicSet
@@ -53,7 +60,8 @@ const _unitItems = _area.units.map((unit, index) => ({
 
 <StudyPage
   title={`${_area.title} | ${_course.title}`}
-  description={`高校${_course.title}「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`}
+  description={`${_scopeLabel}「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`}
+  curriculumKey={_curriculumKey}
 >
   <BreadcrumbTrail items={[{ label: _course.title, href: _courseHomeHref }, { label: _area.title }]} />
   <ContentHero kicker={_course.kicker} title={_area.title} description={_area.description} />
