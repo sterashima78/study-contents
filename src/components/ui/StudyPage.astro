@@ -36,6 +36,8 @@ const _curriculumReference = getCurriculumReference(_courseKey);
           <a class="brand" href={_baseUrl}>高校学習コンテンツ</a>
           <nav class="site-nav" aria-label="共通ナビゲーション">
             <a href={_baseUrl}>科目を選ぶ</a>
+            <a href={`${_baseUrl}practice/`}>演習</a>
+            <a href={`${_baseUrl}progress/`}>学習記録</a>
             <a href="#page-top">ページ先頭</a>
           </nav>
         </div>
@@ -210,6 +212,12 @@ const _curriculumReference = getCurriculumReference(_courseKey);
     .study-page.is-wide {
       padding-top: 1.65rem;
       padding-bottom: 2.5rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .site-nav a:first-child {
+      display: none;
     }
   }
 
