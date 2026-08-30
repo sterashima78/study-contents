@@ -121,7 +121,9 @@ function validateElement(element, location, errors) {
   }
   if (
     element.color !== undefined &&
-    (typeof element.color !== "string" || element.color.trim().length === 0 || element.color.length > 256)
+    (typeof element.color !== "string" ||
+      element.color.trim().length === 0 ||
+      element.color.length > 256)
   ) {
     errors.push(`${location}.color は256文字以内の空でない色文字列にしてください。`);
   }
