@@ -120,6 +120,12 @@ function validateElement(element, location, errors) {
     errors.push(`${location}.id は空でない文字列にしてください。`);
   }
   if (
+    element.color !== undefined &&
+    (typeof element.color !== "string" || element.color.trim().length === 0 || element.color.length > 256)
+  ) {
+    errors.push(`${location}.color は256文字以内の空でない色文字列にしてください。`);
+  }
+  if (
     element.refs !== undefined &&
     (!Array.isArray(element.refs) || element.refs.some((ref) => typeof ref !== "string"))
   ) {
