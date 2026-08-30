@@ -1,4 +1,8 @@
 ---
+import { hasFragileMathGlyphs, toPortableMathText } from "../../lib/math-display";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StaticMath from "./StaticMath.astro";
+
 type Props = {
   title: string;
   body: string[];
@@ -11,15 +15,27 @@ const { title: _title, body: _body, formulas: _formulas, points: _points } = Ast
 
 <article class="concept-card">
   <h3>{_title}</h3>
-  {_body.map((paragraph) => <p>{paragraph}</p>)}
+  {_body.map((paragraph) => <p>{toPortableMathText(paragraph)}</p>)}
   {
     _formulas && _formulas.length > 0 && (
       <div class="formulas">
-        {_formulas.map((formula) => <p>{formula}</p>)}
+        {_formulas.map((formula) =>
+          hasFragileMathGlyphs(formula) ? (
+            <div class="formula">
+              <StaticMath value={formula} block />
+            </div>
+          ) : (
+            <p>{formula}</p>
+          ),
+        )}
       </div>
     )
   }
-  {_points && _points.length > 0 && <ol class="points">{_points.map((point) => <li>{point}</li>)}</ol>}
+  {
+    _points && _points.length > 0 && (
+      <ol class="points">{_points.map((point) => <li>{toPortableMathText(point)}</li>)}</ol>
+    )
+  }
 </article>
 
 <style>
@@ -55,7 +71,8 @@ const { title: _title, body: _body, formulas: _formulas, points: _points } = Ast
     border-bottom: 1px solid var(--color-border-soft);
   }
 
-  .formulas p {
+  .formulas p,
+  .formula {
     margin: 0;
     padding: 0.25rem 0.15rem;
     color: var(--color-text-strong);
