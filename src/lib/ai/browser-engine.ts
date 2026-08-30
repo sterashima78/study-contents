@@ -1,8 +1,4 @@
-import {
-  STUDY_AI_MODEL_DTYPE,
-  STUDY_AI_MODEL_ID,
-  STUDY_AI_MODEL_REVISION,
-} from "./model-config";
+import { STUDY_AI_MODEL_DTYPE, STUDY_AI_MODEL_ID, STUDY_AI_MODEL_REVISION } from "./model-config";
 
 export { STUDY_AI_MODEL_ID } from "./model-config";
 
@@ -15,13 +11,7 @@ type StudyAIMessage = {
   content: string;
 };
 
-type StudyAIStage =
-  | "tokenizer"
-  | "model"
-  | "warmup"
-  | "generation"
-  | "worker"
-  | "unknown";
+type StudyAIStage = "tokenizer" | "model" | "warmup" | "generation" | "worker" | "unknown";
 
 type StudyAICompletionRequest = {
   messages: StudyAIMessage[];
@@ -290,13 +280,21 @@ function normalizeProgress(value: number | undefined) {
 }
 
 function sanitizeDiagnosticMessage(value: string) {
-  return value
-    .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, " ")
+  return stripControlCharacters(value)
     .replace(/([?&](?:token|access_token|auth)=)[^&\s]+/gi, "$1[redacted]")
-    .replace(/Bearer\s+[A-Za-z0-9._~+\/-]+=*/gi, "Bearer [redacted]")
+    .replace(/Bearer\s+[A-Za-z0-9._~+/-]+=*/gi, "Bearer [redacted]")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 1200);
+}
+
+function stripControlCharacters(value: string) {
+  return Array.from(value)
+    .filter((character) => {
+      const code = character.charCodeAt(0);
+      return (code >= 32 && code !== 127) || code === 9 || code === 10 || code === 13;
+    })
+    .join("");
 }
 
 async function inspectWebGPU() {
