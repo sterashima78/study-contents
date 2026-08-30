@@ -37,5 +37,8 @@ export const linearExpressionAdditionSubtractionLesson: MathLesson = {
     ],
     hint: "−(2x−4) は −2x+4 になります。",
   },
-  summary: ["一次式の加減は、かっこを外して同じ種類の項をまとめる。", "式を引くときは後ろの各項の符号をすべて変える。"],
+  summary: [
+    "一次式の加減は、かっこを外して同じ種類の項をまとめる。",
+    "式を引くときは後ろの各項の符号をすべて変える。",
+  ],
 };
