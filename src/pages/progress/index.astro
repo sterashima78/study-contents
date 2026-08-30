@@ -1,0 +1,545 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "../../components/ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "../../components/ui/StudyPage.astro";
+
+const _base = import.meta.env.BASE_URL;
+---
+
+<StudyPage
+  title="学習記録 | 高校学習コンテンツ"
+  description="ブラウザに保存した演習結果から正答率、強み、復習候補、最近の演習履歴を確認できます。JSONファイルへの出力と読み込みにも対応します。"
+  width="wide"
+>
+  <ContentHero
+    kicker="LEARNING RECORDS"
+    title="強みと弱みを確認する"
+    description="演習結果をこのブラウザ内で集計します。科目・領域・小単元ごとの正答率を確認し、復習する場所を絞れます。"
+    compact
+  />
+
+  <section class="record-toolbar" aria-labelledby="record-tools-title">
+    <div>
+      <p class="section-label">DATA</p>
+      <h2 id="record-tools-title">学習記録の管理</h2>
+      <p>記録はサーバーへ送信しません。JSONファイルとして書き出し、別のブラウザへ読み込めます。</p>
+    </div>
+    <div class="record-actions">
+      <a class="primary-link" href={`${_base}practice/`}>演習を始める</a>
+      <button type="button" class="secondary-button" data-export>JSONを書き出す</button>
+      <label class="secondary-button file-button">
+        JSONを読み込む
+        <input type="file" accept="application/json,.json" data-import />
+      </label>
+      <button type="button" class="danger-button" data-clear>記録を削除</button>
+    </div>
+    <p class="record-message" data-record-message aria-live="polite"></p>
+  </section>
+
+  <section class="record-empty" data-record-empty hidden>
+    <h2>まだ学習記録がありません</h2>
+    <p>演習問題を採点すると、正答率と小単元別の傾向がここに表示されます。</p>
+    <a class="primary-link" href={`${_base}practice/`}>最初の演習を始める</a>
+  </section>
+
+  <div data-record-dashboard hidden>
+    <section class="summary-grid" aria-label="学習記録の概要">
+      <article class="summary-card">
+        <span>総合正答率</span>
+        <strong data-overall-rate>0%</strong>
+      </article>
+      <article class="summary-card">
+        <span>回答した問題</span>
+        <strong data-total-questions>0問</strong>
+      </article>
+      <article class="summary-card">
+        <span>演習回数</span>
+        <strong data-attempt-count>0回</strong>
+      </article>
+      <article class="summary-card">
+        <span>学習した領域</span>
+        <strong data-area-count>0領域</strong>
+      </article>
+    </section>
+
+    <section class="insight-grid" aria-label="強みと復習候補">
+      <article class="insight-card">
+        <p class="section-label">STRENGTHS</p>
+        <h2>強み</h2>
+        <p class="insight-note">3問以上の記録があり、正答率80%以上の小単元を表示します。</p>
+        <div class="insight-list" data-strength-list></div>
+      </article>
+      <article class="insight-card">
+        <p class="section-label">REVIEW</p>
+        <h2>復習候補</h2>
+        <p class="insight-note">3問以上の記録があり、正答率60%未満の小単元を低い順に表示します。</p>
+        <div class="insight-list" data-weakness-list></div>
+      </article>
+    </section>
+
+    <section class="record-section" aria-labelledby="area-progress-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">AREAS</p>
+          <h2 id="area-progress-title">領域別の成績</h2>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>科目</th><th>領域</th><th>正答率</th><th>正解 / 出題</th></tr>
+          </thead>
+          <tbody data-area-table></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="record-section" aria-labelledby="lesson-progress-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">LESSONS</p>
+          <h2 id="lesson-progress-title">小単元別の成績</h2>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>科目</th><th>単元 / 小単元</th><th>正答率</th><th>正解 / 出題</th></tr>
+          </thead>
+          <tbody data-lesson-table></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="record-section" aria-labelledby="recent-title">
+      <div class="section-heading">
+        <div>
+          <p class="section-label">RECENT</p>
+          <h2 id="recent-title">最近の演習</h2>
+        </div>
+      </div>
+      <div class="recent-list" data-recent-list></div>
+    </section>
+  </div>
+
+  <noscript>学習記録の集計、書き出し、読み込みには JavaScript が必要です。</noscript>
+</StudyPage>
+
+<script>
+  import {
+    clearLearningRecords,
+    loadLearningRecords,
+    makeLearningRecordsExport,
+    MAX_IMPORT_BYTES,
+    mergeLearningRecords,
+    parseLearningRecords,
+    type LearningAttempt,
+  } from "../../lib/learning-records";
+
+  type Aggregate = {
+    courseTitle: string;
+    label: string;
+    correct: number;
+    total: number;
+  };
+
+  const empty = document.querySelector<HTMLElement>("[data-record-empty]");
+  const dashboard = document.querySelector<HTMLElement>("[data-record-dashboard]");
+  const overallRate = document.querySelector<HTMLElement>("[data-overall-rate]");
+  const totalQuestions = document.querySelector<HTMLElement>("[data-total-questions]");
+  const attemptCount = document.querySelector<HTMLElement>("[data-attempt-count]");
+  const areaCount = document.querySelector<HTMLElement>("[data-area-count]");
+  const strengthList = document.querySelector<HTMLElement>("[data-strength-list]");
+  const weaknessList = document.querySelector<HTMLElement>("[data-weakness-list]");
+  const areaTable = document.querySelector<HTMLElement>("[data-area-table]");
+  const lessonTable = document.querySelector<HTMLElement>("[data-lesson-table]");
+  const recentList = document.querySelector<HTMLElement>("[data-recent-list]");
+  const message = document.querySelector<HTMLElement>("[data-record-message]");
+  const exportButton = document.querySelector<HTMLButtonElement>("[data-export]");
+  const importInput = document.querySelector<HTMLInputElement>("[data-import]");
+  const clearButton = document.querySelector<HTMLButtonElement>("[data-clear]");
+
+  const percent = (correct: number, total: number) => (total === 0 ? 0 : Math.round((correct / total) * 100));
+
+  function createElement<K extends keyof HTMLElementTagNameMap>(
+    tag: K,
+    className?: string,
+    text?: string,
+  ) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (text !== undefined) element.textContent = text;
+    return element;
+  }
+
+  const addAggregate = (map: Map<string, Aggregate>, key: string, courseTitle: string, label: string, correct: boolean) => {
+    const item = map.get(key) ?? { courseTitle, label, correct: 0, total: 0 };
+    item.total += 1;
+    if (correct) item.correct += 1;
+    map.set(key, item);
+  };
+
+  const renderInsight = (container: HTMLElement | null, items: Aggregate[], emptyText: string) => {
+    if (!container) return;
+    container.replaceChildren();
+    if (items.length === 0) {
+      container.append(createElement("p", "empty-note", emptyText));
+      return;
+    }
+    for (const item of items.slice(0, 6)) {
+      const row = createElement("article", "insight-row");
+      const label = createElement("div");
+      label.append(createElement("strong", undefined, item.label), createElement("span", undefined, item.courseTitle));
+      row.append(label, createElement("b", undefined, `${percent(item.correct, item.total)}%`));
+      container.append(row);
+    }
+  };
+
+  const renderTable = (container: HTMLElement | null, items: Aggregate[]) => {
+    if (!container) return;
+    container.replaceChildren();
+    for (const item of items) {
+      const row = document.createElement("tr");
+      const rate = percent(item.correct, item.total);
+      row.append(
+        createElement("td", undefined, item.courseTitle),
+        createElement("td", undefined, item.label),
+        createElement("td", undefined, `${rate}%`),
+        createElement("td", undefined, `${item.correct} / ${item.total}`),
+      );
+      container.append(row);
+    }
+  };
+
+  const renderRecent = (attempts: LearningAttempt[]) => {
+    if (!recentList) return;
+    recentList.replaceChildren();
+    for (const attempt of attempts.slice(0, 10)) {
+      const article = createElement("article", "recent-item");
+      const heading = createElement("div");
+      heading.append(
+        createElement("strong", undefined, `${attempt.courseTitle}・${attempt.areaTitle}`),
+        createElement("span", undefined, new Intl.DateTimeFormat("ja-JP", { dateStyle: "medium", timeStyle: "short" }).format(new Date(attempt.completedAt))),
+      );
+      article.append(
+        heading,
+        createElement("b", undefined, `${percent(attempt.correctCount, attempt.totalCount)}%`),
+        createElement("span", undefined, `${attempt.correctCount} / ${attempt.totalCount} 正解`),
+      );
+      recentList.append(article);
+    }
+  };
+
+  const render = () => {
+    const records = loadLearningRecords();
+    if (!empty || !dashboard) return;
+    const attempts = records.attempts;
+    empty.hidden = attempts.length > 0;
+    dashboard.hidden = attempts.length === 0;
+    if (attempts.length === 0) return;
+
+    const total = attempts.reduce((sum, attempt) => sum + attempt.totalCount, 0);
+    const correct = attempts.reduce((sum, attempt) => sum + attempt.correctCount, 0);
+    const areas = new Map<string, Aggregate>();
+    const lessons = new Map<string, Aggregate>();
+
+    for (const attempt of attempts) {
+      const areaKey = `${attempt.courseKey}:${attempt.areaKey}`;
+      const area = areas.get(areaKey) ?? { courseTitle: attempt.courseTitle, label: attempt.areaTitle, correct: 0, total: 0 };
+      area.correct += attempt.correctCount;
+      area.total += attempt.totalCount;
+      areas.set(areaKey, area);
+
+      for (const item of attempt.results) {
+        addAggregate(
+          lessons,
+          `${attempt.courseKey}:${item.unitKey}:${item.lessonKey}`,
+          attempt.courseTitle,
+          `${item.unitTitle} / ${item.lessonTitle}`,
+          item.correct,
+        );
+      }
+    }
+
+    if (overallRate) overallRate.textContent = `${percent(correct, total)}%`;
+    if (totalQuestions) totalQuestions.textContent = `${total}問`;
+    if (attemptCount) attemptCount.textContent = `${attempts.length}回`;
+    if (areaCount) areaCount.textContent = `${areas.size}領域`;
+
+    const lessonValues = [...lessons.values()];
+    const strengths = lessonValues
+      .filter((item) => item.total >= 3 && percent(item.correct, item.total) >= 80)
+      .sort((a, b) => percent(b.correct, b.total) - percent(a.correct, a.total) || b.total - a.total);
+    const weaknesses = lessonValues
+      .filter((item) => item.total >= 3 && percent(item.correct, item.total) < 60)
+      .sort((a, b) => percent(a.correct, a.total) - percent(b.correct, b.total) || b.total - a.total);
+
+    renderInsight(strengthList, strengths, "判定に必要な問題数がまだありません。演習を続けると表示されます。");
+    renderInsight(weaknessList, weaknesses, "現在、3問以上の記録がある小単元に大きな弱点はありません。");
+    renderTable(
+      areaTable,
+      [...areas.values()].sort((a, b) => percent(a.correct, a.total) - percent(b.correct, b.total)),
+    );
+    renderTable(
+      lessonTable,
+      lessonValues.sort((a, b) => percent(a.correct, a.total) - percent(b.correct, b.total) || b.total - a.total),
+    );
+    renderRecent(attempts);
+  };
+
+  exportButton?.addEventListener("click", () => {
+    const payload = makeLearningRecordsExport();
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const date = new Date().toISOString().slice(0, 10);
+    link.href = url;
+    link.download = `study-contents-learning-records-${date}.json`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    if (message) message.textContent = "学習記録をJSONファイルに書き出しました。";
+  });
+
+  importInput?.addEventListener("change", async () => {
+    const file = importInput.files?.[0];
+    importInput.value = "";
+    if (!file || !message) return;
+    if (file.size > MAX_IMPORT_BYTES) {
+      message.textContent = "ファイルが大きすぎます。2MB以下の学習記録を選んでください。";
+      return;
+    }
+    try {
+      const imported = parseLearningRecords(JSON.parse(await file.text()));
+      const count = mergeLearningRecords(imported);
+      message.textContent = `学習記録を読み込みました。現在 ${count} 回分の記録があります。`;
+      render();
+    } catch (error) {
+      message.textContent = error instanceof Error ? error.message : "学習記録を読み込めませんでした。";
+    }
+  });
+
+  clearButton?.addEventListener("click", () => {
+    if (!window.confirm("このブラウザに保存した学習記録をすべて削除しますか？")) return;
+    clearLearningRecords();
+    if (message) message.textContent = "学習記録を削除しました。";
+    render();
+  });
+
+  render();
+</script>
+
+<style is:global>
+  .record-toolbar,
+  .record-empty,
+  .record-section,
+  .insight-card {
+    margin-top: 2rem;
+    padding: clamp(1.1rem, 3vw, 1.7rem);
+    border: 1px solid var(--color-border);
+    border-radius: 0.9rem;
+    background: var(--surface);
+  }
+
+  .record-toolbar {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .record-toolbar .section-label,
+  [data-record-dashboard] .section-label {
+    margin: 0 0 0.25rem;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .record-toolbar h2,
+  .record-toolbar p,
+  .record-empty h2,
+  .record-empty p,
+  [data-record-dashboard] h2,
+  [data-record-dashboard] p {
+    margin-top: 0;
+  }
+
+  .record-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .record-toolbar .primary-link,
+  .record-empty .primary-link,
+  .record-toolbar .secondary-button,
+  .record-toolbar .danger-button {
+    display: inline-flex;
+    min-height: 2.7rem;
+    padding: 0.62rem 0.85rem;
+    border-radius: 0.55rem;
+    align-items: center;
+    justify-content: center;
+    font-weight: 750;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .record-toolbar .primary-link,
+  .record-empty .primary-link {
+    border: 1px solid var(--color-accent-strong);
+    background: var(--color-accent-strong);
+    color: #fff;
+  }
+
+  .record-toolbar .secondary-button,
+  .record-toolbar .danger-button {
+    border: 1px solid var(--color-border-strong);
+    background: var(--surface);
+    color: var(--color-text-strong);
+  }
+
+  .record-toolbar .danger-button {
+    color: #7c3e35;
+  }
+
+  .file-button input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .record-message {
+    min-height: 1.4em;
+    margin: 0;
+    color: var(--color-muted-strong);
+    font-size: 0.84rem;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .summary-card {
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.15rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.8rem;
+    background: var(--surface);
+  }
+
+  .summary-card span,
+  .insight-row span,
+  .recent-item span {
+    color: var(--color-muted-strong);
+    font-size: 0.78rem;
+  }
+
+  .summary-card strong {
+    color: var(--color-text-strong);
+    font-size: clamp(1.6rem, 4vw, 2.35rem);
+    line-height: 1.1;
+  }
+
+  .insight-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .insight-note {
+    color: var(--color-muted-strong);
+    font-size: 0.82rem;
+  }
+
+  .insight-list {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .insight-row,
+  .recent-item {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--color-border-soft);
+  }
+
+  .insight-row div,
+  .recent-item div {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .empty-note {
+    margin-bottom: 0;
+    color: var(--color-muted-strong);
+  }
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  [data-record-dashboard] table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  [data-record-dashboard] th,
+  [data-record-dashboard] td {
+    padding: 0.72rem 0.55rem;
+    border-top: 1px solid var(--color-border-soft);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  [data-record-dashboard] th {
+    color: var(--color-muted-strong);
+    font-size: 0.75rem;
+  }
+
+  .recent-list {
+    display: grid;
+  }
+
+  .recent-item > b,
+  .recent-item > span {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 760px) {
+    .summary-grid,
+    .insight-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .recent-item {
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .summary-grid,
+    .insight-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
