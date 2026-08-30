@@ -2,7 +2,7 @@
 
 - Status: Superseded
 - Date: 2026-08-30
-- Superseded by: ADR 0044
+- Superseded by: ADR 0046
 - Related: ADR 0005, ADR 0022, ADR 0040, ADR 0041
 
 ## Context
