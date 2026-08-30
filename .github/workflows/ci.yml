@@ -23,19 +23,21 @@ jobs:
           install: false
           cache: false
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Format implementation for review
+      - name: Capture Biome diagnostics
         run: |
-          pnpm exec biome check --write .
+          set +e
+          pnpm exec biome check --write . > /tmp/biome.log 2>&1
+          echo "exit_code=$?" >> /tmp/biome.log
           git diff --binary > /tmp/biome.patch
+          exit 0
 
-      - name: Upload formatter patch
+      - name: Upload Biome diagnostics
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: biome-patch
-          path: /tmp/biome.patch
+          name: biome-diagnostics
+          path: |
+            /tmp/biome.log
+            /tmp/biome.patch
           if-no-files-found: error
 
       - name: Run Biome
