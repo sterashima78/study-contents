@@ -38,7 +38,13 @@ function createMotionAxisLabels(
       align: "start",
       color: AXIS_COLOR,
     },
-    { kind: "label", at: point(origin.x - 8, origin.y + 18), text: "O", align: "end", color: AXIS_COLOR },
+    {
+      kind: "label",
+      at: point(origin.x - 8, origin.y + 18),
+      text: "O",
+      align: "end",
+      color: AXIS_COLOR,
+    },
   ];
 }
 
