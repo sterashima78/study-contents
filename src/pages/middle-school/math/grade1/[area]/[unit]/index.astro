@@ -3,8 +3,8 @@
 import MathUnitIndex from "../../../../../../components/MathUnitIndex.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { middleMath1Course } from "../../../../../../content/math-courses";
-import { middleMath1Areas } from "../../../../../../content/middle-school/math/grade1/catalog";
 import type { MathArea, MathUnit } from "../../../../../../content/math1/types";
+import { middleMath1Areas } from "../../../../../../content/middle-school/math/grade1/catalog";
 
 export function getStaticPaths() {
   return middleMath1Areas.flatMap((area) =>
