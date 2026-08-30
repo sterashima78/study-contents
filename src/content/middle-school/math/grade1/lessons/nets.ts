@@ -23,14 +23,21 @@ export const netsLesson: MathLesson = {
     steps: [
       { expression: "立方体の面は6面", note: "立方体は合同な正方形6枚で囲まれています。" },
       { expression: "展開図も正方形6枚", note: "切り開いても面の枚数は変わりません。" },
-      { expression: "折り上げると立方体になる", note: "面のつながりを保ったまま折ることで元の立体に戻ります。" },
+      {
+        expression: "折り上げると立方体になる",
+        note: "面のつながりを保ったまま折ることで元の立体に戻ります。",
+      },
     ],
   },
   practice: {
     title: "練習: 面の枚数を確認する",
     problem: "立方体の展開図について考えます。",
     steps: [
-      { prompt: "展開図をつくる正方形の枚数を答えてください。", answers: ["6", "6枚"], placeholder: "枚数" },
+      {
+        prompt: "展開図をつくる正方形の枚数を答えてください。",
+        answers: ["6", "6枚"],
+        placeholder: "枚数",
+      },
     ],
     hint: "立方体の面の数と展開図の正方形の数は同じです。",
   },
