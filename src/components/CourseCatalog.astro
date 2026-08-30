@@ -28,7 +28,11 @@ type Props = {
   middleSchoolHref?: string;
 };
 
-const { courses: _courses, middleSchoolHref: _middleSchoolHref } = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const {
+  courses: _courses,
+  middleSchoolHref: _middleSchoolHref = `${_base}middle-school/`,
+} = Astro.props as Props;
 const _items = _courses.map((course, index) => ({
   marker: String(index + 1).padStart(2, "0"),
   kicker: course.kicker,
@@ -55,33 +59,29 @@ const _items = _courses.map((course, index) => ({
 
   <ExperimentalNotice />
 
-  {
-    _middleSchoolHref && (
-      <ContentSection labelledby="middle-school-title" compact>
-        <SectionHeading
-          label="LOWER SECONDARY"
-          title="中学校"
-          id="middle-school-title"
-          description="中学数学から整備を始め、理科・英語へ順次広げます。"
-        />
-        <ContentIndex
-          items={[
-            {
-              marker: "01",
-              title: "中学生向け教材",
-              href: _middleSchoolHref,
-              description: "数学・理科・英語を対象に、学年ごとの基礎を1ページ1技能で学べるようにします。",
-              tags: ["数学", "理科", "英語"],
-              meta: "中学1〜3年",
-              action: "中学校の教材へ →",
-            },
-          ]}
-          variant="grid"
-          density="compact"
-        />
-      </ContentSection>
-    )
-  }
+  <ContentSection labelledby="middle-school-title" compact>
+    <SectionHeading
+      label="LOWER SECONDARY"
+      title="中学校"
+      id="middle-school-title"
+      description="中学数学から整備を始め、理科・英語へ順次広げます。"
+    />
+    <ContentIndex
+      items={[
+        {
+          marker: "01",
+          title: "中学生向け教材",
+          href: _middleSchoolHref,
+          description: "数学・理科・英語を対象に、学年ごとの基礎を1ページ1技能で学べるようにします。",
+          tags: ["数学", "理科", "英語"],
+          meta: "中学1〜3年",
+          action: "中学校の教材へ →",
+        },
+      ]}
+      variant="grid"
+      density="compact"
+    />
+  </ContentSection>
 
   <ContentSection labelledby="courses-title" compact>
     <SectionHeading
