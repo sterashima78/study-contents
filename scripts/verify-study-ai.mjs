@@ -44,6 +44,15 @@ if (!chat.includes("data-study-ai-diagnostics")) {
 if (!chat.includes("buildStudyAIDiagnostics")) {
   issues.push("StudyAIChat.astro: 診断情報はbrowser-engineの安全な整形処理を利用してください。");
 }
+if (!chat.includes("buildStudyContext(question)")) {
+  issues.push("StudyAIChat.astro: 現在の質問を教材コンテキスト選択へ明示的に渡してください。");
+}
+if (!chat.includes('finishReason === "length"')) {
+  issues.push("StudyAIChat.astro: WebLLMのlength終了を検出して途中終了を明示してください。");
+}
+if (!chat.includes("回答が長いためここで区切りました")) {
+  issues.push("StudyAIChat.astro: 生成上限到達時に『続き』で再開できる案内を表示してください。");
+}
 for (const requiredExclusion of ['"script"', '"template"', '"[data-study-ai-exclude]"']) {
   if (!context.includes(requiredExclusion)) {
     issues.push(`study-context.ts: ${requiredExclusion} を教材コンテキストから除外してください。`);
