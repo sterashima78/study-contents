@@ -16,7 +16,10 @@ export const parallelogramPropertiesProofLesson: MathLesson = {
         "平行四辺形ABCDに対角線ACを引くと、△ABCと△CDAを比べられます。AB∥CD、BC∥ADなので錯角がそれぞれ等しく、ACは共通です。",
         "1組の辺とその両端の角がそれぞれ等しいので2三角形は合同となり、AB=CD、BC=ADや向かい合う角が等しいことを導けます。",
       ],
-      formulas: ["平行四辺形 → 2組の対辺はそれぞれ等しい", "平行四辺形 → 2組の対角はそれぞれ等しい"],
+      formulas: [
+        "平行四辺形 → 2組の対辺はそれぞれ等しい",
+        "平行四辺形 → 2組の対角はそれぞれ等しい",
+      ],
     },
   ],
   example: {
@@ -33,7 +36,11 @@ export const parallelogramPropertiesProofLesson: MathLesson = {
     title: "練習: 合同後の結論を読む",
     problem: "△ABC≡△CDAが示せました。",
     steps: [
-      { prompt: "辺ABに対応して等しい辺を答えてください。", answers: ["CD", "DC"], placeholder: "辺" },
+      {
+        prompt: "辺ABに対応して等しい辺を答えてください。",
+        answers: ["CD", "DC"],
+        placeholder: "辺",
+      },
     ],
     hint: "合同な三角形の頂点の対応を確認します。",
   },

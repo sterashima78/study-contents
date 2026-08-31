@@ -32,8 +32,16 @@ export const polygonAnglePropertiesLesson: MathLesson = {
     title: "練習: 十角形の内角の和",
     problem: "十角形の内角の和を求めます。",
     steps: [
-      { prompt: "内角の和を答えてください。", answers: ["1440", "1440°", "1440度"], placeholder: "角度" },
-      { prompt: "十角形の外角の和を答えてください。", answers: ["360", "360°", "360度"], placeholder: "角度" },
+      {
+        prompt: "内角の和を答えてください。",
+        answers: ["1440", "1440°", "1440度"],
+        placeholder: "角度",
+      },
+      {
+        prompt: "十角形の外角の和を答えてください。",
+        answers: ["360", "360°", "360度"],
+        placeholder: "角度",
+      },
     ],
     hint: "内角は(n−2)×180°、外角の和は多角形によらず360°です。",
   },

@@ -32,7 +32,11 @@ export const parallelLineConditionsLesson: MathLesson = {
     title: "練習: 同位角から平行を判断する",
     problem: "2直線l、mを1本の直線が横切り、対応する同位角がどちらも73°です。",
     steps: [
-      { prompt: "lとmの関係を答えてください。", answers: ["平行", "l∥m", "l//m"], placeholder: "関係" },
+      {
+        prompt: "lとmの関係を答えてください。",
+        answers: ["平行", "l∥m", "l//m"],
+        placeholder: "関係",
+      },
     ],
     hint: "同位角が等しいことは、2直線が平行になるための条件です。",
   },

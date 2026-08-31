@@ -32,7 +32,11 @@ export const verticalCorrespondingAlternateLesson: MathLesson = {
     title: "練習: 対頂角を使う",
     problem: "交わる2直線で、一つの角が118°です。向かい合う角を求めます。",
     steps: [
-      { prompt: "向かい合う角の大きさを答えてください。", answers: ["118", "118°", "118度"], placeholder: "角度" },
+      {
+        prompt: "向かい合う角の大きさを答えてください。",
+        answers: ["118", "118°", "118度"],
+        placeholder: "角度",
+      },
     ],
     hint: "向かい合う角は対頂角です。",
   },

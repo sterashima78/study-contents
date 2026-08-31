@@ -32,7 +32,11 @@ export const triangleAnglePropertiesLesson: MathLesson = {
     title: "練習: 外角を求める",
     problem: "三角形の、ある外角と隣り合わない2つの内角が35°と72°です。",
     steps: [
-      { prompt: "外角の大きさを答えてください。", answers: ["107", "107°", "107度"], placeholder: "角度" },
+      {
+        prompt: "外角の大きさを答えてください。",
+        answers: ["107", "107°", "107度"],
+        placeholder: "角度",
+      },
     ],
     hint: "外角は、それと隣り合わない2つの内角の和です。",
   },

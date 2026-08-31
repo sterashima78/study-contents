@@ -32,7 +32,11 @@ export const parallelogramConditionsSpecialLesson: MathLesson = {
     title: "練習: 特別な平行四辺形を分類する",
     problem: "4辺がすべて等しく、4角がすべて直角の四角形です。",
     steps: [
-      { prompt: "この四角形を最も具体的な名前で答えてください。", answers: ["正方形"], placeholder: "図形名" },
+      {
+        prompt: "この四角形を最も具体的な名前で答えてください。",
+        answers: ["正方形"],
+        placeholder: "図形名",
+      },
     ],
     hint: "ひし形と長方形の両方の条件を満たします。",
   },

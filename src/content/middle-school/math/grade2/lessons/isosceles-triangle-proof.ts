@@ -3,8 +3,7 @@ import type { MathLesson } from "../../../../math1/types";
 export const isoscelesTriangleProofLesson: MathLesson = {
   key: "isosceles-triangle-proof",
   title: "二等辺三角形の性質を証明する",
-  description:
-    "三角形の合同条件を根拠に、二等辺三角形の底角が等しいことなどを論理的に確かめます。",
+  description: "三角形の合同条件を根拠に、二等辺三角形の底角が等しいことなどを論理的に確かめます。",
   goals: [
     "補助線を使って合同な三角形を見つけられる。",
     "合同な図形の対応する角が等しいことから二等辺三角形の性質を証明できる。",
@@ -33,7 +32,11 @@ export const isoscelesTriangleProofLesson: MathLesson = {
     title: "練習: 合同の根拠を確認する",
     problem: "上の証明で、AMとAMが等しい理由を答えます。",
     steps: [
-      { prompt: "理由を答えてください。", answers: ["共通な辺", "共通の辺", "AMは共通"], placeholder: "理由" },
+      {
+        prompt: "理由を答えてください。",
+        answers: ["共通な辺", "共通の辺", "AMは共通"],
+        placeholder: "理由",
+      },
     ],
     hint: "二つの三角形が同じ線分AMを使っています。",
   },

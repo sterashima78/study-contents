@@ -5,10 +5,7 @@ export const converseCounterexampleLesson: MathLesson = {
   title: "逆と反例を使う",
   description:
     "命題の仮定と結論を入れ替えた『逆』を考え、逆が正しいかを証明または反例によって確かめます。",
-  goals: [
-    "命題の逆を正しく作れる。",
-    "命題が常に成り立たないことを一つの反例で示せる。",
-  ],
+  goals: ["命題の逆を正しく作れる。", "命題が常に成り立たないことを一つの反例で示せる。"],
   concepts: [
     {
       title: "命題が正しくても逆が正しいとは限らない",
@@ -32,7 +29,11 @@ export const converseCounterexampleLesson: MathLesson = {
     title: "練習: 反例を判断する",
     problem: "『平行四辺形ならば4辺がすべて等しい』という命題を考えます。",
     steps: [
-      { prompt: "この命題は常に成り立ちますか。「成り立つ」か「成り立たない」で答えてください。", answers: ["成り立たない"], placeholder: "成り立つ / 成り立たない" },
+      {
+        prompt: "この命題は常に成り立ちますか。「成り立つ」か「成り立たない」で答えてください。",
+        answers: ["成り立たない"],
+        placeholder: "成り立つ / 成り立たない",
+      },
     ],
     hint: "一般の長方形も平行四辺形ですが、4辺がすべて等しいとは限りません。",
   },

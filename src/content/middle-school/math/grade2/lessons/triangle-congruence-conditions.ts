@@ -32,7 +32,11 @@ export const triangleCongruenceConditionsLesson: MathLesson = {
     title: "練習: 合同条件を答える",
     problem: "二つの三角形で、対応する3組の辺がすべて等しいことが分かっています。",
     steps: [
-      { prompt: "使う合同条件を答えてください。", answers: ["3組の辺", "三辺", "3辺"], placeholder: "合同条件" },
+      {
+        prompt: "使う合同条件を答えてください。",
+        answers: ["3組の辺", "三辺", "3辺"],
+        placeholder: "合同条件",
+      },
     ],
     hint: "等しいと分かっている要素をそのまま合同条件に対応させます。",
   },

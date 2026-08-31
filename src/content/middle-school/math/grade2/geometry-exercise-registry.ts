@@ -90,7 +90,8 @@ const generators: Record<string, Generator> = {
     hint: "AはD、CはFに対応します。",
   }),
   "triangle-congruence-conditions": () => ({
-    prompt: "二つの三角形で、対応する2組の辺とその間の角がそれぞれ等しいときに使う合同条件を答えてください。",
+    prompt:
+      "二つの三角形で、対応する2組の辺とその間の角がそれぞれ等しいときに使う合同条件を答えてください。",
     answers: ["2組の辺とその間の角", "二組の辺とその間の角", "2辺とその間の角"],
     lessonKeys: ["triangle-congruence-conditions"],
     hint: "与えられている2辺にはさまれた角に注目します。",

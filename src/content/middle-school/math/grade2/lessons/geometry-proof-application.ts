@@ -32,8 +32,16 @@ export const geometryProofApplicationLesson: MathLesson = {
     title: "練習: 性質を具体的な長さに使う",
     problem: "平行四辺形PQRSでPQ=42 cmです。",
     steps: [
-      { prompt: "辺RSの長さを答えてください。", answers: ["42", "42cm", "42 cm"], placeholder: "長さ" },
-      { prompt: "使った性質を短く答えてください。", answers: ["対辺は等しい", "平行四辺形の対辺は等しい"], placeholder: "根拠" },
+      {
+        prompt: "辺RSの長さを答えてください。",
+        answers: ["42", "42cm", "42 cm"],
+        placeholder: "長さ",
+      },
+      {
+        prompt: "使った性質を短く答えてください。",
+        answers: ["対辺は等しい", "平行四辺形の対辺は等しい"],
+        placeholder: "根拠",
+      },
     ],
     hint: "PQとRSは平行四辺形の向かい合う辺です。",
   },
