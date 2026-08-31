@@ -1,8 +1,5 @@
 allowBuilds:
   "esbuild@0.28.2": true
-  "onnxruntime-node@1.24.3": false
-  "protobufjs@7.6.6": false
-  "sharp@0.34.5": false
 
 minimumReleaseAgeExclude:
   - astro@7.2.9

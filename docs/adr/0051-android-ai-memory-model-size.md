@@ -1,7 +1,8 @@
 # ADR 0051: Android実機のメモリ制約に合わせてQwen3 0.6Bへ切り替える
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-30
+- Superseded by: ADR 0052
 - Related: ADR 0005, ADR 0047, ADR 0049
 
 ## Context

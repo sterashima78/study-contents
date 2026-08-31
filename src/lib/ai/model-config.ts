@@ -1,3 +1,5 @@
-export const STUDY_AI_MODEL_ID = "onnx-community/Qwen3-0.6B-ONNX";
-export const STUDY_AI_MODEL_REVISION = "da1453100cf3ff33ef56d17983fc7a8648706db6";
-export const STUDY_AI_MODEL_DTYPE = "q4f16" as const;
+export const STUDY_AI_RUNTIME_VERSION = "0.2.84" as const;
+export const STUDY_AI_MODEL_ID = "Qwen3-1.7B-q4f16_1-MLC";
+export const STUDY_AI_CONTEXT_WINDOW_SIZE = 2048;
+export const STUDY_AI_PREFILL_CHUNK_SIZE = 128;
+export const STUDY_AI_SELF_TEST_QUESTION = "1+1は？数字だけで答えてください。";

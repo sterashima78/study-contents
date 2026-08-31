@@ -1,54 +1,15 @@
-import { STUDY_AI_MODEL_DTYPE, STUDY_AI_MODEL_ID, STUDY_AI_MODEL_REVISION } from "./model-config";
+import type { InitProgressReport, MLCEngineInterface } from "@mlc-ai/web-llm";
+import {
+  STUDY_AI_CONTEXT_WINDOW_SIZE,
+  STUDY_AI_MODEL_ID,
+  STUDY_AI_PREFILL_CHUNK_SIZE,
+  STUDY_AI_RUNTIME_VERSION,
+  STUDY_AI_SELF_TEST_QUESTION,
+} from "./model-config";
 
 export { STUDY_AI_MODEL_ID } from "./model-config";
 
-export type StudyAIProgressReport = {
-  progress: number;
-};
-
-type StudyAIMessage = {
-  role: "system" | "user" | "assistant";
-  content: string;
-};
-
-type StudyAIStage = "tokenizer" | "model" | "warmup" | "generation" | "worker" | "unknown";
-
-type StudyAICompletionRequest = {
-  messages: StudyAIMessage[];
-  stream?: boolean;
-  temperature?: number;
-  top_p?: number;
-  max_tokens?: number;
-  enable_thinking?: boolean;
-};
-
-type StudyAICompletionChunk = {
-  choices: Array<{
-    delta: {
-      content?: string;
-    };
-  }>;
-};
-
-type StudyAIEngineInterface = {
-  chat: {
-    completions: {
-      create(request: StudyAICompletionRequest): Promise<AsyncIterable<StudyAICompletionChunk>>;
-    };
-  };
-};
-
-type WorkerResponse = {
-  status: "loading" | "progress" | "ready" | "start" | "update" | "complete" | "error";
-  requestId: number;
-  chunk?: string;
-  error?: string;
-  stage?: StudyAIStage;
-  progress?: number;
-  report?: {
-    progress?: number;
-  };
-};
+export type StudyAIStage = "model-load" | "self-test" | "generation" | "unknown";
 
 type GPUAdapterLike = {
   features?: {
@@ -72,26 +33,28 @@ class StudyAIRuntimeError extends Error {
   }
 }
 
-let worker: Worker | undefined;
-let enginePromise: Promise<StudyAIEngineInterface> | undefined;
-let requestSequence = 0;
-let activeGenerationRequestId: number | undefined;
+let enginePromise: Promise<MLCEngineInterface> | undefined;
+let activeEngine: MLCEngineInterface | undefined;
+let activeWorker: Worker | undefined;
 
 export function supportsStudyAI() {
   return typeof navigator !== "undefined" && "gpu" in navigator && typeof Worker !== "undefined";
 }
 
-export async function buildStudyAIDiagnostics(error: unknown) {
-  const stage = error instanceof StudyAIRuntimeError ? error.stage : "unknown";
+export async function buildStudyAIDiagnostics(
+  error: unknown,
+  fallbackStage: StudyAIStage = "unknown",
+) {
+  const stage = error instanceof StudyAIRuntimeError ? error.stage : fallbackStage;
   const message = sanitizeDiagnosticMessage(error instanceof Error ? error.message : String(error));
   const gpu = await inspectWebGPU();
 
   return [
     `stage: ${stage}`,
-    `runtime: Transformers.js / ONNX Runtime WebGPU`,
+    `runtime: WebLLM ${STUDY_AI_RUNTIME_VERSION}`,
     `model: ${STUDY_AI_MODEL_ID}`,
-    `revision: ${STUDY_AI_MODEL_REVISION}`,
-    `dtype: ${STUDY_AI_MODEL_DTYPE}`,
+    `context-window: ${STUDY_AI_CONTEXT_WINDOW_SIZE}`,
+    `prefill-chunk: ${STUDY_AI_PREFILL_CHUNK_SIZE}`,
     `webgpu: ${gpu.webgpu}`,
     `adapter: ${gpu.adapter}`,
     `shader-f16: ${gpu.shaderF16}`,
@@ -99,184 +62,74 @@ export async function buildStudyAIDiagnostics(error: unknown) {
   ].join("\n");
 }
 
-export async function getStudyAIEngine(
-  onProgress: (report: StudyAIProgressReport) => void,
-): Promise<StudyAIEngineInterface> {
+export async function getStudyAIEngine(onProgress: (report: InitProgressReport) => void) {
+  if (activeEngine) return activeEngine;
   if (!enginePromise) {
-    enginePromise = loadEngine(onProgress);
+    enginePromise = createStudyAIEngine(onProgress);
   }
 
   try {
     return await enginePromise;
   } catch (error) {
     enginePromise = undefined;
-    resetWorker();
+    activeEngine = undefined;
+    activeWorker?.terminate();
+    activeWorker = undefined;
     throw error;
   }
 }
 
 export async function interruptStudyAI() {
-  if (activeGenerationRequestId === undefined) return;
-  getWorker().postMessage({ type: "interrupt" });
+  await activeEngine?.interruptGenerate();
 }
 
-async function loadEngine(
-  onProgress: (report: StudyAIProgressReport) => void,
-): Promise<StudyAIEngineInterface> {
-  const runtimeWorker = getWorker();
-  const requestId = nextRequestId();
-
-  await new Promise<void>((resolve, reject) => {
-    const onMessage = (event: MessageEvent<WorkerResponse>) => {
-      const response = event.data;
-      if (response.requestId !== requestId) return;
-
-      if (response.status === "progress") {
-        onProgress({ progress: normalizeProgress(response.report?.progress) });
-        return;
-      }
-      if (response.status === "ready") {
-        onProgress({ progress: 1 });
-        cleanup();
-        resolve();
-        return;
-      }
-      if (response.status === "error") {
-        cleanup();
-        reject(
-          new StudyAIRuntimeError(
-            response.error ?? "Failed to load the AI model.",
-            response.stage ?? "unknown",
-          ),
-        );
-      }
-    };
-
-    const onError = (event: ErrorEvent) => {
-      cleanup();
-      reject(new StudyAIRuntimeError(event.message || "Study AI worker failed.", "worker"));
-    };
-
-    const cleanup = () => {
-      runtimeWorker.removeEventListener("message", onMessage);
-      runtimeWorker.removeEventListener("error", onError);
-    };
-
-    runtimeWorker.addEventListener("message", onMessage);
-    runtimeWorker.addEventListener("error", onError);
-    runtimeWorker.postMessage({ type: "load", requestId });
-  });
-
-  return {
-    chat: {
-      completions: {
-        create: createCompletion,
-      },
-    },
-  };
-}
-
-async function createCompletion(
-  request: StudyAICompletionRequest,
-): Promise<AsyncIterable<StudyAICompletionChunk>> {
-  if (activeGenerationRequestId !== undefined) {
-    throw new StudyAIRuntimeError("AI generation is already running.", "generation");
-  }
-
-  const runtimeWorker = getWorker();
-  const requestId = nextRequestId();
-  activeGenerationRequestId = requestId;
-  const queue = new AsyncQueue<StudyAICompletionChunk>();
-  let cleanedUp = false;
-
-  const cleanup = () => {
-    if (cleanedUp) return;
-    cleanedUp = true;
-    runtimeWorker.removeEventListener("message", onMessage);
-    runtimeWorker.removeEventListener("error", onError);
-    if (activeGenerationRequestId === requestId) activeGenerationRequestId = undefined;
-  };
-
-  const onMessage = (event: MessageEvent<WorkerResponse>) => {
-    const response = event.data;
-    if (response.requestId !== requestId) return;
-
-    if (response.status === "update") {
-      queue.push({ choices: [{ delta: { content: response.chunk ?? "" } }] });
-      return;
-    }
-    if (response.status === "complete") {
-      queue.close();
-      cleanup();
-      return;
-    }
-    if (response.status === "error") {
-      queue.fail(
-        new StudyAIRuntimeError(
-          response.error ?? "AI generation failed.",
-          response.stage ?? "generation",
-        ),
-      );
-      cleanup();
-    }
-  };
-
-  const onError = (event: ErrorEvent) => {
-    queue.fail(new StudyAIRuntimeError(event.message || "Study AI worker failed.", "worker"));
-    cleanup();
-  };
-
-  runtimeWorker.addEventListener("message", onMessage);
-  runtimeWorker.addEventListener("error", onError);
-  runtimeWorker.postMessage({
-    type: "generate",
-    requestId,
-    data: {
-      messages: request.messages,
-      temperature: request.temperature ?? 0.4,
-      topP: request.top_p ?? 0.9,
-      maxTokens: request.max_tokens ?? 320,
-      enableThinking: false,
-    },
-  });
-
-  return {
-    async *[Symbol.asyncIterator]() {
-      try {
-        for await (const chunk of queue) yield chunk;
-      } finally {
-        if (!cleanedUp) {
-          runtimeWorker.postMessage({ type: "interrupt" });
-          cleanup();
-        }
-      }
-    },
-  };
-}
-
-function getWorker() {
-  worker ??= new Worker(new URL("../../workers/study-ai.worker.ts", import.meta.url), {
+async function createStudyAIEngine(onProgress: (report: InitProgressReport) => void) {
+  const { CreateWebWorkerMLCEngine } = await import("@mlc-ai/web-llm");
+  const worker = new Worker(new URL("../../workers/study-ai.worker.ts", import.meta.url), {
     type: "module",
   });
-  return worker;
+  activeWorker = worker;
+
+  try {
+    const engine = await CreateWebWorkerMLCEngine(
+      worker,
+      STUDY_AI_MODEL_ID,
+      { initProgressCallback: onProgress, logLevel: "WARN" },
+      {
+        context_window_size: STUDY_AI_CONTEXT_WINDOW_SIZE,
+        prefill_chunk_size: STUDY_AI_PREFILL_CHUNK_SIZE,
+      },
+    );
+    await runStudyAISelfTest(engine);
+    activeEngine = engine;
+    return engine;
+  } catch (error) {
+    if (error instanceof StudyAIRuntimeError) throw error;
+    throw new StudyAIRuntimeError(errorMessage(error), "model-load");
+  }
 }
 
-function resetWorker() {
-  worker?.terminate();
-  worker = undefined;
-  activeGenerationRequestId = undefined;
+async function runStudyAISelfTest(engine: MLCEngineInterface) {
+  try {
+    const response = await engine.chat.completions.create({
+      messages: [{ role: "user", content: STUDY_AI_SELF_TEST_QUESTION }],
+      stream: false,
+      temperature: 0.1,
+      top_p: 0.8,
+      max_tokens: 16,
+      enable_thinking: false,
+    });
+    const answer = response.choices[0]?.message?.content?.trim() ?? "";
+    if (!/(^|\D)2(\D|$)/.test(answer)) {
+      throw new Error(`Unexpected self-test response: ${answer.slice(0, 120) || "<empty>"}`);
+    }
+  } catch (error) {
+    throw new StudyAIRuntimeError(errorMessage(error), "self-test");
+  }
 }
 
-function nextRequestId() {
-  requestSequence += 1;
-  return requestSequence;
-}
-
-function normalizeProgress(value: number | undefined) {
-  if (!Number.isFinite(value)) return 0;
-  const finiteValue = value ?? 0;
-  const normalized = finiteValue > 1 ? finiteValue / 100 : finiteValue;
-  return Math.min(Math.max(normalized, 0), 1);
+function errorMessage(error: unknown) {
+  return error instanceof Error ? `${error.name}: ${error.message}` : String(error);
 }
 
 function sanitizeDiagnosticMessage(value: string) {
@@ -319,56 +172,5 @@ async function inspectWebGPU() {
     };
   } catch {
     return { webgpu: "available", adapter: "error", shaderF16: "unknown" };
-  }
-}
-
-class AsyncQueue<T> implements AsyncIterable<T> {
-  private values: T[] = [];
-  private waiters: Array<{
-    resolve: (result: IteratorResult<T>) => void;
-    reject: (error: unknown) => void;
-  }> = [];
-  private closed = false;
-  private failure: unknown;
-
-  push(value: T) {
-    if (this.closed || this.failure !== undefined) return;
-    const waiter = this.waiters.shift();
-    if (waiter) waiter.resolve({ value, done: false });
-    else this.values.push(value);
-  }
-
-  close() {
-    if (this.closed || this.failure !== undefined) return;
-    this.closed = true;
-    for (const waiter of this.waiters.splice(0)) {
-      waiter.resolve({ value: undefined, done: true });
-    }
-  }
-
-  fail(error: unknown) {
-    if (this.closed || this.failure !== undefined) return;
-    this.failure = error;
-    for (const waiter of this.waiters.splice(0)) waiter.reject(error);
-  }
-
-  async *[Symbol.asyncIterator]() {
-    while (true) {
-      const result = await this.next();
-      if (result.done) return;
-      yield result.value;
-    }
-  }
-
-  private next(): Promise<IteratorResult<T>> {
-    if (this.values.length > 0) {
-      return Promise.resolve({ value: this.values.shift() as T, done: false });
-    }
-    if (this.failure !== undefined) return Promise.reject(this.failure);
-    if (this.closed) return Promise.resolve({ value: undefined, done: true });
-
-    return new Promise((resolve, reject) => {
-      this.waiters.push({ resolve, reject });
-    });
   }
 }
