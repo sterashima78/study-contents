@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const squareRootApproximationLesson: MathLesson = {
   key: "square-root-approximation",
   title: "平方根の近似値を捉える",
-  description: "平方して前後の値と比べることで、√2などの平方根がどの範囲にあるかを段階的に絞ります。",
+  description:
+    "平方して前後の値と比べることで、√2などの平方根がどの範囲にあるかを段階的に絞ります。",
   goals: [
     "平方根を整数や小数の間に位置付けられる。",
     "2乗した値を比較して平方根の近似値を絞り込める。",

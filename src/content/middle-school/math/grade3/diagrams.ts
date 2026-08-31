@@ -19,8 +19,7 @@ function squareRootMeaningScene(): DiagramScene {
   return {
     width: 500,
     height: 330,
-    ariaLabel:
-      "1辺が1の正方形とその対角線を示し、対角線の2乗が2なので長さを√2と表すことを示す図。",
+    ariaLabel: "1辺が1の正方形とその対角線を示し、対角線の2乗が2なので長さを√2と表すことを示す図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       {
@@ -42,8 +41,7 @@ function approximationScene(): DiagramScene {
   return {
     width: 500,
     height: 300,
-    ariaLabel:
-      "数直線上で1.4と1.5の間に√2を置き、1.4²は2より小さく1.5²は2より大きいことを示す図。",
+    ariaLabel: "数直線上で1.4と1.5の間に√2を置き、1.4²は2より小さく1.5²は2より大きいことを示す図。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       { kind: "segment", from: point(65, 170), to: point(440, 170), color: BASE },
@@ -55,8 +53,8 @@ function approximationScene(): DiagramScene {
       })),
       label(point(x(1.4), 205), "1.4", BASE),
       label(point(x(1.5), 205), "1.5", BASE),
-      { kind: "point", x: x(1.414), y: 170, radius: 7, color: ORANGE },
-      label(point(x(1.414), 135), "√2", ORANGE),
+      { kind: "point", x: x(Math.SQRT2), y: 170, radius: 7, color: ORANGE },
+      label(point(x(Math.SQRT2), 135), "√2", ORANGE),
       label(point(250, 65), "1.4² < 2 < 1.5²", PURPLE),
     ],
   };
@@ -108,7 +106,10 @@ const diagrams: Record<string, MathLessonDiagrams> = {
   "square-root-meaning": { rule: squareRootMeaningScene(), example: squareRootMeaningScene() },
   "rational-irrational": { rule: squareRootMeaningScene() },
   "square-root-approximation": { rule: approximationScene(), example: approximationScene() },
-  "error-approximation-scientific-notation": { rule: errorRangeScene(), example: errorRangeScene() },
+  "error-approximation-scientific-notation": {
+    rule: errorRangeScene(),
+    example: errorRangeScene(),
+  },
   "square-root-application": { rule: applicationScene(), example: applicationScene() },
 };
 

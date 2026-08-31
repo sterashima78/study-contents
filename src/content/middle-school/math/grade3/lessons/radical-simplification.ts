@@ -4,10 +4,7 @@ export const radicalSimplificationLesson: MathLesson = {
   key: "radical-simplification",
   title: "根号の中を簡単にする",
   description: "平方数を因数として取り出し、√12=2√3のように平方根を扱いやすい形へ直します。",
-  goals: [
-    "根号の中から平方数の因数を見付けられる。",
-    "√(m²n)=m√nを使って平方根を簡単にできる。",
-  ],
+  goals: ["根号の中から平方数の因数を見付けられる。", "√(m²n)=m√nを使って平方根を簡単にできる。"],
   concepts: [
     {
       title: "平方数を根号の外へ出す",

@@ -61,9 +61,7 @@ const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
 const _middleMathCourseKey =
-  _course.key === "middle-math1" ||
-  _course.key === "middle-math2" ||
-  _course.key === "middle-math3"
+  _course.key === "middle-math1" || _course.key === "middle-math2" || _course.key === "middle-math3"
     ? _course.key
     : undefined;
 const _practiceSteps = designPracticeSteps(

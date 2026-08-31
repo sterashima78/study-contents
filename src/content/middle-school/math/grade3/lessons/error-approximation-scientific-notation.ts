@@ -30,8 +30,16 @@ export const errorApproximationScientificNotationLesson: MathLesson = {
     title: "練習: 近似値と指数表現",
     problem: "測定値と数の表し方を確認します。",
     steps: [
-      { prompt: "0.1の位まで測った5.6の真の値の下限を答えてください。", answers: ["5.55"], placeholder: "下限" },
-      { prompt: "4500を百の位まで有効としてa×10^nの形で表してください。", answers: ["4.5×10^3", "4.5x10^3", "4.5*10^3"], placeholder: "a×10^n" },
+      {
+        prompt: "0.1の位まで測った5.6の真の値の下限を答えてください。",
+        answers: ["5.55"],
+        placeholder: "下限",
+      },
+      {
+        prompt: "4500を百の位まで有効としてa×10^nの形で表してください。",
+        answers: ["4.5×10^3", "4.5x10^3", "4.5*10^3"],
+        placeholder: "a×10^n",
+      },
     ],
     hint: "0.1の半分は0.05です。4500は4.5×1000です。",
   },

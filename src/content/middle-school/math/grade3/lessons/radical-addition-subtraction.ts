@@ -4,10 +4,7 @@ export const radicalAdditionSubtractionLesson: MathLesson = {
   key: "radical-addition-subtraction",
   title: "平方根を足す・引く",
   description: "根号の中を簡単にした上で、同じ√aを含む項を同類項のようにまとめます。",
-  goals: [
-    "同じ根号をもつ項を係数でまとめられる。",
-    "根号の中を簡単にしてから加法・減法を行える。",
-  ],
+  goals: ["同じ根号をもつ項を係数でまとめられる。", "根号の中を簡単にしてから加法・減法を行える。"],
   concepts: [
     {
       title: "同じ根号だけをまとめる",
