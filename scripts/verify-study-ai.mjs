@@ -14,8 +14,8 @@ const [packageJson, studyPage, chat, context, engine, modelConfig, worker, promp
     readText("src/lib/ai/system-prompt.ts"),
   ]);
 
-if (packageJson.dependencies?.["@mlc-ai/web-llm"] !== "0.2.84") {
-  issues.push("package.json: @mlc-ai/web-llm は最新の検証対象 0.2.84 に固定してください。");
+if (packageJson.dependencies?.["@mlc-ai/web-llm"] !== "0.2.82") {
+  issues.push("package.json: Android互換性A/Bテストでは @mlc-ai/web-llm 0.2.82 を完全固定してください。");
 }
 if (packageJson.dependencies?.["@huggingface/transformers"]) {
   issues.push(
@@ -51,6 +51,9 @@ if (!context.includes("MAX_RELEVANT_SECTIONS = 2")) {
   issues.push(
     "study-context.ts: Android向けに教材コンテキストを少数セクションへ制限してください。",
   );
+}
+if (!modelConfig.includes('STUDY_AI_RUNTIME_VERSION = "0.2.82"')) {
+  issues.push("model-config.ts: WebLLM runtime versionを0.2.82へ固定してください。");
 }
 if (!modelConfig.includes('"Qwen3-1.7B-q4f16_1-MLC"')) {
   issues.push("model-config.ts: WebLLMで実機ロード済みのQwen3 1.7Bモデルを固定してください。");
