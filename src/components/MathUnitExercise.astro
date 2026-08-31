@@ -38,6 +38,8 @@ const _socialCourseKey =
   _course.key === "japanese-history" || _course.key === "world-history" || _course.key === "ethics"
     ? _course.key
     : undefined;
+const _middleMathCourseKey =
+  _course.key === "middle-math1" || _course.key === "middle-math2" ? _course.key : undefined;
 ---
 
 <StudyPage
@@ -68,9 +70,10 @@ const _socialCourseKey =
         areaKey={_area.key}
         unitKey={_unit.key}
       />
-    ) : _course.key === "middle-math1" ? (
+    ) : _middleMathCourseKey ? (
       <MiddleMathExerciseSet
         mode="unit"
+        courseKey={_middleMathCourseKey}
         routeBase={_course.routeBase}
         areaKey={_area.key}
         unitKey={_unit.key}

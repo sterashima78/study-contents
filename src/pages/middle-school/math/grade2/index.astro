@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleMath2Course } from "../../../../content/math-courses";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleMath2Areas } from "../../../../content/middle-school/math/grade2/catalog";
+---
+
+<CourseHome
+  course={middleMath2Course}
+  areas={middleMath2Areas}
+  description="中学2年の数学を、中学1年の既習事項と結び付けながら1ページ1技能で学びます。まず「式の計算と文字式の活用」から公開します。"
+  metaDescription="中学2年数学の学習コンテンツ。現行の中学校学習指導要領を基準に、整式の計算と文字式の活用から1ページ1技能で学びます。"
+  footerDescription="現行の中学校学習指導要領を基準に、連立方程式、一次関数、図形、データへ段階的に教材を追加します。"
+/>
