@@ -23,10 +23,12 @@ function parabolaScene(a = 1): DiagramScene {
     yMin: -10,
     yMax: 18,
   });
-  const plot = sampleFunctionPlot(transform, (x) => a * x * x, {
+  const plot = sampleFunctionPlot({
+    transform,
+    fn: (x) => a * x * x,
     xMin: -4,
     xMax: 4,
-    samples: 100,
+    sampleCount: 100,
     color: a > 0 ? BLUE : ORANGE,
     expression: `y=${a}x²`,
   });
@@ -71,17 +73,21 @@ function compareParabolasScene(): DiagramScene {
     responsive: { minWidth: 460, allowHorizontalScroll: true },
     elements: [
       createCartesianAxes(transform, { color: AXIS, grid: true, gridStep: 1 }),
-      sampleFunctionPlot(transform, (x) => x * x, {
+      sampleFunctionPlot({
+        transform,
+        fn: (x) => x * x,
         xMin: -3,
         xMax: 3,
-        samples: 90,
+        sampleCount: 90,
         color: BLUE,
         expression: "y=x²",
       }),
-      sampleFunctionPlot(transform, (x) => 3 * x * x, {
+      sampleFunctionPlot({
+        transform,
+        fn: (x) => 3 * x * x,
         xMin: -3,
         xMax: 3,
-        samples: 90,
+        sampleCount: 90,
         color: ORANGE,
         expression: "y=3x²",
       }),
