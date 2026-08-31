@@ -14,11 +14,11 @@ const [packageJson, studyPage, chat, context, engine, modelConfig, worker, promp
     readText("src/lib/ai/system-prompt.ts"),
   ]);
 
-if (packageJson.dependencies?.["@huggingface/transformers"] !== "4.2.0") {
-  issues.push("package.json: @huggingface/transformers は検証済みの 4.2.0 に固定してください。");
+if (packageJson.dependencies?.["@mlc-ai/web-llm"] !== "0.2.84") {
+  issues.push("package.json: @mlc-ai/web-llm は最新の検証対象 0.2.84 に固定してください。");
 }
-if (packageJson.dependencies?.["@mlc-ai/web-llm"]) {
-  issues.push("package.json: 置換済みの @mlc-ai/web-llm を依存に残さないでください。");
+if (packageJson.dependencies?.["@huggingface/transformers"]) {
+  issues.push("package.json: Androidでメモリ問題が確認されたTransformers.jsを依存に残さないでください。");
 }
 if (!studyPage.includes("<StudyAIChat />")) {
   issues.push("StudyPage.astro: 共通AIチャットを配置してください。");
@@ -45,40 +45,35 @@ for (const requiredExclusion of ['"script"', '"template"', '"[data-study-ai-excl
     issues.push(`study-context.ts: ${requiredExclusion} を教材コンテキストから除外してください。`);
   }
 }
-if (!modelConfig.includes('"onnx-community/Qwen3-0.6B-ONNX"')) {
-  issues.push("model-config.ts: Android検証対象のQwen3 0.6B ONNXモデルを固定してください。");
+if (!context.includes("MAX_RELEVANT_SECTIONS = 2")) {
+  issues.push("study-context.ts: Android向けに教材コンテキストを少数セクションへ制限してください。");
 }
-if (!/STUDY_AI_MODEL_REVISION\s*=\s*"[0-9a-f]{40}"/.test(modelConfig)) {
-  issues.push("model-config.ts: Hugging Faceモデルを40桁のcommit idで固定してください。");
+if (!modelConfig.includes('"Qwen3-1.7B-q4f16_1-MLC"')) {
+  issues.push("model-config.ts: WebLLMで実機ロード済みのQwen3 1.7Bモデルを固定してください。");
 }
-if (!modelConfig.includes('STUDY_AI_MODEL_DTYPE = "q4f16"')) {
-  issues.push("model-config.ts: Android検証対象のq4f16量子化を固定してください。");
+if (!modelConfig.includes("STUDY_AI_CONTEXT_WINDOW_SIZE = 2048")) {
+  issues.push("model-config.ts: Android向けcontext windowを2048に固定してください。");
 }
-if (!engine.includes("new Worker")) {
-  issues.push("browser-engine.ts: 推論はWeb Workerで実行してください。");
+if (!modelConfig.includes("STUDY_AI_PREFILL_CHUNK_SIZE = 128")) {
+  issues.push("model-config.ts: Android向けprefill chunkを128に固定してください。");
 }
-if (!engine.includes("buildStudyAIDiagnostics")) {
-  issues.push("browser-engine.ts: 安全な実行診断情報を生成してください。");
-}
-if (!engine.includes('"shader-f16"')) {
-  issues.push("browser-engine.ts: WebGPUのshader-f16可否を診断してください。");
+for (const requiredEngineCode of [
+  "CreateWebWorkerMLCEngine",
+  "STUDY_AI_CONTEXT_WINDOW_SIZE",
+  "STUDY_AI_PREFILL_CHUNK_SIZE",
+  "runStudyAISelfTest",
+  '"self-test"',
+  '"shader-f16"',
+]) {
+  if (!engine.includes(requiredEngineCode)) {
+    issues.push(`browser-engine.ts: ${requiredEngineCode} を維持してください。`);
+  }
 }
 if (engine.includes("navigator.userAgent")) {
   issues.push("browser-engine.ts: 診断情報に完全なUser-Agentを含めないでください。");
 }
-for (const requiredWorkerCode of [
-  "AutoModelForCausalLM",
-  'device: "webgpu"',
-  "STUDY_AI_MODEL_REVISION",
-  "enable_thinking: false",
-  '"tokenizer"',
-  '"model"',
-  '"warmup"',
-  '"generation"',
-]) {
-  if (!worker.includes(requiredWorkerCode)) {
-    issues.push(`study-ai.worker.ts: ${requiredWorkerCode} を維持してください。`);
-  }
+if (!worker.includes("WebWorkerMLCEngineHandler")) {
+  issues.push("study-ai.worker.ts: WebLLM推論を専用Web Workerで実行してください。");
 }
 if (!prompt.includes("<study_context>")) {
   issues.push("system-prompt.ts: 教材コンテキストの信頼境界を明示してください。");
