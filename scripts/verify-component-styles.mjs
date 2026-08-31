@@ -99,6 +99,48 @@ for (const componentPath of requiredScopedComponents) {
   }
 }
 
+const staticMathSource = await readFile(
+  new URL("../src/components/ui/StaticMath.astro", import.meta.url),
+  "utf8",
+);
+if (
+  !staticMathSource.includes("min-width: 0;") ||
+  !staticMathSource.includes("overflow-x: auto;") ||
+  !staticMathSource.includes("white-space: nowrap;")
+) {
+  issues.push(
+    "src/components/ui/StaticMath.astro: ブロック数式は幅を縮められ、長い場合に横スクロールできる必要があります。",
+  );
+}
+
+const conceptCardSource = await readFile(
+  new URL("../src/components/ui/ConceptCard.astro", import.meta.url),
+  "utf8",
+);
+if (
+  !conceptCardSource.includes(".formula-plain") ||
+  !conceptCardSource.includes("overflow-x: auto;")
+) {
+  issues.push(
+    "src/components/ui/ConceptCard.astro: プレーンテキスト数式は長い場合に横スクロールできる必要があります。",
+  );
+}
+
+const workedExampleSource = await readFile(
+  new URL("../src/components/ui/WorkedExample.astro", import.meta.url),
+  "utf8",
+);
+if (
+  !workedExampleSource.includes(".expression") ||
+  !workedExampleSource.includes("min-width: 0;") ||
+  !workedExampleSource.includes("overflow-x: auto;") ||
+  !workedExampleSource.includes("white-space: nowrap;")
+) {
+  issues.push(
+    "src/components/ui/WorkedExample.astro: 例題の数式はレイアウトを突き抜けず横スクロールできる必要があります。",
+  );
+}
+
 if (issues.length > 0) {
   console.error("Component style verification failed:");
   for (const issue of issues) console.error(`- ${issue}`);

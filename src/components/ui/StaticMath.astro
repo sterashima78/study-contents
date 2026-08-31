@@ -37,9 +37,12 @@ const _accessibleLabel = _ariaLabel ?? toPortableMathText(_value);
 
   .static-math.is-block {
     display: block;
+    width: 100%;
+    min-width: 0;
     max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
     padding: 0.1rem 0;
+    white-space: nowrap;
   }
 </style>
