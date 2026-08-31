@@ -24,8 +24,7 @@ export const cumulativeFrequencyLesson: MathLesson = {
   ],
   example: {
     title: "例題: 30分未満の人数を求める",
-    problem:
-      "待ち時間の度数が、0〜10分で3人、10〜20分で4人、20〜30分で6人、30〜40分で7人です。",
+    problem: "待ち時間の度数が、0〜10分で3人、10〜20分で4人、20〜30分で6人、30〜40分で7人です。",
     steps: [
       {
         expression: "10分未満: 3",
@@ -43,8 +42,7 @@ export const cumulativeFrequencyLesson: MathLesson = {
   },
   practice: {
     title: "練習: 累積度数を求める",
-    problem:
-      "度数が順に2, 5, 7, 6で、総度数は20です。小さい階級から順に並んでいます。",
+    problem: "度数が順に2, 5, 7, 6で、総度数は20です。小さい階級から順に並んでいます。",
     steps: [
       {
         prompt: "3番目の階級までの累積度数を求めてください。",
