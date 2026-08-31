@@ -104,9 +104,21 @@ const _isUnit = _mode === "unit";
     generateMiddleMath2FunctionUnitExercises,
   } from "../content/middle-school/math/grade2/linear-function-exercise-registry";
   import {
+    generateMiddleMath3DataLessonExercises,
+    generateMiddleMath3DataUnitExercises,
+  } from "../content/middle-school/math/grade3/data-exercise-registry";
+  import {
     generateMiddleMath3LessonExercises,
     generateMiddleMath3UnitExercises,
   } from "../content/middle-school/math/grade3/exercise-registry";
+  import {
+    generateMiddleMath3FunctionLessonExercises,
+    generateMiddleMath3FunctionUnitExercises,
+  } from "../content/middle-school/math/grade3/function-exercise-registry";
+  import {
+    generateMiddleMath3GeometryLessonExercises,
+    generateMiddleMath3GeometryUnitExercises,
+  } from "../content/middle-school/math/grade3/geometry-exercise-registry";
 
   const difficultyLabel: Record<MiddleMathExercise["difficulty"], string> = {
     basic: "基礎",
@@ -170,6 +182,27 @@ const _isUnit = _mode === "unit";
 
     const makeExercises = () => {
       if (courseKey === "middle-math3") {
+        if (areaKey === "geometry") {
+          return mode === "unit"
+            ? generateMiddleMath3GeometryUnitExercises(unitKey)
+            : lessonKey
+              ? generateMiddleMath3GeometryLessonExercises(lessonKey)
+              : [];
+        }
+        if (areaKey === "functions") {
+          return mode === "unit"
+            ? generateMiddleMath3FunctionUnitExercises(unitKey)
+            : lessonKey
+              ? generateMiddleMath3FunctionLessonExercises(lessonKey)
+              : [];
+        }
+        if (areaKey === "data") {
+          return mode === "unit"
+            ? generateMiddleMath3DataUnitExercises(unitKey)
+            : lessonKey
+              ? generateMiddleMath3DataLessonExercises(lessonKey)
+              : [];
+        }
         return mode === "unit"
           ? generateMiddleMath3UnitExercises(unitKey)
           : lessonKey

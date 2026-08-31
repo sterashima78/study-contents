@@ -148,7 +148,7 @@ export const curriculumReferences = Object.freeze({
     commentaryTitle: "中学校学習指導要領（平成29年告示）解説 数学編",
     commentaryUrl: MIDDLE_MATH_COMMENTARY_URL,
     routeBase: "middle-school/math/grade3",
-    note: "第3学年は「A 数と式」の平方根、簡単な多項式、二次方程式を公開し、平方根・展開と因数分解・二次方程式の解法と具体的な活用まで1ページ1技能で構成しています。",
+    note: "第3学年の「A 数と式」「B 図形」「C 関数」「D データの活用」を、平方根・展開と因数分解・二次方程式、相似・円周角・三平方の定理、関数 y=ax²、標本調査まで1ページ1技能で構成しています。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
