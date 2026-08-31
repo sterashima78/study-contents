@@ -20,7 +20,8 @@
     "check:entrance-content": "node scripts/verify-entrance-content.mjs",
     "check:diagrams": "node scripts/verify-diagrams.mjs",
     "check:component-styles": "node scripts/verify-component-styles.mjs",
-    "check:study-ai": "node scripts/verify-study-ai.mjs"
+    "check:study-ai": "node scripts/verify-study-ai.mjs",
+    "check:middle-math-build": "node scripts/verify-middle-school-math-build-output.mjs"
   },
   "dependencies": {
     "@mlc-ai/web-llm": "0.2.82",
