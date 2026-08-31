@@ -31,8 +31,16 @@ export const squareRootApplicationLesson: MathLesson = {
     title: "練習: 面積から長さを求める",
     problem: "面積32cm²の正方形について考えます。",
     steps: [
-      { prompt: "1辺の長さを根号を使って簡単に表してください。", answers: ["4√2", "4√2cm", "4√2cm²"], placeholder: "長さ" },
-      { prompt: "1辺の長さは正と負のどちらの平方根を使いますか。", answers: ["正", "正の平方根", "正の方"], placeholder: "正 / 負" },
+      {
+        prompt: "1辺の長さを根号を使って簡単に表してください。",
+        answers: ["4√2", "4√2cm"],
+        placeholder: "長さ",
+      },
+      {
+        prompt: "1辺の長さは正と負のどちらの平方根を使いますか。",
+        answers: ["正", "正の平方根", "正の方"],
+        placeholder: "正 / 負",
+      },
     ],
     hint: "長さは負にならないので正の平方根を使います。",
   },
