@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const linearEquationTwoVariablesLesson: MathLesson = {
   key: "linear-equation-two-variables",
   title: "二元一次方程式の解を捉える",
-  description: "二つの文字を含む一次方程式について、方程式を成り立たせる値の組が解であることを理解します。",
+  description:
+    "二つの文字を含む一次方程式について、方程式を成り立たせる値の組が解であることを理解します。",
   goals: [
     "二元一次方程式を成り立たせるx、yの値の組を確かめられる。",
     "一元一次方程式と違い、二元一次方程式には複数の解があり得ることを説明できる。",
@@ -30,7 +31,11 @@ export const linearEquationTwoVariablesLesson: MathLesson = {
     title: "練習: 値の組を確かめる",
     problem: "3x + y = 11 で、x = 2 のときの y を求めてください。",
     steps: [
-      { prompt: "x = 2 を代入した式の左辺の数の部分を答えてください。", answers: ["6"], placeholder: "3×2" },
+      {
+        prompt: "x = 2 を代入した式の左辺の数の部分を答えてください。",
+        answers: ["6"],
+        placeholder: "3×2",
+      },
       { prompt: "y の値を答えてください。", answers: ["5"], placeholder: "y" },
     ],
     hint: "3×2+y=11 として、一元一次方程式と同じように解きます。",

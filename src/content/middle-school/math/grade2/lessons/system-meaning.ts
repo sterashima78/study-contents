@@ -30,7 +30,11 @@ export const systemMeaningLesson: MathLesson = {
     title: "練習: 連立方程式の解を確かめる",
     problem: "x + y = 7、2x + y = 11 を同時に満たす x、y を求めてください。",
     steps: [
-      { prompt: "二つ目の左辺から一つ目の左辺を引くと、xはいくつですか。", answers: ["4"], placeholder: "x" },
+      {
+        prompt: "二つ目の左辺から一つ目の左辺を引くと、xはいくつですか。",
+        answers: ["4"],
+        placeholder: "x",
+      },
       { prompt: "y の値を答えてください。", answers: ["3"], placeholder: "y" },
     ],
     hint: "二つの式の差を考えると、yが消えます。",

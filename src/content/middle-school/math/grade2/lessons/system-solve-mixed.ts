@@ -30,8 +30,16 @@ export const systemSolveMixedLesson: MathLesson = {
     title: "練習: 解法を選ぶ",
     problem: "x + 2y = 8、3x − 2y = 8 を解いてください。",
     steps: [
-      { prompt: "二つの式を加えたときの 4x の値を答えてください。", answers: ["16"], placeholder: "4x" },
-      { prompt: "x、y の値を x,y の順に答えてください。", answers: ["4,2", "(4,2)", "x=4,y=2"], placeholder: "x,y" },
+      {
+        prompt: "二つの式を加えたときの 4x の値を答えてください。",
+        answers: ["16"],
+        placeholder: "4x",
+      },
+      {
+        prompt: "x、y の値を x,y の順に答えてください。",
+        answers: ["4,2", "(4,2)", "x=4,y=2"],
+        placeholder: "x,y",
+      },
     ],
     hint: "yの係数が2と−2なので、そのまま加減法を使えます。",
   },

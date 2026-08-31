@@ -20,7 +20,8 @@ export const middleMath2Areas: MathArea[] = [
   {
     key: "numbers-expressions",
     title: "数と式",
-    description: "中学1年の文字式と一元一次方程式を土台に、整式の計算、文字式の活用、連立二元一次方程式へ進みます。",
+    description:
+      "中学1年の文字式と一元一次方程式を土台に、整式の計算、文字式の活用、連立二元一次方程式へ進みます。",
     units: [
       {
         key: "expressions-calculation",

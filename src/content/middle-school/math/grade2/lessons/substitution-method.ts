@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const substitutionMethodLesson: MathLesson = {
   key: "substitution-method",
   title: "代入法で文字を消去する",
-  description: "一方の式で一つの文字を別の文字の式として表し、それをもう一方の式に代入して解きます。",
+  description:
+    "一方の式で一つの文字を別の文字の式として表し、それをもう一方の式に代入して解きます。",
   goals: [
     "x=... や y=... の形の式を別の方程式へ代入できる。",
     "代入によって二元一次方程式を一元一次方程式に変えられる。",
@@ -30,8 +31,16 @@ export const substitutionMethodLesson: MathLesson = {
     title: "練習: 代入して解く",
     problem: "y = x + 2、2x + y = 11 を解いてください。",
     steps: [
-      { prompt: "yを代入した後の式を答えてください。", answers: ["2x+(x+2)=11", "2x+x+2=11"], placeholder: "xだけの式" },
-      { prompt: "x、y の値を x,y の順に答えてください。", answers: ["3,5", "(3,5)", "x=3,y=5"], placeholder: "x,y" },
+      {
+        prompt: "yを代入した後の式を答えてください。",
+        answers: ["2x+(x+2)=11", "2x+x+2=11"],
+        placeholder: "xだけの式",
+      },
+      {
+        prompt: "x、y の値を x,y の順に答えてください。",
+        answers: ["3,5", "(3,5)", "x=3,y=5"],
+        placeholder: "x,y",
+      },
     ],
     hint: "yの代わりにx+2を入れます。",
   },

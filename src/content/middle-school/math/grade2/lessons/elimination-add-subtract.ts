@@ -21,7 +21,10 @@ export const eliminationAddSubtractLesson: MathLesson = {
     title: "例題: x + y = 7、x − y = 1",
     problem: "x + y = 7、x − y = 1 を加減法で解きます。",
     steps: [
-      { expression: "(x + y) + (x − y) = 7 + 1", note: "yの係数が1と−1なので、二つの式を加えます。" },
+      {
+        expression: "(x + y) + (x − y) = 7 + 1",
+        note: "yの係数が1と−1なので、二つの式を加えます。",
+      },
       { expression: "2x = 8", note: "yが消去されました。" },
       { expression: "x = 4, y = 3", note: "x = 4 を x + y = 7 に代入します。" },
     ],
@@ -30,8 +33,16 @@ export const eliminationAddSubtractLesson: MathLesson = {
     title: "練習: 加えて消去する",
     problem: "x + y = 9、x − y = 3 を解いてください。",
     steps: [
-      { prompt: "二つの式を加えたときの 2x の値を答えてください。", answers: ["12"], placeholder: "2x" },
-      { prompt: "x、y の値を x,y の順に答えてください。", answers: ["6,3", "(6,3)", "x=6,y=3"], placeholder: "x,y" },
+      {
+        prompt: "二つの式を加えたときの 2x の値を答えてください。",
+        answers: ["12"],
+        placeholder: "2x",
+      },
+      {
+        prompt: "x、y の値を x,y の順に答えてください。",
+        answers: ["6,3", "(6,3)", "x=6,y=3"],
+        placeholder: "x,y",
+      },
     ],
     hint: "二つの式を加えるとyが消えます。",
   },

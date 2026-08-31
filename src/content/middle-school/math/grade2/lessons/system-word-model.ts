@@ -19,7 +19,8 @@ export const systemWordModelLesson: MathLesson = {
   ],
   example: {
     title: "例題: 大人と子どもの人数を式にする",
-    problem: "大人700円、子ども400円の入場券を合計10枚買い、代金は5200円でした。大人をx人、子どもをy人とします。",
+    problem:
+      "大人700円、子ども400円の入場券を合計10枚買い、代金は5200円でした。大人をx人、子どもをy人とします。",
     steps: [
       { expression: "x + y = 10", note: "人数の合計を表します。" },
       { expression: "700x + 400y = 5200", note: "代金の合計を表します。" },
@@ -30,8 +31,16 @@ export const systemWordModelLesson: MathLesson = {
     title: "練習: 二つの条件を式にする",
     problem: "120円の品をx個、80円の品をy個買い、合計12個、代金は1200円でした。",
     steps: [
-      { prompt: "個数の関係を方程式で表してください。", answers: ["x+y=12", "y+x=12"], placeholder: "個数の式" },
-      { prompt: "代金の関係を方程式で表してください。", answers: ["120x+80y=1200", "80y+120x=1200"], placeholder: "代金の式" },
+      {
+        prompt: "個数の関係を方程式で表してください。",
+        answers: ["x+y=12", "y+x=12"],
+        placeholder: "個数の式",
+      },
+      {
+        prompt: "代金の関係を方程式で表してください。",
+        answers: ["120x+80y=1200", "80y+120x=1200"],
+        placeholder: "代金の式",
+      },
     ],
     hint: "個数どうし、代金どうしでそれぞれ合計を作ります。",
   },

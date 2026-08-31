@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const systemWordApplicationLesson: MathLesson = {
   key: "system-word-application",
   title: "連立方程式を具体的な問題に活用する",
-  description: "具体的な場面を連立方程式で表して解き、得られた解を問題の数量として解釈し、妥当性を確かめます。",
+  description:
+    "具体的な場面を連立方程式で表して解き、得られた解を問題の数量として解釈し、妥当性を確かめます。",
   goals: [
     "問題の数量関係を連立方程式に表し、解を求められる。",
     "得られた解を元の場面に戻して意味付けし、条件を満たすか確認できる。",
@@ -19,7 +20,8 @@ export const systemWordApplicationLesson: MathLesson = {
   ],
   example: {
     title: "例題: 2種類の品物の個数を求める",
-    problem: "120円の品と80円の品を合計12個買い、代金は1200円でした。120円の品をx個、80円の品をy個とします。",
+    problem:
+      "120円の品と80円の品を合計12個買い、代金は1200円でした。120円の品をx個、80円の品をy個とします。",
     steps: [
       { expression: "x + y = 12, 120x + 80y = 1200", note: "個数と代金の二つの条件を式にします。" },
       { expression: "x + y = 12, 3x + 2y = 30", note: "二つ目の式を40で割って簡単にします。" },
@@ -30,8 +32,16 @@ export const systemWordApplicationLesson: MathLesson = {
     title: "練習: 解を場面に戻す",
     problem: "大人700円、子ども400円の入場券を合計10枚買い、代金は5200円でした。",
     steps: [
-      { prompt: "大人をx人、子どもをy人としたとき、大人の人数xを答えてください。", answers: ["4", "4人"], placeholder: "大人の人数" },
-      { prompt: "子どもの人数yを答えてください。", answers: ["6", "6人"], placeholder: "子どもの人数" },
+      {
+        prompt: "大人をx人、子どもをy人としたとき、大人の人数xを答えてください。",
+        answers: ["4", "4人"],
+        placeholder: "大人の人数",
+      },
+      {
+        prompt: "子どもの人数yを答えてください。",
+        answers: ["6", "6人"],
+        placeholder: "子どもの人数",
+      },
     ],
     hint: "x+y=10、700x+400y=5200 を解きます。",
   },
