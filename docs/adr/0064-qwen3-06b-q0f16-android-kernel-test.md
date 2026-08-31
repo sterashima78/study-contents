@@ -1,6 +1,6 @@
 # ADR 0064: Android実機の生成破綻を切り分けるためQwen3 0.6B q0f16を検証する
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-31
 - Related: ADR 0005, ADR 0042, ADR 0049, ADR 0052, ADR 0055, ADR 0056
 
