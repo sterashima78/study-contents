@@ -1,7 +1,4 @@
-import type {
-  MiddleMathExercise,
-  MiddleMathExerciseDifficulty,
-} from "../grade1/exercise-registry";
+import type { MiddleMathExercise, MiddleMathExerciseDifficulty } from "../grade1/exercise-registry";
 
 type Generator = () => Omit<MiddleMathExercise, "id" | "lessonTitles" | "difficulty">;
 
@@ -114,7 +111,8 @@ const generators: Record<string, Generator> = {
     const gap = randomInt(1, 2);
     const numeratorExponent = n + gap;
     return {
-      prompt: `${monomial(divisor * quotient, numeratorExponent)} ÷ ${monomial(divisor, n)} を計算してください。`,
+      prompt:
+        `${monomial(divisor * quotient, numeratorExponent)} ÷ ${monomial(divisor, n)} を計算してください。`,
       answers: [`${quotient}${power(gap)}`],
       lessonKeys: ["monomial-division"],
       hint: "係数は割り、同じ文字の指数は引きます。",

@@ -27,10 +27,21 @@ export const polynomialSubtractionLesson: MathLesson = {
     title: "練習: 多項式の減法",
     problem: "(7a + b) − (2a − 3b)",
     steps: [
-      { prompt: "かっこを外した式を書いてください。", answers: ["7a+b-2a+3b"], placeholder: "符号に注意" },
-      { prompt: "計算結果を答えてください。", answers: ["5a+4b", "4b+5a"], placeholder: "最終結果" },
+      {
+        prompt: "かっこを外した式を書いてください。",
+        answers: ["7a+b-2a+3b"],
+        placeholder: "符号に注意",
+      },
+      {
+        prompt: "計算結果を答えてください。",
+        answers: ["5a+4b", "4b+5a"],
+        placeholder: "最終結果",
+      },
     ],
     hint: "−(2a−3b) は −2a+3b になります。",
   },
-  summary: ["多項式の減法は、引く式に−1を掛ける加法として考える。", "引く式の全ての項の符号を変えてから同類項をまとめる。"],
+  summary: [
+    "多項式の減法は、引く式に−1を掛ける加法として考える。",
+    "引く式の全ての項の符号を変えてから同類項をまとめる。",
+  ],
 };

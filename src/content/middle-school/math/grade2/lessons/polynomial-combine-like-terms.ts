@@ -29,9 +29,17 @@ export const polynomialCombineLikeTermsLesson: MathLesson = {
     problem: "5a − 3b − 2a + 7b",
     steps: [
       { prompt: "aの項をまとめてください。", answers: ["3a"], placeholder: "aの項" },
-      { prompt: "式全体を簡単にしてください。", answers: ["3a+4b", "4b+3a"], placeholder: "整理した式" },
+      {
+        prompt: "式全体を簡単にしてください。",
+        answers: ["3a+4b", "4b+3a"],
+        placeholder: "整理した式",
+      },
     ],
     hint: "5a−2aと、−3b+7bを別々に計算します。",
   },
-  summary: ["同類項は文字の部分が同じ項である。", "同類項は係数だけを加減する。", "文字の部分が異なる項はまとめない。"],
+  summary: [
+    "同類項は文字の部分が同じ項である。",
+    "同類項は係数だけを加減する。",
+    "文字の部分が異なる項はまとめない。",
+  ],
 };

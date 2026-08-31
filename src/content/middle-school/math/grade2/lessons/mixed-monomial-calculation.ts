@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const mixedMonomialCalculationLesson: MathLesson = {
   key: "mixed-monomial-calculation",
   title: "単項式の乗除を組み合わせる",
-  description: "乗法と除法が混じった単項式の計算を、左から順に、または分数の形にまとめて処理します。",
+  description:
+    "乗法と除法が混じった単項式の計算を、左から順に、または分数の形にまとめて処理します。",
   goals: ["乗法と除法が混じった式を正しい順序で計算できる。", "途中式を分数の形にして約分できる。"],
   concepts: [
     {
@@ -28,9 +29,17 @@ export const mixedMonomialCalculationLesson: MathLesson = {
     problem: "12x²y × 3xy ÷ 6x",
     steps: [
       { prompt: "係数部分 12×3÷6 を計算してください。", answers: ["6"], placeholder: "係数" },
-      { prompt: "式全体を計算してください。", answers: ["6x^2y^2", "6x²y²"], placeholder: "最終結果" },
+      {
+        prompt: "式全体を計算してください。",
+        answers: ["6x^2y^2", "6x²y²"],
+        placeholder: "最終結果",
+      },
     ],
     hint: "x²×x÷x=x²、y×y=y²です。",
   },
-  summary: ["乗法と除法は同じ優先順位なので左から計算できる。", "係数と文字を分けると整理しやすい。", "分数の形にまとめて約分する方法も使える。"],
+  summary: [
+    "乗法と除法は同じ優先順位なので左から計算できる。",
+    "係数と文字を分けると整理しやすい。",
+    "分数の形にまとめて約分する方法も使える。",
+  ],
 };

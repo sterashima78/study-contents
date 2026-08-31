@@ -29,9 +29,17 @@ export const monomialMultiplicationLesson: MathLesson = {
     problem: "2x² × (−5xy)",
     steps: [
       { prompt: "係数の積を答えてください。", answers: ["-10", "−10"], placeholder: "係数" },
-      { prompt: "式全体の積を答えてください。", answers: ["-10x^3y", "−10x³y", "-10x³y"], placeholder: "積" },
+      {
+        prompt: "式全体の積を答えてください。",
+        answers: ["-10x^3y", "−10x³y", "-10x³y"],
+        placeholder: "積",
+      },
     ],
     hint: "x²×x=x³です。",
   },
-  summary: ["単項式の乗法は係数と文字に分けて計算する。", "同じ文字の指数は足す。", "符号は数の乗法と同じ規則で決める。"],
+  summary: [
+    "単項式の乗法は係数と文字に分けて計算する。",
+    "同じ文字の指数は足す。",
+    "符号は数の乗法と同じ規則で決める。",
+  ],
 };

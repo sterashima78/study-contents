@@ -4,10 +4,7 @@ export const monomialPolynomialTermsLesson: MathLesson = {
   key: "monomial-polynomial-terms",
   title: "単項式・多項式と次数を整理する",
   description: "文字を含む式を単項式と多項式に分け、項・係数・次数を正しく読み取ります。",
-  goals: [
-    "単項式と多項式を区別できる。",
-    "式の項、係数、次数を読み取れる。",
-  ],
+  goals: ["単項式と多項式を区別できる。", "式の項、係数、次数を読み取れる。"],
   concepts: [
     {
       title: "項の個数で単項式と多項式を区別する",
@@ -38,7 +35,11 @@ export const monomialPolynomialTermsLesson: MathLesson = {
     problem: "式 4a²b + 3a − 7 を考えます。",
     steps: [
       { prompt: "項はいくつありますか。", answers: ["3", "3個", "3つ"], placeholder: "項の個数" },
-      { prompt: "式全体の次数を答えてください。", answers: ["3", "3次", "3次式"], placeholder: "○次" },
+      {
+        prompt: "式全体の次数を答えてください。",
+        answers: ["3", "3次", "3次式"],
+        placeholder: "○次",
+      },
     ],
     hint: "a²bには文字が合計3個掛け合わされています。",
   },

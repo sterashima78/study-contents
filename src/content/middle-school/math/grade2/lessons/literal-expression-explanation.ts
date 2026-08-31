@@ -35,9 +35,17 @@ export const literalExpressionExplanationLesson: MathLesson = {
     problem: "整数 n の次の整数と、n の次の次の整数を表します。",
     steps: [
       { prompt: "n の次の整数を表してください。", answers: ["n+1", "1+n"], placeholder: "nを使う" },
-      { prompt: "n の次の次の整数を表してください。", answers: ["n+2", "2+n"], placeholder: "nを使う" },
+      {
+        prompt: "n の次の次の整数を表してください。",
+        answers: ["n+2", "2+n"],
+        placeholder: "nを使う",
+      },
     ],
     hint: "整数は1ずつ増えます。",
   },
-  summary: ["連続する整数、偶数、奇数を文字で一般的に表せる。", "式を変形した後の形を根拠に数量の性質を説明する。", "具体例だけでなく一般的な説明に文字式を使う。"],
+  summary: [
+    "連続する整数、偶数、奇数を文字で一般的に表せる。",
+    "式を変形した後の形を根拠に数量の性質を説明する。",
+    "具体例だけでなく一般的な説明に文字式を使う。",
+  ],
 };

@@ -27,10 +27,17 @@ export const polynomialAdditionLesson: MathLesson = {
     title: "練習: 多項式の加法",
     problem: "(2a − 3b) + (5a + b)",
     steps: [
-      { prompt: "かっこを外した式を書いてください。", answers: ["2a-3b+5a+b"], placeholder: "かっこを外す" },
+      {
+        prompt: "かっこを外した式を書いてください。",
+        answers: ["2a-3b+5a+b"],
+        placeholder: "かっこを外す",
+      },
       { prompt: "計算結果を答えてください。", answers: ["7a-2b"], placeholder: "最終結果" },
     ],
     hint: "aの項どうし、bの項どうしをまとめます。",
   },
-  summary: ["多項式の加法では、各項の符号を変えずにかっこを外す。", "同類項を集めて係数を計算する。"],
+  summary: [
+    "多項式の加法では、各項の符号を変えずにかっこを外す。",
+    "同類項を集めて係数を計算する。",
+  ],
 };
