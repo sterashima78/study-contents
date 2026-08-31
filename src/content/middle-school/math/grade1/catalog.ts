@@ -4,6 +4,8 @@ import { angleBisectorConstructionLesson } from "./lessons/angle-bisector-constr
 import { combineLikeTermsLesson } from "./lessons/combine-like-terms";
 import { constructionSymmetryLesson } from "./lessons/construction-symmetry";
 import { coordinatesLesson } from "./lessons/coordinates";
+import { cumulativeFrequencyLesson } from "./lessons/cumulative-frequency";
+import { dataDistributionCritiqueLesson } from "./lessons/data-distribution-critique";
 import { divisionLesson } from "./lessons/division";
 import { divisionNotationLesson } from "./lessons/division-notation";
 import { equalityPropertiesLesson } from "./lessons/equality-properties";
@@ -12,9 +14,12 @@ import { equationBothSidesLesson } from "./lessons/equation-both-sides";
 import { equationMeaningLesson } from "./lessons/equation-meaning";
 import { equationMultiplyDivideLesson } from "./lessons/equation-multiply-divide";
 import { equationWordProblemsLesson } from "./lessons/equation-word-problems";
+import { experimentalProbabilityLesson } from "./lessons/experimental-probability";
 import { expressRelationsLesson } from "./lessons/express-relations";
+import { frequencyDistributionRangeLesson } from "./lessons/frequency-distribution-range";
 import { functionMeaningLesson } from "./lessons/function-meaning";
 import { functionRepresentationsApplicationLesson } from "./lessons/function-representations-application";
+import { histogramReadingLesson } from "./lessons/histogram-reading";
 import { inverseProportionGraphLesson } from "./lessons/inverse-proportion-graph";
 import { inverseProportionTableExpressionLesson } from "./lessons/inverse-proportion-table-expression";
 import { lettersMeaningLesson } from "./lessons/letters-meaning";
@@ -31,6 +36,7 @@ import { planePlaneRelationsLesson } from "./lessons/plane-plane-relations";
 import { positiveNegativeMeaningLesson } from "./lessons/positive-negative-meaning";
 import { prismCylinderSurfaceAreaLesson } from "./lessons/prism-cylinder-surface-area";
 import { prismCylinderVolumeLesson } from "./lessons/prism-cylinder-volume";
+import { probabilityFromObservationsLesson } from "./lessons/probability-from-observations";
 import { projectionsLesson } from "./lessons/projections";
 import { proportionEquationsLesson } from "./lessons/proportion-equations";
 import { proportionGraphLesson } from "./lessons/proportion-graph";
@@ -38,6 +44,8 @@ import { proportionTableExpressionLesson } from "./lessons/proportion-table-expr
 import { pyramidConeSurfaceAreaLesson } from "./lessons/pyramid-cone-surface-area";
 import { pyramidConeVolumeLesson } from "./lessons/pyramid-cone-volume";
 import { reflectionLesson } from "./lessons/reflection";
+import { relativeFrequencyLesson } from "./lessons/relative-frequency";
+import { representativeValuesDistributionLesson } from "./lessons/representative-values-distribution";
 import { rotationLesson } from "./lessons/rotation";
 import { sectorArcLengthLesson } from "./lessons/sector-arc-length";
 import { sectorAreaLesson } from "./lessons/sector-area";
@@ -182,6 +190,35 @@ export const middleMath1Areas: MathArea[] = [
           inverseProportionGraphLesson,
           functionRepresentationsApplicationLesson,
         ],
+      },
+    ],
+  },
+  {
+    key: "data",
+    title: "データの活用",
+    description:
+      "データの分布を表やグラフで整理・考察し、多数回の試行から不確定な事象の起こりやすさを捉えます。",
+    units: [
+      {
+        key: "data-distribution",
+        title: "データの分布",
+        description:
+          "度数分布表、ヒストグラム、代表値、相対度数、累積度数を使い、分布の傾向を読み取り批判的に考察します。",
+        lessons: [
+          frequencyDistributionRangeLesson,
+          histogramReadingLesson,
+          representativeValuesDistributionLesson,
+          relativeFrequencyLesson,
+          cumulativeFrequencyLesson,
+          dataDistributionCritiqueLesson,
+        ],
+      },
+      {
+        key: "experimental-probability",
+        title: "多数回の試行と確率",
+        description:
+          "多数回の観察や試行で得られる相対度数から、不確定な事象の起こりやすさを捉え、予測に活用します。",
+        lessons: [experimentalProbabilityLesson, probabilityFromObservationsLesson],
       },
     ],
   },
