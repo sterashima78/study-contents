@@ -1,9 +1,15 @@
 import type { MathArea } from "../../../math1/types";
+import { basicProbabilityLesson } from "./lessons/basic-probability";
+import { boxPlotComparisonCritiqueLesson } from "./lessons/box-plot-comparison-critique";
+import { boxPlotReadingLesson } from "./lessons/box-plot-reading";
 import { congruenceMeaningLesson } from "./lessons/congruence-meaning";
 import { converseCounterexampleLesson } from "./lessons/converse-counterexample";
+import { countOutcomesSystematicallyLesson } from "./lessons/count-outcomes-systematically";
 import { eliminationAddSubtractLesson } from "./lessons/elimination-add-subtract";
 import { eliminationMultiplyLesson } from "./lessons/elimination-multiply";
+import { equallyLikelyOutcomesLesson } from "./lessons/equally-likely-outcomes";
 import { geometryProofApplicationLesson } from "./lessons/geometry-proof-application";
+import { interquartileRangeLesson } from "./lessons/interquartile-range";
 import { isoscelesTriangleProofLesson } from "./lessons/isosceles-triangle-proof";
 import { linearEquationAsFunctionLesson } from "./lessons/linear-equation-as-function";
 import { linearEquationTwoVariablesLesson } from "./lessons/linear-equation-two-variables";
@@ -25,15 +31,21 @@ import { polygonAnglePropertiesLesson } from "./lessons/polygon-angle-properties
 import { polynomialAdditionLesson } from "./lessons/polynomial-addition";
 import { polynomialCombineLikeTermsLesson } from "./lessons/polynomial-combine-like-terms";
 import { polynomialSubtractionLesson } from "./lessons/polynomial-subtraction";
+import { probabilityApplicationLesson } from "./lessons/probability-application";
+import { probabilityComparisonFairnessLesson } from "./lessons/probability-comparison-fairness";
+import { probabilityNotGuaranteeLesson } from "./lessons/probability-not-guarantee";
 import { proofStructureLesson } from "./lessons/proof-structure";
+import { quartileValuesLesson } from "./lessons/quartile-values";
 import { substitutionMethodLesson } from "./lessons/substitution-method";
 import { systemMeaningLesson } from "./lessons/system-meaning";
 import { systemSolveMixedLesson } from "./lessons/system-solve-mixed";
 import { systemWordApplicationLesson } from "./lessons/system-word-application";
 import { systemWordModelLesson } from "./lessons/system-word-model";
 import { systemsAndGraphsLesson } from "./lessons/systems-and-graphs";
+import { theoreticalProbabilityMeaningLesson } from "./lessons/theoretical-probability-meaning";
 import { triangleAnglePropertiesLesson } from "./lessons/triangle-angle-properties";
 import { triangleCongruenceConditionsLesson } from "./lessons/triangle-congruence-conditions";
+import { twoStepProbabilityLesson } from "./lessons/two-step-probability";
 import { verticalCorrespondingAlternateLesson } from "./lessons/vertical-corresponding-alternate";
 
 export const middleMath2Areas: MathArea[] = [
@@ -78,30 +90,6 @@ export const middleMath2Areas: MathArea[] = [
     ],
   },
   {
-    key: "functions",
-    title: "関数",
-    description:
-      "中学1年の比例・反比例を土台に、一次関数を表・式・グラフで捉え、二元一次方程式や具体的な事象と結び付けます。",
-    units: [
-      {
-        key: "linear-functions",
-        title: "一次関数",
-        description:
-          "一次関数の意味、変化の割合、式とグラフ、二元一次方程式・連立方程式との関係、具体的な事象への活用を学びます。",
-        lessons: [
-          linearFunctionMeaningLesson,
-          linearFunctionRateOfChangeLesson,
-          linearFunctionExpressionLesson,
-          linearFunctionGraphLesson,
-          linearFunctionFromGraphLesson,
-          linearEquationAsFunctionLesson,
-          systemsAndGraphsLesson,
-          linearFunctionApplicationLesson,
-        ],
-      },
-    ],
-  },
-  {
     key: "geometry",
     title: "図形",
     description:
@@ -133,6 +121,66 @@ export const middleMath2Areas: MathArea[] = [
           parallelogramConditionsSpecialLesson,
           converseCounterexampleLesson,
           geometryProofApplicationLesson,
+        ],
+      },
+    ],
+  },
+  {
+    key: "functions",
+    title: "関数",
+    description:
+      "中学1年の比例・反比例を土台に、一次関数を表・式・グラフで捉え、二元一次方程式や具体的な事象と結び付けます。",
+    units: [
+      {
+        key: "linear-functions",
+        title: "一次関数",
+        description:
+          "一次関数の意味、変化の割合、式とグラフ、二元一次方程式・連立方程式との関係、具体的な事象への活用を学びます。",
+        lessons: [
+          linearFunctionMeaningLesson,
+          linearFunctionRateOfChangeLesson,
+          linearFunctionExpressionLesson,
+          linearFunctionGraphLesson,
+          linearFunctionFromGraphLesson,
+          linearEquationAsFunctionLesson,
+          systemsAndGraphsLesson,
+          linearFunctionApplicationLesson,
+        ],
+      },
+    ],
+  },
+  {
+    key: "data",
+    title: "データの活用",
+    description:
+      "四分位数・箱ひげ図で複数のデータ分布を比較し、同様に確からしい場合の数を基に確率を求めて不確定な事象を考察します。",
+    units: [
+      {
+        key: "data-distribution-comparison",
+        title: "データの分布と比較",
+        description:
+          "四分位数、四分位範囲、箱ひげ図を使って複数の分布を比較し、表現から読み取れることを批判的に考察します。",
+        lessons: [
+          quartileValuesLesson,
+          interquartileRangeLesson,
+          boxPlotReadingLesson,
+          boxPlotComparisonCritiqueLesson,
+        ],
+      },
+      {
+        key: "probability-counting",
+        title: "場合の数と確率",
+        description:
+          "同様に確からしい場合を漏れなく整理して確率を求め、確率を不確定な事象の比較・判断・説明に活用します。",
+        lessons: [
+          theoreticalProbabilityMeaningLesson,
+          equallyLikelyOutcomesLesson,
+          countOutcomesSystematicallyLesson,
+          basicProbabilityLesson,
+          twoStepProbabilityLesson,
+          probabilityComparisonFairnessLesson,
+          probabilityNotGuaranteeLesson,
+          probabilityApplicationLesson,
         ],
       },
     ],
