@@ -28,8 +28,16 @@ export const squareFactorizationLesson: MathLesson = {
     title: "練習: 完全平方を見抜く",
     problem: "和と差の2乗へ戻します。",
     steps: [
-      { prompt: "x²+8x+16を因数分解してください。", answers: ["(x+4)²", "(x+4)^2"], placeholder: "式" },
-      { prompt: "a²−6a+9を因数分解してください。", answers: ["(a−3)²", "(a-3)^2", "(a−3)^2"], placeholder: "式" },
+      {
+        prompt: "x²+8x+16を因数分解してください。",
+        answers: ["(x+4)²", "(x+4)^2"],
+        placeholder: "式",
+      },
+      {
+        prompt: "a²−6a+9を因数分解してください。",
+        answers: ["(a−3)²", "(a-3)^2", "(a−3)^2"],
+        placeholder: "式",
+      },
     ],
     hint: "最初と最後の平方根の積を2倍して中央項と比べます。",
   },

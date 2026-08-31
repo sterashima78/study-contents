@@ -29,7 +29,11 @@ export const commonFactorFactorizationLesson: MathLesson = {
     problem: "まず共通する数と文字を探します。",
     steps: [
       { prompt: "10x²+15xを因数分解してください。", answers: ["5x(2x+3)"], placeholder: "式" },
-      { prompt: "6ab−9aを因数分解してください。", answers: ["3a(2b−3)", "3a(2b-3)"], placeholder: "式" },
+      {
+        prompt: "6ab−9aを因数分解してください。",
+        answers: ["3a(2b−3)", "3a(2b-3)"],
+        placeholder: "式",
+      },
     ],
     hint: "すべての項に含まれる最大の数・文字を先にくくります。",
   },

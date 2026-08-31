@@ -29,7 +29,11 @@ export const monomialPolynomialMultiplicationLesson: MathLesson = {
     problem: "単項式を多項式へ掛けます。",
     steps: [
       { prompt: "2a(4a+3)を計算してください。", answers: ["8a²+6a", "8a^2+6a"], placeholder: "式" },
-      { prompt: "−x(3x−2)を計算してください。", answers: ["−3x²+2x", "-3x²+2x", "-3x^2+2x"], placeholder: "式" },
+      {
+        prompt: "−x(3x−2)を計算してください。",
+        answers: ["−3x²+2x", "-3x²+2x", "-3x^2+2x"],
+        placeholder: "式",
+      },
     ],
     hint: "かっこの中のすべての項へ掛けます。",
   },

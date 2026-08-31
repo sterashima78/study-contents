@@ -20,10 +20,15 @@ function distributiveAreaScene(): DiagramScene {
   return {
     width: 520,
     height: 350,
-    ariaLabel: "縦をaとb、横をcとdに分けた長方形を4領域ac、ad、bc、bdに分割し、(a+b)(c+d)の展開を面積で示す図。",
+    ariaLabel:
+      "縦をaとb、横をcとdに分けた長方形を4領域ac、ad、bc、bdに分割し、(a+b)(c+d)の展開を面積で示す図。",
     responsive: { minWidth: 460, allowHorizontalScroll: true },
     elements: [
-      { kind: "polygon", points: [point(120, 60), point(430, 60), point(430, 280), point(120, 280)], color: BLUE },
+      {
+        kind: "polygon",
+        points: [point(120, 60), point(430, 60), point(430, 280), point(120, 280)],
+        color: BLUE,
+      },
       { kind: "segment", from: point(300, 60), to: point(300, 280), color: ORANGE },
       { kind: "segment", from: point(120, 180), to: point(430, 180), color: GREEN },
       label(point(210, 120), "ac", PURPLE),
@@ -43,10 +48,15 @@ function squareFormulaScene(): DiagramScene {
   return {
     width: 520,
     height: 350,
-    ariaLabel: "1辺a+bの正方形をaとbで分割し、面積がa²、ab、ab、b²の4領域になるため(a+b)²=a²+2ab+b²と分かる図。",
+    ariaLabel:
+      "1辺a+bの正方形をaとbで分割し、面積がa²、ab、ab、b²の4領域になるため(a+b)²=a²+2ab+b²と分かる図。",
     responsive: { minWidth: 460, allowHorizontalScroll: true },
     elements: [
-      { kind: "polygon", points: [point(130, 50), point(410, 50), point(410, 290), point(130, 290)], color: BLUE },
+      {
+        kind: "polygon",
+        points: [point(130, 50), point(410, 50), point(410, 290), point(130, 290)],
+        color: BLUE,
+      },
       { kind: "segment", from: point(330, 50), to: point(330, 290), color: ORANGE },
       { kind: "segment", from: point(130, 210), to: point(410, 210), color: GREEN },
       label(point(230, 130), "a²", PURPLE),
@@ -59,7 +69,10 @@ function squareFormulaScene(): DiagramScene {
 }
 
 const diagrams: Record<string, MathLessonDiagrams> = {
-  "binomial-expansion-distributive": { rule: distributiveAreaScene(), example: distributiveAreaScene() },
+  "binomial-expansion-distributive": {
+    rule: distributiveAreaScene(),
+    example: distributiveAreaScene(),
+  },
   "square-expansion": { rule: squareFormulaScene(), example: squareFormulaScene() },
   "square-factorization": { rule: squareFormulaScene() },
 };

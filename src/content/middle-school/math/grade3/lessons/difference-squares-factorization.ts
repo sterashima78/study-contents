@@ -27,8 +27,16 @@ export const differenceSquaresFactorizationLesson: MathLesson = {
     title: "練習: 平方の差を見抜く",
     problem: "平方の差の公式を逆向きに使います。",
     steps: [
-      { prompt: "x²−25を因数分解してください。", answers: ["(x+5)(x−5)", "(x+5)(x-5)"], placeholder: "式" },
-      { prompt: "4a²−9を因数分解してください。", answers: ["(2a+3)(2a−3)", "(2a+3)(2a-3)"], placeholder: "式" },
+      {
+        prompt: "x²−25を因数分解してください。",
+        answers: ["(x+5)(x−5)", "(x+5)(x-5)"],
+        placeholder: "式",
+      },
+      {
+        prompt: "4a²−9を因数分解してください。",
+        answers: ["(2a+3)(2a−3)", "(2a+3)(2a-3)"],
+        placeholder: "式",
+      },
     ],
     hint: "各項を何の2乗と見られるか考えます。",
   },

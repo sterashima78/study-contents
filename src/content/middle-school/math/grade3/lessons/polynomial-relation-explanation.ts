@@ -29,10 +29,21 @@ export const polynomialRelationExplanationLesson: MathLesson = {
     title: "練習: 式の意味を読む",
     problem: "連続する偶数2nと2n+2について確認します。",
     steps: [
-      { prompt: "2nと2n+2の間にある奇数を式で答えてください。", answers: ["2n+1"], placeholder: "式" },
-      { prompt: "2n(2n+2)+1を因数分解した形を答えてください。", answers: ["(2n+1)²", "(2n+1)^2"], placeholder: "式" },
+      {
+        prompt: "2nと2n+2の間にある奇数を式で答えてください。",
+        answers: ["2n+1"],
+        placeholder: "式",
+      },
+      {
+        prompt: "2n(2n+2)+1を因数分解した形を答えてください。",
+        answers: ["(2n+1)²", "(2n+1)^2"],
+        placeholder: "式",
+      },
     ],
     hint: "展開すると4n²+4n+1です。",
   },
-  summary: ["文字を使うと、特定の数だけでなく全ての場合をまとめて説明できる。", "示したい性質が読み取れる形へ式を変形する。"],
+  summary: [
+    "文字を使うと、特定の数だけでなく全ての場合をまとめて説明できる。",
+    "示したい性質が読み取れる形へ式を変形する。",
+  ],
 };

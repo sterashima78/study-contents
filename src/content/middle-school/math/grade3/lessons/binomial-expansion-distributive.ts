@@ -4,7 +4,10 @@ export const binomialExpansionDistributiveLesson: MathLesson = {
   key: "binomial-expansion-distributive",
   title: "分配法則で一次式の積を展開する",
   description: "一次式どうしの積を、既習の分配法則を繰り返して多項式へ直します。",
-  goals: ["一次式どうしの積を分配法則で展開できる。", "公式の根拠を既習の計算と結び付けて説明できる。"],
+  goals: [
+    "一次式どうしの積を分配法則で展開できる。",
+    "公式の根拠を既習の計算と結び付けて説明できる。",
+  ],
   concepts: [
     {
       title: "一方のかっこを一つの式として分配する",
@@ -28,10 +31,21 @@ export const binomialExpansionDistributiveLesson: MathLesson = {
     title: "練習: 4つの積で展開する",
     problem: "分配法則だけで展開します。",
     steps: [
-      { prompt: "(x+1)(x+5)を展開してください。", answers: ["x²+6x+5", "x^2+6x+5"], placeholder: "式" },
-      { prompt: "(a+2)(a−3)を展開してください。", answers: ["a²−a−6", "a^2-a-6", "a²-a-6"], placeholder: "式" },
+      {
+        prompt: "(x+1)(x+5)を展開してください。",
+        answers: ["x²+6x+5", "x^2+6x+5"],
+        placeholder: "式",
+      },
+      {
+        prompt: "(a+2)(a−3)を展開してください。",
+        answers: ["a²−a−6", "a^2-a-6", "a²-a-6"],
+        placeholder: "式",
+      },
     ],
     hint: "左の2項と右の2項の組合せを4つ作ります。",
   },
-  summary: ["一次式の積も分配法則を繰り返せば展開できる。", "公式は分配法則を能率化したものとして理解する。"],
+  summary: [
+    "一次式の積も分配法則を繰り返せば展開できる。",
+    "公式は分配法則を能率化したものとして理解する。",
+  ],
 };

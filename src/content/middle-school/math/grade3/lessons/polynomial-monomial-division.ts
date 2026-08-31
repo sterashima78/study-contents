@@ -29,7 +29,11 @@ export const polynomialMonomialDivisionLesson: MathLesson = {
     problem: "多項式を単項式で割ります。",
     steps: [
       { prompt: "(15a²+10a)÷5aを計算してください。", answers: ["3a+2"], placeholder: "式" },
-      { prompt: "(8x²−12xy)÷4xを計算してください。", answers: ["2x−3y", "2x-3y"], placeholder: "式" },
+      {
+        prompt: "(8x²−12xy)÷4xを計算してください。",
+        answers: ["2x−3y", "2x-3y"],
+        placeholder: "式",
+      },
     ],
     hint: "多項式の各項を同じ単項式で割ります。",
   },

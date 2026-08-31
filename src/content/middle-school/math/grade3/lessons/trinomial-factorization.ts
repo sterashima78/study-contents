@@ -28,8 +28,16 @@ export const trinomialFactorizationLesson: MathLesson = {
     title: "練習: 和と積から探す",
     problem: "pとqの条件を同時に満たす2数を探します。",
     steps: [
-      { prompt: "x²+7x+12を因数分解してください。", answers: ["(x+3)(x+4)", "(x+4)(x+3)"], placeholder: "式" },
-      { prompt: "x²−x−6を因数分解してください。", answers: ["(x−3)(x+2)", "(x+2)(x−3)", "(x-3)(x+2)", "(x+2)(x-3)"], placeholder: "式" },
+      {
+        prompt: "x²+7x+12を因数分解してください。",
+        answers: ["(x+3)(x+4)", "(x+4)(x+3)"],
+        placeholder: "式",
+      },
+      {
+        prompt: "x²−x−6を因数分解してください。",
+        answers: ["(x−3)(x+2)", "(x+2)(x−3)", "(x-3)(x+2)", "(x+2)(x-3)"],
+        placeholder: "式",
+      },
     ],
     hint: "定数項の約数の組を作り、和がxの係数になるか確かめます。",
   },

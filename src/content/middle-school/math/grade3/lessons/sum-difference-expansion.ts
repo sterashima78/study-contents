@@ -28,8 +28,16 @@ export const sumDifferenceExpansionLesson: MathLesson = {
     title: "練習: 平方の差へ展開する",
     problem: "和と差の積を見抜きます。",
     steps: [
-      { prompt: "(x+6)(x−6)を展開してください。", answers: ["x²−36", "x^2-36", "x²-36"], placeholder: "式" },
-      { prompt: "(3a+2)(3a−2)を展開してください。", answers: ["9a²−4", "9a^2-4", "9a²-4"], placeholder: "式" },
+      {
+        prompt: "(x+6)(x−6)を展開してください。",
+        answers: ["x²−36", "x^2-36", "x²-36"],
+        placeholder: "式",
+      },
+      {
+        prompt: "(3a+2)(3a−2)を展開してください。",
+        answers: ["9a²−4", "9a^2-4", "9a²-4"],
+        placeholder: "式",
+      },
     ],
     hint: "同じ部分をa、符号だけ違う部分をbと見ます。",
   },

@@ -28,10 +28,21 @@ export const productExpansionXabLesson: MathLesson = {
     title: "練習: 和と積で展開する",
     problem: "a+bとabを先に考えます。",
     steps: [
-      { prompt: "(x+4)(x+5)を展開してください。", answers: ["x²+9x+20", "x^2+9x+20"], placeholder: "式" },
-      { prompt: "(x−2)(x+6)を展開してください。", answers: ["x²+4x−12", "x^2+4x-12", "x²+4x-12"], placeholder: "式" },
+      {
+        prompt: "(x+4)(x+5)を展開してください。",
+        answers: ["x²+9x+20", "x^2+9x+20"],
+        placeholder: "式",
+      },
+      {
+        prompt: "(x−2)(x+6)を展開してください。",
+        answers: ["x²+4x−12", "x^2+4x-12", "x²+4x-12"],
+        placeholder: "式",
+      },
     ],
     hint: "xの係数は2数の和、定数項は2数の積です。",
   },
-  summary: ["(x+a)(x+b)ではa+bがxの係数、abが定数項になる。", "この和と積の対応は因数分解でも使う。"],
+  summary: [
+    "(x+a)(x+b)ではa+bがxの係数、abが定数項になる。",
+    "この和と積の対応は因数分解でも使う。",
+  ],
 };

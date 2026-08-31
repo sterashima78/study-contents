@@ -28,7 +28,11 @@ export const squareExpansionLesson: MathLesson = {
     problem: "和と差を1問ずつ展開します。",
     steps: [
       { prompt: "(x+3)²を展開してください。", answers: ["x²+6x+9", "x^2+6x+9"], placeholder: "式" },
-      { prompt: "(a−4)²を展開してください。", answers: ["a²−8a+16", "a^2-8a+16", "a²-8a+16"], placeholder: "式" },
+      {
+        prompt: "(a−4)²を展開してください。",
+        answers: ["a²−8a+16", "a^2-8a+16", "a²-8a+16"],
+        placeholder: "式",
+      },
     ],
     hint: "中央の項は±2abです。",
   },
