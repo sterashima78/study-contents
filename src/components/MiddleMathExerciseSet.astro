@@ -96,8 +96,8 @@ const _isUnit = _mode === "unit";
     generateMiddleMath2GeometryUnitExercises,
   } from "../content/middle-school/math/grade2/geometry-exercise-registry";
   import {
-    generateMiddleMath2LinearFunctionLessonExercises,
-    generateMiddleMath2LinearFunctionUnitExercises,
+    generateMiddleMath2FunctionLessonExercises,
+    generateMiddleMath2FunctionUnitExercises,
   } from "../content/middle-school/math/grade2/linear-function-exercise-registry";
 
   const difficultyLabel: Record<MiddleMathExercise["difficulty"], string> = {
@@ -171,9 +171,9 @@ const _isUnit = _mode === "unit";
         }
         if (areaKey === "functions") {
           return mode === "unit"
-            ? generateMiddleMath2LinearFunctionUnitExercises(unitKey)
+            ? generateMiddleMath2FunctionUnitExercises(unitKey)
             : lessonKey
-              ? generateMiddleMath2LinearFunctionLessonExercises(lessonKey)
+              ? generateMiddleMath2FunctionLessonExercises(lessonKey)
               : [];
         }
         return mode === "unit"
