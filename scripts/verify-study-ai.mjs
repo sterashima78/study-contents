@@ -15,7 +15,9 @@ const [packageJson, studyPage, chat, context, engine, modelConfig, worker, promp
   ]);
 
 if (packageJson.dependencies?.["@mlc-ai/web-llm"] !== "0.2.82") {
-  issues.push("package.json: Android互換性A/Bテストでは @mlc-ai/web-llm 0.2.82 を完全固定してください。");
+  issues.push(
+    "package.json: Android互換性A/Bテストでは @mlc-ai/web-llm 0.2.82 を完全固定してください。",
+  );
 }
 if (packageJson.dependencies?.["@huggingface/transformers"]) {
   issues.push(
