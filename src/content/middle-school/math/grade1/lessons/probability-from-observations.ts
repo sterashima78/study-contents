@@ -3,8 +3,7 @@ import type { MathLesson } from "../../../../math1/types";
 export const probabilityFromObservationsLesson: MathLesson = {
   key: "probability-from-observations",
   title: "観察結果から起こりやすさを予測する",
-  description:
-    "過去の多数の観察から得た相対度数を使い、将来の回数や必要数をおおよそ見積もります。",
+  description: "過去の多数の観察から得た相対度数を使い、将来の回数や必要数をおおよそ見積もります。",
   goals: [
     "多数の観察で得た相対度数を、起こりやすさの目安として使える。",
     "確率を使った見積もりには不確実さが残ることを説明できる。",
