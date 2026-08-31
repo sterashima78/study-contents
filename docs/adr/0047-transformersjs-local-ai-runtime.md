@@ -1,7 +1,8 @@
 # ADR 0047: ブラウザ内AIランタイムをTransformers.jsへ切り替える
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-30
+- Superseded by: ADR 0052
 - Related: ADR 0005, ADR 0022, ADR 0040, ADR 0041, ADR 0042, ADR 0046
 
 ## Context
