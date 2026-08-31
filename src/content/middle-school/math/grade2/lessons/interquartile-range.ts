@@ -31,7 +31,11 @@ export const interquartileRangeLesson: MathLesson = {
     problem: "A組はQ1=15、Q3=23、B組はQ1=13、Q3=25です。",
     steps: [
       { prompt: "A組の四分位範囲を答えてください。", answers: ["8"], placeholder: "四分位範囲" },
-      { prompt: "四分位範囲が大きいのはA組とB組のどちらですか。", answers: ["B", "B組", "b", "b組"], placeholder: "組" },
+      {
+        prompt: "四分位範囲が大きいのはA組とB組のどちらですか。",
+        answers: ["B", "B組", "b", "b組"],
+        placeholder: "組",
+      },
     ],
     hint: "それぞれQ3−Q1を計算します。",
   },

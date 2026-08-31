@@ -32,7 +32,11 @@ export const boxPlotReadingLesson: MathLesson = {
     problem: "ある箱ひげ図は、最小値5、Q1=9、中央値13、Q3=18、最大値24です。",
     steps: [
       { prompt: "箱の左端の値を答えてください。", answers: ["9"], placeholder: "値" },
-      { prompt: "箱の長さ、つまり四分位範囲を答えてください。", answers: ["9"], placeholder: "四分位範囲" },
+      {
+        prompt: "箱の長さ、つまり四分位範囲を答えてください。",
+        answers: ["9"],
+        placeholder: "四分位範囲",
+      },
     ],
     hint: "箱の両端はQ1とQ3です。",
   },

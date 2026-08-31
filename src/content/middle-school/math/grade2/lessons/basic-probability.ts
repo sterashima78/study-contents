@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const basicProbabilityLesson: MathLesson = {
   key: "basic-probability",
   title: "場合の数から確率を求める",
-  description: "同様に確からしい場合について、条件に合う場合の数をすべての場合の数で割って確率を求めます。",
+  description:
+    "同様に確からしい場合について、条件に合う場合の数をすべての場合の数で割って確率を求めます。",
   goals: [
     "条件に合う場合とすべての場合を正しく数えられる。",
     "簡単な事象の確率を場合の数の比で求められる。",
@@ -31,7 +32,11 @@ export const basicProbabilityLesson: MathLesson = {
     title: "練習: さいころの確率",
     problem: "公平な6面さいころを1回投げます。",
     steps: [
-      { prompt: "4以上の目が出る確率を分数で答えてください。", answers: ["1/2", "3/6", "0.5"], placeholder: "確率" },
+      {
+        prompt: "4以上の目が出る確率を分数で答えてください。",
+        answers: ["1/2", "3/6", "0.5"],
+        placeholder: "確率",
+      },
     ],
     hint: "4以上は4、5、6の3通りです。",
   },

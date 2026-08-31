@@ -30,7 +30,11 @@ export const countOutcomesSystematicallyLesson: MathLesson = {
     title: "練習: 場合の数を数える",
     problem: "赤・青・黄の3枚から1枚選び、その後に表・裏のある硬貨を1回投げます。",
     steps: [
-      { prompt: "起こり得る組合せは全部で何通りですか。", answers: ["6", "6通り"], placeholder: "通り" },
+      {
+        prompt: "起こり得る組合せは全部で何通りですか。",
+        answers: ["6", "6通り"],
+        placeholder: "通り",
+      },
     ],
     hint: "色3通りのそれぞれに、硬貨2通りがあります。",
   },

@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const theoreticalProbabilityMeaningLesson: MathLesson = {
   key: "theoretical-probability-meaning",
   title: "多数回の試行と場合の数の確率を結び付ける",
-  description: "中学1年で学んだ相対度数による確率と、起こり得る場合の数から求める確率を結び付けます。",
+  description:
+    "中学1年で学んだ相対度数による確率と、起こり得る場合の数から求める確率を結び付けます。",
   goals: [
     "多数回の試行による相対度数と、理論的に求める確率の関係を説明できる。",
     "確率が1回ごとの結果を保証する値ではないことを理解できる。",
@@ -23,14 +24,22 @@ export const theoreticalProbabilityMeaningLesson: MathLesson = {
     problem: "公平なさいころで3の目が出ることを考えます。",
     steps: [
       { expression: "理論的な確率 = 1/6", note: "6通りの目が同様に確からしいためです。" },
-      { expression: "多数回の相対度数 ≈ 1/6", note: "試行回数が増えると、割合は理論値の近くで安定する傾向があります。" },
+      {
+        expression: "多数回の相対度数 ≈ 1/6",
+        note: "試行回数が増えると、割合は理論値の近くで安定する傾向があります。",
+      },
     ],
   },
   practice: {
     title: "練習: 確率の意味を確認する",
     problem: "公平なさいころで6の目が出る確率は1/6です。",
     steps: [
-      { prompt: "6回投げれば必ず1回は6が出ると言えますか。「言える」か「言えない」で答えてください。", answers: ["言えない"], placeholder: "言える / 言えない" },
+      {
+        prompt:
+          "6回投げれば必ず1回は6が出ると言えますか。「言える」か「言えない」で答えてください。",
+        answers: ["言えない"],
+        placeholder: "言える / 言えない",
+      },
     ],
     hint: "確率は各回の結果を決めるものではありません。",
   },

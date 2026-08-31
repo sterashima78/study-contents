@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const probabilityNotGuaranteeLesson: MathLesson = {
   key: "probability-not-guarantee",
   title: "確率を「必ず」と誤解しない",
-  description: "確率から長期的な起こりやすさを説明しつつ、少ない試行の結果を断定しない考え方を身に付けます。",
+  description:
+    "確率から長期的な起こりやすさを説明しつつ、少ない試行の結果を断定しない考え方を身に付けます。",
   goals: [
     "確率と確定した結果の違いを説明できる。",
     "期待される回数を見積もっても、実際の回数は変動することを説明できる。",
@@ -29,7 +30,11 @@ export const probabilityNotGuaranteeLesson: MathLesson = {
     title: "練習: 表現を選ぶ",
     problem: "確率0.4の事象を10回試す場面です。",
     steps: [
-      { prompt: "必ず4回起こると言えますか。「言える」か「言えない」で答えてください。", answers: ["言えない"], placeholder: "言える / 言えない" },
+      {
+        prompt: "必ず4回起こると言えますか。「言える」か「言えない」で答えてください。",
+        answers: ["言えない"],
+        placeholder: "言える / 言えない",
+      },
     ],
     hint: "10×0.4は見積もりであり、個々の結果を固定しません。",
   },

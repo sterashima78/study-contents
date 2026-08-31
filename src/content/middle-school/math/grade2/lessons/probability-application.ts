@@ -23,15 +23,27 @@ export const probabilityApplicationLesson: MathLesson = {
     steps: [
       { expression: "全8通り", note: "各番号は同様に確からしいとします。" },
       { expression: "当たり: 6,7,8 → 3通り", note: "条件に合う番号を数えます。" },
-      { expression: "P(当たり) = 3/8", note: "8回に必ず3回当たるという意味ではなく、当たりやすさの指標です。" },
+      {
+        expression: "P(当たり) = 3/8",
+        note: "8回に必ず3回当たるという意味ではなく、当たりやすさの指標です。",
+      },
     ],
   },
   practice: {
     title: "練習: 起こりやすさを説明する",
     problem: "1〜10の番号から公平に1つ選び、偶数なら当たりとします。",
     steps: [
-      { prompt: "当たる確率を答えてください。", answers: ["1/2", "5/10", "0.5"], placeholder: "確率" },
-      { prompt: "当たりと外れは同じ程度に起こりやすいと言えますか。「言える」か「言えない」で答えてください。", answers: ["言える"], placeholder: "言える / 言えない" },
+      {
+        prompt: "当たる確率を答えてください。",
+        answers: ["1/2", "5/10", "0.5"],
+        placeholder: "確率",
+      },
+      {
+        prompt:
+          "当たりと外れは同じ程度に起こりやすいと言えますか。「言える」か「言えない」で答えてください。",
+        answers: ["言える"],
+        placeholder: "言える / 言えない",
+      },
     ],
     hint: "偶数は2、4、6、8、10の5通りです。",
   },

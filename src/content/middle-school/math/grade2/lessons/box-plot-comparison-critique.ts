@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const boxPlotComparisonCritiqueLesson: MathLesson = {
   key: "box-plot-comparison-critique",
   title: "箱ひげ図で分布を比較し批判的に考察する",
-  description: "複数の箱ひげ図から中央値や散らばりを比較し、図だけでは分からない情報にも注意します。",
+  description:
+    "複数の箱ひげ図から中央値や散らばりを比較し、図だけでは分からない情報にも注意します。",
   goals: [
     "複数の箱ひげ図を同じ尺度で比較し、分布の傾向を説明できる。",
     "箱ひげ図からは分布の細かな形や各値の個数までは分からないことを説明できる。",
@@ -23,15 +24,26 @@ export const boxPlotComparisonCritiqueLesson: MathLesson = {
     steps: [
       { expression: "中央値: B > A", note: "中央の位置はBの方が大きいと読めます。" },
       { expression: "四分位範囲: B > A", note: "中央付近の散らばりもBの方が大きいと読めます。" },
-      { expression: "分布の山の数: 判断できない", note: "箱ひげ図だけでは分布の細かな形は分かりません。" },
+      {
+        expression: "分布の山の数: 判断できない",
+        note: "箱ひげ図だけでは分布の細かな形は分かりません。",
+      },
     ],
   },
   practice: {
     title: "練習: 読み過ぎを避ける",
     problem: "二つの集団の箱ひげ図で、中央値と四分位範囲が同じでした。",
     steps: [
-      { prompt: "分布の形も必ず同じと言えますか。「言える」か「言えない」で答えてください。", answers: ["言えない"], placeholder: "言える / 言えない" },
-      { prompt: "分布の形を詳しく確認するのに適した図を答えてください。", answers: ["ヒストグラム"], placeholder: "図の名前" },
+      {
+        prompt: "分布の形も必ず同じと言えますか。「言える」か「言えない」で答えてください。",
+        answers: ["言えない"],
+        placeholder: "言える / 言えない",
+      },
+      {
+        prompt: "分布の形を詳しく確認するのに適した図を答えてください。",
+        answers: ["ヒストグラム"],
+        placeholder: "図の名前",
+      },
     ],
     hint: "箱ひげ図では元データの細かな並び方が要約されています。",
   },

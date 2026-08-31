@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const probabilityComparisonFairnessLesson: MathLesson = {
   key: "probability-comparison-fairness",
   title: "確率を比べて公平さを判断する",
-  description: "ルールごとの当たりやすさを確率で表し、くじやゲームの公平さを根拠をもって判断します。",
+  description:
+    "ルールごとの当たりやすさを確率で表し、くじやゲームの公平さを根拠をもって判断します。",
   goals: [
     "複数のルールの確率を同じ基準で比較できる。",
     "公平かどうかを感覚ではなく確率を根拠に説明できる。",
@@ -30,7 +31,12 @@ export const probabilityComparisonFairnessLesson: MathLesson = {
     problem: "Aの当たる確率は1/3、Bの当たる確率は2/5です。",
     steps: [
       { prompt: "当たりやすいのはAとBのどちらですか。", answers: ["B", "b"], placeholder: "A / B" },
-      { prompt: "当たる確率が異なるので、公平と言えますか。「言える」か「言えない」で答えてください。", answers: ["言えない"], placeholder: "言える / 言えない" },
+      {
+        prompt:
+          "当たる確率が異なるので、公平と言えますか。「言える」か「言えない」で答えてください。",
+        answers: ["言えない"],
+        placeholder: "言える / 言えない",
+      },
     ],
     hint: "1/3と2/5の大きさを比べます。",
   },

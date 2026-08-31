@@ -4,10 +4,7 @@ export const twoStepProbabilityLesson: MathLesson = {
   key: "two-step-probability",
   title: "二段階の試行の確率を求める",
   description: "二つの操作が続く場面を樹形図や表で整理し、条件に合う組合せから確率を求めます。",
-  goals: [
-    "二段階の試行の全結果を整理できる。",
-    "複数の結果をまとめた事象の確率を求められる。",
-  ],
+  goals: ["二段階の試行の全結果を整理できる。", "複数の結果をまとめた事象の確率を求められる。"],
   concepts: [
     {
       title: "まず全結果を組として書く",
@@ -30,7 +27,11 @@ export const twoStepProbabilityLesson: MathLesson = {
     title: "練習: 二段階の結果を数える",
     problem: "公平な硬貨を2枚投げます。",
     steps: [
-      { prompt: "少なくとも1枚が表になる確率を答えてください。", answers: ["3/4", "0.75"], placeholder: "確率" },
+      {
+        prompt: "少なくとも1枚が表になる確率を答えてください。",
+        answers: ["3/4", "0.75"],
+        placeholder: "確率",
+      },
     ],
     hint: "表表、表裏、裏表が条件に合います。",
   },

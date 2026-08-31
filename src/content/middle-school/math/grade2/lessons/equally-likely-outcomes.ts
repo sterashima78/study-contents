@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const equallyLikelyOutcomesLesson: MathLesson = {
   key: "equally-likely-outcomes",
   title: "同様に確からしい場合を捉える",
-  description: "起こり得る各場合が同じ程度に起こると考えられるかを確認してから、場合の数で確率を考えます。",
+  description:
+    "起こり得る各場合が同じ程度に起こると考えられるかを確認してから、場合の数で確率を考えます。",
   goals: [
     "同様に確からしいという条件を説明できる。",
     "場合の数を分母にできる場面と、できない場面を区別できる。",
@@ -30,7 +31,12 @@ export const equallyLikelyOutcomesLesson: MathLesson = {
     title: "練習: 条件を確認する",
     problem: "公平な6面さいころを1回投げます。",
     steps: [
-      { prompt: "1〜6の各目は同様に確からしいと言えますか。「言える」か「言えない」で答えてください。", answers: ["言える"], placeholder: "言える / 言えない" },
+      {
+        prompt:
+          "1〜6の各目は同様に確からしいと言えますか。「言える」か「言えない」で答えてください。",
+        answers: ["言える"],
+        placeholder: "言える / 言えない",
+      },
     ],
     hint: "『公平な』さいころであることに注目します。",
   },
