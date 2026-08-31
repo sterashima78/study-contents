@@ -139,6 +139,17 @@ export const curriculumReferences = Object.freeze({
     routeBase: "middle-school/math/grade2",
     note: "第2学年の「A 数と式」「B 図形」「C 関数」「D データの活用」を、式・証明・一次関数・四分位数と箱ひげ図・場合の数と確率まで1ページ1技能で構成しています。",
   }),
+  "middle-math3": createReference({
+    courseTitle: "中学数学 3年",
+    subjectTitle: "数学",
+    curriculumCourse: "第3学年",
+    guidelineTitle: "中学校学習指導要領（平成29年告示）",
+    guidelineUrl: GUIDELINE_INDEX_URL,
+    commentaryTitle: "中学校学習指導要領（平成29年告示）解説 数学編",
+    commentaryUrl: MIDDLE_MATH_COMMENTARY_URL,
+    routeBase: "middle-school/math/grade3",
+    note: "第3学年は「A 数と式」の平方根から公開を開始し、平方根の意味・計算・近似値・誤差・具体的な活用を1ページ1技能で構成しています。",
+  }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
     subjectTitle: "理科",
