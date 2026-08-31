@@ -29,6 +29,18 @@ const polynomialLessonKeys = [
   "polynomial-relation-explanation",
 ] as const;
 
+const quadraticLessonKeys = [
+  "quadratic-equation-meaning",
+  "quadratic-equation-square-root",
+  "quadratic-equation-factorization",
+  "quadratic-equation-completing-square",
+  "quadratic-formula-derivation",
+  "quadratic-formula-solving",
+  "quadratic-equation-method-selection",
+  "quadratic-equation-modeling",
+  "quadratic-equation-interpretation",
+] as const;
+
 const lessonTitles: Record<string, string> = {
   "square-root-meaning": "平方根の意味を捉える",
   "rational-irrational": "有理数と無理数を区別する",
@@ -51,11 +63,31 @@ const lessonTitles: Record<string, string> = {
   "trinomial-factorization": "x²+px+qを因数分解する",
   "formula-efficient-calculation": "展開・因数分解の公式を数の計算に活用する",
   "polynomial-relation-explanation": "文字式で数量の関係を説明する",
+  "quadratic-equation-meaning": "二次方程式の意味と解を捉える",
+  "quadratic-equation-square-root": "平方根の考えで二次方程式を解く",
+  "quadratic-equation-factorization": "因数分解して二次方程式を解く",
+  "quadratic-equation-completing-square": "平方の形に変形して二次方程式を解く",
+  "quadratic-formula-derivation": "解の公式が生まれる流れを知る",
+  "quadratic-formula-solving": "解の公式で二次方程式を解く",
+  "quadratic-equation-method-selection": "二次方程式の解法を選ぶ",
+  "quadratic-equation-modeling": "具体的な場面から二次方程式をつくる",
+  "quadratic-equation-interpretation": "二次方程式の解を場面に戻して吟味する",
 };
 
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 const signedTerm = (value: number, variable = "") =>
   value > 0 ? `+${value}${variable}` : value < 0 ? `${value}${variable}` : "";
+const randomNonZero = (min: number, max: number) => {
+  let value = 0;
+  while (value === 0) value = randomInt(min, max);
+  return value;
+};
+const rootPair = (first: number, second: number) =>
+  [first, second]
+    .sort((a, b) => a - b)
+    .map(String)
+    .join(",");
+const half = (numerator: number) => (numerator === 1 ? "1/2" : numerator === -1 ? "-1/2" : `${numerator}/2`);
 
 const generators: Record<string, Generator> = {
   "square-root-meaning": () => {
@@ -276,6 +308,145 @@ const generators: Record<string, Generator> = {
     lessonKeys: ["polynomial-relation-explanation"],
     hint: "展開すると4n²+4n+1です。",
   }),
+  "quadratic-equation-meaning": () => {
+    const b = randomNonZero(-7, 7);
+    const c = randomInt(-8, 8);
+    return {
+      prompt: `x²${signedTerm(b, "x")}${signedTerm(c)}=0は何次方程式ですか。`,
+      answers: ["二次方程式", "2次方程式"],
+      lessonKeys: ["quadratic-equation-meaning"],
+      hint: "整理した式の最高次数に注目します。",
+    };
+  },
+  "quadratic-equation-square-root": () => {
+    const n = [2, 3, 5, 6, 7, 10, 11, 13][randomInt(0, 7)];
+    return {
+      prompt: `x²=${n}の解を「小さい方,大きい方」の順で答えてください。`,
+      answers: [`-√${n},√${n}`, `−√${n},√${n}`],
+      lessonKeys: ["quadratic-equation-square-root"],
+      hint: `2乗して${n}になる実数は正負の二つです。`,
+    };
+  },
+  "quadratic-equation-factorization": () => {
+    const first = randomNonZero(-6, 6);
+    let second = randomNonZero(-6, 6);
+    while (second === first) second = randomNonZero(-6, 6);
+    const sum = first + second;
+    const product = first * second;
+    return {
+      prompt: `x²${signedTerm(-sum, "x")}${signedTerm(product)}=0の解を小さい順にカンマで答えてください。`,
+      answers: [rootPair(first, second)],
+      lessonKeys: ["quadratic-equation-factorization"],
+      hint: `(x−${first})(x−${second})=0の形へ因数分解できます。`,
+    };
+  },
+  "quadratic-equation-completing-square": () => {
+    const m = randomNonZero(-5, 5);
+    const radius = randomInt(2, 6);
+    const constant = m * m - radius * radius;
+    const first = -m - radius;
+    const second = -m + radius;
+    return {
+      prompt: `x²${signedTerm(2 * m, "x")}${signedTerm(constant)}=0を平方の形に変形して解き、解を小さい順にカンマで答えてください。`,
+      answers: [rootPair(first, second)],
+      lessonKeys: ["quadratic-equation-completing-square"],
+      hint: `(x${signedTerm(m)})²=${radius * radius}の形を作ります。`,
+    };
+  },
+  "quadratic-formula-derivation": () => {
+    const m = randomInt(2, 6);
+    const k = randomInt(2, 15);
+    const constant = m * m - k;
+    return {
+      prompt: `x²+${2 * m}x${signedTerm(constant)}=0を(x+${m})²=kの形にするとき、kを答えてください。`,
+      answers: [String(k)],
+      lessonKeys: ["quadratic-formula-derivation"],
+      hint: `${2 * m}の半分${m}の2乗を両辺に加えます。`,
+    };
+  },
+  "quadratic-formula-solving": () => {
+    const integerRoot = randomInt(1, 5);
+    const oddNumerator = [-5, -3, -1, 1, 3, 5][randomInt(0, 5)];
+    const b = -(2 * integerRoot + oddNumerator);
+    const c = integerRoot * oddNumerator;
+    const halfRoot = oddNumerator / 2;
+    const answers =
+      integerRoot < halfRoot
+        ? [`${integerRoot},${half(oddNumerator)}`]
+        : [`${half(oddNumerator)},${integerRoot}`];
+    return {
+      prompt: `2x²${signedTerm(b, "x")}${signedTerm(c)}=0を解の公式で解き、解を小さい順にカンマで答えてください。`,
+      answers,
+      lessonKeys: ["quadratic-formula-solving"],
+      hint: `a=2、b=${b}、c=${c}として解の公式へ代入します。`,
+    };
+  },
+  "quadratic-equation-method-selection": () => {
+    const pattern = randomInt(0, 3);
+    if (pattern === 0) {
+      const n = [2, 3, 5, 7, 11][randomInt(0, 4)];
+      return {
+        prompt: `x²=${n}を解くとき、最も直接的な方法を答えてください。`,
+        answers: ["平方根", "平方根の考え"],
+        lessonKeys: ["quadratic-equation-method-selection"],
+        hint: "すでにX²=kの形です。",
+      };
+    }
+    if (pattern === 1) {
+      const first = randomInt(1, 5);
+      const second = randomInt(first + 1, 7);
+      return {
+        prompt: `x²-${first + second}x+${first * second}=0を解くとき、最も直接的な方法を答えてください。`,
+        answers: ["因数分解"],
+        lessonKeys: ["quadratic-equation-method-selection"],
+        hint: "整数の一次式の積へすぐ直せます。",
+      };
+    }
+    if (pattern === 2) {
+      const m = randomInt(2, 5);
+      return {
+        prompt: `x²+${2 * m}x−1=0を、一次項の係数が偶数であることを生かして解く方法を答えてください。`,
+        answers: ["平方完成", "平方の形", "平方の形に変形"],
+        lessonKeys: ["quadratic-equation-method-selection"],
+        hint: "一次項の係数の半分を使うと平方の形を作れます。",
+      };
+    }
+    const n = [1, 3, 4, 5, 7][randomInt(0, 4)];
+    return {
+      prompt: `x²+x−${n}=0を解くとき、整数で因数分解しにくい場合に使える方法を答えてください。`,
+      answers: ["解の公式"],
+      lessonKeys: ["quadratic-equation-method-selection"],
+      hint: "標準形ax²+bx+c=0なら係数から直接解を求められます。",
+    };
+  },
+  "quadratic-equation-modeling": () => {
+    const side = randomInt(4, 10);
+    const area = side * side - 1;
+    return {
+      prompt: `元の正方形の1辺をx cmとし、一方を1cm長く、他方を1cm短くした長方形の面積が${area}cm²です。xについての方程式を答えてください。`,
+      answers: [
+        `(x+1)(x-1)=${area}`,
+        `(x+1)(x−1)=${area}`,
+        `x²-1=${area}`,
+        `x^2-1=${area}`,
+        `x²−1=${area}`,
+        `x²-${side * side}=0`,
+        `x^2-${side * side}=0`,
+      ],
+      lessonKeys: ["quadratic-equation-modeling"],
+      hint: "長辺×短辺=面積と表します。",
+    };
+  },
+  "quadratic-equation-interpretation": () => {
+    const side = randomInt(4, 10);
+    const area = side * side - 1;
+    return {
+      prompt: `元の正方形の1辺をx cmとし、一方を1cm長く、他方を1cm短くした長方形の面積が${area}cm²です。二次方程式を解いて得られる正負の解を吟味し、元の正方形の1辺を答えてください。`,
+      answers: [String(side), `${side}cm`],
+      lessonKeys: ["quadratic-equation-interpretation"],
+      hint: `方程式では±${side}が現れますが、長さとして採用できる値を選びます。`,
+    };
+  },
 };
 
 const withMetadata = (
@@ -308,7 +479,9 @@ export const generateMiddleMath3UnitExercises = (unitKey: string, count = 8) => 
       ? squareRootLessonKeys
       : unitKey === "polynomial-expansion-factorization"
         ? polynomialLessonKeys
-        : undefined;
+        : unitKey === "quadratic-equations"
+          ? quadraticLessonKeys
+          : undefined;
   if (!unitLessonKeys) return [];
   const difficulties: MiddleMathExerciseDifficulty[] = [
     "basic",
