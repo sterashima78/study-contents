@@ -19,7 +19,7 @@ const _base = import.meta.env.BASE_URL;
 
 <StudyPage
   title="中学数学 | 学習コンテンツ"
-  description="中学1〜3年の数学を学年別に学ぶための入口です。中学1・2年の4領域と、中学3年の平方根・式の展開と因数分解を公開しています。"
+  description="中学1〜3年の数学を学年別に学ぶための入口です。中学1・2年の4領域と、中学3年の数と式3単元を公開しています。"
   width="wide"
 >
   <ContentHero
@@ -34,7 +34,7 @@ const _base = import.meta.env.BASE_URL;
       label="GRADES"
       title="学年からはじめる"
       id="grades-title"
-      description="中学1年と中学2年は4領域を公開済みです。中学3年は数と式の「平方根」「式の展開と因数分解」を公開しています。"
+      description="中学1年と中学2年は4領域を公開済みです。中学3年は数と式の「平方根」「式の展開と因数分解」「二次方程式」を公開しています。"
     />
     <ContentIndex
       items={[
@@ -60,8 +60,8 @@ const _base = import.meta.env.BASE_URL;
           title: "中学3年",
           href: `${_base}middle-school/math/grade3/`,
           description:
-            "平方根、式の展開・因数分解から始め、二次方程式、関数 y=ax²、相似、円、三平方の定理、標本調査へ進みます。",
-          tags: ["数と式 2単元公開中", "1ページ1技能"],
+            "平方根、式の展開・因数分解、二次方程式から始め、関数 y=ax²、相似、円、三平方の定理、標本調査へ進みます。",
+          tags: ["数と式 3単元公開中", "1ページ1技能"],
           action: "3年の目次へ →",
         },
       ]}
@@ -71,9 +71,7 @@ const _base = import.meta.env.BASE_URL;
 
   <ContentSection labelledby="planned-title" compact>
     <SectionHeading label="PLANNED" title="続けて追加する内容" id="planned-title" />
-    <SummaryPoints
-      items={["中学3年: 二次方程式、関数 y=ax²、相似、円、三平方の定理、標本調査。"]}
-    />
+    <SummaryPoints items={["中学3年: 関数 y=ax²、相似、円、三平方の定理、標本調査。"]} />
   </ContentSection>
 
   <PageNavigation
