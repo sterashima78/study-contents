@@ -1,7 +1,14 @@
 import type { MathArea } from "../../../math1/types";
 import { eliminationAddSubtractLesson } from "./lessons/elimination-add-subtract";
 import { eliminationMultiplyLesson } from "./lessons/elimination-multiply";
+import { linearEquationAsFunctionLesson } from "./lessons/linear-equation-as-function";
 import { linearEquationTwoVariablesLesson } from "./lessons/linear-equation-two-variables";
+import { linearFunctionApplicationLesson } from "./lessons/linear-function-application";
+import { linearFunctionExpressionLesson } from "./lessons/linear-function-expression";
+import { linearFunctionFromGraphLesson } from "./lessons/linear-function-from-graph";
+import { linearFunctionGraphLesson } from "./lessons/linear-function-graph";
+import { linearFunctionMeaningLesson } from "./lessons/linear-function-meaning";
+import { linearFunctionRateOfChangeLesson } from "./lessons/linear-function-rate-of-change";
 import { literalExpressionExplanationLesson } from "./lessons/literal-expression-explanation";
 import { mixedMonomialCalculationLesson } from "./lessons/mixed-monomial-calculation";
 import { monomialDivisionLesson } from "./lessons/monomial-division";
@@ -15,6 +22,7 @@ import { systemMeaningLesson } from "./lessons/system-meaning";
 import { systemSolveMixedLesson } from "./lessons/system-solve-mixed";
 import { systemWordApplicationLesson } from "./lessons/system-word-application";
 import { systemWordModelLesson } from "./lessons/system-word-model";
+import { systemsAndGraphsLesson } from "./lessons/systems-and-graphs";
 
 export const middleMath2Areas: MathArea[] = [
   {
@@ -53,6 +61,30 @@ export const middleMath2Areas: MathArea[] = [
           systemSolveMixedLesson,
           systemWordModelLesson,
           systemWordApplicationLesson,
+        ],
+      },
+    ],
+  },
+  {
+    key: "functions",
+    title: "関数",
+    description:
+      "中学1年の比例・反比例を土台に、一次関数を表・式・グラフで捉え、二元一次方程式や具体的な事象と結び付けます。",
+    units: [
+      {
+        key: "linear-functions",
+        title: "一次関数",
+        description:
+          "一次関数の意味、変化の割合、式とグラフ、二元一次方程式・連立方程式との関係、具体的な事象への活用を学びます。",
+        lessons: [
+          linearFunctionMeaningLesson,
+          linearFunctionRateOfChangeLesson,
+          linearFunctionExpressionLesson,
+          linearFunctionGraphLesson,
+          linearFunctionFromGraphLesson,
+          linearEquationAsFunctionLesson,
+          systemsAndGraphsLesson,
+          linearFunctionApplicationLesson,
         ],
       },
     ],
