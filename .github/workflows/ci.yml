@@ -59,6 +59,9 @@ jobs:
       - name: Verify generated HTML
         run: node scripts/verify-build-output.mjs
 
+      - name: Verify middle school math generated HTML
+        run: pnpm check:middle-math-build
+
       - name: Verify English generated HTML
         run: node scripts/verify-english-build-output.mjs
 
