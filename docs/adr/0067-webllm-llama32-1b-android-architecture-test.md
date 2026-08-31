@@ -1,6 +1,7 @@
 # ADR 0067: Android実機の生成破綻をLlama 3.2 1Bでアーキテクチャ比較する
 
-- Status: Accepted
+- Status: Superseded
+- Superseded by: ADR 0071
 - Date: 2026-08-31
 - Related: ADR 0005, ADR 0049, ADR 0055, ADR 0056, ADR 0064
 
