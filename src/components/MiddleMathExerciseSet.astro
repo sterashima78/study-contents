@@ -3,7 +3,7 @@ import "../styles/exercise.css";
 
 type Props = {
   mode: "lesson" | "unit";
-  courseKey: "middle-math1" | "middle-math2";
+  courseKey: "middle-math1" | "middle-math2" | "middle-math3";
   areaKey: string;
   unitKey: string;
   lessonKey?: string;
@@ -103,6 +103,10 @@ const _isUnit = _mode === "unit";
     generateMiddleMath2FunctionLessonExercises,
     generateMiddleMath2FunctionUnitExercises,
   } from "../content/middle-school/math/grade2/linear-function-exercise-registry";
+  import {
+    generateMiddleMath3LessonExercises,
+    generateMiddleMath3UnitExercises,
+  } from "../content/middle-school/math/grade3/exercise-registry";
 
   const difficultyLabel: Record<MiddleMathExercise["difficulty"], string> = {
     basic: "基礎",
@@ -165,6 +169,13 @@ const _isUnit = _mode === "unit";
     let exercises: MiddleMathExercise[] = [];
 
     const makeExercises = () => {
+      if (courseKey === "middle-math3") {
+        return mode === "unit"
+          ? generateMiddleMath3UnitExercises(unitKey)
+          : lessonKey
+            ? generateMiddleMath3LessonExercises(lessonKey)
+            : [];
+      }
       if (courseKey === "middle-math2") {
         if (areaKey === "data") {
           return mode === "unit"
