@@ -14,6 +14,21 @@ const squareRootLessonKeys = [
   "square-root-application",
 ] as const;
 
+const polynomialLessonKeys = [
+  "monomial-polynomial-multiplication",
+  "polynomial-monomial-division",
+  "binomial-expansion-distributive",
+  "square-expansion",
+  "sum-difference-expansion",
+  "product-expansion-xab",
+  "common-factor-factorization",
+  "square-factorization",
+  "difference-squares-factorization",
+  "trinomial-factorization",
+  "formula-efficient-calculation",
+  "polynomial-relation-explanation",
+] as const;
+
 const lessonTitles: Record<string, string> = {
   "square-root-meaning": "平方根の意味を捉える",
   "rational-irrational": "有理数と無理数を区別する",
@@ -24,9 +39,23 @@ const lessonTitles: Record<string, string> = {
   "radical-mixed-calculation": "平方根の計算を組み合わせる",
   "error-approximation-scientific-notation": "誤差・近似値と数の表し方を捉える",
   "square-root-application": "平方根を具体的な場面に活用する",
+  "monomial-polynomial-multiplication": "単項式と多項式を掛ける",
+  "polynomial-monomial-division": "多項式を単項式で割る",
+  "binomial-expansion-distributive": "分配法則で一次式の積を展開する",
+  "square-expansion": "和と差の2乗を展開する",
+  "sum-difference-expansion": "和と差の積を展開する",
+  "product-expansion-xab": "(x+a)(x+b)を展開する",
+  "common-factor-factorization": "共通因数で因数分解する",
+  "square-factorization": "完全平方の形を因数分解する",
+  "difference-squares-factorization": "平方の差を因数分解する",
+  "trinomial-factorization": "x²+px+qを因数分解する",
+  "formula-efficient-calculation": "展開・因数分解の公式を数の計算に活用する",
+  "polynomial-relation-explanation": "文字式で数量の関係を説明する",
 };
 
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+const signedTerm = (value: number, variable = "") =>
+  value > 0 ? `+${value}${variable}` : value < 0 ? `${value}${variable}` : "";
 
 const generators: Record<string, Generator> = {
   "square-root-meaning": () => {
@@ -120,6 +149,133 @@ const generators: Record<string, Generator> = {
       hint: `1辺は√${area}cmです。平方数の因数を外へ出します。`,
     };
   },
+  "monomial-polynomial-multiplication": () => {
+    const m = randomInt(2, 5);
+    const a = randomInt(2, 6);
+    const b = randomInt(1, 8);
+    return {
+      prompt: `${m}x(${a}x+${b})を計算してください。`,
+      answers: [`${m * a}x²+${m * b}x`, `${m * a}x^2+${m * b}x`],
+      lessonKeys: ["monomial-polynomial-multiplication"],
+      hint: `${m}xを${a}xと${b}の両方へ掛けます。`,
+    };
+  },
+  "polynomial-monomial-division": () => {
+    const m = randomInt(2, 5);
+    const a = randomInt(2, 6);
+    const b = randomInt(1, 6);
+    return {
+      prompt: `(${m * a}x²+${m * b}x)÷${m}xを計算してください。`,
+      answers: [`${a}x+${b}`],
+      lessonKeys: ["polynomial-monomial-division"],
+      hint: "2つの項をそれぞれ同じ単項式で割ります。",
+    };
+  },
+  "binomial-expansion-distributive": () => {
+    const a = randomInt(1, 5);
+    const b = randomInt(1, 6);
+    return {
+      prompt: `(x+${a})(x+${b})を展開してください。`,
+      answers: [`x²+${a + b}x+${a * b}`, `x^2+${a + b}x+${a * b}`],
+      lessonKeys: ["binomial-expansion-distributive"],
+      hint: "4つの積を作ってから同類項をまとめます。",
+    };
+  },
+  "square-expansion": () => {
+    const n = randomInt(2, 8);
+    return {
+      prompt: `(x+${n})²を展開してください。`,
+      answers: [`x²+${2 * n}x+${n * n}`, `x^2+${2 * n}x+${n * n}`],
+      lessonKeys: ["square-expansion"],
+      hint: `(a+b)²=a²+2ab+b²を使います。`,
+    };
+  },
+  "sum-difference-expansion": () => {
+    const n = randomInt(2, 9);
+    return {
+      prompt: `(x+${n})(x−${n})を展開してください。`,
+      answers: [`x²−${n * n}`, `x²-${n * n}`, `x^2-${n * n}`],
+      lessonKeys: ["sum-difference-expansion"],
+      hint: "和と差の積は平方の差になります。",
+    };
+  },
+  "product-expansion-xab": () => {
+    const a = randomInt(2, 7);
+    const b = -randomInt(1, 6);
+    const p = a + b;
+    const q = a * b;
+    const middle = signedTerm(p, "x");
+    return {
+      prompt: `(x+${a})(x${signedTerm(b)})を展開してください。`,
+      answers: [`x²${middle}${signedTerm(q)}`, `x^2${middle}${signedTerm(q)}`],
+      lessonKeys: ["product-expansion-xab"],
+      hint: "xの係数は2数の和、定数項は2数の積です。",
+    };
+  },
+  "common-factor-factorization": () => {
+    const common = randomInt(2, 6);
+    const pairs = [
+      [2, 3],
+      [2, 5],
+      [3, 4],
+      [3, 5],
+      [4, 5],
+      [5, 6],
+    ] as const;
+    const [a, b] = pairs[randomInt(0, pairs.length - 1)];
+    return {
+      prompt: `${common * a}x²+${common * b}xを因数分解してください。`,
+      answers: [`${common}x(${a}x+${b})`],
+      lessonKeys: ["common-factor-factorization"],
+      hint: `${common}xを最大の共通因数としてくくれます。`,
+    };
+  },
+  "square-factorization": () => {
+    const n = randomInt(2, 8);
+    return {
+      prompt: `x²+${2 * n}x+${n * n}を因数分解してください。`,
+      answers: [`(x+${n})²`, `(x+${n})^2`],
+      lessonKeys: ["square-factorization"],
+      hint: "最初と最後の平方根の積を2倍すると中央の項になります。",
+    };
+  },
+  "difference-squares-factorization": () => {
+    const n = randomInt(2, 10);
+    return {
+      prompt: `x²−${n * n}を因数分解してください。`,
+      answers: [`(x+${n})(x−${n})`, `(x+${n})(x-${n})`],
+      lessonKeys: ["difference-squares-factorization"],
+      hint: "a²−b²=(a+b)(a−b)を使います。",
+    };
+  },
+  "trinomial-factorization": () => {
+    const a = randomInt(1, 6);
+    const b = randomInt(1, 6);
+    const p = a + b;
+    const q = a * b;
+    return {
+      prompt: `x²+${p}x+${q}を因数分解してください。`,
+      answers: [`(x+${a})(x+${b})`, `(x+${b})(x+${a})`],
+      lessonKeys: ["trinomial-factorization"],
+      hint: `和が${p}、積が${q}になる2数を探します。`,
+    };
+  },
+  "formula-efficient-calculation": () => {
+    const n = randomInt(1, 4);
+    const value = 100 + n;
+    return {
+      prompt: `${value}²を展開公式を使って計算した値を答えてください。`,
+      answers: [String(value * value)],
+      lessonKeys: ["formula-efficient-calculation"],
+      hint: `${value}=100+${n}として和の2乗を使います。`,
+    };
+  },
+  "polynomial-relation-explanation": () => ({
+    prompt: "連続する偶数を2n、2n+2とするとき、2n(2n+2)+1を因数分解した形を答えてください。",
+    answers: ["(2n+1)²", "(2n+1)^2"],
+    lessonKeys: ["polynomial-relation-explanation"],
+    hint: "展開すると4n²+4n+1です。",
+  }),
 };
 
 const withMetadata = (
@@ -147,7 +303,13 @@ export const generateMiddleMath3LessonExercises = (lessonKey: string, count = 3)
 };
 
 export const generateMiddleMath3UnitExercises = (unitKey: string, count = 8) => {
-  if (unitKey !== "square-roots") return [];
+  const unitLessonKeys =
+    unitKey === "square-roots"
+      ? squareRootLessonKeys
+      : unitKey === "polynomial-expansion-factorization"
+        ? polynomialLessonKeys
+        : undefined;
+  if (!unitLessonKeys) return [];
   const difficulties: MiddleMathExerciseDifficulty[] = [
     "basic",
     "basic",
@@ -156,9 +318,9 @@ export const generateMiddleMath3UnitExercises = (unitKey: string, count = 8) => 
     "applied",
     "challenge",
   ];
-  const startIndex = randomInt(0, squareRootLessonKeys.length - 1);
+  const startIndex = randomInt(0, unitLessonKeys.length - 1);
   return Array.from({ length: count }, (_, index) => {
-    const lessonKey = squareRootLessonKeys[(startIndex + index) % squareRootLessonKeys.length];
+    const lessonKey = unitLessonKeys[(startIndex + index) % unitLessonKeys.length];
     return withMetadata(
       generators[lessonKey](),
       `${unitKey}-${Date.now()}-${index}`,

@@ -1,20 +1,31 @@
 import type { MathArea } from "../../../math1/types";
+import { binomialExpansionDistributiveLesson } from "./lessons/binomial-expansion-distributive";
+import { commonFactorFactorizationLesson } from "./lessons/common-factor-factorization";
+import { differenceSquaresFactorizationLesson } from "./lessons/difference-squares-factorization";
 import { errorApproximationScientificNotationLesson } from "./lessons/error-approximation-scientific-notation";
+import { formulaEfficientCalculationLesson } from "./lessons/formula-efficient-calculation";
+import { monomialPolynomialMultiplicationLesson } from "./lessons/monomial-polynomial-multiplication";
+import { polynomialMonomialDivisionLesson } from "./lessons/polynomial-monomial-division";
+import { polynomialRelationExplanationLesson } from "./lessons/polynomial-relation-explanation";
+import { productExpansionXabLesson } from "./lessons/product-expansion-xab";
 import { radicalAdditionSubtractionLesson } from "./lessons/radical-addition-subtraction";
 import { radicalMixedCalculationLesson } from "./lessons/radical-mixed-calculation";
 import { radicalMultiplicationDivisionLesson } from "./lessons/radical-multiplication-division";
 import { radicalSimplificationLesson } from "./lessons/radical-simplification";
 import { rationalIrrationalLesson } from "./lessons/rational-irrational";
+import { squareExpansionLesson } from "./lessons/square-expansion";
+import { squareFactorizationLesson } from "./lessons/square-factorization";
 import { squareRootApplicationLesson } from "./lessons/square-root-application";
 import { squareRootApproximationLesson } from "./lessons/square-root-approximation";
 import { squareRootMeaningLesson } from "./lessons/square-root-meaning";
+import { sumDifferenceExpansionLesson } from "./lessons/sum-difference-expansion";
+import { trinomialFactorizationLesson } from "./lessons/trinomial-factorization";
 
 export const middleMath3Areas: MathArea[] = [
   {
     key: "numbers-expressions",
     title: "数と式",
-    description:
-      "平方根で数の範囲を無理数まで広げ、続いて式の展開・因数分解、二次方程式へ進みます。",
+    description: "平方根で数の範囲を広げ、式の展開・因数分解を経て二次方程式へ進みます。",
     units: [
       {
         key: "square-roots",
@@ -31,6 +42,26 @@ export const middleMath3Areas: MathArea[] = [
           radicalMixedCalculationLesson,
           errorApproximationScientificNotationLesson,
           squareRootApplicationLesson,
+        ],
+      },
+      {
+        key: "polynomial-expansion-factorization",
+        title: "式の展開と因数分解",
+        description:
+          "単項式と多項式の計算から、一次式の積、4つの典型公式、因数分解、公式を使う数の計算、文字式による数量関係の説明へ進みます。",
+        lessons: [
+          monomialPolynomialMultiplicationLesson,
+          polynomialMonomialDivisionLesson,
+          binomialExpansionDistributiveLesson,
+          squareExpansionLesson,
+          sumDifferenceExpansionLesson,
+          productExpansionXabLesson,
+          commonFactorFactorizationLesson,
+          squareFactorizationLesson,
+          differenceSquaresFactorizationLesson,
+          trinomialFactorizationLesson,
+          formulaEfficientCalculationLesson,
+          polynomialRelationExplanationLesson,
         ],
       },
     ],
