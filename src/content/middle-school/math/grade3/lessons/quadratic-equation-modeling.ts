@@ -20,7 +20,8 @@ export const quadraticEquationModelingLesson: MathLesson = {
   ],
   example: {
     title: "例題: 正方形から作った長方形",
-    problem: "元の正方形の1辺をx cmとし、一方を1cm長く、他方を1cm短くした長方形の面積を24cm²とします。",
+    problem:
+      "元の正方形の1辺をx cmとし、一方を1cm長く、他方を1cm短くした長方形の面積を24cm²とします。",
     steps: [
       { expression: "長辺=x+1", note: "元の1辺より1cm長い辺です。" },
       { expression: "短辺=x−1", note: "元の1辺より1cm短い辺です。" },
@@ -32,10 +33,22 @@ export const quadraticEquationModelingLesson: MathLesson = {
     title: "練習: 数量関係を式にする",
     problem: "求める量をxと置いて、面積の関係を作ります。",
     steps: [
-      { prompt: "元の正方形の1辺をx cmとし、長辺x+2 cm、短辺x−2 cmの長方形の面積が45cm²です。方程式を答えてください。", answers: ["(x+2)(x-2)=45", "(x+2)(x−2)=45", "x²-4=45", "x^2-4=45", "x²−4=45"], placeholder: "方程式" },
-      { prompt: "縦x cm、横x+3 cmの長方形の面積が40cm²です。方程式を答えてください。", answers: ["x(x+3)=40", "x²+3x=40", "x^2+3x=40"], placeholder: "方程式" },
+      {
+        prompt:
+          "元の正方形の1辺をx cmとし、長辺x+2 cm、短辺x−2 cmの長方形の面積が45cm²です。方程式を答えてください。",
+        answers: ["(x+2)(x-2)=45", "(x+2)(x−2)=45", "x²-4=45", "x^2-4=45", "x²−4=45"],
+        placeholder: "方程式",
+      },
+      {
+        prompt: "縦x cm、横x+3 cmの長方形の面積が40cm²です。方程式を答えてください。",
+        answers: ["x(x+3)=40", "x²+3x=40", "x^2+3x=40"],
+        placeholder: "方程式",
+      },
     ],
     hint: "面積なら縦×横を作り、与えられた面積と等号で結びます。",
   },
-  summary: ["求めたい数量を文字で表し、同じ数量の二通りの表し方を等号で結ぶ。", "作った方程式が元の数量関係を表しているか確認する。"],
+  summary: [
+    "求めたい数量を文字で表し、同じ数量の二通りの表し方を等号で結ぶ。",
+    "作った方程式が元の数量関係を表しているか確認する。",
+  ],
 };
