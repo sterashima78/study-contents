@@ -15,7 +15,12 @@ export const quadraticEquationMethodSelectionLesson: MathLesson = {
         "x²=kなら平方根、左辺がすぐ因数分解できるなら因数分解、平方の形を作りやすいなら平方完成が有効です。どれにも当てはまりにくいときは解の公式が使えます。",
         "どの方法も、既習の平方根や一元一次方程式で処理できる形へ二次方程式を変えるという点でつながっています。",
       ],
-      formulas: ["x²=k → 平方根", "AB=0 → 因数分解", "(x+m)²=k → 平方完成", "ax²+bx+c=0 → 解の公式"],
+      formulas: [
+        "x²=k → 平方根",
+        "AB=0 → 因数分解",
+        "(x+m)²=k → 平方完成",
+        "ax²+bx+c=0 → 解の公式",
+      ],
     },
   ],
   example: {
@@ -31,10 +36,21 @@ export const quadraticEquationMethodSelectionLesson: MathLesson = {
     title: "練習: 解法を選ぶ",
     problem: "最も直接的な方法を答えます。",
     steps: [
-      { prompt: "x²=19を解くとき、最も直接的な方法を答えてください。", answers: ["平方根", "平方根の考え"], placeholder: "方法" },
-      { prompt: "x²−8x+15=0を解くとき、最も直接的な方法を答えてください。", answers: ["因数分解"], placeholder: "方法" },
+      {
+        prompt: "x²=19を解くとき、最も直接的な方法を答えてください。",
+        answers: ["平方根", "平方根の考え"],
+        placeholder: "方法",
+      },
+      {
+        prompt: "x²−8x+15=0を解くとき、最も直接的な方法を答えてください。",
+        answers: ["因数分解"],
+        placeholder: "方法",
+      },
     ],
     hint: "平方の形か、積が0の形へすぐ直せるかを先に見ます。",
   },
-  summary: ["解く前に式の形を見て方法を選ぶ。", "各解法は既習の平方根・一次方程式へ帰着させる考えでつながっている。"],
+  summary: [
+    "解く前に式の形を見て方法を選ぶ。",
+    "各解法は既習の平方根・一次方程式へ帰着させる考えでつながっている。",
+  ],
 };
