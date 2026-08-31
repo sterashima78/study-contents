@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleMath3Course } from "../../../../content/math-courses";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleMath3Areas } from "../../../../content/middle-school/math/grade3/catalog";
+---
+
+<CourseHome
+  course={middleMath3Course}
+  areas={middleMath3Areas}
+  description="中学3年の数学を、中学1・2年の既習事項と結び付けながら1ページ1技能で学びます。現在は数と式の「平方根」を公開しています。"
+  metaDescription="中学3年数学の学習コンテンツ。現行の中学校学習指導要領を基準に、平方根の意味、有理数と無理数、近似値、平方根を含む計算、誤差と具体的な活用を1ページ1技能で学びます。"
+  footerDescription="現行の中学校学習指導要領を基準に、次は式の展開と因数分解、二次方程式を追加します。"
+/>
