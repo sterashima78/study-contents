@@ -4,10 +4,7 @@ export const quadraticEquationCompletingSquareLesson: MathLesson = {
   key: "quadratic-equation-completing-square",
   title: "平方の形に変形して二次方程式を解く",
   description: "一次項の係数の半分を使って完全平方を作り、平方根の考えへつなげます。",
-  goals: [
-    "x²+2mxの形から(x+m)²を作れる。",
-    "平方完成してX²=kの形へ変形し、二次方程式を解ける。",
-  ],
+  goals: ["x²+2mxの形から(x+m)²を作れる。", "平方完成してX²=kの形へ変形し、二次方程式を解ける。"],
   concepts: [
     {
       title: "足した分を両辺へ足す",
@@ -33,10 +30,21 @@ export const quadraticEquationCompletingSquareLesson: MathLesson = {
     title: "練習: 平方完成する",
     problem: "一次項の係数の半分を利用します。",
     steps: [
-      { prompt: "x²+8x−9=0を(x+4)²=kの形にするとき、kを答えてください。", answers: ["25"], placeholder: "k" },
-      { prompt: "x²−4x−5=0の解を小さい順にカンマで答えてください。", answers: ["-1,5", "−1,5"], placeholder: "例: -2,3" },
+      {
+        prompt: "x²+8x−9=0を(x+4)²=kの形にするとき、kを答えてください。",
+        answers: ["25"],
+        placeholder: "k",
+      },
+      {
+        prompt: "x²−4x−5=0の解を小さい順にカンマで答えてください。",
+        answers: ["-1,5", "−1,5"],
+        placeholder: "例: -2,3",
+      },
     ],
     hint: "x²+2mxにはm²を加えると完全平方になります。",
   },
-  summary: ["平方完成は二次方程式をX²=kへ帰着させる方法。", "一次項の係数の半分を使って完全平方を作る。"],
+  summary: [
+    "平方完成は二次方程式をX²=kへ帰着させる方法。",
+    "一次項の係数の半分を使って完全平方を作る。",
+  ],
 };
