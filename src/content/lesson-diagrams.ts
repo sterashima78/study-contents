@@ -8,6 +8,7 @@ import { getMath3LessonDiagrams } from "./math3/diagrams";
 import { getMathCLessonDiagrams } from "./mathc/diagrams";
 import { getMiddleMath1LessonDiagrams } from "./middle-school/math/grade1/lesson-diagrams";
 import { getMiddleMath2LessonDiagrams } from "./middle-school/math/grade2/lesson-diagrams";
+import { getMiddleMath3LessonDiagrams } from "./middle-school/math/grade3/lesson-diagrams";
 import { getPhysicsLessonDiagrams } from "./physics/diagrams";
 import { getPhysicsBasicsLessonDiagrams } from "./physics-basics/diagrams";
 
@@ -28,6 +29,7 @@ const resolvers: Partial<Record<MathCourseInfo["key"], DiagramResolver>> = {
   math3: getMath3LessonDiagrams,
   "middle-math1": getMiddleMath1LessonDiagrams,
   "middle-math2": getMiddleMath2LessonDiagrams,
+  "middle-math3": getMiddleMath3LessonDiagrams,
   "physics-basics": getPhysicsBasicsLessonDiagrams,
   physics: getPhysicsLessonDiagrams,
 };
