@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const quadraticEquationMeaningLesson: MathLesson = {
   key: "quadratic-equation-meaning",
   title: "二次方程式の意味と解を捉える",
-  description: "文字の次数に着目して二次方程式を捉え、解が方程式を成り立たせる値であることを確認します。",
+  description:
+    "文字の次数に着目して二次方程式を捉え、解が方程式を成り立たせる値であることを確認します。",
   goals: [
     "一元一次方程式との違いを文字の次数から説明できる。",
     "二次方程式の解の意味と、解が一般に2つ現れることを理解する。",
@@ -39,8 +40,16 @@ export const quadraticEquationMeaningLesson: MathLesson = {
     title: "練習: 二次方程式を見分ける",
     problem: "整理したときの文字の次数に注目します。",
     steps: [
-      { prompt: "x²+3x−4=0は何次方程式ですか。", answers: ["二次方程式", "2次方程式"], placeholder: "○次方程式" },
-      { prompt: "x=2はx²−4=0の解ですか。", answers: ["はい", "解である", "解です"], placeholder: "はい / いいえ" },
+      {
+        prompt: "x²+3x−4=0は何次方程式ですか。",
+        answers: ["二次方程式", "2次方程式"],
+        placeholder: "○次方程式",
+      },
+      {
+        prompt: "x=2はx²−4=0の解ですか。",
+        answers: ["はい", "解である", "解です"],
+        placeholder: "はい / いいえ",
+      },
     ],
     hint: "最高次数が2なら二次方程式です。解かどうかは代入して確かめます。",
   },
