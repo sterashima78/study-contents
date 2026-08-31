@@ -57,8 +57,10 @@ if (!context.includes("MAX_RELEVANT_SECTIONS = 2")) {
 if (!modelConfig.includes('STUDY_AI_RUNTIME_VERSION = "0.2.82"')) {
   issues.push("model-config.ts: WebLLM runtime versionを0.2.82へ固定してください。");
 }
-if (!modelConfig.includes('"Qwen3-1.7B-q4f16_1-MLC"')) {
-  issues.push("model-config.ts: WebLLMで実機ロード済みのQwen3 1.7Bモデルを固定してください。");
+if (!modelConfig.includes('"Qwen3-1.7B-q4f32_1-MLC"')) {
+  issues.push(
+    "model-config.ts: Androidのf16経路切り分けではQwen3 1.7B q4f32モデルを固定してください。",
+  );
 }
 if (!modelConfig.includes("STUDY_AI_CONTEXT_WINDOW_SIZE = 2048")) {
   issues.push("model-config.ts: Android向けcontext windowを2048に固定してください。");
