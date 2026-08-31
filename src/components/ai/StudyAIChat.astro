@@ -231,6 +231,7 @@
 
         const assistantBody = appendMessage({ role: "assistant", content: "考えています…" });
         let answer = "";
+        let finishReason: string | null = null;
         try {
           const engine = await getStudyAIEngine((report) => {
             progress.hidden = false;
@@ -247,7 +248,7 @@
           }));
           const stream = await engine.chat.completions.create({
             messages: [
-              { role: "system", content: buildStudySystemPrompt(buildStudyContext()) },
+              { role: "system", content: buildStudySystemPrompt(buildStudyContext(question)) },
               ...recentHistory,
             ],
             stream: true,
@@ -258,18 +259,27 @@
           });
 
           for await (const chunk of stream) {
-            answer += chunk.choices[0]?.delta?.content ?? "";
+            const choice = chunk.choices[0];
+            answer += choice?.delta?.content ?? "";
+            finishReason = choice?.finish_reason ?? finishReason;
             assistantBody.textContent = visibleAssistantText(answer) || "考えています…";
             scrollToLatest();
           }
 
           const visibleAnswer = visibleAssistantText(answer).trim();
           if (!visibleAnswer) throw new Error("The model returned an empty response.");
-          assistantBody.textContent = visibleAnswer;
-          history.push({ role: "assistant", content: visibleAnswer });
+          const completedAnswer =
+            finishReason === "length"
+              ? `${visibleAnswer}\n\n回答が長いためここで区切りました。「続き」と入力してください。`
+              : visibleAnswer;
+          assistantBody.textContent = completedAnswer;
+          history.push({ role: "assistant", content: completedAnswer });
           history = history.slice(-10);
           saveHistory(storageKey, history);
-          status.textContent = "端末内AIで回答しました。";
+          status.textContent =
+            finishReason === "length"
+              ? "回答が長いため途中で区切りました。続きから再開できます。"
+              : "端末内AIで回答しました。";
         } catch (error) {
           console.error("Study AI failed", error);
           progress.hidden = true;
