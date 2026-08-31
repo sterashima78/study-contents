@@ -117,7 +117,10 @@ const conceptCardSource = await readFile(
   new URL("../src/components/ui/ConceptCard.astro", import.meta.url),
   "utf8",
 );
-if (!conceptCardSource.includes(".formula-plain") || !conceptCardSource.includes("overflow-x: auto;")) {
+if (
+  !conceptCardSource.includes(".formula-plain") ||
+  !conceptCardSource.includes("overflow-x: auto;")
+) {
   issues.push(
     "src/components/ui/ConceptCard.astro: プレーンテキスト数式は長い場合に横スクロールできる必要があります。",
   );
