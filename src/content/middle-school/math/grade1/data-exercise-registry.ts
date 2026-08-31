@@ -93,7 +93,8 @@ const generators: Record<string, Generator> = {
     };
   },
   "data-distribution-critique": () => ({
-    prompt: "同じデータでも、ヒストグラムの階級の幅を変えると分布の見え方が変わることがありますか。『変わる』か『変わらない』で答えてください。",
+    prompt:
+      "同じデータでも、ヒストグラムの階級の幅を変えると分布の見え方が変わることがありますか。『変わる』か『変わらない』で答えてください。",
     answers: ["変わる", "変わることがある", "変化する"],
     lessonKeys: ["data-distribution-critique"],
     hint: "階級を細かくするか粗くするかで、山の見え方が変わる場合があります。",
