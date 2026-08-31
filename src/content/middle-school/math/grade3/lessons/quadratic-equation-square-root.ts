@@ -4,10 +4,7 @@ export const quadraticEquationSquareRootLesson: MathLesson = {
   key: "quadratic-equation-square-root",
   title: "平方根の考えで二次方程式を解く",
   description: "ax²=bや(x+m)²=kをX²=kと見て、平方根の考えから二つの解を求めます。",
-  goals: [
-    "x²=kからx=±√kと解ける。",
-    "ax²=bや(x+m)²=kを平方根の考えで解ける。",
-  ],
+  goals: ["x²=kからx=±√kと解ける。", "ax²=bや(x+m)²=kを平方根の考えで解ける。"],
   concepts: [
     {
       title: "2乗を外すときは±を忘れない",
@@ -31,8 +28,16 @@ export const quadraticEquationSquareRootLesson: MathLesson = {
     title: "練習: 平方の形から解く",
     problem: "X²=kの形を見付けます。",
     steps: [
-      { prompt: "x²=7の解を答えてください。", answers: ["x=±√7", "±√7", "x=√7,-√7", "√7,-√7"], placeholder: "x=..." },
-      { prompt: "(x+2)²=16の解を小さい順にカンマで答えてください。", answers: ["-6,2", "−6,2"], placeholder: "例: -2,3" },
+      {
+        prompt: "x²=7の解を答えてください。",
+        answers: ["x=±√7", "±√7", "x=√7,-√7", "√7,-√7"],
+        placeholder: "x=...",
+      },
+      {
+        prompt: "(x+2)²=16の解を小さい順にカンマで答えてください。",
+        answers: ["-6,2", "−6,2"],
+        placeholder: "例: -2,3",
+      },
     ],
     hint: "かっこ全体をXと見て、X=±√kとしてからxを求めます。",
   },
