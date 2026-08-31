@@ -8,6 +8,15 @@ import { monomialPolynomialMultiplicationLesson } from "./lessons/monomial-polyn
 import { polynomialMonomialDivisionLesson } from "./lessons/polynomial-monomial-division";
 import { polynomialRelationExplanationLesson } from "./lessons/polynomial-relation-explanation";
 import { productExpansionXabLesson } from "./lessons/product-expansion-xab";
+import { quadraticEquationCompletingSquareLesson } from "./lessons/quadratic-equation-completing-square";
+import { quadraticEquationFactorizationLesson } from "./lessons/quadratic-equation-factorization";
+import { quadraticEquationInterpretationLesson } from "./lessons/quadratic-equation-interpretation";
+import { quadraticEquationMeaningLesson } from "./lessons/quadratic-equation-meaning";
+import { quadraticEquationMethodSelectionLesson } from "./lessons/quadratic-equation-method-selection";
+import { quadraticEquationModelingLesson } from "./lessons/quadratic-equation-modeling";
+import { quadraticEquationSquareRootLesson } from "./lessons/quadratic-equation-square-root";
+import { quadraticFormulaDerivationLesson } from "./lessons/quadratic-formula-derivation";
+import { quadraticFormulaSolvingLesson } from "./lessons/quadratic-formula-solving";
 import { radicalAdditionSubtractionLesson } from "./lessons/radical-addition-subtraction";
 import { radicalMixedCalculationLesson } from "./lessons/radical-mixed-calculation";
 import { radicalMultiplicationDivisionLesson } from "./lessons/radical-multiplication-division";
@@ -62,6 +71,23 @@ export const middleMath3Areas: MathArea[] = [
           trinomialFactorizationLesson,
           formulaEfficientCalculationLesson,
           polynomialRelationExplanationLesson,
+        ],
+      },
+      {
+        key: "quadratic-equations",
+        title: "二次方程式",
+        description:
+          "二次方程式の意味から、平方根・因数分解・平方完成・解の公式による解法、解法の選択、具体的な場面での方程式化と解の吟味へ進みます。",
+        lessons: [
+          quadraticEquationMeaningLesson,
+          quadraticEquationSquareRootLesson,
+          quadraticEquationFactorizationLesson,
+          quadraticEquationCompletingSquareLesson,
+          quadraticFormulaDerivationLesson,
+          quadraticFormulaSolvingLesson,
+          quadraticEquationMethodSelectionLesson,
+          quadraticEquationModelingLesson,
+          quadraticEquationInterpretationLesson,
         ],
       },
     ],
