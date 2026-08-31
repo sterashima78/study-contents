@@ -1,7 +1,8 @@
 # ADR 0055: Android実機の生成破綻を切り分けるためWebLLM 0.2.82へ一時固定する
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-31
+- Superseded by: ADR 0056
 - Related: ADR 0005, ADR 0042, ADR 0049, ADR 0052
 
 ## Context
@@ -115,6 +116,10 @@ Android実機では次の順で確認する。
 - AI境界検証が0.2.82、Qwen3 1.7B、2048 context、128 prefill、自己診断、Worker、安全な出力境界を確認すること。
 - Android実機で診断情報が `runtime: WebLLM 0.2.82` となること。
 - Android実機で自己診断結果を0.2.84時の結果と比較すること。
+
+## Superseded by
+
+Android実機でWebLLM 0.2.82でも最小自己診断がq4f16版と同種の不規則な多言語・コード断片へ破綻したため、version差だけでは原因を説明できない。ADR 0056で同じWebLLM 0.2.82とQwen3 1.7Bを維持し、q4f32モデルへ切り替えてf16演算経路を切り分ける。
 
 ## Supersedes
 
