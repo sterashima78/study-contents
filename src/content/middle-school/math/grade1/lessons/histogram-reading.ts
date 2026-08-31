@@ -46,8 +46,7 @@ export const histogramReadingLesson: MathLesson = {
   },
   practice: {
     title: "練習: ヒストグラムのもとになる度数を読む",
-    problem:
-      "5以上10未満が4人、10以上15未満が7人、15以上20未満が5人、20以上25未満が2人です。",
+    problem: "5以上10未満が4人、10以上15未満が7人、15以上20未満が5人、20以上25未満が2人です。",
     steps: [
       {
         prompt: "最も度数が大きい階級を答えてください。",
