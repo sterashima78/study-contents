@@ -92,8 +92,12 @@ const _isUnit = _mode === "unit";
     generateMiddleMath2UnitExercises,
   } from "../content/middle-school/math/grade2/exercise-registry";
   import {
-    generateMiddleMath2FunctionLessonExercises,
-    generateMiddleMath2FunctionUnitExercises,
+    generateMiddleMath2GeometryLessonExercises,
+    generateMiddleMath2GeometryUnitExercises,
+  } from "../content/middle-school/math/grade2/geometry-exercise-registry";
+  import {
+    generateMiddleMath2LinearFunctionLessonExercises,
+    generateMiddleMath2LinearFunctionUnitExercises,
   } from "../content/middle-school/math/grade2/linear-function-exercise-registry";
 
   const difficultyLabel: Record<MiddleMathExercise["difficulty"], string> = {
@@ -158,11 +162,18 @@ const _isUnit = _mode === "unit";
 
     const makeExercises = () => {
       if (courseKey === "middle-math2") {
+        if (areaKey === "geometry") {
+          return mode === "unit"
+            ? generateMiddleMath2GeometryUnitExercises(unitKey)
+            : lessonKey
+              ? generateMiddleMath2GeometryLessonExercises(lessonKey)
+              : [];
+        }
         if (areaKey === "functions") {
           return mode === "unit"
-            ? generateMiddleMath2FunctionUnitExercises(unitKey)
+            ? generateMiddleMath2LinearFunctionUnitExercises(unitKey)
             : lessonKey
-              ? generateMiddleMath2FunctionLessonExercises(lessonKey)
+              ? generateMiddleMath2LinearFunctionLessonExercises(lessonKey)
               : [];
         }
         return mode === "unit"
