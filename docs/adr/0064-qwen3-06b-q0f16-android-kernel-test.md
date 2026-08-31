@@ -62,6 +62,10 @@ Android実機では次を順に確認する。
 
 利用者入力、URL parameter、localStorage等からmodel IDやruntime versionを任意指定できる経路も追加しない。
 
+### 4. Pages配備前にもStudy AI境界検証を実行する
+
+PR用CIだけでなくGitHub Pagesのbuild jobでも `pnpm check:study-ai` を実行する。これにより、model ID、runtime固定、context/prefill条件、安全な出力境界が検証されないまま公開される経路をなくす。
+
 ## Consequences
 
 ### Positive
@@ -69,6 +73,7 @@ Android実機では次を順に確認する。
 - 0.2.82標準の別量子化経路を使い、1.7B q4 `_1` 系から問題を分離できる。
 - q4f32 1.7Bより推定VRAMが小さく、Androidで比較を完遂しやすい。
 - runtime、context、prefill、自己診断条件を維持するため、既存の実機結果と比較しやすい。
+- Pages配備時にもStudy AI境界検証が必須となり、PR外の変更でも公開前に設定不整合を検出できる。
 
 ### Negative
 
@@ -81,8 +86,10 @@ Android実機では次を順に確認する。
 - `@mlc-ai/web-llm` は0.2.82の完全固定を維持すること。
 - `STUDY_AI_MODEL_ID` が `Qwen3-0.6B-q0f16-MLC` であること。
 - context window 2048、prefill chunk 128、自己診断条件を変更しないこと。
+- `pnpm check:study-ai` が通ること。
 - `pnpm check` が通ること。
 - `pnpm build` が通ること。
+- GitHub Pages buildでも `pnpm check:study-ai` を実行すること。
 - Android実機の診断情報でmodelが0.6B q0f16版になっていること。
 - Android実機で自己診断結果を1.7B q4f16/q4f32時の結果と比較すること。
 
