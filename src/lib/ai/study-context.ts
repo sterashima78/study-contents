@@ -54,9 +54,9 @@ function buildQuestionTerms(question: string) {
     if (word.length >= 2) terms.add(word);
   }
 
-  const japanese = Array.from(normalized.replace(/[\s、。！？,.!?「」『』（）()【】\-]/g, "")).filter(
-    (character) => /[ぁ-んァ-ヶ一-龠々]/.test(character),
-  );
+  const japanese = Array.from(
+    normalized.replace(/[\s、。！？,.!?「」『』（）()【】-]/g, ""),
+  ).filter((character) => /[ぁ-んァ-ヶ一-龠々]/.test(character));
   for (let index = 0; index < japanese.length - 1; index += 1) {
     terms.add(`${japanese[index]}${japanese[index + 1]}`);
   }
@@ -83,7 +83,11 @@ function uniqueContexts(values: string[]) {
   const result: string[] = [];
   for (const value of values) {
     if (!value) continue;
-    if (result.some((existing) => existing === value || existing.includes(value) || value.includes(existing))) {
+    if (
+      result.some(
+        (existing) => existing === value || existing.includes(value) || value.includes(existing),
+      )
+    ) {
       continue;
     }
     result.push(value);
@@ -100,7 +104,8 @@ export function buildStudyContext(question = "") {
   const focusText = main ? findViewportContext(main) : "";
   const relevantSections = main ? findRelevantSections(main, effectiveQuestion) : [];
   const selectedContexts = uniqueContexts([focusText, ...relevantSections]);
-  const fallbackText = selectedContexts.length === 0 ? extractText(main, FALLBACK_CONTEXT_LIMIT) : "";
+  const fallbackText =
+    selectedContexts.length === 0 ? extractText(main, FALLBACK_CONTEXT_LIMIT) : "";
 
   const parts = [
     `ページタイトル: ${document.title}`,
