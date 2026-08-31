@@ -40,6 +40,13 @@ function findViewportContext(main: HTMLElement) {
   return extractText(section && main.contains(section) ? section : target, SECTION_CONTEXT_LIMIT);
 }
 
+function latestStudyAIQuestion() {
+  const messages = document.querySelectorAll<HTMLElement>(
+    "[data-study-ai-root] .study-ai-message.is-user .study-ai-message-body",
+  );
+  return messages.item(messages.length - 1)?.textContent?.trim() ?? "";
+}
+
 function buildQuestionTerms(question: string) {
   const normalized = normalizeText(question).toLowerCase();
   const terms = new Set<string>();
@@ -89,8 +96,9 @@ export function buildStudyContext(question = "") {
   const main = document.querySelector<HTMLElement>("main.study-page");
   const description =
     document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content ?? "";
+  const effectiveQuestion = question || latestStudyAIQuestion();
   const focusText = main ? findViewportContext(main) : "";
-  const relevantSections = main ? findRelevantSections(main, question) : [];
+  const relevantSections = main ? findRelevantSections(main, effectiveQuestion) : [];
   const selectedContexts = uniqueContexts([focusText, ...relevantSections]);
   const fallbackText = selectedContexts.length === 0 ? extractText(main, FALLBACK_CONTEXT_LIMIT) : "";
 
