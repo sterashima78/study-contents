@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   checks:
@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          ref: fix/webllm-0282-ab-test
 
       - name: Setup pnpm and Node.js
         uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1
@@ -24,19 +22,6 @@ jobs:
           runtime: node@24
           install: false
           cache: false
-
-      - name: Regenerate lockfile for A/B test
-        if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fix/webllm-0282-ab-test'
-        run: |
-          pnpm install --lockfile-only --no-frozen-lockfile
-          if git diff --quiet -- pnpm-lock.yaml; then
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add pnpm-lock.yaml
-          git commit -m "chore: WebLLM 0.2.82のlockfileを更新する"
-          git push origin HEAD:fix/webllm-0282-ab-test
 
       - name: Install dependencies
         run: pnpm install
