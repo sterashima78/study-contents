@@ -51,6 +51,9 @@ jobs:
       - name: Verify application and advanced content
         run: pnpm check:entrance-content
 
+      - name: Verify public-domain text rights
+        run: pnpm check:text-rights
+
       - name: Verify component style boundaries
         run: pnpm check:component-styles
 
