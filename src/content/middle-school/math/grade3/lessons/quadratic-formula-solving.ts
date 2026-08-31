@@ -32,8 +32,16 @@ export const quadraticFormulaSolvingLesson: MathLesson = {
     title: "練習: 解の公式を使う",
     problem: "a、b、cを確認してから代入します。",
     steps: [
-      { prompt: "x²+x−1=0の解を答えてください。", answers: ["(-1±√5)/2", "x=(-1±√5)/2", "(−1±√5)/2", "x=(−1±√5)/2"], placeholder: "x=..." },
-      { prompt: "2x²−5x+2=0の解を小さい順にカンマで答えてください。", answers: ["1/2,2", "0.5,2"], placeholder: "例: 1/2,3" },
+      {
+        prompt: "x²+x−1=0の解を答えてください。",
+        answers: ["(-1±√5)/2", "x=(-1±√5)/2", "(−1±√5)/2", "x=(−1±√5)/2"],
+        placeholder: "x=...",
+      },
+      {
+        prompt: "2x²−5x+2=0の解を小さい順にカンマで答えてください。",
+        answers: ["1/2,2", "0.5,2"],
+        placeholder: "例: 1/2,3",
+      },
     ],
     hint: "まずa、b、cを符号ごと書き出し、b²−4acを先に計算します。",
   },
