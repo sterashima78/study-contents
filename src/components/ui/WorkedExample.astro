@@ -145,18 +145,27 @@ const {
 
   .expression,
   .text-step {
+    min-width: 0;
     align-self: center;
     padding: 0.35rem 0;
     color: var(--color-text-strong);
     font-size: clamp(1.02rem, 2.6vw, 1.24rem);
     font-weight: 700;
     line-height: 1.6;
-    overflow-wrap: anywhere;
   }
 
   .expression {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
     font-family: "Times New Roman", "Yu Mincho", serif;
     font-variant-numeric: lining-nums tabular-nums;
+    overflow-wrap: normal;
+    white-space: nowrap;
+  }
+
+  .text-step {
+    overflow-wrap: anywhere;
   }
 
   .steps p {
