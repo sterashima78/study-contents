@@ -21,8 +21,7 @@ export const experimentalProbabilityLesson: MathLesson = {
   ],
   example: {
     title: "例題: コイン投げの結果を読む",
-    problem:
-      "コインを200回投げたところ、表が104回出ました。この結果から表の出やすさを考えます。",
+    problem: "コインを200回投げたところ、表が104回出ました。この結果から表の出やすさを考えます。",
     steps: [
       {
         expression: "104 / 200 = 0.52",
