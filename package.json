@@ -23,7 +23,7 @@
     "check:study-ai": "node scripts/verify-study-ai.mjs"
   },
   "dependencies": {
-    "@mlc-ai/web-llm": "0.2.84",
+    "@mlc-ai/web-llm": "0.2.82",
     "astro": "7.2.9",
     "mathlive": "0.110.0"
   },
