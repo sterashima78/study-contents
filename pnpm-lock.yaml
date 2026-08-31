@@ -110,8 +110,8 @@ importers:
   .:
     dependencies:
       '@mlc-ai/web-llm':
-        specifier: 0.2.84
-        version: 0.2.84
+        specifier: 0.2.82
+        version: 0.2.82
       astro:
         specifier: 7.2.9
         version: 7.2.9(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)
@@ -679,8 +679,8 @@ packages:
   '@jridgewell/sourcemap-codec@1.6.0':
     resolution: {integrity: sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==}
 
-  '@mlc-ai/web-llm@0.2.84':
-    resolution: {integrity: sha512-hrOWzK4/nGNmgoRKT8pgVmZZ2oEPpbblIWQOwpqNyvK2dysHw3KVB1gNJOuRcQfKOPhucEhX1NJzXzgMDnwSCQ==}
+  '@mlc-ai/web-llm@0.2.82':
+    resolution: {integrity: sha512-ONhW+28PPVSUI1m0RkJcm7suwc47b65i5b/rTEIADq5I22p1+9uf/CBbDPRkkjj1WJB9s8oFp0ywAW0NY1G6fg==}
 
   '@napi-rs/wasm-runtime@1.2.3':
     resolution: {integrity: sha512-UMduMbqO5s5zF2NkNacMT/yK5Y5QiKvWr2+50bzIIxFDwVJ2h49b+oyjaCGPhJxd2/gC2x39EHv/gHVuu36x2Q==}
@@ -1961,7 +1961,7 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.6.0': {}
 
-  '@mlc-ai/web-llm@0.2.84':
+  '@mlc-ai/web-llm@0.2.82':
     dependencies:
       loglevel: 1.9.2
 

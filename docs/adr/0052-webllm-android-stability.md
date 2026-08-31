@@ -1,7 +1,8 @@
 # ADR 0052: Android向けブラウザ内AIをWebLLMへ戻して低メモリ設定で検証する
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-31
+- Superseded by: ADR 0055
 - Related: ADR 0005, ADR 0042, ADR 0047, ADR 0049, ADR 0051
 
 ## Context
@@ -87,6 +88,10 @@ ADR 0049で導入した失敗時診断UIを継続する。表示内容はWebLLM�
 - Android実機でモデルロード後にブラウザが終了せず、自己診断を通過すること。
 - `1+1=` の通常質問、短い教材質問、実際の演習質問を順に確認すること。
 - 文字列破綻が再現した場合は、診断情報と入力条件を記録して0.2.82互換性比較の要否を判断すること。
+
+## Superseded by
+
+ADR 0055で、0.2.84の最小自己診断でも文字列破綻が再現した実機結果を受け、同一条件のままWebLLM 0.2.82へ固定してA/B比較する決定に置き換える。
 
 ## Supersedes
 
