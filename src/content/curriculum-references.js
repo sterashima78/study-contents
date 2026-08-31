@@ -126,7 +126,7 @@ export const curriculumReferences = Object.freeze({
     commentaryTitle: "中学校学習指導要領（平成29年告示）解説 数学編",
     commentaryUrl: MIDDLE_MATH_COMMENTARY_URL,
     routeBase: "middle-school/math/grade1",
-    note: "現在は第1学年「A 数と式」のうち「正の数・負の数」から段階的に公開しています。",
+    note: "第1学年の「A 数と式」「B 図形」「C 関数」「D データの活用」を、1ページ1技能の教材単位に分けて構成しています。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
