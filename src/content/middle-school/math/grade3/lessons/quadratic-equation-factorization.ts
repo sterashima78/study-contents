@@ -32,8 +32,16 @@ export const quadraticEquationFactorizationLesson: MathLesson = {
     title: "練習: 因数分解して解く",
     problem: "因数分解できる形を見抜きます。",
     steps: [
-      { prompt: "x²−7x+12=0の解を小さい順にカンマで答えてください。", answers: ["3,4"], placeholder: "例: 1,5" },
-      { prompt: "x²+x−6=0の解を小さい順にカンマで答えてください。", answers: ["-3,2", "−3,2"], placeholder: "例: -2,3" },
+      {
+        prompt: "x²−7x+12=0の解を小さい順にカンマで答えてください。",
+        answers: ["3,4"],
+        placeholder: "例: 1,5",
+      },
+      {
+        prompt: "x²+x−6=0の解を小さい順にカンマで答えてください。",
+        answers: ["-3,2", "−3,2"],
+        placeholder: "例: -2,3",
+      },
     ],
     hint: "左辺を(x−m)(x−n)の形へ因数分解します。",
   },
