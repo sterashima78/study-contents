@@ -2,7 +2,7 @@
 
 - Status: Superseded
 - Date: 2026-08-31
-- Superseded by: ADR 0054
+- Superseded by: ADR 0055
 - Related: ADR 0005, ADR 0042, ADR 0047, ADR 0049, ADR 0051
 
 ## Context
@@ -91,7 +91,7 @@ ADR 0049で導入した失敗時診断UIを継続する。表示内容はWebLLM�
 
 ## Superseded by
 
-ADR 0054で、0.2.84の最小自己診断でも文字列破綻が再現した実機結果を受け、同一条件のままWebLLM 0.2.82へ固定してA/B比較する決定に置き換える。
+ADR 0055で、0.2.84の最小自己診断でも文字列破綻が再現した実機結果を受け、同一条件のままWebLLM 0.2.82へ固定してA/B比較する決定に置き換える。
 
 ## Supersedes
 
