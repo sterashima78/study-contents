@@ -3,8 +3,7 @@ import type { MathLesson } from "../../../../math1/types";
 export const frequencyDistributionRangeLesson: MathLesson = {
   key: "frequency-distribution-range",
   title: "範囲・階級・度数を整理する",
-  description:
-    "最大値と最小値から範囲を求め、連続したデータを階級に分けて度数分布表に整理します。",
+  description: "最大値と最小値から範囲を求め、連続したデータを階級に分けて度数分布表に整理します。",
   goals: [
     "データの最大値と最小値から範囲を求められる。",
     "階級と度数の意味を理解し、データを度数分布表に整理できる。",
