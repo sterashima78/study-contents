@@ -8,7 +8,10 @@ export const pythagoreanCoordinateDistanceLesson: MathLesson = {
   concepts: [
     {
       title: "座標の差が直角辺になる",
-      body: ["点A(x₁,y₁)、B(x₂,y₂)の横の差と縦の差は互いに垂直です。", "2点を結ぶ線分を斜辺とする直角三角形を作れば、三平方の定理で距離を求められます。"],
+      body: [
+        "点A(x₁,y₁)、B(x₂,y₂)の横の差と縦の差は互いに垂直です。",
+        "2点を結ぶ線分を斜辺とする直角三角形を作れば、三平方の定理で距離を求められます。",
+      ],
       formulas: ["AB=√((x₂−x₁)²+(y₂−y₁)²)"],
     },
   ],
@@ -26,7 +29,11 @@ export const pythagoreanCoordinateDistanceLesson: MathLesson = {
     problem: "横と縦の差を先に求めます。",
     steps: [
       { prompt: "A(0,0), B(6,8)の距離を答えてください。", answers: ["10"], placeholder: "距離" },
-      { prompt: "A(1,1), B(3,4)の距離を根号で答えてください。", answers: ["√13"], placeholder: "距離" },
+      {
+        prompt: "A(1,1), B(3,4)の距離を根号で答えてください。",
+        answers: ["√13"],
+        placeholder: "距離",
+      },
     ],
     hint: "座標差を直角三角形の2辺とみなします。",
   },

@@ -8,7 +8,10 @@ export const midpointTheoremLesson: MathLesson = {
   concepts: [
     {
       title: "相似比1:2の特別な場合",
-      body: ["△ABCの辺AB、ACの中点をP、QとするとPQ∥BCでPQ=BC/2です。", "これは△APQと△ABCの相似比が1:2になる、平行線と線分の比の特別な場合です。"],
+      body: [
+        "△ABCの辺AB、ACの中点をP、QとするとPQ∥BCでPQ=BC/2です。",
+        "これは△APQと△ABCの相似比が1:2になる、平行線と線分の比の特別な場合です。",
+      ],
       formulas: ["P,Qが中点 → PQ∥BC", "PQ=BC/2"],
     },
   ],
@@ -25,10 +28,21 @@ export const midpointTheoremLesson: MathLesson = {
     title: "練習: 中点連結定理",
     problem: "平行と半分の二つの性質を使います。",
     steps: [
-      { prompt: "三角形の2辺の中点を結ぶ線分は残りの1辺とどんな位置関係ですか。", answers: ["平行", "平行です"], placeholder: "位置関係" },
-      { prompt: "BC=18のとき、中点を結ぶ線分PQの長さを答えてください。", answers: ["9"], placeholder: "長さ" },
+      {
+        prompt: "三角形の2辺の中点を結ぶ線分は残りの1辺とどんな位置関係ですか。",
+        answers: ["平行", "平行です"],
+        placeholder: "位置関係",
+      },
+      {
+        prompt: "BC=18のとき、中点を結ぶ線分PQの長さを答えてください。",
+        answers: ["9"],
+        placeholder: "長さ",
+      },
     ],
     hint: "中点なら相似比は1:2です。",
   },
-  summary: ["中点連結定理は平行線と線分の比の特別な場合。", "中点を結ぶ線分は第3辺に平行で長さは半分。"],
+  summary: [
+    "中点連結定理は平行線と線分の比の特別な場合。",
+    "中点を結ぶ線分は第3辺に平行で長さは半分。",
+  ],
 };

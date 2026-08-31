@@ -8,7 +8,10 @@ export const quadraticFunctionExpressionLesson: MathLesson = {
   concepts: [
     {
       title: "1組の対応でaが決まる",
-      body: ["y=ax²では未知なのは比例定数aだけなので、x≠0の1組の対応を代入すればaを求められます。", "求めた式は別の表の値にも合うか確かめると安全です。"],
+      body: [
+        "y=ax²では未知なのは比例定数aだけなので、x≠0の1組の対応を代入すればaを求められます。",
+        "求めた式は別の表の値にも合うか確かめると安全です。",
+      ],
       formulas: ["a=y/x²"],
     },
   ],
@@ -26,7 +29,11 @@ export const quadraticFunctionExpressionLesson: MathLesson = {
     problem: "x≠0の対応を使います。",
     steps: [
       { prompt: "y=ax²が点(3,18)を通るときaを答えてください。", answers: ["2"], placeholder: "a" },
-      { prompt: "y=ax²が点(-2,-8)を通るとき式を答えてください。", answers: ["y=-2x²", "y=-2x^2"], placeholder: "式" },
+      {
+        prompt: "y=ax²が点(-2,-8)を通るとき式を答えてください。",
+        answers: ["y=-2x²", "y=-2x^2"],
+        placeholder: "式",
+      },
     ],
     hint: "a=y/x²なのでxが負でもx²は正です。",
   },

@@ -28,7 +28,8 @@ const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max 
 
 const generators: Record<string, Generator> = {
   "census-sample-meaning": () => ({
-    prompt: "大量生産品の破壊検査で、一部を取り出して全体の傾向を推定する調査方法を答えてください。",
+    prompt:
+      "大量生産品の破壊検査で、一部を取り出して全体の傾向を推定する調査方法を答えてください。",
     answers: ["標本調査"],
     lessonKeys: ["census-sample-meaning"],
     hint: "全てを壊して調べることは現実的ではありません。",
@@ -68,7 +69,8 @@ const generators: Record<string, Generator> = {
     };
   },
   "sampling-bias": () => ({
-    prompt: "学校全体の通学方法を調べるため自転車置き場にいる人だけを標本にすると、偏りが生じる可能性がありますか。",
+    prompt:
+      "学校全体の通学方法を調べるため自転車置き場にいる人だけを標本にすると、偏りが生じる可能性がありますか。",
     answers: ["はい", "ある", "あります"],
     lessonKeys: ["sampling-bias"],
     hint: "自転車通学者が選ばれやすくなります。",
@@ -109,7 +111,14 @@ export const generateMiddleMath3DataLessonExercises = (lessonKey: string, count 
 
 export const generateMiddleMath3DataUnitExercises = (unitKey: string, count = 8) => {
   if (unitKey !== "sample-survey") return [];
-  const difficulties: MiddleMathExerciseDifficulty[] = ["basic", "basic", "basic", "applied", "applied", "challenge"];
+  const difficulties: MiddleMathExerciseDifficulty[] = [
+    "basic",
+    "basic",
+    "basic",
+    "applied",
+    "applied",
+    "challenge",
+  ];
   const startIndex = randomInt(0, lessonKeys.length - 1);
   return Array.from({ length: count }, (_, index) => {
     const lessonKey = lessonKeys[(startIndex + index) % lessonKeys.length];

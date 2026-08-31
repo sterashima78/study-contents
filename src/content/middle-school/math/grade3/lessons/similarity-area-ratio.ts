@@ -8,7 +8,10 @@ export const similarityAreaRatioLesson: MathLesson = {
   concepts: [
     {
       title: "面積は長さの2乗で変わる",
-      body: ["相似比がm:nなら、縦も横も同じ割合で変わるため面積比はm²:n²です。", "円の面積S=πr²も、半径の比の2乗が面積比になる例です。"],
+      body: [
+        "相似比がm:nなら、縦も横も同じ割合で変わるため面積比はm²:n²です。",
+        "円の面積S=πr²も、半径の比の2乗が面積比になる例です。",
+      ],
       formulas: ["相似比 m:n → 面積比 m²:n²"],
     },
   ],
@@ -24,8 +27,16 @@ export const similarityAreaRatioLesson: MathLesson = {
     title: "練習: 2乗する",
     problem: "相似比と面積比を区別します。",
     steps: [
-      { prompt: "相似比3:5のとき面積比を答えてください。", answers: ["9:25", "9：25"], placeholder: "a:b" },
-      { prompt: "相似比1:4で小さい図形の面積が6cm²のとき、大きい図形の面積を答えてください。", answers: ["96", "96cm²", "96cm^2"], placeholder: "面積" },
+      {
+        prompt: "相似比3:5のとき面積比を答えてください。",
+        answers: ["9:25", "9：25"],
+        placeholder: "a:b",
+      },
+      {
+        prompt: "相似比1:4で小さい図形の面積が6cm²のとき、大きい図形の面積を答えてください。",
+        answers: ["96", "96cm²", "96cm^2"],
+        placeholder: "面積",
+      },
     ],
     hint: "面積比は相似比の2乗です。",
   },

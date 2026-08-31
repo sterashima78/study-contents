@@ -8,7 +8,10 @@ export const similarityProofLesson: MathLesson = {
   concepts: [
     {
       title: "証明は結論から逆算する",
-      body: ["二つの三角形が相似だと示したいなら、まず使えそうな相似条件を決めます。", "平行線の同位角・錯角や共通角などから、条件に必要な角の等しさを集めます。"],
+      body: [
+        "二つの三角形が相似だと示したいなら、まず使えそうな相似条件を決めます。",
+        "平行線の同位角・錯角や共通角などから、条件に必要な角の等しさを集めます。",
+      ],
       formulas: ["仮定 → 根拠 → 相似条件 → 結論"],
     },
   ],
@@ -25,8 +28,16 @@ export const similarityProofLesson: MathLesson = {
     title: "練習: 根拠を言葉にする",
     problem: "相似条件につながる根拠を答えます。",
     steps: [
-      { prompt: "DE∥BCから∠ADE=∠ABCといえる根拠を答えてください。", answers: ["同位角", "平行線の同位角"], placeholder: "根拠" },
-      { prompt: "2組の角がそれぞれ等しいことから使える相似条件を答えてください。", answers: ["2組の角", "二組の角"], placeholder: "条件" },
+      {
+        prompt: "DE∥BCから∠ADE=∠ABCといえる根拠を答えてください。",
+        answers: ["同位角", "平行線の同位角"],
+        placeholder: "根拠",
+      },
+      {
+        prompt: "2組の角がそれぞれ等しいことから使える相似条件を答えてください。",
+        answers: ["2組の角", "二組の角"],
+        placeholder: "条件",
+      },
     ],
     hint: "平行線から作られる同位角・錯角に注目します。",
   },

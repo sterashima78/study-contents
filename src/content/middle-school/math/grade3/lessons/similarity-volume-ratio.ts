@@ -8,7 +8,10 @@ export const similarityVolumeRatioLesson: MathLesson = {
   concepts: [
     {
       title: "体積は長さの3乗で変わる",
-      body: ["相似な立体では対応する長さの比がすべて相似比に等しくなります。", "縦・横・高さの三方向が同じ割合で変わるので、相似比m:nに対する体積比はm³:n³です。"],
+      body: [
+        "相似な立体では対応する長さの比がすべて相似比に等しくなります。",
+        "縦・横・高さの三方向が同じ割合で変わるので、相似比m:nに対する体積比はm³:n³です。",
+      ],
       formulas: ["相似比 m:n → 体積比 m³:n³"],
     },
   ],
@@ -24,8 +27,16 @@ export const similarityVolumeRatioLesson: MathLesson = {
     title: "練習: 3乗する",
     problem: "立体では3方向の長さが変わります。",
     steps: [
-      { prompt: "相似比1:3の立体の体積比を答えてください。", answers: ["1:27", "1：27"], placeholder: "a:b" },
-      { prompt: "相似比1:2で小さい立体の体積が10cm³のとき、大きい立体の体積を答えてください。", answers: ["80", "80cm³", "80cm^3"], placeholder: "体積" },
+      {
+        prompt: "相似比1:3の立体の体積比を答えてください。",
+        answers: ["1:27", "1：27"],
+        placeholder: "a:b",
+      },
+      {
+        prompt: "相似比1:2で小さい立体の体積が10cm³のとき、大きい立体の体積を答えてください。",
+        answers: ["80", "80cm³", "80cm^3"],
+        placeholder: "体積",
+      },
     ],
     hint: "体積比は相似比の3乗です。",
   },

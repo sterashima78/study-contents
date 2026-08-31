@@ -144,7 +144,14 @@ export const generateMiddleMath3FunctionLessonExercises = (lessonKey: string, co
 
 export const generateMiddleMath3FunctionUnitExercises = (unitKey: string, count = 8) => {
   if (unitKey !== "quadratic-functions") return [];
-  const difficulties: MiddleMathExerciseDifficulty[] = ["basic", "basic", "basic", "applied", "applied", "challenge"];
+  const difficulties: MiddleMathExerciseDifficulty[] = [
+    "basic",
+    "basic",
+    "basic",
+    "applied",
+    "applied",
+    "challenge",
+  ];
   const startIndex = randomInt(0, lessonKeys.length - 1);
   return Array.from({ length: count }, (_, index) => {
     const lessonKey = lessonKeys[(startIndex + index) % lessonKeys.length];

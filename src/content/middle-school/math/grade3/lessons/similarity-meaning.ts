@@ -8,7 +8,10 @@ export const similarityMeaningLesson: MathLesson = {
   concepts: [
     {
       title: "相似は形が同じという関係",
-      body: ["一方を同じ割合で拡大・縮小すると他方と合同になる二つの図形は相似です。", "相似な図形では対応する辺の比がすべて等しく、対応する角はそれぞれ等しくなります。"],
+      body: [
+        "一方を同じ割合で拡大・縮小すると他方と合同になる二つの図形は相似です。",
+        "相似な図形では対応する辺の比がすべて等しく、対応する角はそれぞれ等しくなります。",
+      ],
       formulas: ["△ABC∽△DEF", "AB:DE=BC:EF=CA:FD"],
     },
   ],
@@ -24,10 +27,21 @@ export const similarityMeaningLesson: MathLesson = {
     title: "練習: 対応と相似比",
     problem: "対応する順序に注意します。",
     steps: [
-      { prompt: "△ABC∽△PQRのとき、辺BCに対応する辺を答えてください。", answers: ["QR", "qr"], placeholder: "辺" },
-      { prompt: "対応する辺が6cmと9cmのとき、小さい図形:大きい図形の相似比を答えてください。", answers: ["2:3", "2：3"], placeholder: "a:b" },
+      {
+        prompt: "△ABC∽△PQRのとき、辺BCに対応する辺を答えてください。",
+        answers: ["QR", "qr"],
+        placeholder: "辺",
+      },
+      {
+        prompt: "対応する辺が6cmと9cmのとき、小さい図形:大きい図形の相似比を答えてください。",
+        answers: ["2:3", "2：3"],
+        placeholder: "a:b",
+      },
     ],
     hint: "相似の記号に書かれた頂点の順序を対応させます。",
   },
-  summary: ["相似では対応する辺の比が等しく、対応する角が等しい。", "相似の記号の頂点順序から対応を読む。"],
+  summary: [
+    "相似では対応する辺の比が等しく、対応する角が等しい。",
+    "相似の記号の頂点順序から対応を読む。",
+  ],
 };

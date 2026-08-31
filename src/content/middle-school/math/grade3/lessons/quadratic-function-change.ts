@@ -8,7 +8,10 @@ export const quadraticFunctionChangeLesson: MathLesson = {
   concepts: [
     {
       title: "xをm倍するとyはm²倍",
-      body: ["y=ax²でxをmxに置き換えるとy=a(mx)²=m²ax²です。", "比例y=axではxをm倍するとyもm倍でしたが、2乗比例では倍率が2乗になります。"],
+      body: [
+        "y=ax²でxをmxに置き換えるとy=a(mx)²=m²ax²です。",
+        "比例y=axではxをm倍するとyもm倍でしたが、2乗比例では倍率が2乗になります。",
+      ],
       formulas: ["x→mx なら y→m²y"],
     },
   ],
@@ -24,8 +27,16 @@ export const quadraticFunctionChangeLesson: MathLesson = {
     title: "練習: 倍率を読む",
     problem: "xの倍率を2乗します。",
     steps: [
-      { prompt: "y=ax²でxを2倍にするとyは何倍ですか。", answers: ["4", "4倍"], placeholder: "倍率" },
-      { prompt: "y=ax²でxを1/3倍にするとyは何倍ですか。", answers: ["1/9", "9分の1"], placeholder: "倍率" },
+      {
+        prompt: "y=ax²でxを2倍にするとyは何倍ですか。",
+        answers: ["4", "4倍"],
+        placeholder: "倍率",
+      },
+      {
+        prompt: "y=ax²でxを1/3倍にするとyは何倍ですか。",
+        answers: ["1/9", "9分の1"],
+        placeholder: "倍率",
+      },
     ],
     hint: "xの倍率mを2乗します。",
   },

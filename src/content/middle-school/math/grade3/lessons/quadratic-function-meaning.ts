@@ -8,7 +8,10 @@ export const quadraticFunctionMeaningLesson: MathLesson = {
   concepts: [
     {
       title: "yはxの2乗に比例する",
-      body: ["xの値を決めるとyがただ一つ決まり、y/x²が一定になるとき、yはxの2乗に比例します。", "比例定数をaとするとy=ax²と表せます。aは0ではない実数として扱います。"],
+      body: [
+        "xの値を決めるとyがただ一つ決まり、y/x²が一定になるとき、yはxの2乗に比例します。",
+        "比例定数をaとするとy=ax²と表せます。aは0ではない実数として扱います。",
+      ],
       formulas: ["y=ax²", "y/x²=a"],
     },
   ],

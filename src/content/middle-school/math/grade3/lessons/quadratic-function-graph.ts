@@ -8,7 +8,10 @@ export const quadraticFunctionGraphLesson: MathLesson = {
   concepts: [
     {
       title: "左右対称の曲線",
-      body: ["xと−xではx²が同じなのでyの値も同じです。そのためグラフはy軸について対称です。", "x=0ならy=0なので原点を通り、直線ではなく滑らかな曲線である放物線になります。"],
+      body: [
+        "xと−xではx²が同じなのでyの値も同じです。そのためグラフはy軸について対称です。",
+        "x=0ならy=0なので原点を通り、直線ではなく滑らかな曲線である放物線になります。",
+      ],
       formulas: ["f(x)=f(−x)", "(0,0)を通る"],
     },
   ],
@@ -25,7 +28,11 @@ export const quadraticFunctionGraphLesson: MathLesson = {
     problem: "式と対称性を対応させます。",
     steps: [
       { prompt: "y=3x²でx=-2のときyを答えてください。", answers: ["12"], placeholder: "y" },
-      { prompt: "y=ax²のグラフは何軸について対称ですか。", answers: ["y軸", "y軸について対称"], placeholder: "軸" },
+      {
+        prompt: "y=ax²のグラフは何軸について対称ですか。",
+        answers: ["y軸", "y軸について対称"],
+        placeholder: "軸",
+      },
     ],
     hint: "xと−xの2乗は同じです。",
   },

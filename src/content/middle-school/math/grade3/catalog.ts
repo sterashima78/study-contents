@@ -133,7 +133,8 @@ export const middleMath3Areas: MathArea[] = [
   {
     key: "geometry",
     title: "図形",
-    description: "合同と証明の学習を発展させ、相似、円周角、三平方の定理を使って図形を論理的に考察・計量します。",
+    description:
+      "合同と証明の学習を発展させ、相似、円周角、三平方の定理を使って図形を論理的に考察・計量します。",
     units: [
       {
         key: "similarity",
@@ -185,7 +186,8 @@ export const middleMath3Areas: MathArea[] = [
   {
     key: "functions",
     title: "関数",
-    description: "比例・反比例・一次関数の学習を発展させ、関数 y=ax² とさらに広い関数関係を考察します。",
+    description:
+      "比例・反比例・一次関数の学習を発展させ、関数 y=ax² とさらに広い関数関係を考察します。",
     units: [
       {
         key: "quadratic-functions",
@@ -209,7 +211,8 @@ export const middleMath3Areas: MathArea[] = [
   {
     key: "data",
     title: "データの活用",
-    description: "全体を直接調べられない場面で標本を無作為に取り出し、母集団の傾向を推定して批判的に判断します。",
+    description:
+      "全体を直接調べられない場面で標本を無作為に取り出し、母集団の傾向を推定して批判的に判断します。",
     units: [
       {
         key: "sample-survey",

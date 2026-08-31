@@ -8,7 +8,10 @@ export const parallelLinesSegmentRatioLesson: MathLesson = {
   concepts: [
     {
       title: "平行線が相似を作る",
-      body: ["△ABCでPがAB上、QがAC上にありPQ∥BCなら△APQと△ABCは相似です。", "そのため対応する辺の比AP:AB=AQ:AC=PQ:BCが成り立ちます。"],
+      body: [
+        "△ABCでPがAB上、QがAC上にありPQ∥BCなら△APQと△ABCは相似です。",
+        "そのため対応する辺の比AP:AB=AQ:AC=PQ:BCが成り立ちます。",
+      ],
       formulas: ["PQ∥BC → AP:AB=AQ:AC=PQ:BC"],
     },
   ],
@@ -25,8 +28,16 @@ export const parallelLinesSegmentRatioLesson: MathLesson = {
     title: "練習: 比例式を作る",
     problem: "対応する位置をそろえます。",
     steps: [
-      { prompt: "AP=4、AB=10、AQ=6、PQ∥BCのときACを答えてください。", answers: ["15"], placeholder: "長さ" },
-      { prompt: "AP:AB=2:5、BC=20、PQ∥BCのときPQを答えてください。", answers: ["8"], placeholder: "長さ" },
+      {
+        prompt: "AP=4、AB=10、AQ=6、PQ∥BCのときACを答えてください。",
+        answers: ["15"],
+        placeholder: "長さ",
+      },
+      {
+        prompt: "AP:AB=2:5、BC=20、PQ∥BCのときPQを答えてください。",
+        answers: ["8"],
+        placeholder: "長さ",
+      },
     ],
     hint: "小さい三角形:大きい三角形の順序をそろえます。",
   },

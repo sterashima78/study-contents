@@ -8,7 +8,10 @@ export const pythagoreanMeaningLesson: MathLesson = {
   concepts: [
     {
       title: "斜辺の平方=他の2辺の平方の和",
-      body: ["直角をはさむ2辺をa、b、斜辺をcとするとa²+b²=c²です。", "これは各辺を1辺とする正方形の面積について、二つの小さい正方形の面積の和が斜辺上の正方形の面積に等しいことも表します。"],
+      body: [
+        "直角をはさむ2辺をa、b、斜辺をcとするとa²+b²=c²です。",
+        "これは各辺を1辺とする正方形の面積について、二つの小さい正方形の面積の和が斜辺上の正方形の面積に等しいことも表します。",
+      ],
       formulas: ["a²+b²=c²"],
     },
   ],
@@ -24,8 +27,16 @@ export const pythagoreanMeaningLesson: MathLesson = {
     title: "練習: 式を読む",
     problem: "斜辺を見分けます。",
     steps: [
-      { prompt: "直角をはさむ2辺をa,b、斜辺をcとした三平方の定理を答えてください。", answers: ["a²+b²=c²", "a^2+b^2=c^2"], placeholder: "式" },
-      { prompt: "直角三角形の最も長い辺を何と呼びますか。", answers: ["斜辺"], placeholder: "用語" },
+      {
+        prompt: "直角をはさむ2辺をa,b、斜辺をcとした三平方の定理を答えてください。",
+        answers: ["a²+b²=c²", "a^2+b^2=c^2"],
+        placeholder: "式",
+      },
+      {
+        prompt: "直角三角形の最も長い辺を何と呼びますか。",
+        answers: ["斜辺"],
+        placeholder: "用語",
+      },
     ],
     hint: "斜辺は直角の向かい側です。",
   },

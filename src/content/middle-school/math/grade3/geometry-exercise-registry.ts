@@ -157,7 +157,8 @@ const generators: Record<string, Generator> = {
     };
   },
   "circle-angle-proof": () => ({
-    prompt: "円周角の関係を有限個の測定だけでなく、すべての場合に成り立つと確かめる方法を答えてください。",
+    prompt:
+      "円周角の関係を有限個の測定だけでなく、すべての場合に成り立つと確かめる方法を答えてください。",
     answers: ["証明", "証明する"],
     lessonKeys: ["circle-angle-proof"],
     hint: "既習の図形の性質を根拠に論理的に確かめます。",
@@ -274,7 +275,14 @@ export const generateMiddleMath3GeometryLessonExercises = (lessonKey: string, co
 export const generateMiddleMath3GeometryUnitExercises = (unitKey: string, count = 8) => {
   const keys = unitLessons[unitKey];
   if (!keys) return [];
-  const difficulties: MiddleMathExerciseDifficulty[] = ["basic", "basic", "basic", "applied", "applied", "challenge"];
+  const difficulties: MiddleMathExerciseDifficulty[] = [
+    "basic",
+    "basic",
+    "basic",
+    "applied",
+    "applied",
+    "challenge",
+  ];
   const startIndex = randomInt(0, keys.length - 1);
   return Array.from({ length: count }, (_, index) => {
     const lessonKey = keys[(startIndex + index) % keys.length];

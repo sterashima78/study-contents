@@ -36,7 +36,13 @@ function parabolaScene(a = 1): DiagramScene {
     plot,
     { kind: "label", at: { x: 500, y: origin.y - 10 }, text: "x", align: "end", color: AXIS },
     { kind: "label", at: { x: origin.x + 12, y: 40 }, text: "y", align: "start", color: AXIS },
-    { kind: "label", at: { x: 420, y: 65 }, text: `y=${a}x²`, align: "middle", color: a > 0 ? BLUE : ORANGE },
+    {
+      kind: "label",
+      at: { x: 420, y: 65 },
+      text: `y=${a}x²`,
+      align: "middle",
+      color: a > 0 ? BLUE : ORANGE,
+    },
   ];
   return {
     width: 540,
@@ -60,12 +66,25 @@ function compareParabolasScene(): DiagramScene {
   return {
     width: 540,
     height: 360,
-    ariaLabel: "y=x二乗とy=3x二乗の二つの放物線を同じ座標平面に描き、比例定数の絶対値が大きい方が細く開くことを示す図。",
+    ariaLabel:
+      "y=x二乗とy=3x二乗の二つの放物線を同じ座標平面に描き、比例定数の絶対値が大きい方が細く開くことを示す図。",
     responsive: { minWidth: 460, allowHorizontalScroll: true },
     elements: [
       createCartesianAxes(transform, { color: AXIS, grid: true, gridStep: 1 }),
-      sampleFunctionPlot(transform, (x) => x * x, { xMin: -3, xMax: 3, samples: 90, color: BLUE, expression: "y=x²" }),
-      sampleFunctionPlot(transform, (x) => 3 * x * x, { xMin: -3, xMax: 3, samples: 90, color: ORANGE, expression: "y=3x²" }),
+      sampleFunctionPlot(transform, (x) => x * x, {
+        xMin: -3,
+        xMax: 3,
+        samples: 90,
+        color: BLUE,
+        expression: "y=x²",
+      }),
+      sampleFunctionPlot(transform, (x) => 3 * x * x, {
+        xMin: -3,
+        xMax: 3,
+        samples: 90,
+        color: ORANGE,
+        expression: "y=3x²",
+      }),
       { kind: "label", at: point(440, 75), text: "y=3x²", color: ORANGE, align: "middle" },
       { kind: "label", at: point(440, 105), text: "y=x²", color: BLUE, align: "middle" },
     ],

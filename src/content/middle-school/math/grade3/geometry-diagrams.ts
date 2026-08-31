@@ -23,7 +23,11 @@ function similarityScene(): DiagramScene {
     responsive: { minWidth: 460, allowHorizontalScroll: true },
     elements: [
       { kind: "polygon", points: [point(70, 260), point(210, 260), point(130, 110)], color: BLUE },
-      { kind: "polygon", points: [point(295, 270), point(500, 270), point(380, 50)], color: ORANGE },
+      {
+        kind: "polygon",
+        points: [point(295, 270), point(500, 270), point(380, 50)],
+        color: ORANGE,
+      },
       label(point(140, 295), "相似比 2 : 3", PURPLE),
       label(point(130, 92), "A", BLUE),
       label(point(380, 32), "D", ORANGE),
@@ -87,7 +91,8 @@ function pythagoreanScene(): DiagramScene {
   return {
     width: 540,
     height: 350,
-    ariaLabel: "直角三角形の直角をはさむ二辺a、bと斜辺cを示し、a二乗足すb二乗イコールc二乗を示す図。",
+    ariaLabel:
+      "直角三角形の直角をはさむ二辺a、bと斜辺cを示し、a二乗足すb二乗イコールc二乗を示す図。",
     responsive: { minWidth: 460, allowHorizontalScroll: true },
     elements: [
       { kind: "polygon", points: [a, b, c], color: BLUE },
@@ -105,10 +110,21 @@ function coordinateDistanceScene(): DiagramScene {
   return {
     width: 540,
     height: 330,
-    ariaLabel: "座標平面上の二点AとBの横方向の差と縦方向の差で直角三角形を作り、二点間距離を斜辺として示す図。",
+    ariaLabel:
+      "座標平面上の二点AとBの横方向の差と縦方向の差で直角三角形を作り、二点間距離を斜辺として示す図。",
     responsive: { minWidth: 460, allowHorizontalScroll: true },
     elements: [
-      { kind: "axes", origin: point(90, 270), xMin: -1, xMax: 8, yMin: -1, yMax: 7, grid: true, gridStep: 1, color: BASE },
+      {
+        kind: "axes",
+        origin: point(90, 270),
+        xMin: -1,
+        xMax: 8,
+        yMin: -1,
+        yMax: 7,
+        grid: true,
+        gridStep: 1,
+        color: BASE,
+      },
       { kind: "point", x: 150, y: 230, radius: 5, color: BLUE },
       { kind: "point", x: 390, y: 90, radius: 5, color: ORANGE },
       { kind: "segment", from: point(150, 230), to: point(390, 230), color: GREEN },
