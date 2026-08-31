@@ -1,4 +1,7 @@
 import type { MathArea } from "../../../math1/types";
+import { eliminationAddSubtractLesson } from "./lessons/elimination-add-subtract";
+import { eliminationMultiplyLesson } from "./lessons/elimination-multiply";
+import { linearEquationTwoVariablesLesson } from "./lessons/linear-equation-two-variables";
 import { literalExpressionExplanationLesson } from "./lessons/literal-expression-explanation";
 import { mixedMonomialCalculationLesson } from "./lessons/mixed-monomial-calculation";
 import { monomialDivisionLesson } from "./lessons/monomial-division";
@@ -7,12 +10,18 @@ import { monomialPolynomialTermsLesson } from "./lessons/monomial-polynomial-ter
 import { polynomialAdditionLesson } from "./lessons/polynomial-addition";
 import { polynomialCombineLikeTermsLesson } from "./lessons/polynomial-combine-like-terms";
 import { polynomialSubtractionLesson } from "./lessons/polynomial-subtraction";
+import { substitutionMethodLesson } from "./lessons/substitution-method";
+import { systemMeaningLesson } from "./lessons/system-meaning";
+import { systemSolveMixedLesson } from "./lessons/system-solve-mixed";
+import { systemWordApplicationLesson } from "./lessons/system-word-application";
+import { systemWordModelLesson } from "./lessons/system-word-model";
 
 export const middleMath2Areas: MathArea[] = [
   {
     key: "numbers-expressions",
     title: "数と式",
-    description: "中学1年の文字式を土台に、整式の計算と文字式による説明へ進みます。",
+    description:
+      "中学1年の文字式と一元一次方程式を土台に、整式の計算、文字式の活用、連立二元一次方程式へ進みます。",
     units: [
       {
         key: "expressions-calculation",
@@ -28,6 +37,22 @@ export const middleMath2Areas: MathArea[] = [
           monomialDivisionLesson,
           mixedMonomialCalculationLesson,
           literalExpressionExplanationLesson,
+        ],
+      },
+      {
+        key: "simultaneous-equations",
+        title: "連立二元一次方程式",
+        description:
+          "二元一次方程式と連立方程式の解の意味を押さえ、加減法・代入法で解き、具体的な問題に活用します。",
+        lessons: [
+          linearEquationTwoVariablesLesson,
+          systemMeaningLesson,
+          eliminationAddSubtractLesson,
+          eliminationMultiplyLesson,
+          substitutionMethodLesson,
+          systemSolveMixedLesson,
+          systemWordModelLesson,
+          systemWordApplicationLesson,
         ],
       },
     ],
