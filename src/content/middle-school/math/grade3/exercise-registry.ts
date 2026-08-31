@@ -156,8 +156,9 @@ export const generateMiddleMath3UnitExercises = (unitKey: string, count = 8) => 
     "applied",
     "challenge",
   ];
+  const startIndex = randomInt(0, squareRootLessonKeys.length - 1);
   return Array.from({ length: count }, (_, index) => {
-    const lessonKey = squareRootLessonKeys[index % squareRootLessonKeys.length];
+    const lessonKey = squareRootLessonKeys[(startIndex + index) % squareRootLessonKeys.length];
     return withMetadata(
       generators[lessonKey](),
       `${unitKey}-${Date.now()}-${index}`,
