@@ -54,6 +54,15 @@ if (!context.includes("MAX_RELEVANT_SECTIONS = 2")) {
     "study-context.ts: Android向けに教材コンテキストを少数セクションへ制限してください。",
   );
 }
+if (!context.includes("PRACTICE_CONTEXT_LIMIT = 760")) {
+  issues.push("study-context.ts: 練習問題の具体的な問題文を保持する専用上限を維持してください。");
+}
+if (!context.includes('"[data-guided-practice]"')) {
+  issues.push("study-context.ts: 練習・演習質問ではGuidedPracticeを優先参照してください。");
+}
+if (!context.includes("uniqueContexts([practiceText, focusText")) {
+  issues.push("study-context.ts: 練習問題コンテキストをviewport・一般検索より先に選択してください。");
+}
 if (!modelConfig.includes('STUDY_AI_RUNTIME_VERSION = "0.2.82"')) {
   issues.push("model-config.ts: WebLLM runtime versionを0.2.82へ固定してください。");
 }
@@ -88,6 +97,15 @@ if (!worker.includes("WebWorkerMLCEngineHandler")) {
 }
 if (!prompt.includes("<study_context>")) {
   issues.push("system-prompt.ts: 教材コンテキストの信頼境界を明示してください。");
+}
+if (!prompt.includes("複数問題を勝手に作ったり")) {
+  issues.push("system-prompt.ts: 練習問題を1問ずつ説明する制約を維持してください。");
+}
+if (!prompt.includes("原則250字程度")) {
+  issues.push("system-prompt.ts: 小型端末内モデル向けの短い回答上限を維持してください。");
+}
+if (!prompt.includes("Markdownの見出し記号や強調記号は使わず")) {
+  issues.push("system-prompt.ts: textContent表示に適したプレーンテキスト回答を要求してください。");
 }
 
 if (issues.length > 0) {
