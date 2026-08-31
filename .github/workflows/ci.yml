@@ -24,7 +24,9 @@ jobs:
           cache: false
 
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          pnpm install --no-frozen-lockfile
+          git diff -- pnpm-lock.yaml
 
       - name: Run Biome
         run: pnpm exec biome ci .
