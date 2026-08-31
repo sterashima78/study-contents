@@ -3,6 +3,7 @@ import "../styles/exercise.css";
 
 type Props = {
   mode: "lesson" | "unit";
+  courseKey: "middle-math1" | "middle-math2";
   areaKey: string;
   unitKey: string;
   lessonKey?: string;
@@ -11,6 +12,7 @@ type Props = {
 
 const {
   mode: _mode,
+  courseKey: _courseKey,
   areaKey: _areaKey,
   unitKey: _unitKey,
   lessonKey: _lessonKey,
@@ -24,6 +26,7 @@ const _isUnit = _mode === "unit";
   class:list={["exercise-set", _isUnit && "unit-exercise-set"]}
   data-middle-math-exercise-set
   data-mode={_mode}
+  data-course-key={_courseKey}
   data-area-key={_areaKey}
   data-unit-key={_unitKey}
   data-lesson-key={_lessonKey}
@@ -84,6 +87,10 @@ const _isUnit = _mode === "unit";
     generateMiddleMath1GeometryLessonExercises,
     generateMiddleMath1GeometryUnitExercises,
   } from "../content/middle-school/math/grade1/geometry-exercise-registry";
+  import {
+    generateMiddleMath2LessonExercises,
+    generateMiddleMath2UnitExercises,
+  } from "../content/middle-school/math/grade2/exercise-registry";
 
   const difficultyLabel: Record<MiddleMathExercise["difficulty"], string> = {
     basic: "基礎",
@@ -116,6 +123,7 @@ const _isUnit = _mode === "unit";
 
   for (const section of document.querySelectorAll<HTMLElement>("[data-middle-math-exercise-set]")) {
     const mode = section.dataset.mode;
+    const courseKey = section.dataset.courseKey;
     const areaKey = section.dataset.areaKey;
     const unitKey = section.dataset.unitKey;
     const lessonKey = section.dataset.lessonKey;
@@ -128,6 +136,7 @@ const _isUnit = _mode === "unit";
     const diagnostic = section.querySelector<HTMLElement>("[data-exercise-diagnostic]");
     const diagnosticList = section.querySelector<HTMLElement>("[data-diagnostic-list]");
     if (
+      !courseKey ||
       !areaKey ||
       !unitKey ||
       !routeBase ||
@@ -144,6 +153,13 @@ const _isUnit = _mode === "unit";
     let exercises: MiddleMathExercise[] = [];
 
     const makeExercises = () => {
+      if (courseKey === "middle-math2") {
+        return mode === "unit"
+          ? generateMiddleMath2UnitExercises(unitKey)
+          : lessonKey
+            ? generateMiddleMath2LessonExercises(lessonKey)
+            : [];
+      }
       if (areaKey === "geometry") {
         return mode === "unit"
           ? generateMiddleMath1GeometryUnitExercises(unitKey)

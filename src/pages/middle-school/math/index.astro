@@ -19,7 +19,7 @@ const _base = import.meta.env.BASE_URL;
 
 <StudyPage
   title="中学数学 | 学習コンテンツ"
-  description="中学1〜3年の数学を学年別に学ぶための入口です。現在は中学1年を実装しています。"
+  description="中学1〜3年の数学を学年別に学ぶための入口です。現在は中学1年と中学2年の教材を公開しています。"
   width="wide"
 >
   <ContentHero
@@ -34,7 +34,7 @@ const _base = import.meta.env.BASE_URL;
       label="GRADES"
       title="学年からはじめる"
       id="grades-title"
-      description="まず1年の教材から公開し、同じ構成で2年・3年へ広げます。"
+      description="中学1年の4領域に加え、中学2年は式の計算から順に教材を広げています。"
     />
     <ContentIndex
       items={[
@@ -43,8 +43,16 @@ const _base = import.meta.env.BASE_URL;
           title: "中学1年",
           href: `${_base}middle-school/math/grade1/`,
           description: "正の数・負の数から始め、文字式、方程式、比例・反比例、図形、データへ進みます。",
-          tags: ["正の数・負の数 公開中", "1ページ1技能"],
+          tags: ["4領域 公開中", "1ページ1技能"],
           action: "1年の目次へ →",
+        },
+        {
+          marker: "02",
+          title: "中学2年",
+          href: `${_base}middle-school/math/grade2/`,
+          description: "中学1年の文字式を土台に、整式の計算と文字式による説明から学びます。",
+          tags: ["式の計算 公開中", "1ページ1技能"],
+          action: "2年の目次へ →",
         },
       ]}
       variant="grid"
@@ -52,10 +60,10 @@ const _base = import.meta.env.BASE_URL;
   </ContentSection>
 
   <ContentSection labelledby="planned-title" compact>
-    <SectionHeading label="PLANNED" title="続けて追加する学年" id="planned-title" />
+    <SectionHeading label="PLANNED" title="続けて追加する内容" id="planned-title" />
     <SummaryPoints
       items={[
-        "中学2年: 式の計算、連立方程式、一次関数、図形の性質と証明、確率・データ。",
+        "中学2年: 連立方程式、一次関数、図形の性質と証明、確率・データを順に追加します。",
         "中学3年: 平方根、多項式、二次方程式、関数 y=ax²、相似、円、三平方の定理、標本調査。",
       ]}
     />
@@ -63,6 +71,6 @@ const _base = import.meta.env.BASE_URL;
 
   <PageNavigation
     previous={{ label: "← 中学校", href: `${_base}middle-school/` }}
-    next={{ label: "中学1年へ →", href: `${_base}middle-school/math/grade1/` }}
+    next={{ label: "中学2年へ →", href: `${_base}middle-school/math/grade2/` }}
   />
 </StudyPage>

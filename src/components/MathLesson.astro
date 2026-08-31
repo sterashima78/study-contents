@@ -60,8 +60,10 @@ const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _unitExerciseHref = `${_unitHref}exercise/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _middleMathCourseKey =
+  _course.key === "middle-math1" || _course.key === "middle-math2" ? _course.key : undefined;
 const _practiceSteps = designPracticeSteps(
-  _course.key === "middle-math1" ? "math1" : _course.key,
+  _middleMathCourseKey ? "math1" : _course.key,
   _lesson.practice.steps,
 );
 const _portablePracticeSteps = _practiceSteps.map((step) => ({
@@ -78,7 +80,7 @@ const _socialCourseKey =
     ? _course.key
     : undefined;
 const _formulaDerivation =
-  _socialCourseKey || _course.key === "middle-math1"
+  _socialCourseKey || _middleMathCourseKey
     ? undefined
     : _course.key === "matha"
       ? getMathAFormulaDerivation(_lesson.key)
@@ -179,9 +181,10 @@ const _formulaDerivation =
         unitKey={_unit.key}
         lessonKey={_lesson.key}
       />
-    ) : _course.key === "middle-math1" ? (
+    ) : _middleMathCourseKey ? (
       <MiddleMathExerciseSet
         mode="lesson"
+        courseKey={_middleMathCourseKey}
         routeBase={_course.routeBase}
         areaKey={_area.key}
         unitKey={_unit.key}

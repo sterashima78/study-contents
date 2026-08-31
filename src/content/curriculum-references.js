@@ -11,7 +11,7 @@ const SCIENCE_COMMENTARY_URL =
 const ENGLISH_COMMENTARY_URL = "https://www.mext.go.jp/content/1407073_09_1_2.pdf";
 const MIDDLE_MATH_COMMENTARY_URL =
   "https://www.mext.go.jp/component/a_menu/education/micro_detail/__icsFiles/afieldfile/2019/03/18/1387018_004.pdf";
-const LAST_VERIFIED = "2026-08-30";
+const LAST_VERIFIED = "2026-08-31";
 
 function createReference({
   courseTitle,
@@ -127,6 +127,17 @@ export const curriculumReferences = Object.freeze({
     commentaryUrl: MIDDLE_MATH_COMMENTARY_URL,
     routeBase: "middle-school/math/grade1",
     note: "第1学年の「A 数と式」「B 図形」「C 関数」「D データの活用」を、1ページ1技能の教材単位に分けて構成しています。",
+  }),
+  "middle-math2": createReference({
+    courseTitle: "中学数学 2年",
+    subjectTitle: "数学",
+    curriculumCourse: "第2学年",
+    guidelineTitle: "中学校学習指導要領（平成29年告示）",
+    guidelineUrl: GUIDELINE_INDEX_URL,
+    commentaryTitle: "中学校学習指導要領（平成29年告示）解説 数学編",
+    commentaryUrl: MIDDLE_MATH_COMMENTARY_URL,
+    routeBase: "middle-school/math/grade2",
+    note: "第2学年は「A 数と式」の式の計算と文字式の活用から、1ページ1技能で段階的に公開しています。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
