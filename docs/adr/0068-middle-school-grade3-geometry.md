@@ -1,8 +1,8 @@
-# ADR 0067: 中学3年「B 図形」を3単元21教材で実装する
+# ADR 0068: 中学3年「B 図形」を3単元21教材で実装する
 
 - Status: Accepted
 - Date: 2026-08-31
-- Related: ADR 0059, ADR 0063, ADR 0066
+- Related: ADR 0059, ADR 0063, ADR 0066, ADR 0067
 
 ## Context
 
@@ -36,7 +36,7 @@
 
 ### 6. 安全境界を維持する
 
-教材値は固定例またはブラウザ内生成値のみとし、個人情報・学校の実データ・秘密情報・外部APIを追加しない。`package.json`、`pnpm-lock.yaml`、Study AI runtime/model/診断条件は変更しない。
+教材値は固定例またはブラウザ内生成値のみとし、個人情報・学校の実データ・秘密情報・外部APIを追加しない。`package.json`、`pnpm-lock.yaml`、Study AI runtime/model/診断条件は変更しない。ADR 0067で進行中のLlama 3.2 1B診断条件をそのまま保持する。
 
 ## Consequences
 

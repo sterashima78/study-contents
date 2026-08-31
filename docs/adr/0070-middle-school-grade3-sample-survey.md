@@ -1,8 +1,8 @@
-# ADR 0069: 中学3年「標本調査」を8教材で実装し中学数学3学年を完成する
+# ADR 0070: 中学3年「標本調査」を8教材で実装し中学数学3学年を完成する
 
 - Status: Accepted
 - Date: 2026-08-31
-- Related: ADR 0060, ADR 0062, ADR 0067, ADR 0068
+- Related: ADR 0060, ADR 0062, ADR 0068, ADR 0069
 
 ## Context
 
@@ -32,7 +32,7 @@
 
 ### 6. 依存関係とAI境界を維持する
 
-新規依存関係、分析SDK、外部APIは追加しない。`package.json`、`pnpm-lock.yaml`、Study AI runtime/model/診断条件は変更しない。
+新規依存関係、分析SDK、外部APIは追加しない。`package.json`、`pnpm-lock.yaml`、Study AI runtime/model/診断条件は変更しない。ADR 0067のLlama 3.2 1Bアーキテクチャ比較を含む最新mainの診断状態を保持する。
 
 ## Consequences
 

@@ -36,7 +36,7 @@ for (const unsafeSink of ["innerHTML", "insertAdjacentHTML", "outerHTML"]) {
   }
 }
 if (!chat.includes("enable_thinking: false")) {
-  issues.push("StudyAIChat.astro: Qwen3のthinkingを無効化してください。");
+  issues.push("StudyAIChat.astro: thinkingを無効化した生成設定を維持してください。");
 }
 if (!chat.includes("data-study-ai-diagnostics")) {
   issues.push("StudyAIChat.astro: 実行失敗時の診断情報UIを維持してください。");
@@ -57,9 +57,9 @@ if (!context.includes("MAX_RELEVANT_SECTIONS = 2")) {
 if (!modelConfig.includes('STUDY_AI_RUNTIME_VERSION = "0.2.82"')) {
   issues.push("model-config.ts: WebLLM runtime versionを0.2.82へ固定してください。");
 }
-if (!modelConfig.includes('"Qwen3-0.6B-q0f16-MLC"')) {
+if (!modelConfig.includes('"Llama-3.2-1B-Instruct-q4f16_1-MLC"')) {
   issues.push(
-    "model-config.ts: AndroidのQwen3実行経路切り分けではQwen3 0.6B q0f16モデルを固定してください。",
+    "model-config.ts: Androidのモデルアーキテクチャ比較ではLlama 3.2 1B q4f16モデルを固定してください。",
   );
 }
 if (!modelConfig.includes("STUDY_AI_CONTEXT_WINDOW_SIZE = 2048")) {

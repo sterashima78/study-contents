@@ -1,8 +1,8 @@
-# ADR 0068: 中学3年「関数 y=ax²」を9教材で実装する
+# ADR 0069: 中学3年「関数 y=ax²」を9教材で実装する
 
 - Status: Accepted
 - Date: 2026-08-31
-- Related: ADR 0058, ADR 0063, ADR 0067
+- Related: ADR 0058, ADR 0063, ADR 0068
 
 ## Context
 
