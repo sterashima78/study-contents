@@ -125,6 +125,16 @@ if (
     "src/components/ui/ConceptCard.astro: プレーンテキスト数式は長い場合に横スクロールできる必要があります。",
   );
 }
+if (
+  !conceptCardSource.includes("grid-template-columns: minmax(0, 1fr);") ||
+  !conceptCardSource.includes("width: 100%;") ||
+  !conceptCardSource.includes("max-width: 100%;") ||
+  !conceptCardSource.includes("overflow: hidden;")
+) {
+  issues.push(
+    "src/components/ui/ConceptCard.astro: 数式ラッパーは内容幅に引っ張られずカード幅以内に収まる必要があります。",
+  );
+}
 
 const workedExampleSource = await readFile(
   new URL("../src/components/ui/WorkedExample.astro", import.meta.url),
