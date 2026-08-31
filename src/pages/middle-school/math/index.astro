@@ -34,7 +34,7 @@ const _base = import.meta.env.BASE_URL;
       label="GRADES"
       title="学年からはじめる"
       id="grades-title"
-      description="中学1年の4領域に加え、中学2年は数と式・一次関数・図形まで教材を公開しています。"
+      description="中学1年と中学2年は、数と式・図形・関数・データの活用の4領域を公開しています。"
     />
     <ContentIndex
       items={[
@@ -50,8 +50,9 @@ const _base = import.meta.env.BASE_URL;
           marker: "02",
           title: "中学2年",
           href: `${_base}middle-school/math/grade2/`,
-          description: "中学1年の既習事項を土台に、式の計算、連立方程式、一次関数、図形の性質と証明へ進みます。",
-          tags: ["数と式・関数・図形 公開中", "1ページ1技能"],
+          description:
+            "式の計算、連立方程式、図形の性質と証明、一次関数、四分位数・箱ひげ図、場合の数と確率へ進みます。",
+          tags: ["4領域 公開中", "1ページ1技能"],
           action: "2年の目次へ →",
         },
       ]}
@@ -63,7 +64,6 @@ const _base = import.meta.env.BASE_URL;
     <SectionHeading label="PLANNED" title="続けて追加する内容" id="planned-title" />
     <SummaryPoints
       items={[
-        "中学2年: 確率・データを追加し、第2学年の4領域を完成させます。",
         "中学3年: 平方根、多項式、二次方程式、関数 y=ax²、相似、円、三平方の定理、標本調査。",
       ]}
     />
