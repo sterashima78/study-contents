@@ -70,7 +70,9 @@ if (!context.includes('"[data-guided-practice]"')) {
   issues.push("study-context.ts: 練習・演習質問ではGuidedPracticeを優先参照してください。");
 }
 if (!context.includes("uniqueContexts([practiceText, focusText")) {
-  issues.push("study-context.ts: 練習問題コンテキストをviewport・一般検索より先に選択してください。");
+  issues.push(
+    "study-context.ts: 練習問題コンテキストをviewport・一般検索より先に選択してください。",
+  );
 }
 if (!modelConfig.includes('STUDY_AI_RUNTIME_VERSION = "0.2.82"')) {
   issues.push("model-config.ts: WebLLM runtime versionを0.2.82へ固定してください。");
