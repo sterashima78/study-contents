@@ -1,6 +1,8 @@
 const FALLBACK_CONTEXT_LIMIT = 650;
 const SECTION_CONTEXT_LIMIT = 420;
+const PRACTICE_CONTEXT_LIMIT = 760;
 const MAX_RELEVANT_SECTIONS = 2;
+const PRACTICE_QUERY_PATTERN = /練習|演習|問題|解き方|解法|ヒント/;
 const removableSelector = [
   "script",
   "style",
@@ -45,6 +47,12 @@ function latestStudyAIQuestion() {
     "[data-study-ai-root] .study-ai-message.is-user .study-ai-message-body",
   );
   return messages.item(messages.length - 1)?.textContent?.trim() ?? "";
+}
+
+function findPracticeContext(main: HTMLElement, question: string) {
+  if (!PRACTICE_QUERY_PATTERN.test(normalizeText(question))) return "";
+  const practice = main.querySelector<HTMLElement>("[data-guided-practice]");
+  return extractText(practice, PRACTICE_CONTEXT_LIMIT);
 }
 
 function buildQuestionTerms(question: string) {
@@ -101,9 +109,10 @@ export function buildStudyContext(question = "") {
   const description =
     document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content ?? "";
   const effectiveQuestion = question || latestStudyAIQuestion();
+  const practiceText = main ? findPracticeContext(main, effectiveQuestion) : "";
   const focusText = main ? findViewportContext(main) : "";
   const relevantSections = main ? findRelevantSections(main, effectiveQuestion) : [];
-  const selectedContexts = uniqueContexts([focusText, ...relevantSections]);
+  const selectedContexts = uniqueContexts([practiceText, focusText, ...relevantSections]);
   const fallbackText =
     selectedContexts.length === 0 ? extractText(main, FALLBACK_CONTEXT_LIMIT) : "";
 
