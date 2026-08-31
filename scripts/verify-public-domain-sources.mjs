@@ -67,7 +67,9 @@ if (!Array.isArray(registry.sources)) {
     }
 
     if (!allowedReviewStatuses.has(source.reviewStatus)) {
-      issues.push(`${location}.reviewStatus: candidate、approved、rejected のいずれかにしてください。`);
+      issues.push(
+        `${location}.reviewStatus: candidate、approved、rejected のいずれかにしてください。`,
+      );
       continue;
     }
 
@@ -90,7 +92,9 @@ if (issues.length > 0) {
 } else {
   const total = registry.sources.length;
   const approved = registry.sources.filter((source) => source.reviewStatus === "approved").length;
-  console.log(`Public-domain source verification passed: ${total} source(s), ${approved} approved.`);
+  console.log(
+    `Public-domain source verification passed: ${total} source(s), ${approved} approved.`,
+  );
 }
 
 function validateApprovedSource(source, location) {
