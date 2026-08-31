@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const linearFunctionRateOfChangeLesson: MathLesson = {
   key: "linear-function-rate-of-change",
   title: "変化の割合を求める",
-  description: "xの増加量に対するyの増加量の割合を求め、一次関数ではその値が一定で傾きaに等しいことを理解します。",
+  description:
+    "xの増加量に対するyの増加量の割合を求め、一次関数ではその値が一定で傾きaに等しいことを理解します。",
   goals: [
     "二つの点や表から変化の割合を求められる。",
     "一次関数 y = ax + b の変化の割合がaに等しいことを説明できる。",

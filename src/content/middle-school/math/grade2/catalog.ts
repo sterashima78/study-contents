@@ -20,9 +20,9 @@ import { polynomialSubtractionLesson } from "./lessons/polynomial-subtraction";
 import { substitutionMethodLesson } from "./lessons/substitution-method";
 import { systemMeaningLesson } from "./lessons/system-meaning";
 import { systemSolveMixedLesson } from "./lessons/system-solve-mixed";
-import { systemsAndGraphsLesson } from "./lessons/systems-and-graphs";
 import { systemWordApplicationLesson } from "./lessons/system-word-application";
 import { systemWordModelLesson } from "./lessons/system-word-model";
+import { systemsAndGraphsLesson } from "./lessons/systems-and-graphs";
 
 export const middleMath2Areas: MathArea[] = [
   {

@@ -3,11 +3,9 @@ import type { MathLesson } from "../../../../math1/types";
 export const linearFunctionFromGraphLesson: MathLesson = {
   key: "linear-function-from-graph",
   title: "グラフから一次関数の式を求める",
-  description: "グラフ上の二点から傾きを求め、y軸との交点から切片を読み取って一次関数の式を決めます。",
-  goals: [
-    "グラフ上の二点から傾きを求められる。",
-    "傾きと切片を使って y=ax+b の式を決められる。",
-  ],
+  description:
+    "グラフ上の二点から傾きを求め、y軸との交点から切片を読み取って一次関数の式を決めます。",
+  goals: ["グラフ上の二点から傾きを求められる。", "傾きと切片を使って y=ax+b の式を決められる。"],
   concepts: [
     {
       title: "グラフからaとbを読む",
@@ -32,7 +30,11 @@ export const linearFunctionFromGraphLesson: MathLesson = {
     problem: "グラフが (0,−3) と (4,5) を通ります。",
     steps: [
       { prompt: "傾きaを答えてください。", answers: ["2"], placeholder: "a" },
-      { prompt: "一次関数の式を答えてください。", answers: ["y=2x-3", "2x-3"], placeholder: "y=..." },
+      {
+        prompt: "一次関数の式を答えてください。",
+        answers: ["y=2x-3", "2x-3"],
+        placeholder: "y=...",
+      },
     ],
     hint: "yの増加量は8、xの増加量は4です。",
   },

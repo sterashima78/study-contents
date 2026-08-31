@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const linearFunctionExpressionLesson: MathLesson = {
   key: "linear-function-expression",
   title: "表から一次関数の式を求める",
-  description: "表の対応から変化の割合aとx=0のときの値bを読み取り、一次関数 y = ax + b の式を求めます。",
+  description:
+    "表の対応から変化の割合aとx=0のときの値bを読み取り、一次関数 y = ax + b の式を求めます。",
   goals: [
     "表から変化の割合aを求められる。",
     "x=0のときの値bと組み合わせて一次関数の式を決められる。",
@@ -32,7 +33,11 @@ export const linearFunctionExpressionLesson: MathLesson = {
     problem: "x=0のときy=4、x=3のときy=10となる一次関数を考えます。",
     steps: [
       { prompt: "変化の割合aを答えてください。", answers: ["2"], placeholder: "a" },
-      { prompt: "一次関数の式を答えてください。", answers: ["y=2x+4", "2x+4"], placeholder: "y=..." },
+      {
+        prompt: "一次関数の式を答えてください。",
+        answers: ["y=2x+4", "2x+4"],
+        placeholder: "y=...",
+      },
     ],
     hint: "yの増加量は6、xの増加量は3です。",
   },

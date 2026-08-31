@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const linearFunctionApplicationLesson: MathLesson = {
   key: "linear-function-application",
   title: "一次関数を具体的な事象に活用する",
-  description: "一定の割合で変化する具体的な事象を一次関数とみなし、式・表・グラフを使って予測し、その意味を説明します。",
+  description:
+    "一定の割合で変化する具体的な事象を一次関数とみなし、式・表・グラフを使って予測し、その意味を説明します。",
   goals: [
     "具体的な事象から一次関数の式をつくれる。",
     "式やグラフから未知の値を予測し、元の事象に戻して意味を説明できる。",
@@ -20,7 +21,8 @@ export const linearFunctionApplicationLesson: MathLesson = {
   ],
   example: {
     title: "例題: 水温の変化を一次関数とみなす",
-    problem: "加熱開始時20℃の水が、一定の範囲で1分ごとに3℃ずつ上昇するとみなします。x分後の水温をy℃とします。",
+    problem:
+      "加熱開始時20℃の水が、一定の範囲で1分ごとに3℃ずつ上昇するとみなします。x分後の水温をy℃とします。",
     steps: [
       { expression: "y = 3x + 20", note: "1分あたり3℃がa、開始時20℃がbです。" },
       { expression: "x = 8 → y = 44", note: "8分後の予測値は44℃です。" },
@@ -31,8 +33,16 @@ export const linearFunctionApplicationLesson: MathLesson = {
     title: "練習: 減少する事象を一次関数で表す",
     problem: "容器に50Lの水があり、毎分4Lずつ一定に減るとみなします。x分後の水量をyLとします。",
     steps: [
-      { prompt: "xとyの関係を式で答えてください。", answers: ["y=-4x+50", "50-4x", "y=50-4x"], placeholder: "y=..." },
-      { prompt: "7分後の水量を答えてください。", answers: ["22", "22L", "22l"], placeholder: "水量" },
+      {
+        prompt: "xとyの関係を式で答えてください。",
+        answers: ["y=-4x+50", "50-4x", "y=50-4x"],
+        placeholder: "y=...",
+      },
+      {
+        prompt: "7分後の水量を答えてください。",
+        answers: ["22", "22L", "22l"],
+        placeholder: "水量",
+      },
     ],
     hint: "開始時の50Lから、1分ごとに4Lずつ減ります。",
   },

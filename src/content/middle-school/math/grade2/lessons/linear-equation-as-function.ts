@@ -3,7 +3,8 @@ import type { MathLesson } from "../../../../math1/types";
 export const linearEquationAsFunctionLesson: MathLesson = {
   key: "linear-equation-as-function",
   title: "二元一次方程式を直線として捉える",
-  description: "二元一次方程式を y=ax+b の形に変形し、その解の組が一次関数のグラフ上の点になることを理解します。",
+  description:
+    "二元一次方程式を y=ax+b の形に変形し、その解の組が一次関数のグラフ上の点になることを理解します。",
   goals: [
     "二元一次方程式をyについて解いて一次関数の式に直せる。",
     "二元一次方程式の解の組と直線上の点を結び付けられる。",
@@ -31,7 +32,11 @@ export const linearEquationAsFunctionLesson: MathLesson = {
     title: "練習: 二元一次方程式を一次関数に直す",
     problem: "3x + y − 6 = 0 を考えます。",
     steps: [
-      { prompt: "yについて解いた式を答えてください。", answers: ["y=-3x+6", "-3x+6"], placeholder: "y=..." },
+      {
+        prompt: "yについて解いた式を答えてください。",
+        answers: ["y=-3x+6", "-3x+6"],
+        placeholder: "y=...",
+      },
       { prompt: "x = 1 のときのyを答えてください。", answers: ["3"], placeholder: "y" },
     ],
     hint: "3xを右辺へ移すと y=−3x+6 です。",

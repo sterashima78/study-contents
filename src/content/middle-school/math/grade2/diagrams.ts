@@ -306,7 +306,8 @@ function createLinearEquationScene(): DiagramScene {
   return {
     width,
     height,
-    ariaLabel: "二元一次方程式2xプラスyマイナス4イコール0をyイコールマイナス2xプラス4として表した直線。",
+    ariaLabel:
+      "二元一次方程式2xプラスyマイナス4イコール0をyイコールマイナス2xプラス4として表した直線。",
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       ...createAxes(transform, [-1, 1, 2, 3], [-2, 2, 4]),
@@ -390,8 +391,8 @@ function createApplicationScene(): DiagramScene {
     height,
     xMin: 0,
     xMax: 10,
-    yMin: 15,
-    yMax: 52,
+    yMin: 0,
+    yMax: 55,
     padding: 42,
   });
 
