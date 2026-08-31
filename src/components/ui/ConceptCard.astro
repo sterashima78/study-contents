@@ -26,7 +26,7 @@ const { title: _title, body: _body, formulas: _formulas, points: _points } = Ast
               <StaticMath value={formula} block />
             </div>
           ) : (
-            <p>{formula}</p>
+            <p class="formula-plain">{formula}</p>
           ),
         )}
       </div>
@@ -66,6 +66,7 @@ const { title: _title, body: _body, formulas: _formulas, points: _points } = Ast
   .formulas {
     display: grid;
     gap: 0.45rem;
+    min-width: 0;
     margin-top: 1.15rem;
     padding: 0.85rem 0;
     border-top: 1px solid var(--color-border-soft);
@@ -74,6 +75,8 @@ const { title: _title, body: _body, formulas: _formulas, points: _points } = Ast
 
   .formulas p,
   .formula {
+    min-width: 0;
+    max-width: 100%;
     margin: 0;
     padding: 0.25rem 0.15rem;
     color: var(--color-text-strong);
@@ -81,6 +84,12 @@ const { title: _title, body: _body, formulas: _formulas, points: _points } = Ast
     font-size: clamp(1.04rem, 2.5vw, 1.28rem);
     font-variant-numeric: lining-nums tabular-nums;
     font-weight: 700;
+  }
+
+  .formula-plain {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
   }
 
   .points {
