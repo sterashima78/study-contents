@@ -72,6 +72,10 @@ const _isUnit = _mode === "unit";
 
 <script>
   import {
+    generateMiddleMath1DataLessonExercises,
+    generateMiddleMath1DataUnitExercises,
+  } from "../content/middle-school/math/grade1/data-exercise-registry";
+  import {
     generateMiddleMath1LessonExercises,
     generateMiddleMath1UnitExercises,
     type MiddleMathExercise,
@@ -145,6 +149,13 @@ const _isUnit = _mode === "unit";
           ? generateMiddleMath1GeometryUnitExercises(unitKey)
           : lessonKey
             ? generateMiddleMath1GeometryLessonExercises(lessonKey)
+            : [];
+      }
+      if (areaKey === "data") {
+        return mode === "unit"
+          ? generateMiddleMath1DataUnitExercises(unitKey)
+          : lessonKey
+            ? generateMiddleMath1DataLessonExercises(lessonKey)
             : [];
       }
       return mode === "unit"
