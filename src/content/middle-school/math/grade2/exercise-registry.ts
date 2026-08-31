@@ -2,7 +2,7 @@ import type { MiddleMathExercise, MiddleMathExerciseDifficulty } from "../grade1
 
 type Generator = () => Omit<MiddleMathExercise, "id" | "lessonTitles" | "difficulty">;
 
-const lessonKeys = [
+const expressionLessonKeys = [
   "monomial-polynomial-terms",
   "polynomial-combine-like-terms",
   "polynomial-addition",
@@ -11,6 +11,17 @@ const lessonKeys = [
   "monomial-division",
   "mixed-monomial-calculation",
   "literal-expression-explanation",
+] as const;
+
+const systemLessonKeys = [
+  "linear-equation-two-variables",
+  "system-meaning",
+  "elimination-add-subtract",
+  "elimination-multiply",
+  "substitution-method",
+  "system-solve-mixed",
+  "system-word-model",
+  "system-word-application",
 ] as const;
 
 const lessonTitles: Record<string, string> = {
@@ -22,6 +33,14 @@ const lessonTitles: Record<string, string> = {
   "monomial-division": "単項式を割る",
   "mixed-monomial-calculation": "単項式の乗除を組み合わせる",
   "literal-expression-explanation": "文字式を使って数量関係を説明する",
+  "linear-equation-two-variables": "二元一次方程式の解を捉える",
+  "system-meaning": "連立方程式とその解を捉える",
+  "elimination-add-subtract": "加減法で文字を消去する",
+  "elimination-multiply": "式を倍してから加減法を使う",
+  "substitution-method": "代入法で文字を消去する",
+  "system-solve-mixed": "解き方を選んで連立方程式を解く",
+  "system-word-model": "文章から連立方程式をつくる",
+  "system-word-application": "連立方程式を具体的な問題に活用する",
 };
 
 const randomInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -41,6 +60,7 @@ const twoTerm = (a: number, b: number) => {
 
 const power = (exponent: number) => (exponent === 1 ? "x" : `x^${exponent}`);
 const monomial = (coefficient: number, exponent: number) => `${coefficient}${power(exponent)}`;
+const pairAnswers = (x: number, y: number) => [`${x},${y}`, `(${x},${y})`, `x=${x},y=${y}`];
 
 const generators: Record<string, Generator> = {
   "monomial-polynomial-terms": () => {
@@ -132,6 +152,96 @@ const generators: Record<string, Generator> = {
     lessonKeys: ["literal-expression-explanation"],
     hint: "連続する整数は1ずつ増えます。",
   }),
+  "linear-equation-two-variables": () => {
+    const x = randomInt(1, 5);
+    const y = randomInt(1, 6);
+    const a = randomInt(1, 4);
+    const b = randomInt(1, 4);
+    const total = a * x + b * y;
+    return {
+      prompt: `${a}x + ${b}y = ${total} で x = ${x} のとき、yを求めてください。`,
+      answers: [String(y)],
+      lessonKeys: ["linear-equation-two-variables"],
+      hint: "xの値を代入すると、yについての一元一次方程式になります。",
+    };
+  },
+  "system-meaning": () => {
+    const x = randomInt(1, 5);
+    const y = randomInt(1, 5);
+    return {
+      prompt: `x + y = ${x + y}、2x + y = ${2 * x + y} を同時に満たす解を x,y の順に答えてください。`,
+      answers: pairAnswers(x, y),
+      lessonKeys: ["system-meaning"],
+      hint: "二つの式の左辺どうしの差を考えるとxが分かります。",
+    };
+  },
+  "elimination-add-subtract": () => {
+    const x = randomInt(2, 7);
+    const y = randomInt(1, x - 1);
+    return {
+      prompt: `x + y = ${x + y}、x - y = ${x - y} を加減法で解き、x,yの順に答えてください。`,
+      answers: pairAnswers(x, y),
+      lessonKeys: ["elimination-add-subtract"],
+      hint: "二つの式を加えるとyが消えます。",
+    };
+  },
+  "elimination-multiply": () => {
+    const x = randomInt(1, 5);
+    const y = randomInt(1, 5);
+    return {
+      prompt: `x + y = ${x + y}、2x + 3y = ${2 * x + 3 * y} を解き、x,yの順に答えてください。`,
+      answers: pairAnswers(x, y),
+      lessonKeys: ["elimination-multiply"],
+      hint: "一つ目の式を2倍してから二つ目の式と引き算します。",
+    };
+  },
+  "substitution-method": () => {
+    const x = randomInt(1, 5);
+    const offset = randomInt(1, 4);
+    const y = x + offset;
+    return {
+      prompt: `y = x + ${offset}、2x + y = ${2 * x + y} を代入法で解き、x,yの順に答えてください。`,
+      answers: pairAnswers(x, y),
+      lessonKeys: ["substitution-method"],
+      hint: "二つ目の式のyをx+定数で置き換えます。",
+    };
+  },
+  "system-solve-mixed": () => {
+    const x = randomInt(1, 5);
+    const y = randomInt(1, 5);
+    return {
+      prompt: `3x + 2y = ${3 * x + 2 * y}、2x - y = ${2 * x - y} を解き、x,yの順に答えてください。`,
+      answers: pairAnswers(x, y),
+      lessonKeys: ["system-solve-mixed"],
+      hint: "二つ目の式を2倍するとyを消去できます。",
+    };
+  },
+  "system-word-model": () => {
+    const adults = randomInt(2, 6);
+    const children = randomInt(2, 6);
+    const count = adults + children;
+    const total = 700 * adults + 400 * children;
+    const countEquation = `x+y=${count}`;
+    const priceEquation = `700x+400y=${total}`;
+    return {
+      prompt: `大人700円、子ども400円の券を合計${count}枚、代金${total}円で買いました。大人をx人、子どもをy人として、連立方程式を「式1;式2」の形で答えてください。`,
+      answers: [`${countEquation};${priceEquation}`, `${priceEquation};${countEquation}`],
+      lessonKeys: ["system-word-model"],
+      hint: "人数の合計と代金の合計を別々の方程式にします。",
+    };
+  },
+  "system-word-application": () => {
+    const adults = randomInt(2, 7);
+    const children = randomInt(2, 7);
+    const count = adults + children;
+    const total = 700 * adults + 400 * children;
+    return {
+      prompt: `大人700円、子ども400円の券を合計${count}枚、代金${total}円で買いました。大人は何人ですか。`,
+      answers: [String(adults), `${adults}人`],
+      lessonKeys: ["system-word-application"],
+      hint: `x+y=${count}、700x+400y=${total} として解きます。`,
+    };
+  },
 };
 
 const withMetadata = (
@@ -159,7 +269,14 @@ export const generateMiddleMath2LessonExercises = (lessonKey: string, count = 3)
 };
 
 export const generateMiddleMath2UnitExercises = (unitKey: string, count = 8) => {
-  if (unitKey !== "expressions-calculation") return [];
+  const lessonKeys =
+    unitKey === "expressions-calculation"
+      ? expressionLessonKeys
+      : unitKey === "simultaneous-equations"
+        ? systemLessonKeys
+        : undefined;
+  if (!lessonKeys) return [];
+
   const difficulties: MiddleMathExerciseDifficulty[] = [
     "basic",
     "basic",
