@@ -87,7 +87,8 @@ const rootPair = (first: number, second: number) =>
     .sort((a, b) => a - b)
     .map(String)
     .join(",");
-const half = (numerator: number) => (numerator === 1 ? "1/2" : numerator === -1 ? "-1/2" : `${numerator}/2`);
+const half = (numerator: number) =>
+  numerator === 1 ? "1/2" : numerator === -1 ? "-1/2" : `${numerator}/2`;
 
 const generators: Record<string, Generator> = {
   "square-root-meaning": () => {
