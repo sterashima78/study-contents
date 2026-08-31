@@ -1,7 +1,8 @@
 # ADR 0056: Android実機の生成破綻を切り分けるためQwen3 1.7Bのq4f32モデルを検証する
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-08-31
+- Superseded by: ADR 0064
 - Related: ADR 0005, ADR 0042, ADR 0049, ADR 0052, ADR 0055
 
 ## Context
@@ -89,6 +90,10 @@ q4f32でも同じ文字列破綻が再現する場合、f16固有の問題では
 - `pnpm build` が通ること。
 - Android実機の診断情報でmodelがq4f32版になっていること。
 - Android実機でq4f32の自己診断結果をq4f16時の結果と比較すること。
+
+## Superseded by
+
+ADR 0064で、1.7B q4f32でも最小自己診断が同種の文字列破綻となった実機結果を受け、Qwen3 0.6B q0f16へ診断モデルを変更する。
 
 ## Supersedes
 
