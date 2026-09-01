@@ -53,6 +53,9 @@ if (!chat.includes('finishReason === "length"')) {
 if (!chat.includes("回答が長いためここで区切りました")) {
   issues.push("StudyAIChat.astro: 生成上限到達時に『続き』で再開できる案内を表示してください。");
 }
+if (!chat.includes("max_tokens: 512")) {
+  issues.push("StudyAIChat.astro: 教材解説に必要な回答予算としてmax_tokensを512に固定してください。");
+}
 for (const requiredExclusion of ['"script"', '"template"', '"[data-study-ai-exclude]"']) {
   if (!context.includes(requiredExclusion)) {
     issues.push(`study-context.ts: ${requiredExclusion} を教材コンテキストから除外してください。`);
@@ -112,8 +115,8 @@ if (!prompt.includes("<study_context>")) {
 if (!prompt.includes("複数問題を勝手に作ったり")) {
   issues.push("system-prompt.ts: 練習問題を1問ずつ説明する制約を維持してください。");
 }
-if (!prompt.includes("原則250字程度")) {
-  issues.push("system-prompt.ts: 小型端末内モデル向けの短い回答上限を維持してください。");
+if (!prompt.includes("通常400〜600字程度")) {
+  issues.push("system-prompt.ts: 512トークン予算に合わせた回答長の目安を維持してください。");
 }
 if (!prompt.includes("Markdownの見出し記号や強調記号は使わず")) {
   issues.push("system-prompt.ts: textContent表示に適したプレーンテキスト回答を要求してください。");
