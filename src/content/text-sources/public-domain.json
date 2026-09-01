@@ -11,7 +11,18 @@
       "sourceUrl": "https://www.aozora.gr.jp/cards/000042/card2363.html",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
-      "reviewStatus": "candidate"
+      "reviewStatus": "approved",
+      "rightsBasis": "寺田寅彦は1935年没。旧法から現行法への移行を考慮しても著作権は2018年の死後70年延長前に満了しており、満了した権利は復活しない。青空文庫は著作権切れ作品の収録ファイルについて複製・再配布・翻案等の自由利用を明示している。",
+      "authorDeathYear": 1935,
+      "wartimeExtensionReview": "not-applicable",
+      "evidenceUrls": [
+        "https://www.ndl.go.jp/portrait/datas/6078",
+        "https://www.bunka.go.jp/seisaku/chosakuken/hokaisei/kantaiheiyo_chosakuken/1411890.html",
+        "https://www.aozora.gr.jp/guide/kijyunn.html",
+        "https://www.aozora.gr.jp/cards/000042/card2363.html"
+      ],
+      "reviewedAt": "2026-09-01",
+      "notes": "教材では作品本文のみを利用し、青空文庫の書誌注記や底本側の追加解説は本文として転載しない。"
     },
     {
       "id": "natsume-gendai-nihon-no-kaika",
@@ -22,7 +33,18 @@
       "sourceUrl": "https://www.aozora.gr.jp/cards/000148/card759.html",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
-      "reviewStatus": "candidate"
+      "reviewStatus": "approved",
+      "rightsBasis": "夏目漱石は1916年没。旧法上の保護期間は現行法施行以前に満了しており、その後の保護期間延長で復活しない。青空文庫は著作権切れ作品の収録ファイルについて複製・再配布・翻案等の自由利用を明示している。",
+      "authorDeathYear": 1916,
+      "wartimeExtensionReview": "not-applicable",
+      "evidenceUrls": [
+        "https://www.ndl.go.jp/portrait/datas/307/index.html",
+        "https://www.bunka.go.jp/seisaku/chosakuken/hokaisei/kantaiheiyo_chosakuken/1411890.html",
+        "https://www.aozora.gr.jp/guide/kijyunn.html",
+        "https://www.aozora.gr.jp/cards/000148/card759.html"
+      ],
+      "reviewedAt": "2026-09-01",
+      "notes": "教材では作品本文のみを利用し、底本や青空文庫の注記・解説は転載しない。"
     },
     {
       "id": "kamo-hojoki",
@@ -33,7 +55,18 @@
       "sourceUrl": "https://www.aozora.gr.jp/cards/000196/card975.html",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
-      "reviewStatus": "candidate"
+      "reviewStatus": "approved",
+      "rightsBasis": "鴨長明は13世紀没で原著の著作権保護期間は満了している。国立国会図書館は1892年刊『方丈記』を著作権情報pdmとしてインターネット公開している。青空文庫も著作権切れ作品の収録ファイルの自由利用を明示している。",
+      "authorDeathYear": 1216,
+      "wartimeExtensionReview": "not-applicable",
+      "evidenceUrls": [
+        "https://ndlsearch.ndl.go.jp/books/R100000039-I888871",
+        "https://www.bunka.go.jp/seisaku/chosakuken/taisetsu/point/index.html",
+        "https://www.aozora.gr.jp/guide/kijyunn.html",
+        "https://www.aozora.gr.jp/cards/000196/card975.html"
+      ],
+      "reviewedAt": "2026-09-01",
+      "notes": "教材用の現代語訳・語注は独自作成する。近現代の校注・現代語訳は利用しない。"
     },
     {
       "id": "wilde-selfish-giant",
@@ -44,7 +77,19 @@
       "sourceUrl": "https://www.gutenberg.org/ebooks/902",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
-      "reviewStatus": "candidate"
+      "reviewStatus": "approved",
+      "rightsBasis": "Oscar Wildeは1900年没。日本の旧法上の通常保護期間は1941年12月7日より前に満了していたため、同日に連合国民が有していた著作権を対象とする戦時加算の対象となる存続権はないと確認した。2018年の保護期間延長でも満了済み権利は復活しない。",
+      "authorDeathYear": 1900,
+      "wartimeExtensionReview": "reviewed",
+      "evidenceUrls": [
+        "https://catalogue.bnf.fr/ark:/12148/cb11929190h.public",
+        "https://www.bunka.go.jp/seisaku/chosakuken/hokaisei/kantaiheiyo_chosakuken/1411890.html",
+        "https://laws.e-gov.go.jp/law/327AC0000000302/",
+        "https://www.gutenberg.org/policy/permission",
+        "https://www.gutenberg.org/ebooks/902"
+      ],
+      "reviewedAt": "2026-09-01",
+      "notes": "教材ではWildeの英文本文だけを利用する。Project Gutenbergの商標・ライセンス文、電子版の説明文、挿絵は転載しない。"
     },
     {
       "id": "lincoln-gettysburg-address",
@@ -55,7 +100,19 @@
       "sourceUrl": "https://www.gutenberg.org/ebooks/4",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
-      "reviewStatus": "candidate"
+      "reviewStatus": "approved",
+      "rightsBasis": "Abraham Lincolnは1865年没で、Gettysburg Addressは1863年の著作物。1941年12月7日に米国民が有していた著作権を対象とする戦時加算を検討しても、本件について同日に存続する日本法上の著作権はないと確認した。Library of Congressにも1863年のLincoln自筆稿が所蔵されている。",
+      "authorDeathYear": 1865,
+      "wartimeExtensionReview": "reviewed",
+      "evidenceUrls": [
+        "https://www.loc.gov/item/mal4356500/",
+        "https://www.bunka.go.jp/seisaku/chosakuken/hokaisei/kantaiheiyo_chosakuken/1411890.html",
+        "https://laws.e-gov.go.jp/law/327AC0000000302/",
+        "https://www.gutenberg.org/policy/permission",
+        "https://www.gutenberg.org/ebooks/4"
+      ],
+      "reviewedAt": "2026-09-01",
+      "notes": "教材では演説本文だけを利用する。Project Gutenbergの商標・ライセンス文や自動生成説明は転載しない。版間の語句差があるため、採用版を教材実装時に明示する。"
     },
     {
       "id": "bacon-of-studies",
@@ -66,7 +123,19 @@
       "sourceUrl": "https://www.gutenberg.org/ebooks/575",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
-      "reviewStatus": "candidate"
+      "reviewStatus": "approved",
+      "rightsBasis": "Francis Baconは1626年没。原著は近代著作権制度より数世紀前の著作物で、日本国内の著作権保護期間は満了している。戦時加算についても1941年12月7日に存続する著作権がなく対象外であることを確認した。",
+      "authorDeathYear": 1626,
+      "wartimeExtensionReview": "reviewed",
+      "evidenceUrls": [
+        "https://www.loc.gov/item/16023938/",
+        "https://www.bunka.go.jp/seisaku/chosakuken/hokaisei/kantaiheiyo_chosakuken/1411890.html",
+        "https://laws.e-gov.go.jp/law/327AC0000000302/",
+        "https://www.gutenberg.org/policy/permission",
+        "https://www.gutenberg.org/ebooks/575"
+      ],
+      "reviewedAt": "2026-09-01",
+      "notes": "教材ではBaconの『Of Studies』本文だけを利用する。Project Gutenbergの商標・ライセンス文、編集者による前書き・注釈等は転載しない。"
     }
   ]
 }
