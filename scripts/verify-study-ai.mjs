@@ -54,7 +54,9 @@ if (!chat.includes("回答が長いためここで区切りました")) {
   issues.push("StudyAIChat.astro: 生成上限到達時に『続き』で再開できる案内を表示してください。");
 }
 if (!chat.includes("max_tokens: 512")) {
-  issues.push("StudyAIChat.astro: 教材解説に必要な回答予算としてmax_tokensを512に固定してください。");
+  issues.push(
+    "StudyAIChat.astro: 教材解説に必要な回答予算としてmax_tokensを512に固定してください。",
+  );
 }
 for (const requiredExclusion of ['"script"', '"template"', '"[data-study-ai-exclude]"']) {
   if (!context.includes(requiredExclusion)) {
