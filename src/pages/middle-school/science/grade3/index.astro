@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleScience3Course } from "../../../../content/math-courses";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleScience3Areas } from "../../../../content/middle-school/science/grade3/catalog";
+---
+
+<CourseHome
+  course={middleScience3Course}
+  areas={middleScience3Areas}
+  description="中学3年理科を、観察・実験の考え方と資料分析を1ページ1技能に分けて学びます。まず第1分野（5）「運動とエネルギー」を公開しています。"
+  metaDescription="中学3年理科の学習コンテンツ。水圧・浮力、力の合成と分解、運動の規則性、仕事・仕事率、位置エネルギー・運動エネルギー、力学的エネルギー保存を1ページ1技能で学びます。"
+  footerDescription="現行の中学校学習指導要領を基準に、第1分野（5）「運動とエネルギー」を公開しています。測定値には誤差が含まれることを踏まえ、表・グラフの全体傾向から規則性を考える構成です。"
+/>

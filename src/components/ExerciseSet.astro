@@ -12,6 +12,7 @@ type Props = {
     | "math3"
     | "middle-science1"
     | "middle-science2"
+    | "middle-science3"
     | "chemistry-basic"
     | "chemistry"
     | "biology-basic"
@@ -31,7 +32,9 @@ const {
 const _base = import.meta.env.BASE_URL;
 const _isUnit = _mode === "unit";
 const _usesMiddleScienceUnitSet =
-  _courseKey === "middle-science1" || _courseKey === "middle-science2";
+  _courseKey === "middle-science1" ||
+  _courseKey === "middle-science2" ||
+  _courseKey === "middle-science3";
 const _usesCompactUnitSet =
   _courseKey === "chemistry-basic" ||
   _courseKey === "chemistry" ||
@@ -148,6 +151,10 @@ const _usesCompactUnitSet =
     generateMiddleScience2LessonExercises,
     generateMiddleScience2UnitExercises,
   } from "../content/middle-school/science/grade2/exercise-registry";
+  import {
+    generateMiddleScience3LessonExercises,
+    generateMiddleScience3UnitExercises,
+  } from "../content/middle-school/science/grade3/exercise-registry";
   import type { PracticeInputKind, PracticeOption } from "../content/practice";
 
   MathfieldElement.soundsDirectory = null;
@@ -357,6 +364,13 @@ const _usesCompactUnitSet =
             ? generateMiddleScience2LessonExercises(unitKey, lessonKey)
             : [];
       }
+      if (courseKey === "middle-science3") {
+        return mode === "unit"
+          ? generateMiddleScience3UnitExercises(unitKey)
+          : lessonKey
+            ? generateMiddleScience3LessonExercises(unitKey, lessonKey)
+            : [];
+      }
       if (courseKey === "biology") {
         return mode === "unit"
           ? generateBiologyUnitExercises(unitKey)
@@ -475,7 +489,9 @@ const _usesCompactUnitSet =
             ? "middle-school/science/grade1"
             : courseKey === "middle-science2"
               ? "middle-school/science/grade2"
-              : courseKey;
+              : courseKey === "middle-science3"
+                ? "middle-school/science/grade3"
+                : courseKey;
         link.href = `${base}${routeBase}/${areaKey}/${unitKey}/${key}/`;
         item.append(
           createElement("h4", undefined, result.title),
