@@ -15,10 +15,10 @@ import StudyPage from "../../../components/ui/StudyPage.astro";
 const _base = import.meta.env.BASE_URL;
 ---
 
-<StudyPage title="中学理科 | 学習コンテンツ" description="中学1〜3年理科を現行の学習指導要領に沿って1ページ1技能で整備します。中3は運動とエネルギーを公開中です。">
+<StudyPage title="中学理科 | 学習コンテンツ" description="中学1〜3年理科を現行の学習指導要領に沿って1ページ1技能で整備します。中3は運動とエネルギー、化学変化とイオンを公開中です。">
   <ContentHero kicker="JUNIOR HIGH SCIENCE" title="中学理科" description="観察・実験や資料から規則性や共通点を見いだし、自然の現象を科学的に説明する力を育てます。" variant="display" />
   <ContentSection labelledby="grades-title">
-    <SectionHeading label="GRADES" title="学年からはじめる" id="grades-title" description="中学1年・中学2年は4領域完成。中学3年は第1分野（5）「運動とエネルギー」を公開しています。" />
+    <SectionHeading label="GRADES" title="学年からはじめる" id="grades-title" description="中学1年・中学2年は4領域完成。中学3年は「運動とエネルギー」「化学変化とイオン」の2領域を公開しています。" />
     <ContentIndex
       items={[
         {
@@ -41,8 +41,8 @@ const _base = import.meta.env.BASE_URL;
           marker: "03",
           title: "中学3年",
           href: `${_base}middle-school/science/grade3/`,
-          description: "まず水圧・浮力、力の合成と分解、運動の規則性、仕事と力学的エネルギーを学びます。",
-          tags: ["運動とエネルギー公開", "15技能", "単元末8問"],
+          description: "運動と力学的エネルギーに加え、イオン、酸・アルカリ、中和、金属とダニエル電池を学びます。",
+          tags: ["2領域公開", "30技能", "単元末8問"],
           action: "中学3年理科へ →",
         },
       ]}
