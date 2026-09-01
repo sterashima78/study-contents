@@ -161,7 +161,7 @@ export const curriculumReferences = Object.freeze({
     commentaryTitle: "中学校学習指導要領（平成29年告示）解説 理科編",
     commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
     routeBase: "middle-school/science/grade1",
-    note: "第1学年の第1分野（1）「身近な物理現象」と（2）「身の回りの物質」を、光・音・力、物質の性質・気体・水溶液・状態変化まで1ページ1技能で構成しています。",
+    note: "第1学年の第1分野（1）「身近な物理現象」と（2）「身の回りの物質」、第2分野（1）「いろいろな生物とその共通点」を、物理・物質・生物の観察と分類まで1ページ1技能で構成しています。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
