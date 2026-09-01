@@ -1,0 +1,202 @@
+name: Cleanup merged branches
+
+on:
+  schedule:
+    - cron: "17 2 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "削除せず対象だけを確認する"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: cleanup-merged-branches
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Delete stale merged branches
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const STALE_DAYS = 30;
+            const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+            const TARGET_PREFIXES = [
+              "feat/",
+              "feature/",
+              "fix/",
+              "bugfix/",
+              "chore/",
+              "docs/",
+              "refactor/",
+              "test/",
+              "prep/",
+              "dependabot/",
+              "renovate/",
+            ];
+
+            const { owner, repo } = context.repo;
+            const manualDryRun = context.payload.inputs?.dry_run;
+            const dryRun =
+              context.eventName === "workflow_dispatch" && String(manualDryRun) !== "false";
+
+            const repoResponse = await github.rest.repos.get({ owner, repo });
+            const defaultBranch = repoResponse.data.default_branch;
+            const defaultBranchResponse = await github.rest.repos.getBranch({
+              owner,
+              repo,
+              branch: defaultBranch,
+            });
+            const defaultSha = defaultBranchResponse.data.commit.sha;
+            const branches = await github.paginate(github.rest.repos.listBranches, {
+              owner,
+              repo,
+              per_page: 100,
+            });
+
+            const results = [];
+            let examined = 0;
+            let deleted = 0;
+            let candidates = 0;
+
+            for (const branch of branches) {
+              if (branch.name === defaultBranch) continue;
+              if (!TARGET_PREFIXES.some((prefix) => branch.name.startsWith(prefix))) continue;
+
+              examined += 1;
+              if (branch.protected) continue;
+
+              const commitResponse = await github.rest.repos.getCommit({
+                owner,
+                repo,
+                ref: branch.commit.sha,
+              });
+              const commitDateText =
+                commitResponse.data.commit.committer?.date ?? commitResponse.data.commit.author?.date;
+              if (!commitDateText) {
+                results.push([branch.name, "skip", "先端コミット日時を取得できない"]);
+                continue;
+              }
+
+              const ageDays = Math.floor(
+                (Date.now() - Date.parse(commitDateText)) / MILLISECONDS_PER_DAY,
+              );
+              if (ageDays < STALE_DAYS) continue;
+
+              const openPulls = await github.paginate(github.rest.pulls.list, {
+                owner,
+                repo,
+                state: "open",
+                head: `${owner}:${branch.name}`,
+                per_page: 100,
+              });
+              if (openPulls.length > 0) continue;
+
+              let mergedByAncestry = false;
+              try {
+                const comparison = await github.rest.repos.compareCommitsWithBasehead({
+                  owner,
+                  repo,
+                  basehead: `${branch.commit.sha}...${defaultSha}`,
+                });
+                mergedByAncestry = ["ahead", "identical"].includes(comparison.data.status);
+              } catch (error) {
+                core.warning(`祖先判定に失敗しました: ${branch.name}: ${error.message}`);
+              }
+
+              let mergedByPullRequest = false;
+              if (!mergedByAncestry) {
+                const closedPulls = await github.paginate(github.rest.pulls.list, {
+                  owner,
+                  repo,
+                  state: "closed",
+                  head: `${owner}:${branch.name}`,
+                  per_page: 100,
+                });
+                mergedByPullRequest = closedPulls.some(
+                  (pull) => pull.merged_at && pull.head.sha === branch.commit.sha,
+                );
+              }
+
+              if (!mergedByAncestry && !mergedByPullRequest) continue;
+
+              candidates += 1;
+              const mergeEvidence = mergedByPullRequest ? "merged PR" : "main ancestor";
+              if (dryRun) {
+                results.push([branch.name, "candidate", `${ageDays}日 / ${mergeEvidence}`]);
+                continue;
+              }
+
+              let currentBranch;
+              try {
+                currentBranch = await github.rest.repos.getBranch({
+                  owner,
+                  repo,
+                  branch: branch.name,
+                });
+              } catch (error) {
+                if (error.status === 404) {
+                  results.push([branch.name, "skip", "削除前に既に消失"]);
+                  continue;
+                }
+                throw error;
+              }
+
+              if (currentBranch.data.protected) {
+                results.push([branch.name, "skip", "削除前に保護済み"]);
+                continue;
+              }
+              if (currentBranch.data.commit.sha !== branch.commit.sha) {
+                results.push([branch.name, "skip", "削除前に先端SHAが更新"]);
+                continue;
+              }
+
+              const openPullsNow = await github.paginate(github.rest.pulls.list, {
+                owner,
+                repo,
+                state: "open",
+                head: `${owner}:${branch.name}`,
+                per_page: 100,
+              });
+              if (openPullsNow.length > 0) {
+                results.push([branch.name, "skip", "削除前にopen PRを検出"]);
+                continue;
+              }
+
+              await github.rest.git.deleteRef({
+                owner,
+                repo,
+                ref: `heads/${branch.name}`,
+              });
+              deleted += 1;
+              results.push([branch.name, "deleted", `${ageDays}日 / ${mergeEvidence}`]);
+            }
+
+            await core.summary
+              .addHeading("Merged branch cleanup")
+              .addRaw(
+                `mode=${dryRun ? "dry-run" : "delete"}, stale=${STALE_DAYS} days, examined=${examined}, candidates=${candidates}, deleted=${deleted}`,
+              )
+              .addTable([
+                [
+                  { data: "Branch", header: true },
+                  { data: "Result", header: true },
+                  { data: "Reason", header: true },
+                ],
+                ...(results.length > 0 ? results : [["-", "none", "対象なし"]]),
+              ])
+              .write();
+
+            core.notice(
+              `Branch cleanup completed: examined=${examined}, candidates=${candidates}, deleted=${deleted}, dryRun=${dryRun}`,
+            );
