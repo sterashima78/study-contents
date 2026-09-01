@@ -11,6 +11,7 @@ type Props = {
     | "mathc"
     | "math3"
     | "middle-science1"
+    | "middle-science2"
     | "chemistry-basic"
     | "chemistry"
     | "biology-basic"
@@ -29,7 +30,8 @@ const {
 } = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _isUnit = _mode === "unit";
-const _usesMiddleScienceUnitSet = _courseKey === "middle-science1";
+const _usesMiddleScienceUnitSet =
+  _courseKey === "middle-science1" || _courseKey === "middle-science2";
 const _usesCompactUnitSet =
   _courseKey === "chemistry-basic" ||
   _courseKey === "chemistry" ||
@@ -142,6 +144,10 @@ const _usesCompactUnitSet =
     generateMiddleScience1LessonExercises,
     generateMiddleScience1UnitExercises,
   } from "../content/middle-school/science/grade1/exercise-registry";
+  import {
+    generateMiddleScience2LessonExercises,
+    generateMiddleScience2UnitExercises,
+  } from "../content/middle-school/science/grade2/exercise-registry";
   import type { PracticeInputKind, PracticeOption } from "../content/practice";
 
   MathfieldElement.soundsDirectory = null;
@@ -344,6 +350,13 @@ const _usesCompactUnitSet =
             ? generateMiddleScience1LessonExercises(unitKey, lessonKey)
             : [];
       }
+      if (courseKey === "middle-science2") {
+        return mode === "unit"
+          ? generateMiddleScience2UnitExercises(unitKey)
+          : lessonKey
+            ? generateMiddleScience2LessonExercises(unitKey, lessonKey)
+            : [];
+      }
       if (courseKey === "biology") {
         return mode === "unit"
           ? generateBiologyUnitExercises(unitKey)
@@ -457,7 +470,12 @@ const _usesCompactUnitSet =
         const item = createElement("article", "diagnostic-item");
         const ratio = result.total === 0 ? 0 : result.correct / result.total;
         const link = createElement("a", "diagnostic-link", "この小単元を復習する");
-        const routeBase = courseKey === "middle-science1" ? "middle-school/science/grade1" : courseKey;
+        const routeBase =
+          courseKey === "middle-science1"
+            ? "middle-school/science/grade1"
+            : courseKey === "middle-science2"
+              ? "middle-school/science/grade2"
+              : courseKey;
         link.href = `${base}${routeBase}/${areaKey}/${unitKey}/${key}/`;
         item.append(
           createElement("h4", undefined, result.title),

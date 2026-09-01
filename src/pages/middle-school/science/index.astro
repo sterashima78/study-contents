@@ -18,7 +18,7 @@ const _base = import.meta.env.BASE_URL;
 <StudyPage title="中学理科 | 学習コンテンツ" description="中学1〜3年理科を現行の学習指導要領に沿って1ページ1技能で整備します。">
   <ContentHero kicker="JUNIOR HIGH SCIENCE" title="中学理科" description="観察・実験や資料から規則性や共通点を見いだし、自然の現象を科学的に説明する力を育てます。" variant="display" />
   <ContentSection labelledby="grades-title">
-    <SectionHeading label="GRADES" title="学年からはじめる" id="grades-title" description="中学1年のエネルギー・粒子・生命・地球の4領域を公開しています。" />
+    <SectionHeading label="GRADES" title="学年からはじめる" id="grades-title" description="中学1年の4領域と、中学2年「電流とその利用」を公開しています。" />
     <ContentIndex
       items={[
         {
@@ -29,9 +29,17 @@ const _base = import.meta.env.BASE_URL;
           tags: ["4領域公開", "3問確認", "単元末8問"],
           action: "中学1年理科へ →",
         },
+        {
+          marker: "02",
+          title: "中学2年",
+          href: `${_base}middle-school/science/grade2/`,
+          description: "回路、電流・電圧・抵抗、電力、静電気、磁界、電磁誘導から第2学年を始めます。",
+          tags: ["電流とその利用 公開", "3問確認", "単元末8問"],
+          action: "中学2年理科へ →",
+        },
       ]}
       variant="grid"
     />
   </ContentSection>
-  <PageNavigation previous={{ label: "← 中学校", href: `${_base}middle-school/` }} next={{ label: "中学1年理科へ →", href: `${_base}middle-school/science/grade1/` }} />
+  <PageNavigation previous={{ label: "← 中学校", href: `${_base}middle-school/` }} next={{ label: "中学2年理科へ →", href: `${_base}middle-school/science/grade2/` }} />
 </StudyPage>
