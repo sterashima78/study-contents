@@ -19,6 +19,7 @@ import { middleMath1Areas } from "../content/middle-school/math/grade1/catalog";
 import { middleMath2Areas } from "../content/middle-school/math/grade2/catalog";
 import { middleMath3Areas } from "../content/middle-school/math/grade3/catalog";
 import { middleScience1Areas } from "../content/middle-school/science/grade1/catalog";
+import { middleScience2Areas } from "../content/middle-school/science/grade2/catalog";
 import { physicsAreas } from "../content/physics/catalog";
 import { physicsBasicsAreas } from "../content/physics-basics/catalog";
 import { worldHistoryAreas } from "../content/world-history/catalog";
@@ -39,14 +40,16 @@ const _middleSchoolLessonCount =
   _lessonCount(middleMath1Areas) +
   _lessonCount(middleMath2Areas) +
   _lessonCount(middleMath3Areas) +
-  _lessonCount(middleScience1Areas);
+  _lessonCount(middleScience1Areas) +
+  _lessonCount(middleScience2Areas);
 const _courses = [
   {
     title: "中学校",
     kicker: "LOWER SECONDARY",
     href: `${_base}middle-school/`,
-    description: "中学数学1〜3年の全4領域と、中学1年理科を公開しています。",
-    areas: ["中学数学 1年", "中学数学 2年", "中学数学 3年", "中学理科 1年"],
+    description:
+      "中学数学1〜3年の全4領域、中学1年理科の全4領域、中学2年理科「電流とその利用」を公開しています。",
+    areas: ["中学数学 1年", "中学数学 2年", "中学数学 3年", "中学理科 1年", "中学理科 2年"],
     lessonCount: _middleSchoolLessonCount,
   },
   {

@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import CourseHome from "../../../../components/CourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleScience2Course } from "../../../../content/math-courses";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleScience2Areas } from "../../../../content/middle-school/science/grade2/catalog";
+---
+
+<CourseHome
+  course={middleScience2Course}
+  areas={middleScience2Areas}
+  description="中学2年理科を、測定値・観察結果・模式図から関係性を見いだす流れで1ページ1技能に分けて学びます。まず「電流とその利用」を公開しています。"
+  metaDescription="中学2年理科の学習コンテンツ。現行の中学校学習指導要領を基準に、回路、オームの法則、電力・電力量、静電気、磁界、電磁誘導を1ページ1技能で学びます。"
+  footerDescription="現行の中学校学習指導要領を基準に、第1分野（3）「電流とその利用」を公開しています。家庭用電源や高電圧を用いる実験手順は扱いません。"
+/>

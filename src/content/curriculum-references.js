@@ -163,6 +163,17 @@ export const curriculumReferences = Object.freeze({
     routeBase: "middle-school/science/grade1",
     note: "第1学年の第1分野（1）「身近な物理現象」と（2）「身の回りの物質」、第2分野（1）「いろいろな生物とその共通点」と（2）「大地の成り立ちと変化」を、エネルギー・粒子・生命・地球の4領域で1ページ1技能に構成しています。",
   }),
+  "middle-science2": createReference({
+    courseTitle: "中学理科 2年",
+    subjectTitle: "理科",
+    curriculumCourse: "第2学年",
+    guidelineTitle: "中学校学習指導要領（平成29年告示）",
+    guidelineUrl: GUIDELINE_INDEX_URL,
+    commentaryTitle: "中学校学習指導要領（平成29年告示）解説 理科編",
+    commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
+    routeBase: "middle-school/science/grade2",
+    note: "第2学年第1分野（3）「電流とその利用」を、回路・電流と電圧・抵抗・電力と電力量・静電気・磁界・電磁誘導まで1ページ1技能で構成しています。",
+  }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
     subjectTitle: "理科",
