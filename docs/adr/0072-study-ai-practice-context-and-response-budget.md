@@ -1,6 +1,7 @@
 # ADR 0072: 練習問題のAI回答は具体的な1問を優先し短いプレーンテキストで返す
 
-- Status: Accepted
+- Status: Superseded
+- Superseded by: ADR 0086
 - Date: 2026-08-31
 - Related: ADR 0005, ADR 0049, ADR 0067
 
