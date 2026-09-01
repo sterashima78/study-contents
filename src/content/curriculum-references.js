@@ -183,7 +183,7 @@ export const curriculumReferences = Object.freeze({
     commentaryTitle: "中学校学習指導要領（平成29年告示）解説 理科編",
     commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
     routeBase: "middle-school/science/grade3",
-    note: "第3学年の第1分野（5）「運動とエネルギー」を、水中の力と力の合成・分解、運動の規則性、仕事と力学的エネルギーの15技能で公開しています。測定値の誤差を踏まえ、表・グラフの全体傾向から規則性を考える構成です。",
+    note: "第3学年の第1分野（5）「運動とエネルギー」と（6）「化学変化とイオン」を、エネルギー・粒子の2領域で1ページ1技能に構成しています。運動では測定誤差を踏まえた資料分析、イオンでは粒子・電子モデルによる説明を重視します。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
