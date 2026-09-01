@@ -11,6 +11,8 @@ const SCIENCE_COMMENTARY_URL =
 const ENGLISH_COMMENTARY_URL = "https://www.mext.go.jp/content/1407073_09_1_2.pdf";
 const MIDDLE_MATH_COMMENTARY_URL =
   "https://www.mext.go.jp/component/a_menu/education/micro_detail/__icsFiles/afieldfile/2019/03/18/1387018_004.pdf";
+const MIDDLE_SCIENCE_COMMENTARY_URL =
+  "https://www.mext.go.jp/content/20230626-mxt_kyoikujinzai02-000033064_05.pdf";
 const LAST_VERIFIED = "2026-08-31";
 
 function createReference({
@@ -149,6 +151,17 @@ export const curriculumReferences = Object.freeze({
     commentaryUrl: MIDDLE_MATH_COMMENTARY_URL,
     routeBase: "middle-school/math/grade3",
     note: "第3学年の「A 数と式」「B 図形」「C 関数」「D データの活用」を、平方根・展開と因数分解・二次方程式、相似・円周角・三平方の定理、関数 y=ax²、標本調査まで1ページ1技能で構成しています。",
+  }),
+  "middle-science1": createReference({
+    courseTitle: "中学理科 1年",
+    subjectTitle: "理科",
+    curriculumCourse: "第1学年",
+    guidelineTitle: "中学校学習指導要領（平成29年告示）",
+    guidelineUrl: GUIDELINE_INDEX_URL,
+    commentaryTitle: "中学校学習指導要領（平成29年告示）解説 理科編",
+    commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
+    routeBase: "middle-school/science/grade1",
+    note: "第1学年の第1分野（1）「身近な物理現象」から公開し、光の反射・屈折、凸レンズ、音、力の働きを1ページ1技能で構成しています。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
