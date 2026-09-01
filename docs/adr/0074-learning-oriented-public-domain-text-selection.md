@@ -1,7 +1,8 @@
 # ADR 0074: パブリックドメイン作品は作問可能な短区間を基準に選定する
 
-- Status: Accepted
+- Status: Superseded
 - Date: 2026-09-01
+- Superseded by: ADR 0078
 - Related: ADR 0001, ADR 0025, ADR 0026, ADR 0073
 
 ## Context
