@@ -9,6 +9,7 @@ export type MathCourseInfo = {
     | "middle-math1"
     | "middle-math2"
     | "middle-math3"
+    | "middle-science1"
     | "chemistry-basic"
     | "chemistry"
     | "physics-basics"
@@ -108,6 +109,16 @@ export const middleMath3Course: MathCourseInfo = {
   homePath: "middle-school/math/grade3/",
   scopeLabel: "中学3年数学",
   curriculumKey: "middle-math3",
+};
+
+export const middleScience1Course: MathCourseInfo = {
+  key: "middle-science1",
+  title: "中学理科 1年",
+  kicker: "JUNIOR HIGH SCIENCE · GRADE 1",
+  routeBase: "middle-school/science/grade1",
+  homePath: "middle-school/science/grade1/",
+  scopeLabel: "中学1年理科",
+  curriculumKey: "middle-science1",
 };
 
 export const chemistryBasicCourse: MathCourseInfo = {

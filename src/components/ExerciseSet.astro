@@ -10,6 +10,7 @@ type Props = {
     | "mathb"
     | "mathc"
     | "math3"
+    | "middle-science1"
     | "chemistry-basic"
     | "chemistry"
     | "biology-basic"
@@ -28,6 +29,7 @@ const {
 } = Astro.props;
 const _base = import.meta.env.BASE_URL;
 const _isUnit = _mode === "unit";
+const _usesMiddleScienceUnitSet = _courseKey === "middle-science1";
 const _usesCompactUnitSet =
   _courseKey === "chemistry-basic" ||
   _courseKey === "chemistry" ||
@@ -56,9 +58,11 @@ const _usesCompactUnitSet =
     <p>
       {
         _isUnit
-          ? _usesCompactUnitSet
-            ? "基礎・応用・難問を全6問で採点し、小単元ごとの理解度を確認します。"
-            : "基礎12問・応用3問・難問1問を採点し、小単元ごとの理解度を確認します。"
+          ? _usesMiddleScienceUnitSet
+            ? "基礎・応用・難問を全8問で採点し、小単元ごとの理解度を確認します。"
+            : _usesCompactUnitSet
+              ? "基礎・応用・難問を全6問で採点し、小単元ごとの理解度を確認します。"
+              : "基礎12問・応用3問・難問1問を採点し、小単元ごとの理解度を確認します。"
           : "解き方を確認したあと、誘導なしで3問解いてからまとめへ進みます。"
       }
     </p>
@@ -68,9 +72,11 @@ const _usesCompactUnitSet =
     <p class="exercise-count-note">
       {
         _isUnit
-          ? _usesCompactUnitSet
-            ? "全6問 · 対応小単元を各問題に表示"
-            : "全16問 · 対応小単元を各問題に表示"
+          ? _usesMiddleScienceUnitSet
+            ? "全8問 · 対応小単元を各問題に表示"
+            : _usesCompactUnitSet
+              ? "全6問 · 対応小単元を各問題に表示"
+              : "全16問 · 対応小単元を各問題に表示"
           : "全3問 · すべてこの小単元の確認問題"
       }
     </p>
@@ -132,6 +138,10 @@ const _usesCompactUnitSet =
     generateLessonExercises as generateMath3LessonExercises,
     generateUnitExercises as generateMath3UnitExercises,
   } from "../content/math3/exercise-registry";
+  import {
+    generateMiddleScience1LessonExercises,
+    generateMiddleScience1UnitExercises,
+  } from "../content/middle-school/science/grade1/exercise-registry";
   import type { PracticeInputKind, PracticeOption } from "../content/practice";
 
   MathfieldElement.soundsDirectory = null;
@@ -327,6 +337,13 @@ const _usesCompactUnitSet =
 
     let exercises: GeneratedExercise[] = [];
     const makeExercises = () => {
+      if (courseKey === "middle-science1") {
+        return mode === "unit"
+          ? generateMiddleScience1UnitExercises(unitKey)
+          : lessonKey
+            ? generateMiddleScience1LessonExercises(unitKey, lessonKey)
+            : [];
+      }
       if (courseKey === "biology") {
         return mode === "unit"
           ? generateBiologyUnitExercises(unitKey)
@@ -440,7 +457,8 @@ const _usesCompactUnitSet =
         const item = createElement("article", "diagnostic-item");
         const ratio = result.total === 0 ? 0 : result.correct / result.total;
         const link = createElement("a", "diagnostic-link", "この小単元を復習する");
-        link.href = `${base}${courseKey}/${areaKey}/${unitKey}/${key}/`;
+        const routeBase = courseKey === "middle-science1" ? "middle-school/science/grade1" : courseKey;
+        link.href = `${base}${routeBase}/${areaKey}/${unitKey}/${key}/`;
         item.append(
           createElement("h4", undefined, result.title),
           createElement("p", "diagnostic-score", `${result.correct}/${result.total} 正解`),

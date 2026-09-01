@@ -1,0 +1,37 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "../../../components/ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentIndex from "../../../components/ui/ContentIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentSection from "../../../components/ui/ContentSection.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "../../../components/ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SectionHeading from "../../../components/ui/SectionHeading.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "../../../components/ui/StudyPage.astro";
+
+const _base = import.meta.env.BASE_URL;
+---
+
+<StudyPage title="中学理科 | 学習コンテンツ" description="中学1〜3年理科を現行の学習指導要領に沿って1ページ1技能で整備します。">
+  <ContentHero kicker="JUNIOR HIGH SCIENCE" title="中学理科" description="観察・実験の結果から規則性を見いだし、日常の現象を科学的に説明する力を育てます。" variant="display" />
+  <ContentSection labelledby="grades-title">
+    <SectionHeading label="GRADES" title="学年からはじめる" id="grades-title" description="現在は中学1年「身近な物理現象」を公開しています。" />
+    <ContentIndex
+      items={[
+        {
+          marker: "01",
+          title: "中学1年",
+          href: `${_base}middle-school/science/grade1/`,
+          description: "光・音・力から始め、物質・生物・大地へ順に広げます。",
+          tags: ["身近な物理現象 公開中", "3問確認", "単元末8問"],
+          action: "中学1年理科へ →",
+        },
+      ]}
+      variant="grid"
+    />
+  </ContentSection>
+  <PageNavigation previous={{ label: "← 中学校", href: `${_base}middle-school/` }} next={{ label: "中学1年理科へ →", href: `${_base}middle-school/science/grade1/` }} />
+</StudyPage>
