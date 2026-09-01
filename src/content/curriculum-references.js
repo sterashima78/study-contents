@@ -13,7 +13,7 @@ const MIDDLE_MATH_COMMENTARY_URL =
   "https://www.mext.go.jp/component/a_menu/education/micro_detail/__icsFiles/afieldfile/2019/03/18/1387018_004.pdf";
 const MIDDLE_SCIENCE_COMMENTARY_URL =
   "https://www.mext.go.jp/content/20230626-mxt_kyoikujinzai02-000033064_05.pdf";
-const LAST_VERIFIED = "2026-08-31";
+const LAST_VERIFIED = "2026-09-01";
 
 function createReference({
   courseTitle,
@@ -161,7 +161,7 @@ export const curriculumReferences = Object.freeze({
     commentaryTitle: "中学校学習指導要領（平成29年告示）解説 理科編",
     commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
     routeBase: "middle-school/science/grade1",
-    note: "第1学年の第1分野（1）「身近な物理現象」から公開し、光の反射・屈折、凸レンズ、音、力の働きを1ページ1技能で構成しています。",
+    note: "第1学年の第1分野（1）「身近な物理現象」と（2）「身の回りの物質」を、光・音・力、物質の性質・気体・水溶液・状態変化まで1ページ1技能で構成しています。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
