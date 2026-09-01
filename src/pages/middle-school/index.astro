@@ -19,7 +19,7 @@ const _base = import.meta.env.BASE_URL;
 
 <StudyPage
   title="中学校 | 学習コンテンツ"
-  description="中学1〜3年の学習コンテンツです。数学は3学年・4領域を公開済みで、中学1年理科も公開を開始しています。"
+  description="中学1〜3年の学習コンテンツです。数学は3学年・4領域を公開済みで、中学1年理科は第1分野の2単元を公開しています。"
   width="wide"
 >
   <ContentHero
@@ -34,7 +34,7 @@ const _base = import.meta.env.BASE_URL;
       label="SUBJECTS"
       title="教科からはじめる"
       id="subjects-title"
-      description="中学数学は1〜3年の全領域を公開済みです。中学理科は1年「身近な物理現象」から公開しています。"
+      description="中学数学は1〜3年の全領域を公開済みです。中学理科は1年の「身近な物理現象」「身の回りの物質」を公開しています。"
     />
     <ContentIndex
       items={[
@@ -50,8 +50,8 @@ const _base = import.meta.env.BASE_URL;
           marker: "02",
           title: "理科",
           href: `${_base}middle-school/science/`,
-          description: "観察・実験の結果から、光・音・力などの規則性を見いだして説明する力を育てます。",
-          tags: ["中学1年 公開開始", "図解", "自動採点"],
+          description: "観察・実験の結果から、光・音・力、物質や状態変化の規則性を見いだして説明する力を育てます。",
+          tags: ["中学1年 第1分野公開中", "図解", "自動採点"],
           action: "中学理科へ →",
         },
       ]}
@@ -64,7 +64,7 @@ const _base = import.meta.env.BASE_URL;
     <SummaryPoints
       items={[
         "中学数学: 1〜3年のA 数と式、B 図形、C 関数、D データの活用を公開済み。",
-        "中学理科: 1年「身近な物理現象」を公開。身の回りの物質、生物、大地へ順次拡張する。",
+        "中学理科: 1年「身近な物理現象」「身の回りの物質」を公開。次に生物、大地へ拡張する。",
         "中学英語: 理科に続いて同じ1ページ1技能の基盤へ追加する。",
       ]}
     />
