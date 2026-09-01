@@ -1,0 +1,166 @@
+name: Cleanup unused branches
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+      timezone: "Asia/Tokyo"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "削除せず対象だけを確認する"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: cleanup-unused-branches
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Delete branches unrelated to open pull requests
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const { owner, repo } = context.repo;
+            const repositoryFullName = `${owner}/${repo}`;
+            const manualDryRun = context.payload.inputs?.dry_run;
+            const dryRun =
+              context.eventName === "workflow_dispatch" && String(manualDryRun) !== "false";
+
+            const repoResponse = await github.rest.repos.get({ owner, repo });
+            const defaultBranch = repoResponse.data.default_branch;
+            const branches = await github.paginate(github.rest.repos.listBranches, {
+              owner,
+              repo,
+              per_page: 100,
+            });
+            const openPulls = await github.paginate(github.rest.pulls.list, {
+              owner,
+              repo,
+              state: "open",
+              per_page: 100,
+            });
+
+            const openPullBranches = new Set();
+            for (const pull of openPulls) {
+              if (pull.head.repo?.full_name === repositoryFullName) {
+                openPullBranches.add(pull.head.ref);
+              }
+              if (pull.base.repo?.full_name === repositoryFullName) {
+                openPullBranches.add(pull.base.ref);
+              }
+            }
+
+            const results = [];
+            let examined = 0;
+            let candidates = 0;
+            let deleted = 0;
+
+            for (const branch of branches) {
+              if (branch.name === defaultBranch) {
+                results.push([branch.name, "skip", "default branch"]);
+                continue;
+              }
+
+              examined += 1;
+              if (branch.protected) {
+                results.push([branch.name, "skip", "protected branch"]);
+                continue;
+              }
+              if (openPullBranches.has(branch.name)) {
+                results.push([branch.name, "skip", "open PR related"]);
+                continue;
+              }
+
+              candidates += 1;
+              if (dryRun) {
+                results.push([branch.name, "candidate", "no open PR"]);
+                continue;
+              }
+
+              let currentBranch;
+              try {
+                currentBranch = await github.rest.repos.getBranch({
+                  owner,
+                  repo,
+                  branch: branch.name,
+                });
+              } catch (error) {
+                if (error.status === 404) {
+                  results.push([branch.name, "skip", "already deleted"]);
+                  continue;
+                }
+                throw error;
+              }
+
+              const currentRepo = await github.rest.repos.get({ owner, repo });
+              if (currentRepo.data.default_branch === branch.name) {
+                results.push([branch.name, "skip", "became default branch"]);
+                continue;
+              }
+              if (currentBranch.data.protected) {
+                results.push([branch.name, "skip", "became protected"]);
+                continue;
+              }
+              if (currentBranch.data.commit.sha !== branch.commit.sha) {
+                results.push([branch.name, "skip", "tip updated during cleanup"]);
+                continue;
+              }
+
+              const [openHeadPulls, openBasePulls] = await Promise.all([
+                github.paginate(github.rest.pulls.list, {
+                  owner,
+                  repo,
+                  state: "open",
+                  head: `${owner}:${branch.name}`,
+                  per_page: 100,
+                }),
+                github.paginate(github.rest.pulls.list, {
+                  owner,
+                  repo,
+                  state: "open",
+                  base: branch.name,
+                  per_page: 100,
+                }),
+              ]);
+              if (openHeadPulls.length > 0 || openBasePulls.length > 0) {
+                results.push([branch.name, "skip", "open PR detected before deletion"]);
+                continue;
+              }
+
+              await github.rest.git.deleteRef({
+                owner,
+                repo,
+                ref: `heads/${branch.name}`,
+              });
+              deleted += 1;
+              results.push([branch.name, "deleted", "no open PR"]);
+            }
+
+            await core.summary
+              .addHeading("Unused branch cleanup")
+              .addRaw(
+                `mode=${dryRun ? "dry-run" : "delete"}, examined=${examined}, candidates=${candidates}, deleted=${deleted}`,
+              )
+              .addTable([
+                [
+                  { data: "Branch", header: true },
+                  { data: "Result", header: true },
+                  { data: "Reason", header: true },
+                ],
+                ...(results.length > 0 ? results : [["-", "none", "no branches"]]),
+              ])
+              .write();
+
+            core.notice(
+              `Branch cleanup completed: examined=${examined}, candidates=${candidates}, deleted=${deleted}, dryRun=${dryRun}`,
+            );
