@@ -174,6 +174,17 @@ export const curriculumReferences = Object.freeze({
     routeBase: "middle-school/science/grade2",
     note: "第2学年の第1分野（3）「電流とその利用」と（4）「化学変化と原子・分子」、第2分野（3）「生物の体のつくりと働き」と（4）「気象とその変化」を、エネルギー・粒子・生命・地球の4領域で1ページ1技能に構成しています。",
   }),
+  "middle-science3": createReference({
+    courseTitle: "中学理科 3年",
+    subjectTitle: "理科",
+    curriculumCourse: "第3学年",
+    guidelineTitle: "中学校学習指導要領（平成29年告示）",
+    guidelineUrl: GUIDELINE_INDEX_URL,
+    commentaryTitle: "中学校学習指導要領（平成29年告示）解説 理科編",
+    commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
+    routeBase: "middle-school/science/grade3",
+    note: "第3学年の第1分野（5）「運動とエネルギー」を、水中の力と力の合成・分解、運動の規則性、仕事と力学的エネルギーの15技能で公開しています。測定値の誤差を踏まえ、表・グラフの全体傾向から規則性を考える構成です。",
+  }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
     subjectTitle: "理科",
