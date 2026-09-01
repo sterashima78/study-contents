@@ -3,23 +3,23 @@
   "policy": "ADR 0073",
   "sources": [
     {
-      "id": "natsume-yume-juya",
-      "title": "夢十夜",
-      "author": "夏目 漱石",
+      "id": "terada-chawan-no-yu",
+      "title": "茶わんの湯",
+      "author": "寺田 寅彦",
       "language": "ja",
       "sourceProvider": "青空文庫",
-      "sourceUrl": "https://www.aozora.gr.jp/cards/000148/card799.html",
+      "sourceUrl": "https://www.aozora.gr.jp/cards/000042/card2363.html",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
       "reviewStatus": "candidate"
     },
     {
-      "id": "miyazawa-chumon-no-oi-ryoriten",
-      "title": "注文の多い料理店",
-      "author": "宮沢 賢治",
+      "id": "natsume-gendai-nihon-no-kaika",
+      "title": "現代日本の開化",
+      "author": "夏目 漱石",
       "language": "ja",
       "sourceProvider": "青空文庫",
-      "sourceUrl": "https://www.aozora.gr.jp/cards/000081/card43754.html",
+      "sourceUrl": "https://www.aozora.gr.jp/cards/000148/card759.html",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
       "reviewStatus": "candidate"
@@ -47,23 +47,23 @@
       "reviewStatus": "candidate"
     },
     {
-      "id": "ohenry-after-twenty-years",
-      "title": "After Twenty Years",
-      "author": "O. Henry",
+      "id": "lincoln-gettysburg-address",
+      "title": "Lincoln's Gettysburg Address",
+      "author": "Abraham Lincoln",
       "language": "en",
       "sourceProvider": "Project Gutenberg",
-      "sourceUrl": "https://www.gutenberg.org/ebooks/2776",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/4",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
       "reviewStatus": "candidate"
     },
     {
-      "id": "saki-open-window",
-      "title": "The Open Window",
-      "author": "Saki",
+      "id": "bacon-of-studies",
+      "title": "Of Studies",
+      "author": "Francis Bacon",
       "language": "en",
       "sourceProvider": "Project Gutenberg",
-      "sourceUrl": "https://www.gutenberg.org/ebooks/269",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/575",
       "sourceAccessedAt": "2026-09-01",
       "jurisdiction": "JP",
       "reviewStatus": "candidate"
