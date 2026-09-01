@@ -10,6 +10,10 @@ import {
   generateMiddleScience2ParticleLessonExercises,
   generateMiddleScience2ParticleUnitExercises,
 } from "./particle-exercise-registry";
+import {
+  generateMiddleScience2WeatherLessonExercises,
+  generateMiddleScience2WeatherUnitExercises,
+} from "./weather-exercise-registry";
 
 export const generateMiddleScience2LessonExercises = (
   unitKey: string,
@@ -23,16 +27,20 @@ export const generateMiddleScience2LessonExercises = (
     lessonKey,
     count,
   );
-  return particleExercises.length
-    ? particleExercises
-    : generateMiddleScience2LifeLessonExercises(unitKey, lessonKey, count);
+  if (particleExercises.length) return particleExercises;
+  const lifeExercises = generateMiddleScience2LifeLessonExercises(unitKey, lessonKey, count);
+  return lifeExercises.length
+    ? lifeExercises
+    : generateMiddleScience2WeatherLessonExercises(unitKey, lessonKey, count);
 };
 
 export const generateMiddleScience2UnitExercises = (unitKey: string, count = 8) => {
   const energyExercises = generateEnergyUnitExercises(unitKey, count);
   if (energyExercises.length) return energyExercises;
   const particleExercises = generateMiddleScience2ParticleUnitExercises(unitKey, count);
-  return particleExercises.length
-    ? particleExercises
-    : generateMiddleScience2LifeUnitExercises(unitKey, count);
+  if (particleExercises.length) return particleExercises;
+  const lifeExercises = generateMiddleScience2LifeUnitExercises(unitKey, count);
+  return lifeExercises.length
+    ? lifeExercises
+    : generateMiddleScience2WeatherUnitExercises(unitKey, count);
 };

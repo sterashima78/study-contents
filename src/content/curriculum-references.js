@@ -172,7 +172,7 @@ export const curriculumReferences = Object.freeze({
     commentaryTitle: "中学校学習指導要領（平成29年告示）解説 理科編",
     commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
     routeBase: "middle-school/science/grade2",
-    note: "第2学年第1分野（3）「電流とその利用」と（4）「化学変化と原子・分子」、第2分野（3）「生物の体のつくりと働き」を、回路・化学変化・細胞・植物と動物の体の働きまで1ページ1技能で構成しています。",
+    note: "第2学年の第1分野（3）「電流とその利用」と（4）「化学変化と原子・分子」、第2分野（3）「生物の体のつくりと働き」と（4）「気象とその変化」を、エネルギー・粒子・生命・地球の4領域で1ページ1技能に構成しています。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
