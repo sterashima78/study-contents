@@ -1,6 +1,7 @@
 # ADR 0080: 30日以上未更新のマージ済み作業ブランチを週次で自動削除する
 
-- Status: Accepted
+- Status: Superseded
+- Superseded by: ADR 0081
 - Date: 2026-09-01
 - Related: ADR 0012
 
