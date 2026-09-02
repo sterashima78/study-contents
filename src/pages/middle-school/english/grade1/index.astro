@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import EnglishCourseHome from "../../../../components/EnglishCourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleEnglish1Course } from "../../../../content/english/course";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleEnglish1Areas } from "../../../../content/middle-school/english/grade1/catalog";
+---
+
+<EnglishCourseHome
+  course={middleEnglish1Course}
+  areas={middleEnglish1Areas}
+  description="中学1年英語を、短い文脈の中で語順・動詞の形・質問と応答を使えるように1ページ1技能で学びます。"
+  metaDescription="中学1年英語の学習コンテンツ。be動詞と一般動詞の肯定・否定・疑問、疑問詞、自己紹介と日常表現を16教材で学びます。"
+  footerDescription="現行の中学校学習指導要領を基準に、まずbe動詞と一般動詞の基本文を公開しています。学年別の文法配当はサイト独自の段階配置です。"
+/>

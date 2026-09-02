@@ -13,6 +13,8 @@ const MIDDLE_MATH_COMMENTARY_URL =
   "https://www.mext.go.jp/component/a_menu/education/micro_detail/__icsFiles/afieldfile/2019/03/18/1387018_004.pdf";
 const MIDDLE_SCIENCE_COMMENTARY_URL =
   "https://www.mext.go.jp/content/20230626-mxt_kyoikujinzai02-000033064_05.pdf";
+const MIDDLE_ENGLISH_COMMENTARY_URL =
+  "https://www.mext.go.jp/content/20210531-mxt_kyoiku01-100002608_010.pdf";
 const LAST_VERIFIED = "2026-09-01";
 
 function createReference({
@@ -184,6 +186,17 @@ export const curriculumReferences = Object.freeze({
     commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
     routeBase: "middle-school/science/grade3",
     note: "第3学年の第1分野（5）「運動とエネルギー」、（6）「化学変化とイオン」、（7）「科学技術と人間」と、第2分野（5）「生命の連続性」、（6）「地球と宇宙」、（7）「自然と人間」を、エネルギー・粒子・生命・地球の4領域で1ページ1技能に構成しています。（7）は4領域へ横断単元を配置し、持続可能な社会を科学的根拠・不確かさ・価値判断を区別して考察する構成です。",
+  }),
+  "middle-english1": createReference({
+    courseTitle: "中学英語 1年",
+    subjectTitle: "外国語",
+    curriculumCourse: "第1学年（サイト上の段階配置）",
+    guidelineTitle: "中学校学習指導要領（平成29年告示）",
+    guidelineUrl: GUIDELINE_INDEX_URL,
+    commentaryTitle: "中学校学習指導要領（平成29年告示）解説 外国語編",
+    commentaryUrl: MIDDLE_ENGLISH_COMMENTARY_URL,
+    routeBase: "middle-school/english/grade1",
+    note: "中学校外国語の言語材料を3学年で段階配置するサイト独自の学習順序です。第1段階としてbe動詞と一般動詞の基本文を、意味のある短い文脈で1ページ1技能に構成しています。学習指導要領が文法事項を学年別に固定配当していることを示すものではありません。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",

@@ -1,0 +1,60 @@
+---
+import type { EnglishCourseInfo } from "../content/english/course";
+import type { EnglishArea, EnglishUnit } from "../content/english/types";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MiddleEnglishExerciseSet from "./MiddleEnglishExerciseSet.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import ContentHero from "./ui/ContentHero.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import PageNavigation from "./ui/PageNavigation.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import StudyPage from "./ui/StudyPage.astro";
+
+type Props = {
+  area: EnglishArea;
+  unit: EnglishUnit;
+  course: EnglishCourseInfo;
+};
+
+const { area: _area, unit: _unit, course: _course } = Astro.props as Props;
+const _base = import.meta.env.BASE_URL;
+const _courseHomeHref = `${_base}${_course.homePath}`;
+const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
+const _unitHref = `${_areaHref}${_unit.key}/`;
+const _scopeLabel = _course.scopeLabel ?? "高校英語";
+---
+
+<StudyPage
+  title={`単元末演習 | ${_unit.title} | ${_course.title}`}
+  description={`${_scopeLabel}「${_unit.title}」の単元末演習。8問を解き、小単元ごとの理解度を確認します。`}
+  curriculumKey={_course.curriculumKey ?? _course.key}
+>
+  <BreadcrumbTrail
+    items={[
+      { label: _course.title, href: _courseHomeHref },
+      { label: _area.title, href: _areaHref },
+      { label: _unit.title, href: _unitHref },
+      { label: "単元末演習" },
+    ]}
+  />
+  <ContentHero
+    kicker={_area.title}
+    title={`${_unit.title} · 単元末演習`}
+    description="8問を解き、語順や動詞の形で混同している小単元を確認します。"
+    compact
+  />
+
+  <MiddleEnglishExerciseSet
+    mode="unit"
+    routeBase={_course.routeBase}
+    areaKey={_area.key}
+    unitKey={_unit.key}
+  />
+
+  <PageNavigation
+    previous={{ label: `← ${_unit.title}の目次`, href: _unitHref }}
+    next={{ label: `${_area.title}の目次へ →`, href: _areaHref }}
+  />
+</StudyPage>

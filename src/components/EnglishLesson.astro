@@ -9,6 +9,8 @@ import type {
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import EnglishPassage from "./EnglishPassage.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MiddleEnglishExerciseSet from "./MiddleEnglishExerciseSet.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ConceptCard from "./ui/ConceptCard.astro";
@@ -46,12 +48,15 @@ const _nextLesson =
 const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _scopeLabel = _course.scopeLabel ?? "高校英語";
+const _curriculumKey = _course.curriculumKey ?? _course.key;
 const _practiceSteps = designPracticeSteps("english", _lesson.practice.steps);
 ---
 
 <StudyPage
   title={`${_lesson.title} | ${_unit.title} | ${_course.title}`}
-  description={`高校英語「${_lesson.title}」の教材。要点、オリジナル英文、分析、直後の練習、まとめで学習します。`}
+  description={`${_scopeLabel}「${_lesson.title}」の教材。要点、オリジナル英文、分析、直後の練習、まとめで学習します。`}
+  curriculumKey={_curriculumKey}
 >
   <BreadcrumbTrail
     items={[
@@ -115,6 +120,18 @@ const _practiceSteps = designPracticeSteps("english", _lesson.practice.steps);
       errorMessage="赤く表示された段階を、要点と例題に戻って確認してください。"
     />
   </ContentSection>
+
+  {
+    _course.unitExerciseCount && (
+      <MiddleEnglishExerciseSet
+        mode="lesson"
+        routeBase={_course.routeBase}
+        areaKey={_area.key}
+        unitKey={_unit.key}
+        lessonKey={_lesson.key}
+      />
+    )
+  }
 
   <ContentSection labelledby="summary-title" compact>
     <SectionHeading label="SUMMARY" title="このページのポイント" id="summary-title" />
