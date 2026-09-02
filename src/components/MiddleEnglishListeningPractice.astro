@@ -1,0 +1,116 @@
+---
+type Props = {
+  text: string;
+};
+
+const { text: _text } = Astro.props as Props;
+---
+
+<section class="listening-practice" data-middle-english-listening data-text={_text} aria-labelledby="listening-title">
+  <div>
+    <p class="listening-label">LISTEN</p>
+    <h2 id="listening-title">英文を聞いて語順を確かめる</h2>
+    <p class="listening-note">
+      端末・ブラウザに用意された英語音声で例文を読み上げます。音声は補助教材であり、発音の唯一の正解を示すものではありません。
+    </p>
+  </div>
+  <button type="button" class="listen-button">英文を聞く</button>
+  <p class="listening-status" aria-live="polite"></p>
+  <noscript>音声再生には JavaScript が必要です。</noscript>
+</section>
+
+<script>
+  for (const section of document.querySelectorAll<HTMLElement>("[data-middle-english-listening]")) {
+    const button = section.querySelector<HTMLButtonElement>(".listen-button");
+    const status = section.querySelector<HTMLElement>(".listening-status");
+    const text = section.dataset.text?.trim();
+    if (!button || !status || !text) continue;
+
+    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+      button.disabled = true;
+      status.textContent = "このブラウザでは音声読み上げを利用できません。";
+      continue;
+    }
+
+    button.addEventListener("click", () => {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      utterance.rate = 0.86;
+      utterance.onstart = () => {
+        status.textContent = "再生中です。";
+      };
+      utterance.onend = () => {
+        status.textContent = "再生が終わりました。もう一度聞くこともできます。";
+      };
+      utterance.onerror = () => {
+        status.textContent = "この端末では音声を再生できませんでした。英文を見ながら内容を確認してください。";
+      };
+      window.speechSynthesis.speak(utterance);
+    });
+  }
+</script>
+
+<style>
+  .listening-practice {
+    display: grid;
+    margin: 1.25rem 0 0;
+    padding: 1rem 1.1rem;
+    gap: 0.85rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 0.8rem;
+    background: var(--surface-subtle);
+  }
+
+  .listening-label,
+  h2,
+  .listening-note,
+  .listening-status {
+    margin: 0;
+  }
+
+  .listening-label {
+    color: var(--color-accent);
+    font-size: 0.68rem;
+    font-weight: 750;
+    letter-spacing: 0.16em;
+  }
+
+  h2 {
+    margin-top: 0.2rem;
+    color: var(--color-text-strong);
+    font-size: 1rem;
+  }
+
+  .listening-note,
+  .listening-status {
+    color: var(--color-text-soft);
+    font-size: 0.84rem;
+    line-height: 1.7;
+  }
+
+  .listening-note {
+    margin-top: 0.35rem;
+  }
+
+  .listen-button {
+    width: fit-content;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 0.45rem;
+    color: var(--color-text-strong);
+    background: var(--surface);
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .listen-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .listen-button:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+</style>
