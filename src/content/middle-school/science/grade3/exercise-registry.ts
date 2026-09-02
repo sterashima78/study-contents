@@ -14,6 +14,10 @@ import {
   generateMiddleScience3ParticleLessonExercises,
   generateMiddleScience3ParticleUnitExercises,
 } from "./particles-exercise-registry";
+import {
+  generateMiddleScience3SustainabilityLessonExercises,
+  generateMiddleScience3SustainabilityUnitExercises,
+} from "./sustainability-exercise-registry";
 
 export const generateMiddleScience3LessonExercises = (
   unitKey: string,
@@ -29,9 +33,11 @@ export const generateMiddleScience3LessonExercises = (
   );
   if (particleExercises.length) return particleExercises;
   const lifeExercises = generateMiddleScience3LifeLessonExercises(unitKey, lessonKey, count);
-  return lifeExercises.length
-    ? lifeExercises
-    : generateMiddleScience3EarthLessonExercises(unitKey, lessonKey, count);
+  if (lifeExercises.length) return lifeExercises;
+  const earthExercises = generateMiddleScience3EarthLessonExercises(unitKey, lessonKey, count);
+  return earthExercises.length
+    ? earthExercises
+    : generateMiddleScience3SustainabilityLessonExercises(unitKey, lessonKey, count);
 };
 
 export const generateMiddleScience3UnitExercises = (unitKey: string, count = 8) => {
@@ -40,7 +46,9 @@ export const generateMiddleScience3UnitExercises = (unitKey: string, count = 8) 
   const particleExercises = generateMiddleScience3ParticleUnitExercises(unitKey, count);
   if (particleExercises.length) return particleExercises;
   const lifeExercises = generateMiddleScience3LifeUnitExercises(unitKey, count);
-  return lifeExercises.length
-    ? lifeExercises
-    : generateMiddleScience3EarthUnitExercises(unitKey, count);
+  if (lifeExercises.length) return lifeExercises;
+  const earthExercises = generateMiddleScience3EarthUnitExercises(unitKey, count);
+  return earthExercises.length
+    ? earthExercises
+    : generateMiddleScience3SustainabilityUnitExercises(unitKey, count);
 };
