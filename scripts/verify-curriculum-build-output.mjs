@@ -1,5 +1,5 @@
 import { readdir, readFile } from "node:fs/promises";
-import { curriculumReferences } from "../src/content/curriculum-references.js";
+import { curriculumReferences } from "../src/content/curriculum-reference-resolver.js";
 
 const distDirectory = new URL("../dist/", import.meta.url);
 const issues = [];
