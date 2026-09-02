@@ -1,0 +1,17 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import EnglishAreaIndex from "../../../../../components/EnglishAreaIndex.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleEnglish2Course } from "../../../../../content/english/course";
+import type { EnglishArea } from "../../../../../content/english/types";
+import { middleEnglish2Areas } from "../../../../../content/middle-school/english/grade2/catalog";
+
+export function getStaticPaths() {
+  return middleEnglish2Areas.map((area) => ({ params: { area: area.key }, props: { area } }));
+}
+
+type Props = { area: EnglishArea };
+const { area: _area } = Astro.props;
+---
+
+<EnglishAreaIndex area={_area} course={middleEnglish2Course} />
