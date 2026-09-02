@@ -73,10 +73,10 @@ const _isUnit = _mode === "unit";
 
 <script>
   import {
-    generateMiddleEnglish1LessonExercises,
-    generateMiddleEnglish1UnitExercises,
+    generateMiddleEnglishLessonExercises,
+    generateMiddleEnglishUnitExercises,
     type MiddleEnglishExercise,
-  } from "../content/middle-school/english/grade1/exercise-registry";
+  } from "../content/middle-school/english/exercise-registry";
 
   const normalizeAnswer = (value: string) =>
     value
@@ -125,9 +125,9 @@ const _isUnit = _mode === "unit";
 
     const makeExercises = () =>
       mode === "unit"
-        ? generateMiddleEnglish1UnitExercises(unitKey)
+        ? generateMiddleEnglishUnitExercises(routeBase, unitKey)
         : lessonKey
-          ? generateMiddleEnglish1LessonExercises(unitKey, lessonKey)
+          ? generateMiddleEnglishLessonExercises(routeBase, unitKey, lessonKey)
           : [];
 
     const renderExercises = () => {
