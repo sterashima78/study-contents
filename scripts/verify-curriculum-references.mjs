@@ -1,5 +1,5 @@
 import { access, readdir } from "node:fs/promises";
-import { curriculumReferences } from "../src/content/curriculum-references.js";
+import { curriculumReferences } from "../src/content/curriculum-reference-resolver.js";
 
 const pagesDirectory = new URL("../src/pages/", import.meta.url);
 const allowedHost = "www.mext.go.jp";
