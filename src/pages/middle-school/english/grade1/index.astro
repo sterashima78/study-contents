@@ -4,13 +4,13 @@ import EnglishCourseHome from "../../../../components/EnglishCourseHome.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { middleEnglish1Course } from "../../../../content/english/course";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import { middleEnglish1Areas } from "../../../../content/middle-school/english/grade1/catalog";
+import { middleEnglish1CompleteAreas } from "../../../../content/middle-school/english/grade1/catalog-complete";
 ---
 
 <EnglishCourseHome
   course={middleEnglish1Course}
-  areas={middleEnglish1Areas}
-  description="中学1年英語を、短い文脈の中で語順・動詞の形・質問と応答を使えるように1ページ1技能で学びます。"
-  metaDescription="中学1年英語の学習コンテンツ。be動詞と一般動詞の肯定・否定・疑問、疑問詞、自己紹介と日常表現を16教材で学びます。"
-  footerDescription="現行の中学校学習指導要領を基準に、まずbe動詞と一般動詞の基本文を公開しています。学年別の文法配当はサイト独自の段階配置です。"
+  areas={middleEnglish1CompleteAreas}
+  description="中学1年英語を、短い文脈の中で語順・動詞の形・質問と応答を使えるように1ページ1技能で学びます。基本文からcan・命令文・進行形・過去形まで段階的に進みます。"
+  metaDescription="中学1年英語の学習コンテンツ。be動詞、一般動詞、can、命令文、現在進行形、過去形、代名詞・前置詞・接続詞を36教材で学びます。"
+  footerDescription="中学校外国語の言語材料を3学年へ段階配置するサイト独自の学習順序として、中1の基礎文法36教材を収録しています。"
 />
