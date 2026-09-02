@@ -183,7 +183,7 @@ export const curriculumReferences = Object.freeze({
     commentaryTitle: "中学校学習指導要領（平成29年告示）解説 理科編",
     commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
     routeBase: "middle-school/science/grade3",
-    note: "第3学年の第1分野（5）「運動とエネルギー」と（6）「化学変化とイオン」を、エネルギー・粒子の2領域で1ページ1技能に構成しています。運動では測定誤差を踏まえた資料分析、イオンでは粒子・電子モデルによる説明を重視します。",
+    note: "第3学年の第1分野（5）「運動とエネルギー」と（6）「化学変化とイオン」、第2分野（5）「生命の連続性」を、エネルギー・粒子・生命の3領域で1ページ1技能に構成しています。生命では体細胞分裂、生殖、遺伝の規則性、遺伝子とDNA、進化を観察像・交配資料・化石などから考察します。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
