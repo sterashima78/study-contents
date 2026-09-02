@@ -1,0 +1,27 @@
+name: Temporary Biome format middle science 3
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879
+        with:
+          version: 12.0.0
+          runtime: node@24
+          install: false
+          cache: false
+      - run: pnpm install --frozen-lockfile
+      - run: |
+          pnpm exec biome format --write \
+            src/content/curriculum-references.js \
+            src/content/math-courses.ts \
+            src/content/middle-school/science/grade3/catalog.ts \
+            src/content/middle-school/science/grade3/diagrams.ts \
+            src/content/middle-school/science/grade3/exercise-registry.ts
