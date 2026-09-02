@@ -28,6 +28,7 @@ const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
 const _unitHref = `${_areaHref}${_unit.key}/`;
 const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
+const _scopeLabel = _course.scopeLabel ?? "高校英語";
 const _lessonItems = _unit.lessons.map((lesson, index) => ({
   marker: String(index + 1).padStart(2, "0"),
   title: lesson.title,
@@ -35,11 +36,26 @@ const _lessonItems = _unit.lessons.map((lesson, index) => ({
   description: lesson.description,
   meta: "5〜10分",
 }));
+const _items = [
+  ..._lessonItems,
+  ...(_course.unitExerciseCount
+    ? [
+        {
+          marker: "演習",
+          title: "単元末演習",
+          href: `${_unitHref}exercise/`,
+          description: `全${_course.unitExerciseCount}問で小単元ごとの理解度を確認します。`,
+          meta: `${_course.unitExerciseCount}問`,
+        },
+      ]
+    : []),
+];
 ---
 
 <StudyPage
   title={`${_unit.title} | ${_area.title} | ${_course.title}`}
-  description={`高校英語「${_unit.title}」の小単元一覧。要点、英文・例文、分析、直後の練習を1ページ1技能で学びます。`}
+  description={`${_scopeLabel}「${_unit.title}」の小単元一覧。要点、英文・例文、分析、直後の練習を1ページ1技能で学びます。`}
+  curriculumKey={_course.curriculumKey ?? _course.key}
 >
   <BreadcrumbTrail
     items={[
@@ -57,7 +73,7 @@ const _lessonItems = _unit.lessons.map((lesson, index) => ({
       id="lessons-title"
       description="上から順に進めると、前の技能を使いながら読解・表現へつなげられます。"
     />
-    <ContentIndex items={_lessonItems} />
+    <ContentIndex items={_items} />
   </ContentSection>
 
   <PageNavigation

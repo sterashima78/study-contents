@@ -34,6 +34,24 @@ const checks = [
       "Could you send me the updated schedule by Friday?",
     ],
   },
+  {
+    path: new URL("../dist/middle-school/english/grade1/index.html", import.meta.url),
+    markers: ["中学英語 1年", "基本文とやり取り", "全16小教材", "オリジナル英文で学ぶ"],
+  },
+  {
+    path: new URL(
+      "../dist/middle-school/english/grade1/foundations/be-verbs/be-questions/index.html",
+      import.meta.url,
+    ),
+    markers: ["be動詞を文頭に出して疑問文を作る", "Is he a teacher?", "理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/middle-school/english/grade1/foundations/general-verbs/exercise/index.html",
+      import.meta.url,
+    ),
+    markers: ["一般動詞の現在形 · 単元末演習", "全8問", "小単元ごとの理解度"],
+  },
 ];
 
 for (const check of checks) {

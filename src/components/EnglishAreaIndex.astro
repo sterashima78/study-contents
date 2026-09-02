@@ -25,6 +25,7 @@ const { area: _area, course: _course } = Astro.props as Props;
 const _base = import.meta.env.BASE_URL;
 const _courseHomeHref = `${_base}${_course.homePath}`;
 const _areaHref = `${_base}${_course.routeBase}/${_area.key}/`;
+const _scopeLabel = _course.scopeLabel ?? "高校英語";
 const _lessonCount = _area.units.reduce((sum, unit) => sum + unit.lessons.length, 0);
 const _unitItems = _area.units.map((unit, index) => ({
   marker: String(index + 1).padStart(2, "0"),
@@ -37,7 +38,8 @@ const _unitItems = _area.units.map((unit, index) => ({
 
 <StudyPage
   title={`${_area.title} | ${_course.title}`}
-  description={`高校英語「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`}
+  description={`${_scopeLabel}「${_area.title}」の単元一覧。${_lessonCount}個の小教材で学習します。`}
+  curriculumKey={_course.curriculumKey ?? _course.key}
 >
   <BreadcrumbTrail items={[{ label: _course.title, href: _courseHomeHref }, { label: _area.title }]} />
   <ContentHero kicker={_course.kicker} title={_area.title} description={_area.description} />
@@ -53,7 +55,7 @@ const _unitItems = _area.units.map((unit, index) => ({
   </ContentSection>
 
   <PageNavigation
-    previous={{ label: "← 英語の目次へ", href: _courseHomeHref }}
+    previous={{ label: `← ${_course.title}の目次へ`, href: _courseHomeHref }}
     next={{ label: "最初の単元から始める →", href: `${_areaHref}${_area.units[0].key}/` }}
   />
 </StudyPage>

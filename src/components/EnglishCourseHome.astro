@@ -19,10 +19,23 @@ import StudyPage from "./ui/StudyPage.astro";
 type Props = {
   course: EnglishCourseInfo;
   areas: EnglishArea[];
+  description?: string;
+  metaDescription?: string;
+  footerDescription?: string;
 };
 
-const { course: _course, areas: _areas } = Astro.props as Props;
+const {
+  course: _course,
+  areas: _areas,
+  description:
+    _description = "文法事項を単独で暗記するだけでなく、英文の構造を読み、情報を取り出し、論理的に表現するところまでを一続きで学びます。",
+  metaDescription:
+    _metaDescription = "高校英語の学習コンテンツ。英語基礎、英文解釈、長文読解、論理・表現をオリジナル英文で学べます。",
+  footerDescription:
+    _footerDescription = "英語基礎・英文解釈・長文読解・論理／表現を16小教材で学習できます。",
+} = Astro.props as Props;
 const _base = import.meta.env.BASE_URL;
+const _scopeLabel = _course.scopeLabel ?? "高校英語";
 const _areaItems = _areas.map((area, index) => {
   const lessonCount = area.units.reduce((sum, unit) => sum + unit.lessons.length, 0);
   return {
@@ -44,14 +57,15 @@ const _totalLessonCount = _areas.reduce(
 ---
 
 <StudyPage
-  title="英語 | 学習コンテンツ"
-  description="高校英語の学習コンテンツ。英語基礎、英文解釈、長文読解、論理・表現をオリジナル英文で学べます。"
+  title={`${_course.title} | 学習コンテンツ`}
+  description={_metaDescription}
+  curriculumKey={_course.curriculumKey ?? _course.key}
   width="wide"
 >
   <ContentHero
     kicker={_course.kicker}
     title={_course.title}
-    description="文法事項を単独で暗記するだけでなく、英文の構造を読み、情報を取り出し、論理的に表現するところまでを一続きで学びます。"
+    description={_description}
     variant="display"
   />
 
@@ -71,8 +85,5 @@ const _totalLessonCount = _areas.reduce(
     description="この英語コースに収録する英文・例文・設問・解説は、このリポジトリ向けに作成したオリジナル教材です。教科書、市販問題集、入試問題、記事本文の転載は行いません。"
   />
 
-  <PageFooter
-    items={["高校 英語", "英語基礎・英文解釈・長文読解・論理／表現を16小教材で学習できます。"]}
-    homeHref={_base}
-  />
+  <PageFooter items={[_scopeLabel, _footerDescription]} homeHref={_base} />
 </StudyPage>

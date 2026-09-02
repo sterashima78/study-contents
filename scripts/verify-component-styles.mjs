@@ -22,12 +22,14 @@ const forbiddenLegacyClasses = [
 ];
 const exerciseComponents = [
   "src/components/ExerciseSet.astro",
+  "src/components/MiddleEnglishExerciseSet.astro",
   "src/components/MiddleMathExerciseSet.astro",
   "src/components/PhysicsExerciseSet.astro",
   "src/components/SocialExerciseSet.astro",
 ];
 const exerciseScopeRoots = [
   "[data-exercise-set]",
+  "[data-middle-english-exercise-set]",
   "[data-middle-math-exercise-set]",
   "[data-physics-exercise-set]",
   "[data-social-exercise-set]",
