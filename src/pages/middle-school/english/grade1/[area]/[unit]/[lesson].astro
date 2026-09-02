@@ -8,10 +8,10 @@ import type {
   EnglishLesson as EnglishLessonData,
   EnglishUnit,
 } from "../../../../../../content/english/types";
-import { middleEnglish1Areas } from "../../../../../../content/middle-school/english/grade1/catalog";
+import { middleEnglish1CompleteAreas } from "../../../../../../content/middle-school/english/grade1/catalog-complete";
 
 export function getStaticPaths() {
-  return middleEnglish1Areas.flatMap((area) =>
+  return middleEnglish1CompleteAreas.flatMap((area) =>
     area.units.flatMap((unit) =>
       unit.lessons.map((lesson) => ({
         params: { area: area.key, unit: unit.key, lesson: lesson.key },
