@@ -183,7 +183,7 @@ export const curriculumReferences = Object.freeze({
     commentaryTitle: "中学校学習指導要領（平成29年告示）解説 理科編",
     commentaryUrl: MIDDLE_SCIENCE_COMMENTARY_URL,
     routeBase: "middle-school/science/grade3",
-    note: "第3学年の第1分野（5）「運動とエネルギー」と（6）「化学変化とイオン」、第2分野（5）「生命の連続性」を、エネルギー・粒子・生命の3領域で1ページ1技能に構成しています。生命では体細胞分裂、生殖、遺伝の規則性、遺伝子とDNA、進化を観察像・交配資料・化石などから考察します。",
+    note: "第3学年の第1分野（5）「運動とエネルギー」と（6）「化学変化とイオン」、第2分野（5）「生命の連続性」と（6）「地球と宇宙」を、エネルギー・粒子・生命・地球の4領域で1ページ1技能に構成しています。地球領域では日周運動・年周運動、太陽系、月・金星の見え方を観察記録や模式図から考察します。",
   }),
   "chemistry-basic": createReference({
     courseTitle: "化学基礎",
