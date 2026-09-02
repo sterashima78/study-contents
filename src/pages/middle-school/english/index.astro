@@ -17,12 +17,12 @@ const _base = import.meta.env.BASE_URL;
 
 <StudyPage
   title="中学英語 | 学習コンテンツ"
-  description="中学英語を、意味のある短い文脈で語順・文法・読み書き・やり取りへつなげて学ぶ教材です。"
+  description="中学英語1〜3年を79個の小教材で学ぶコースです。語順・文法を、読む・書く・やり取り・説明へつなげます。"
 >
   <ContentHero
     kicker="JUNIOR HIGH ENGLISH"
     title="中学英語"
-    description="文法の形だけを覚えるのではなく、自分や身近なことを伝え、尋ね、読んで理解するための英語として1ページ1技能で学びます。"
+    description="文法の形だけを覚えるのではなく、自分や身近なことを伝え、尋ね、読んで理解し、理由や意見を説明するための英語として1ページ1技能で学びます。"
     variant="display"
   />
 
@@ -31,7 +31,7 @@ const _base = import.meta.env.BASE_URL;
       label="GRADES"
       title="学年からはじめる"
       id="grades-title"
-      description="まず中学1年の基本文とやり取りから公開します。"
+      description="中学校外国語の言語材料を、サイト独自の段階配置で1〜3年へ整理しています。3学年で全79教材です。"
     />
     <ContentIndex
       items={[
@@ -39,9 +39,25 @@ const _base = import.meta.env.BASE_URL;
           marker: "01",
           title: "中学1年",
           href: `${_base}middle-school/english/grade1/`,
-          description: "be動詞と一般動詞から、自分・相手・身近な人の日常を伝えたり尋ねたりする基本文を学びます。",
-          tags: ["16教材 公開", "3問確認", "単元末8問"],
+          description: "be動詞・一般動詞から、can、命令文、進行形、過去形、代名詞・前置詞・接続詞まで基礎を固めます。",
+          tags: ["36教材", "3問確認", "単元末8問"],
           action: "中学1年英語へ →",
+        },
+        {
+          marker: "02",
+          title: "中学2年",
+          href: `${_base}middle-school/english/grade2/`,
+          description: "未来・助動詞、不定詞・動名詞・比較、SVOO・SVOC、接続詞やthat節などへ表現を広げます。",
+          tags: ["21教材", "複文", "自動採点"],
+          action: "中学2年英語へ →",
+        },
+        {
+          marker: "03",
+          title: "中学3年",
+          href: `${_base}middle-school/english/grade3/`,
+          description: "現在完了・受け身、関係代名詞・分詞、発展文構造・基本仮定法を説明や意見へ統合します。",
+          tags: ["22教材", "統合読解", "自動採点"],
+          action: "中学3年英語へ →",
         },
       ]}
       variant="grid"
