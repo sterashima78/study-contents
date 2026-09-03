@@ -15,11 +15,15 @@ import { math3Areas } from "../content/math3/catalog";
 import { mathAAreas } from "../content/matha/catalog";
 import { mathBAreas } from "../content/mathb/catalog";
 import { mathCAreas } from "../content/mathc/catalog";
+import { middleEnglish1CompleteAreas } from "../content/middle-school/english/grade1/catalog-complete";
+import { middleEnglish2Areas } from "../content/middle-school/english/grade2/catalog";
+import { middleEnglish3Areas } from "../content/middle-school/english/grade3/catalog";
 import { middleMath1Areas } from "../content/middle-school/math/grade1/catalog";
 import { middleMath2Areas } from "../content/middle-school/math/grade2/catalog";
 import { middleMath3Areas } from "../content/middle-school/math/grade3/catalog";
 import { middleScience1Areas } from "../content/middle-school/science/grade1/catalog";
 import { middleScience2Areas } from "../content/middle-school/science/grade2/catalog";
+import { middleScience3Areas } from "../content/middle-school/science/grade3/catalog";
 import { physicsAreas } from "../content/physics/catalog";
 import { physicsBasicsAreas } from "../content/physics-basics/catalog";
 import { worldHistoryAreas } from "../content/world-history/catalog";
@@ -36,22 +40,44 @@ const _lessonCount = (areas: ReadonlyArray<CountableArea>) =>
     (sum, area) => sum + area.units.reduce((unitSum, unit) => unitSum + unit.lessons.length, 0),
     0,
   );
-const _middleSchoolLessonCount =
-  _lessonCount(middleMath1Areas) +
-  _lessonCount(middleMath2Areas) +
-  _lessonCount(middleMath3Areas) +
-  _lessonCount(middleScience1Areas) +
-  _lessonCount(middleScience2Areas);
-const _courses = [
+
+const _middleSchoolCourses = [
   {
-    title: "中学校",
-    kicker: "LOWER SECONDARY",
-    href: `${_base}middle-school/`,
-    description:
-      "中学数学1〜3年の全4領域と、中学1年・2年理科のエネルギー・粒子・生命・地球を公開しています。",
-    areas: ["中学数学 1年", "中学数学 2年", "中学数学 3年", "中学理科 1年", "中学理科 2年"],
-    lessonCount: _middleSchoolLessonCount,
+    title: "中学数学",
+    kicker: "JUNIOR HIGH MATHEMATICS",
+    href: `${_base}middle-school/math/`,
+    description: "1〜3年の数と式、図形、関数、データの活用を、学年ごとの既習事項に合わせて学びます。",
+    areas: ["1〜3年", "数と式", "図形", "関数", "データの活用"],
+    lessonCount:
+      _lessonCount(middleMath1Areas) +
+      _lessonCount(middleMath2Areas) +
+      _lessonCount(middleMath3Areas),
   },
+  {
+    title: "中学理科",
+    kicker: "JUNIOR HIGH SCIENCE",
+    href: `${_base}middle-school/science/`,
+    description: "1〜3年のエネルギー・粒子・生命・地球を、観察・実験や資料と結びつけて学びます。",
+    areas: ["1〜3年", "エネルギー", "粒子", "生命", "地球"],
+    lessonCount:
+      _lessonCount(middleScience1Areas) +
+      _lessonCount(middleScience2Areas) +
+      _lessonCount(middleScience3Areas),
+  },
+  {
+    title: "中学英語",
+    kicker: "JUNIOR HIGH ENGLISH",
+    href: `${_base}middle-school/english/`,
+    description: "1〜3年の基本文から現在完了・受け身・関係代名詞まで、読む・書く・聞く・話す活動へつなげます。",
+    areas: ["1〜3年", "基本文", "文法", "読解・表現"],
+    lessonCount:
+      _lessonCount(middleEnglish1CompleteAreas) +
+      _lessonCount(middleEnglish2Areas) +
+      _lessonCount(middleEnglish3Areas),
+  },
+];
+
+const _mathCourses = [
   {
     title: "数学I",
     kicker: "MATHEMATICS I",
@@ -85,6 +111,14 @@ const _courses = [
     lessonCount: _lessonCount(mathBAreas),
   },
   {
+    title: "数学III",
+    kicker: "MATHEMATICS III",
+    href: `${_base}math3/`,
+    description: "極限、微分法、積分法。公式の意味と計算の流れを確かめながら学びます。",
+    areas: math3Areas.map((area) => area.title),
+    lessonCount: _lessonCount(math3Areas),
+  },
+  {
     title: "数学C",
     kicker: "MATHEMATICS C",
     href: `${_base}mathc/`,
@@ -92,13 +126,24 @@ const _courses = [
     areas: mathCAreas.map((area) => area.title),
     lessonCount: _lessonCount(mathCAreas),
   },
+];
+
+const _scienceCourses = [
   {
-    title: "数学III",
-    kicker: "MATHEMATICS III",
-    href: `${_base}math3/`,
-    description: "極限、微分法、積分法。公式の意味と計算の流れを確かめながら学びます。",
-    areas: math3Areas.map((area) => area.title),
-    lessonCount: _lessonCount(math3Areas),
+    title: "物理基礎",
+    kicker: "BASIC PHYSICS",
+    href: `${_base}physics-basics/`,
+    description: "運動、力とエネルギー、波、熱、電気を、現象と式を結びつけて学びます。",
+    areas: physicsBasicsAreas.map((area) => area.title),
+    lessonCount: _lessonCount(physicsBasicsAreas),
+  },
+  {
+    title: "物理",
+    kicker: "PHYSICS",
+    href: `${_base}physics/`,
+    description: "運動、波、電気と磁気、原子を、法則の意味と計算の流れから学びます。",
+    areas: physicsAreas.map((area) => area.title),
+    lessonCount: _lessonCount(physicsAreas),
   },
   {
     title: "化学基礎",
@@ -117,22 +162,6 @@ const _courses = [
     lessonCount: _lessonCount(chemistryAreas),
   },
   {
-    title: "物理基礎",
-    kicker: "BASIC PHYSICS",
-    href: `${_base}physics-basics/`,
-    description: "運動、力とエネルギー、波、熱、電気を、現象と式を結びつけて学びます。",
-    areas: physicsBasicsAreas.map((area) => area.title),
-    lessonCount: _lessonCount(physicsBasicsAreas),
-  },
-  {
-    title: "物理",
-    kicker: "PHYSICS",
-    href: `${_base}physics/`,
-    description: "運動、波、電気と磁気、原子を、法則の意味と計算の流れから学びます。",
-    areas: physicsAreas.map((area) => area.title),
-    lessonCount: _lessonCount(physicsAreas),
-  },
-  {
     title: "生物基礎",
     kicker: "BASIC BIOLOGY",
     href: `${_base}biology-basic/`,
@@ -148,6 +177,9 @@ const _courses = [
     areas: biologyAreas.map((area) => area.title),
     lessonCount: _lessonCount(biologyAreas),
   },
+];
+
+const _humanitiesCourses = [
   {
     title: "日本史",
     kicker: "JAPANESE HISTORY",
@@ -174,14 +206,9 @@ const _courses = [
     areas: ethicsAreas.map((area) => area.title),
     lessonCount: _lessonCount(ethicsAreas),
   },
-  {
-    title: "英語",
-    kicker: "ENGLISH",
-    href: `${_base}english/`,
-    description: "英文法・解釈・長文読解・論理表現を、英文を読み解く手順から学びます。",
-    areas: englishAreas.map((area) => area.title),
-    lessonCount: _lessonCount(englishAreas),
-  },
+];
+
+const _languageCourses = [
   {
     title: "国語",
     kicker: "JAPANESE",
@@ -190,7 +217,49 @@ const _courses = [
     areas: japaneseAreas.map((area) => area.title),
     lessonCount: _lessonCount(japaneseAreas),
   },
+  {
+    title: "英語",
+    kicker: "ENGLISH",
+    href: `${_base}english/`,
+    description: "英文法・解釈・長文読解・論理表現を、英文を読み解く手順から学びます。",
+    areas: englishAreas.map((area) => area.title),
+    lessonCount: _lessonCount(englishAreas),
+  },
+];
+
+const _highSchoolGroups = [
+  {
+    label: "MATHEMATICS",
+    title: "高校数学",
+    id: "high-school-mathematics-title",
+    description: "数学I・A・II・B・III・Cから、学びたい科目を選びます。",
+    courses: _mathCourses,
+  },
+  {
+    label: "SCIENCE",
+    title: "高校理科",
+    id: "high-school-science-title",
+    description: "物理・化学・生物を、基礎科目と専門科目から選びます。",
+    courses: _scienceCourses,
+  },
+  {
+    label: "HISTORY & CIVICS",
+    title: "地歴・公民",
+    id: "high-school-humanities-title",
+    description: "日本史・世界史・倫理から、学びたい科目を選びます。",
+    courses: _humanitiesCourses,
+  },
+  {
+    label: "LANGUAGES",
+    title: "国語・英語",
+    id: "high-school-languages-title",
+    description: "国語と英語の読解・表現教材へ進みます。",
+    courses: _languageCourses,
+  },
 ];
 ---
 
-<CourseCatalog courses={_courses} />
+<CourseCatalog
+  middleSchoolCourses={_middleSchoolCourses}
+  highSchoolGroups={_highSchoolGroups}
+/>
