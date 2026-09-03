@@ -8,12 +8,7 @@ const checks = [
   },
   {
     path: new URL("../dist/english/index.html", import.meta.url),
-    markers: [
-      "英語",
-      "学習する4つの領域",
-      "全17小教材",
-      "オリジナル英文と権利確認済み文章で学ぶ",
-    ],
+    markers: ["英語", "学習する4つの領域", "全17小教材", "オリジナル英文と権利確認済み文章で学ぶ"],
   },
   {
     path: new URL(
