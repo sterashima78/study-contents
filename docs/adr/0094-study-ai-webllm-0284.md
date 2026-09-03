@@ -78,6 +78,10 @@ runtime更新とモデル・メモリ条件の変更を同時に行わず、既�
 - `pnpm build` が通ること。
 - GitHub Pages buildでもStudy AI境界検証が通ること。
 
+## Verification record
+
+2026-09-03に、pnpm 12.2.1で公開レジストリからlockfileを再生成し、Biome整形、`pnpm check`、`pnpm build`、生成HTMLの学習指導要領参照検証、中学英語の生成HTML回帰検証まで成功した。検証専用workflowは成功後に同じコミット系列で削除した。
+
 ## Supersedes
 
 ADR 0087の回答予算、教材コンテキスト、安全境界を継承しつつ、WebLLM 0.2.82を変更しないというruntime固定条件を置き換える。以後のStudy AI基準は、WebLLM 0.2.84、Llama 3.2 1B、context 2048、prefill 128、512 token回答予算とする。
