@@ -58,7 +58,11 @@ const checks = [
       "../dist/middle-school/english/grade2/expanding-expression/infinitive-gerund-comparison/comparative/index.html",
       import.meta.url,
     ),
-    markers: ["比較級 + than で二つを比べる", "This book is newer than that one.", "理解を確認する3問"],
+    markers: [
+      "比較級 + than で二つを比べる",
+      "This book is newer than that one.",
+      "理解を確認する3問",
+    ],
   },
   {
     path: new URL(
@@ -76,7 +80,11 @@ const checks = [
       "../dist/middle-school/english/grade3/integrated-grammar/advanced-structures/basic-subjunctive/index.html",
       import.meta.url,
     ),
-    markers: ["If I were ... / I wish ... で現実と異なる想像を表す", "If I were you, I would ask the teacher.", "理解を確認する3問"],
+    markers: [
+      "If I were ... / I wish ... で現実と異なる想像を表す",
+      "If I were you, I would ask the teacher.",
+      "理解を確認する3問",
+    ],
   },
 ];
 

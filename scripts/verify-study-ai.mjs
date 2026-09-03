@@ -15,9 +15,7 @@ const [packageJson, studyPage, chat, context, engine, modelConfig, worker, promp
   ]);
 
 if (packageJson.dependencies?.["@mlc-ai/web-llm"] !== "0.2.84") {
-  issues.push(
-    "package.json: ADR 0094に従い @mlc-ai/web-llm 0.2.84 を完全固定してください。",
-  );
+  issues.push("package.json: ADR 0094に従い @mlc-ai/web-llm 0.2.84 を完全固定してください。");
 }
 if (packageJson.dependencies?.["@huggingface/transformers"]) {
   issues.push(

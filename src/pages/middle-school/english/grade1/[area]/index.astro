@@ -7,7 +7,10 @@ import type { EnglishArea } from "../../../../../content/english/types";
 import { middleEnglish1CompleteAreas } from "../../../../../content/middle-school/english/grade1/catalog-complete";
 
 export function getStaticPaths() {
-  return middleEnglish1CompleteAreas.map((area) => ({ params: { area: area.key }, props: { area } }));
+  return middleEnglish1CompleteAreas.map((area) => ({
+    params: { area: area.key },
+    props: { area },
+  }));
 }
 
 type Props = { area: EnglishArea };

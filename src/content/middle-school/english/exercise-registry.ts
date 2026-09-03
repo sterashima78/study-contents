@@ -21,9 +21,7 @@ const legacyGrade1Units = new Set(["be-verbs", "general-verbs"]);
 const difficulties: MiddleEnglishDifficulty[] = ["basic", "applied", "challenge"];
 
 const findUnit = (routeBase: string, unitKey: string): EnglishUnit | undefined =>
-  routeAreas[routeBase]
-    ?.flatMap((area) => area.units)
-    .find((unit) => unit.key === unitKey);
+  routeAreas[routeBase]?.flatMap((area) => area.units).find((unit) => unit.key === unitKey);
 
 const createExercise = (
   routeBase: string,

@@ -6,28 +6,60 @@ const perfectAndPassive: EnglishLesson[] = [
     key: "present-perfect-experience",
     title: "have + 過去分詞で経験を表す",
     description: "現在完了形を使い、これまでの経験を現在と結び付けて表します。",
-    goals: ["have / has + 過去分詞を作れる。", "ever / neverを使って経験を尋ねたり否定したりできる。"],
-    points: ["現在完了形は have / has + 過去分詞です。", "経験では ever、never、once、twice などと組み合わせて使えます。"],
+    goals: [
+      "have / has + 過去分詞を作れる。",
+      "ever / neverを使って経験を尋ねたり否定したりできる。",
+    ],
+    points: [
+      "現在完了形は have / has + 過去分詞です。",
+      "経験では ever、never、once、twice などと組み合わせて使えます。",
+    ],
     example: "「私は京都を2回訪れたことがあります」を英語で表す。",
-    analysis: [["I have", "I なので have。"], ["visited", "visit の過去分詞。"], ["I have visited Kyoto twice.", "回数を加えます。"]],
+    analysis: [
+      ["I have", "I なので have。"],
+      ["visited", "visit の過去分詞。"],
+      ["I have visited Kyoto twice.", "回数を加えます。"],
+    ],
     practice: [
-      { prompt: "「彼女は一度も海外へ行ったことがありません」を英語にしてください。", answers: ["She has never been abroad.", "She has never been abroad"] },
-      { prompt: "Have you ever (see / seen) this movie? 正しい形を答えてください。", answers: ["seen"] },
+      {
+        prompt: "「彼女は一度も海外へ行ったことがありません」を英語にしてください。",
+        answers: ["She has never been abroad.", "She has never been abroad"],
+      },
+      {
+        prompt: "Have you ever (see / seen) this movie? 正しい形を答えてください。",
+        answers: ["seen"],
+      },
     ],
     hint: "have / has の後ろは過去形ではなく過去分詞です。",
-    summary: ["経験の現在完了は have / has + 過去分詞。", "ever / never / 回数で経験を詳しく表す。"],
+    summary: [
+      "経験の現在完了は have / has + 過去分詞。",
+      "ever / never / 回数で経験を詳しく表す。",
+    ],
   }),
   lesson({
     key: "present-perfect-continuation",
     title: "現在完了で継続を表す",
     description: "過去から現在まで続いている状態をfor / sinceとともに表します。",
     goals: ["forとsinceを使い分けられる。", "過去形ではなく現在完了を選ぶ理由を説明できる。"],
-    points: ["for two years は期間、since 2024 は開始点を表します。", "現在まで続いている状態なので、過去だけを切り取る過去形とは見方が異なります。"],
+    points: [
+      "for two years は期間、since 2024 は開始点を表します。",
+      "現在まで続いている状態なので、過去だけを切り取る過去形とは見方が異なります。",
+    ],
     example: "「私は3年間この町に住んでいます」を英語で表す。",
-    analysis: [["I have lived", "現在までの継続。"], ["in this town", "場所。"], ["I have lived in this town for three years.", "期間をforで加えます。"]],
+    analysis: [
+      ["I have lived", "現在までの継続。"],
+      ["in this town", "場所。"],
+      ["I have lived in this town for three years.", "期間をforで加えます。"],
+    ],
     practice: [
-      { prompt: "「彼は2023年からここにいます」を英語にしてください。", answers: ["He has been here since 2023.", "He has been here since 2023"] },
-      { prompt: "We have known each other (for / since) five years. 正しい語を答えてください。", answers: ["for"] },
+      {
+        prompt: "「彼は2023年からここにいます」を英語にしてください。",
+        answers: ["He has been here since 2023.", "He has been here since 2023"],
+      },
+      {
+        prompt: "We have known each other (for / since) five years. 正しい語を答えてください。",
+        answers: ["for"],
+      },
     ],
     hint: "期間ならfor、開始点ならsince。",
     summary: ["現在まで続く状態を現在完了で表す。", "forは期間、sinceは開始点。"],
@@ -36,28 +68,64 @@ const perfectAndPassive: EnglishLesson[] = [
     key: "present-perfect-result",
     title: "現在完了で完了・結果を表す",
     description: "just / already / yetを使い、完了したことや現在への結果を表します。",
-    goals: ["just / already / yetを現在完了と使える。", "現在に関係する完了と単純過去を区別できる。"],
-    points: ["just は「ちょうど」、already は「すでに」、yet は疑問・否定で「もう／まだ」を表します。", "現在完了は、過去の出来事を現在の状況とつなげて捉えます。"],
+    goals: [
+      "just / already / yetを現在完了と使える。",
+      "現在に関係する完了と単純過去を区別できる。",
+    ],
+    points: [
+      "just は「ちょうど」、already は「すでに」、yet は疑問・否定で「もう／まだ」を表します。",
+      "現在完了は、過去の出来事を現在の状況とつなげて捉えます。",
+    ],
     example: "「私はちょうど宿題を終えたところです」を英語で表す。",
-    analysis: [["I have", "現在完了の助動詞。"], ["just finished", "just + 過去分詞。"], ["I have just finished my homework.", "目的語を加えます。"]],
+    analysis: [
+      ["I have", "現在完了の助動詞。"],
+      ["just finished", "just + 過去分詞。"],
+      ["I have just finished my homework.", "目的語を加えます。"],
+    ],
     practice: [
-      { prompt: "「彼女はすでに昼食を食べました」を英語にしてください。", answers: ["She has already eaten lunch.", "She has already eaten lunch"] },
-      { prompt: "Have you finished your homework (yet / already)? 文末の「もう」に自然な語を答えてください。", answers: ["yet"] },
+      {
+        prompt: "「彼女はすでに昼食を食べました」を英語にしてください。",
+        answers: ["She has already eaten lunch.", "She has already eaten lunch"],
+      },
+      {
+        prompt:
+          "Have you finished your homework (yet / already)? 文末の「もう」に自然な語を答えてください。",
+        answers: ["yet"],
+      },
     ],
     hint: "完了したことが現在にどう関係するかを考えます。",
-    summary: ["完了・結果も have / has + 過去分詞。", "just / already / yetの位置と意味を確認する。"],
+    summary: [
+      "完了・結果も have / has + 過去分詞。",
+      "just / already / yetの位置と意味を確認する。",
+    ],
   }),
   lesson({
     key: "present-perfect-progressive",
     title: "have been + -ing で動作の継続を表す",
     description: "現在完了進行形で、過去から現在まで続いている動作を強調します。",
     goals: ["have / has been + -ingを作れる。", "状態の継続と動作の継続を区別できる。"],
-    points: ["I have been studying for two hours. のように、続いている動作を表します。", "know / live など状態を表す動詞では単純な現在完了が自然な場合もあります。"],
+    points: [
+      "I have been studying for two hours. のように、続いている動作を表します。",
+      "know / live など状態を表す動詞では単純な現在完了が自然な場合もあります。",
+    ],
     example: "「私は2時間英語を勉強し続けています」を英語で表す。",
-    analysis: [["I have been", "現在完了 + beの過去分詞。"], ["studying", "動作を-ingで。"], ["I have been studying English for two hours.", "対象と期間を加えます。"]],
+    analysis: [
+      ["I have been", "現在完了 + beの過去分詞。"],
+      ["studying", "動作を-ingで。"],
+      ["I have been studying English for two hours.", "対象と期間を加えます。"],
+    ],
     practice: [
-      { prompt: "「彼は朝から走っています」を英語にしてください。", answers: ["He has been running since this morning.", "He has been running since this morning"] },
-      { prompt: "They have been (work / working) for three hours. 正しい形を答えてください。", answers: ["working"] },
+      {
+        prompt: "「彼は朝から走っています」を英語にしてください。",
+        answers: [
+          "He has been running since this morning.",
+          "He has been running since this morning",
+        ],
+      },
+      {
+        prompt: "They have been (work / working) for three hours. 正しい形を答えてください。",
+        answers: ["working"],
+      },
     ],
     hint: "have / has + been + 動詞-ingの3段階です。",
     summary: ["現在完了進行形は have been + -ing。", "継続する動作に焦点を当てる。"],
@@ -67,12 +135,25 @@ const perfectAndPassive: EnglishLesson[] = [
     title: "be動詞 + 過去分詞で受け身を表す",
     description: "動作を受けるものを主語にし、「〜される」を表します。",
     goals: ["現在の受け身を作れる。", "能動文と受け身で情報の焦点が変わると分かる。"],
-    points: ["受け身は be動詞 + 過去分詞です。", "English is spoken in many countries. のように、行為者より対象に焦点を当てます。"],
+    points: [
+      "受け身は be動詞 + 過去分詞です。",
+      "English is spoken in many countries. のように、行為者より対象に焦点を当てます。",
+    ],
     example: "「英語は多くの国で話されています」を英語で表す。",
-    analysis: [["English", "動作を受ける対象を主語に。"], ["is spoken", "be動詞 + speakの過去分詞。"], ["English is spoken in many countries.", "場所・範囲を加えます。"]],
+    analysis: [
+      ["English", "動作を受ける対象を主語に。"],
+      ["is spoken", "be動詞 + speakの過去分詞。"],
+      ["English is spoken in many countries.", "場所・範囲を加えます。"],
+    ],
     practice: [
-      { prompt: "「この部屋は毎日掃除されます」を英語にしてください。", answers: ["This room is cleaned every day.", "This room is cleaned every day"] },
-      { prompt: "These books are (use / used) in class. 正しい形を答えてください。", answers: ["used"] },
+      {
+        prompt: "「この部屋は毎日掃除されます」を英語にしてください。",
+        answers: ["This room is cleaned every day.", "This room is cleaned every day"],
+      },
+      {
+        prompt: "These books are (use / used) in class. 正しい形を答えてください。",
+        answers: ["used"],
+      },
     ],
     hint: "主語に合うbe動詞 + 過去分詞。",
     summary: ["受け身は be動詞 + 過去分詞。", "何を情報の中心にするかで能動・受け身を選ぶ。"],
@@ -82,12 +163,25 @@ const perfectAndPassive: EnglishLesson[] = [
     title: "過去の受け身と受け身の疑問文を作る",
     description: "was / were + 過去分詞を使い、過去の受け身や質問を表します。",
     goals: ["過去の受け身を作れる。", "be動詞を移動して受け身の疑問文を作れる。"],
-    points: ["過去の受け身は was / were + 過去分詞です。", "疑問文は Was this built ...? のようにbe動詞を主語の前へ出します。"],
+    points: [
+      "過去の受け身は was / were + 過去分詞です。",
+      "疑問文は Was this built ...? のようにbe動詞を主語の前へ出します。",
+    ],
     example: "「この橋は100年前に建てられました」を英語で表す。",
-    analysis: [["This bridge", "対象を主語に。"], ["was built", "過去のbe動詞 + buildの過去分詞。"], ["This bridge was built 100 years ago.", "時を加えます。"]],
+    analysis: [
+      ["This bridge", "対象を主語に。"],
+      ["was built", "過去のbe動詞 + buildの過去分詞。"],
+      ["This bridge was built 100 years ago.", "時を加えます。"],
+    ],
     practice: [
-      { prompt: "「その歌は彼女によって書かれました」を英語にしてください。", answers: ["The song was written by her.", "The song was written by her"] },
-      { prompt: "This temple was built in 1600. を疑問文にしてください。", answers: ["Was this temple built in 1600?", "Was this temple built in 1600"] },
+      {
+        prompt: "「その歌は彼女によって書かれました」を英語にしてください。",
+        answers: ["The song was written by her.", "The song was written by her"],
+      },
+      {
+        prompt: "This temple was built in 1600. を疑問文にしてください。",
+        answers: ["Was this temple built in 1600?", "Was this temple built in 1600"],
+      },
     ],
     hint: "受け身でも疑問文の中心はbe動詞です。",
     summary: ["過去の受け身は was / were + 過去分詞。", "疑問文はbe動詞を文頭へ。"],
@@ -97,16 +191,38 @@ const perfectAndPassive: EnglishLesson[] = [
     title: "完了形と受け身を読み分ける",
     description: "have + 過去分詞とbe + 過去分詞を、助動詞・be動詞の手掛かりから判別します。",
     goals: ["完了形と受け身を形から判別できる。", "短い説明文で時と情報の焦点を整理できる。"],
-    points: ["has visited は現在完了、is visited は受け身です。", "過去分詞だけを見るのではなく、その直前が have / has か be動詞かを確認します。"],
-    passage: { title: "A Community Library", paragraphs: ["Our community library was built in 1985. Many people have visited it since then. The building is used for classes and local events, and new books have been added every year."] },
+    points: [
+      "has visited は現在完了、is visited は受け身です。",
+      "過去分詞だけを見るのではなく、その直前が have / has か be動詞かを確認します。",
+    ],
+    passage: {
+      title: "A Community Library",
+      paragraphs: [
+        "Our community library was built in 1985. Many people have visited it since then. The building is used for classes and local events, and new books have been added every year.",
+      ],
+    },
     example: "英文中の has visited と is used の違いを説明する。",
-    analysis: [["has visited", "have + 過去分詞なので現在完了。"], ["is used", "be + 過去分詞なので受け身。"], ["形の前半を見る", "同じ過去分詞でも文法機能を区別できます。"]],
+    analysis: [
+      ["has visited", "have + 過去分詞なので現在完了。"],
+      ["is used", "be + 過去分詞なので受け身。"],
+      ["形の前半を見る", "同じ過去分詞でも文法機能を区別できます。"],
+    ],
     practice: [
-      { prompt: "The room has cleaned / has been cleaned. 「部屋は掃除されました」に合う方を答えてください。", answers: ["has been cleaned"] },
-      { prompt: "She has used this computer for years. は現在完了か受け身か答えてください。", answers: ["現在完了", "present perfect"] },
+      {
+        prompt:
+          "The room has cleaned / has been cleaned. 「部屋は掃除されました」に合う方を答えてください。",
+        answers: ["has been cleaned"],
+      },
+      {
+        prompt: "She has used this computer for years. は現在完了か受け身か答えてください。",
+        answers: ["現在完了", "present perfect"],
+      },
     ],
     hint: "過去分詞の直前の have / be を確認します。",
-    summary: ["完了形は have + 過去分詞。", "受け身は be + 過去分詞。複合形では両方が現れることもある。"],
+    summary: [
+      "完了形は have + 過去分詞。",
+      "受け身は be + 過去分詞。複合形では両方が現れることもある。",
+    ],
   }),
 ];
 
@@ -116,12 +232,28 @@ const relativesAndParticiples: EnglishLesson[] = [
     title: "who で人を後ろから説明する",
     description: "関係代名詞whoを使い、人を表す名詞に主語付きの説明を加えます。",
     goals: ["人 + who + 動詞の語順を使える。", "先行詞と関係節の関係を捉えられる。"],
-    points: ["The girl who is singing is my sister. の who は girl を受け、関係節の主語になります。", "日本語と違い、説明が名詞の後ろに続く構造を意識します。"],
+    points: [
+      "The girl who is singing is my sister. の who は girl を受け、関係節の主語になります。",
+      "日本語と違い、説明が名詞の後ろに続く構造を意識します。",
+    ],
     example: "「そこで走っている少年は私の弟です」を英語で表す。",
-    analysis: [["The boy", "説明される人。"], ["who is running there", "whoで後ろから説明。"], ["The boy who is running there is my brother.", "主節のbe動詞まで続けます。"]],
+    analysis: [
+      ["The boy", "説明される人。"],
+      ["who is running there", "whoで後ろから説明。"],
+      ["The boy who is running there is my brother.", "主節のbe動詞まで続けます。"],
+    ],
     practice: [
-      { prompt: "「英語を教えている女性は私の母です」を英語にしてください。", answers: ["The woman who teaches English is my mother.", "The woman who teaches English is my mother"] },
-      { prompt: "The student (who / which) helped me is Ken. 正しい語を答えてください。", answers: ["who"] },
+      {
+        prompt: "「英語を教えている女性は私の母です」を英語にしてください。",
+        answers: [
+          "The woman who teaches English is my mother.",
+          "The woman who teaches English is my mother",
+        ],
+      },
+      {
+        prompt: "The student (who / which) helped me is Ken. 正しい語を答えてください。",
+        answers: ["who"],
+      },
     ],
     hint: "先行詞が人で、関係節の主語ならwho。",
     summary: ["whoは人を受け、関係節の主語になる。", "名詞の後ろから説明する語順に慣れる。"],
@@ -131,12 +263,30 @@ const relativesAndParticiples: EnglishLesson[] = [
     title: "which / that でものを後ろから説明する",
     description: "もの・動物・事柄を表す名詞に関係節を加えます。",
     goals: ["which / thatを主格の関係代名詞として使える。", "関係節の範囲を見抜ける。"],
-    points: ["The book which is on the desk is mine. の which は book を受けます。", "主格ではwhich / thatの直後に動詞が続きます。"],
+    points: [
+      "The book which is on the desk is mine. の which は book を受けます。",
+      "主格ではwhich / thatの直後に動詞が続きます。",
+    ],
     example: "「机の上にある本は私のです」を英語で表す。",
-    analysis: [["The book", "説明されるもの。"], ["which is on the desk", "関係節。"], ["The book which is on the desk is mine.", "主節へ戻ります。"]],
+    analysis: [
+      ["The book", "説明されるもの。"],
+      ["which is on the desk", "関係節。"],
+      ["The book which is on the desk is mine.", "主節へ戻ります。"],
+    ],
     practice: [
-      { prompt: "「昨日届いた手紙は短かった」を英語にしてください。", answers: ["The letter that arrived yesterday was short.", "The letter that arrived yesterday was short", "The letter which arrived yesterday was short.", "The letter which arrived yesterday was short"] },
-      { prompt: "The bike (who / that) is red is mine. 正しい語を答えてください。", answers: ["that"] },
+      {
+        prompt: "「昨日届いた手紙は短かった」を英語にしてください。",
+        answers: [
+          "The letter that arrived yesterday was short.",
+          "The letter that arrived yesterday was short",
+          "The letter which arrived yesterday was short.",
+          "The letter which arrived yesterday was short",
+        ],
+      },
+      {
+        prompt: "The bike (who / that) is red is mine. 正しい語を答えてください。",
+        answers: ["that"],
+      },
     ],
     hint: "人以外を受ける主格ならwhich / thatを考えます。",
     summary: ["which / thatで人以外の名詞を説明できる。", "関係節が終わったら主節へ戻る。"],
@@ -146,57 +296,124 @@ const relativesAndParticiples: EnglishLesson[] = [
     title: "目的格のthat / whichで目的語を補う",
     description: "関係節の中で目的語が欠けている構造を捉え、名詞を後ろから説明します。",
     goals: ["目的格のthat / whichを使える。", "主格と目的格を後ろの語順から区別できる。"],
-    points: ["The book that I bought ... では I bought の後ろに目的語がなく、thatがbookを受けます。", "目的格の関係代名詞は省略されることもあります。"],
+    points: [
+      "The book that I bought ... では I bought の後ろに目的語がなく、thatがbookを受けます。",
+      "目的格の関係代名詞は省略されることもあります。",
+    ],
     example: "「私が昨日買った本は面白い」を英語で表す。",
-    analysis: [["The book", "説明される名詞。"], ["that I bought yesterday", "I boughtの目的語をthatが受けます。"], ["The book that I bought yesterday is interesting.", "主節を続けます。"]],
+    analysis: [
+      ["The book", "説明される名詞。"],
+      ["that I bought yesterday", "I boughtの目的語をthatが受けます。"],
+      ["The book that I bought yesterday is interesting.", "主節を続けます。"],
+    ],
     practice: [
-      { prompt: "「彼女が作ったケーキはおいしかった」を英語にしてください。", answers: ["The cake that she made was delicious.", "The cake that she made was delicious", "The cake which she made was delicious.", "The cake which she made was delicious"] },
-      { prompt: "This is the picture (that / who) I like. 正しい語を答えてください。", answers: ["that"] },
+      {
+        prompt: "「彼女が作ったケーキはおいしかった」を英語にしてください。",
+        answers: [
+          "The cake that she made was delicious.",
+          "The cake that she made was delicious",
+          "The cake which she made was delicious.",
+          "The cake which she made was delicious",
+        ],
+      },
+      {
+        prompt: "This is the picture (that / who) I like. 正しい語を答えてください。",
+        answers: ["that"],
+      },
     ],
     hint: "関係節の主語の後ろに目的語が欠けているか確認します。",
-    summary: ["目的格のthat / whichは関係節の目的語を受ける。", "主格か目的格かは関係節内部の不足から判断する。"],
+    summary: [
+      "目的格のthat / whichは関係節の目的語を受ける。",
+      "主格か目的格かは関係節内部の不足から判断する。",
+    ],
   }),
   lesson({
     key: "present-participle-adjective",
     title: "現在分詞で「〜している」名詞を説明する",
     description: "-ing形を形容詞のように使い、動作中の人・ものを説明します。",
     goals: ["名詞 + 現在分詞の後置修飾を読める。", "進行形との役割を区別できる。"],
-    points: ["the girl singing on the stage の singing ... は girl を後ろから説明します。", "be動詞がないため進行形ではなく、名詞を修飾する現在分詞です。"],
+    points: [
+      "the girl singing on the stage の singing ... は girl を後ろから説明します。",
+      "be動詞がないため進行形ではなく、名詞を修飾する現在分詞です。",
+    ],
     example: "「公園で走っている少年」を英語で表す。",
-    analysis: [["the boy", "説明される名詞。"], ["running", "能動的な動作を-ingで。"], ["the boy running in the park", "後ろから説明を加えます。"]],
+    analysis: [
+      ["the boy", "説明される名詞。"],
+      ["running", "能動的な動作を-ingで。"],
+      ["the boy running in the park", "後ろから説明を加えます。"],
+    ],
     practice: [
-      { prompt: "「窓のそばで読書している女性」を英語にしてください。", answers: ["the woman reading by the window", "The woman reading by the window"] },
-      { prompt: "The dog (running / run) there is mine. 正しい形を答えてください。", answers: ["running"] },
+      {
+        prompt: "「窓のそばで読書している女性」を英語にしてください。",
+        answers: ["the woman reading by the window", "The woman reading by the window"],
+      },
+      {
+        prompt: "The dog (running / run) there is mine. 正しい形を答えてください。",
+        answers: ["running"],
+      },
     ],
     hint: "名詞の直後の-ingがその名詞を説明しているか確認します。",
-    summary: ["現在分詞は名詞を後ろから説明できる。", "be動詞 + -ingの進行形とは文中の役割が異なる。"],
+    summary: [
+      "現在分詞は名詞を後ろから説明できる。",
+      "be動詞 + -ingの進行形とは文中の役割が異なる。",
+    ],
   }),
   lesson({
     key: "past-participle-adjective",
     title: "過去分詞で「〜された」名詞を説明する",
     description: "過去分詞を形容詞のように使い、受け身の関係を持つ名詞を説明します。",
     goals: ["名詞 + 過去分詞の後置修飾を読める。", "受け身の文との違いを説明できる。"],
-    points: ["a book written in English の written ... は book を後ろから説明します。", "be動詞がないため受け身の述語ではなく、名詞を修飾する過去分詞です。"],
+    points: [
+      "a book written in English の written ... は book を後ろから説明します。",
+      "be動詞がないため受け身の述語ではなく、名詞を修飾する過去分詞です。",
+    ],
     example: "「英語で書かれた本」を英語で表す。",
-    analysis: [["a book", "説明される名詞。"], ["written", "writeの過去分詞。"], ["a book written in English", "後ろから受け身の説明を加えます。"]],
+    analysis: [
+      ["a book", "説明される名詞。"],
+      ["written", "writeの過去分詞。"],
+      ["a book written in English", "後ろから受け身の説明を加えます。"],
+    ],
     practice: [
-      { prompt: "「日本で作られた車」を英語にしてください。", answers: ["a car made in Japan", "A car made in Japan"] },
-      { prompt: "The picture (painted / painting) by Ken is beautiful. Kenによって描かれたなら正しい形を答えてください。", answers: ["painted"] },
+      {
+        prompt: "「日本で作られた車」を英語にしてください。",
+        answers: ["a car made in Japan", "A car made in Japan"],
+      },
+      {
+        prompt:
+          "The picture (painted / painting) by Ken is beautiful. Kenによって描かれたなら正しい形を答えてください。",
+        answers: ["painted"],
+      },
     ],
     hint: "名詞がその動作を「する側」か「される側」か考えます。",
-    summary: ["過去分詞は受け身の関係で名詞を説明できる。", "be動詞がある受け身の文との構造差を見る。"],
+    summary: [
+      "過去分詞は受け身の関係で名詞を説明できる。",
+      "be動詞がある受け身の文との構造差を見る。",
+    ],
   }),
   lesson({
     key: "participles-relative-choice",
     title: "分詞と関係代名詞を使い分ける",
     description: "同じ名詞説明でも、短い分詞句と主語・動詞を持つ関係節を使い分けます。",
     goals: ["分詞による修飾と関係節を対応させられる。", "説明の長さ・構造から読み方を選べる。"],
-    points: ["the boy running there ≒ the boy who is running there のように対応する場合があります。", "関係節には主語・動詞の構造があり、分詞句はより短く名詞を修飾します。"],
+    points: [
+      "the boy running there ≒ the boy who is running there のように対応する場合があります。",
+      "関係節には主語・動詞の構造があり、分詞句はより短く名詞を修飾します。",
+    ],
     example: "the girl singing there を関係代名詞を使って言い換える。",
-    analysis: [["the girl", "先行詞。"], ["who is singing there", "現在分詞を関係節へ。"], ["the girl who is singing there", "同じ対象を説明します。"]],
+    analysis: [
+      ["the girl", "先行詞。"],
+      ["who is singing there", "現在分詞を関係節へ。"],
+      ["the girl who is singing there", "同じ対象を説明します。"],
+    ],
     practice: [
-      { prompt: "the book written by Saki をthatを使って言い換えてください。", answers: ["the book that was written by Saki", "The book that was written by Saki"] },
-      { prompt: "the man who is talking with Ken を分詞で短くしてください。", answers: ["the man talking with Ken", "The man talking with Ken"] },
+      {
+        prompt: "the book written by Saki をthatを使って言い換えてください。",
+        answers: ["the book that was written by Saki", "The book that was written by Saki"],
+      },
+      {
+        prompt: "the man who is talking with Ken を分詞で短くしてください。",
+        answers: ["the man talking with Ken", "The man talking with Ken"],
+      },
     ],
     hint: "関係節のbe動詞 + 分詞を短くできる場合を探します。",
     summary: ["分詞句と関係節は名詞説明で対応することがある。", "文構造の有無を見て読み分ける。"],
@@ -209,26 +426,52 @@ const advancedStructures: EnglishLesson[] = [
     title: "want + 人 + to不定詞でしてほしいことを表す",
     description: "目的語の人に期待する行動をto不定詞で続けます。",
     goals: ["want + 人 + to + 動詞原形を作れる。", "I want to ... との意味の違いを説明できる。"],
-    points: ["I want you to help me. では you が help する人です。", "I want to help you. は自分がhelpするため、語順で意味が変わります。"],
+    points: [
+      "I want you to help me. では you が help する人です。",
+      "I want to help you. は自分がhelpするため、語順で意味が変わります。",
+    ],
     example: "「私はあなたにここに来てほしい」を英語で表す。",
-    analysis: [["I want", "主語の希望。"], ["you", "行動する人を目的格で。"], ["I want you to come here.", "to不定詞で行動を続けます。"]],
+    analysis: [
+      ["I want", "主語の希望。"],
+      ["you", "行動する人を目的格で。"],
+      ["I want you to come here.", "to不定詞で行動を続けます。"],
+    ],
     practice: [
-      { prompt: "「先生は私たちに本を読んでほしいと思っています」を英語にしてください。", answers: ["The teacher wants us to read the book.", "The teacher wants us to read the book"] },
+      {
+        prompt: "「先生は私たちに本を読んでほしいと思っています」を英語にしてください。",
+        answers: [
+          "The teacher wants us to read the book.",
+          "The teacher wants us to read the book",
+        ],
+      },
       { prompt: "I want (he / him) to join us. 正しい形を答えてください。", answers: ["him"] },
     ],
     hint: "wantの後ろの人は目的格、その後ろにto + 動詞原形。",
-    summary: ["want + 人 + to不定詞で「人に〜してほしい」。", "行動の主体が誰かを語順から確認する。"],
+    summary: [
+      "want + 人 + to不定詞で「人に〜してほしい」。",
+      "行動の主体が誰かを語順から確認する。",
+    ],
   }),
   lesson({
     key: "tell-object-to",
     title: "tell + 人 + to不定詞で依頼・指示を伝える",
     description: "人に何をするよう伝えたかを、tell + 人 + to不定詞で表します。",
     goals: ["tell + 人 + to不定詞を作れる。", "直接の命令文と伝達内容を区別できる。"],
-    points: ["My mother told me to clean my room. で「母は私に部屋を掃除するよう言った」です。", "否定は told me not to ... のようにto不定詞の前にnotを置きます。"],
+    points: [
+      "My mother told me to clean my room. で「母は私に部屋を掃除するよう言った」です。",
+      "否定は told me not to ... のようにto不定詞の前にnotを置きます。",
+    ],
     example: "「先生は私たちに静かにするよう言いました」を英語で表す。",
-    analysis: [["The teacher told", "伝えた人と動詞。"], ["us", "指示を受けた人。"], ["The teacher told us to be quiet.", "行動をto不定詞で。"]],
+    analysis: [
+      ["The teacher told", "伝えた人と動詞。"],
+      ["us", "指示を受けた人。"],
+      ["The teacher told us to be quiet.", "行動をto不定詞で。"],
+    ],
     practice: [
-      { prompt: "「父は私に遅れないよう言いました」を英語にしてください。", answers: ["My father told me not to be late.", "My father told me not to be late"] },
+      {
+        prompt: "「父は私に遅れないよう言いました」を英語にしてください。",
+        answers: ["My father told me not to be late.", "My father told me not to be late"],
+      },
       { prompt: "She told (we / us) to wait. 正しい語を答えてください。", answers: ["us"] },
     ],
     hint: "tellの後ろは人、その後ろにto不定詞。",
@@ -238,13 +481,32 @@ const advancedStructures: EnglishLesson[] = [
     key: "it-for-to",
     title: "It is ... for 人 to ... で評価を表す",
     description: "長いto不定詞を後ろへ置き、Itを形式的な主語として使います。",
-    goals: ["It is + 形容詞 + for + 人 + to不定詞を作れる。", "Itが具体的なものを指さない用法を理解できる。"],
-    points: ["It is important for us to learn from mistakes. のItは後ろのto不定詞内容を受ける形式主語です。", "for + 人で、その行動をする人を示せます。"],
+    goals: [
+      "It is + 形容詞 + for + 人 + to不定詞を作れる。",
+      "Itが具体的なものを指さない用法を理解できる。",
+    ],
+    points: [
+      "It is important for us to learn from mistakes. のItは後ろのto不定詞内容を受ける形式主語です。",
+      "for + 人で、その行動をする人を示せます。",
+    ],
     example: "「私たちが毎日練習することは大切です」を英語で表す。",
-    analysis: [["It is important", "評価を先に置きます。"], ["for us", "行動する人。"], ["It is important for us to practice every day.", "to不定詞で内容を続けます。"]],
+    analysis: [
+      ["It is important", "評価を先に置きます。"],
+      ["for us", "行動する人。"],
+      ["It is important for us to practice every day.", "to不定詞で内容を続けます。"],
+    ],
     practice: [
-      { prompt: "「子どもが十分眠ることは必要です」を英語にしてください。", answers: ["It is necessary for children to get enough sleep.", "It is necessary for children to get enough sleep"] },
-      { prompt: "It is easy for me (use / to use) this app. 正しい形を答えてください。", answers: ["to use"] },
+      {
+        prompt: "「子どもが十分眠ることは必要です」を英語にしてください。",
+        answers: [
+          "It is necessary for children to get enough sleep.",
+          "It is necessary for children to get enough sleep",
+        ],
+      },
+      {
+        prompt: "It is easy for me (use / to use) this app. 正しい形を答えてください。",
+        answers: ["to use"],
+      },
     ],
     hint: "It is + 評価 + for + 人 + to + 動詞原形。",
     summary: ["形式主語Itで長いto不定詞を後ろへ置ける。", "for + 人で行動の主体を示す。"],
@@ -254,12 +516,25 @@ const advancedStructures: EnglishLesson[] = [
     title: "be動詞 + 形容詞 + that節で気持ち・評価を表す",
     description: "glad / sure / sorryなどの後ろにthat節を続け、その理由・内容を表します。",
     goals: ["形容詞 + that節の構造を使える。", "that節が形容詞の内容を補うと理解できる。"],
-    points: ["I am glad that you are here. のthat節はgladの内容を示します。", "thatは会話で省略されることがありますが、構造上の境界を意識します。"],
+    points: [
+      "I am glad that you are here. のthat節はgladの内容を示します。",
+      "thatは会話で省略されることがありますが、構造上の境界を意識します。",
+    ],
     example: "「あなたが来てくれてうれしいです」を英語で表す。",
-    analysis: [["I am glad", "気持ちを形容詞で。"], ["that", "内容を導きます。"], ["I am glad that you came.", "that節を続けます。"]],
+    analysis: [
+      ["I am glad", "気持ちを形容詞で。"],
+      ["that", "内容を導きます。"],
+      ["I am glad that you came.", "that節を続けます。"],
+    ],
     practice: [
-      { prompt: "「私はあなたが無事だと確信しています」を英語にしてください。", answers: ["I am sure that you are safe.", "I am sure that you are safe"] },
-      { prompt: "We are happy (that / to) you joined us. 正しい語を答えてください。", answers: ["that"] },
+      {
+        prompt: "「私はあなたが無事だと確信しています」を英語にしてください。",
+        answers: ["I am sure that you are safe.", "I am sure that you are safe"],
+      },
+      {
+        prompt: "We are happy (that / to) you joined us. 正しい語を答えてください。",
+        answers: ["that"],
+      },
     ],
     hint: "形容詞の「何についてそう感じるか」をthat節で表します。",
     summary: ["形容詞 + that節で気持ち・確信の内容を示す。", "that節内部にも主語と動詞がある。"],
@@ -269,12 +544,25 @@ const advancedStructures: EnglishLesson[] = [
     title: "whatなどで始まる節を文の一部にする",
     description: "I know what you mean. のように、疑問詞で始まる節を目的語として使います。",
     goals: ["疑問詞節を主節の目的語にできる。", "間接疑問では平叙文語順になると理解できる。"],
-    points: ["Do you know where he lives? では where he lives がknowの内容です。", "疑問詞節の中は where does he live ではなく where he lives の平叙文語順です。"],
+    points: [
+      "Do you know where he lives? では where he lives がknowの内容です。",
+      "疑問詞節の中は where does he live ではなく where he lives の平叙文語順です。",
+    ],
     example: "「私は彼がどこに住んでいるか知っています」を英語で表す。",
-    analysis: [["I know", "主節。"], ["where", "知っている内容の種類。"], ["I know where he lives.", "疑問詞節は主語 + 動詞の語順。"]],
+    analysis: [
+      ["I know", "主節。"],
+      ["where", "知っている内容の種類。"],
+      ["I know where he lives.", "疑問詞節は主語 + 動詞の語順。"],
+    ],
     practice: [
-      { prompt: "「あなたは彼女が何を欲しがっているか知っていますか」を英語にしてください。", answers: ["Do you know what she wants?", "Do you know what she wants"] },
-      { prompt: "I don't know where (is he / he is). 正しい語順を答えてください。", answers: ["he is"] },
+      {
+        prompt: "「あなたは彼女が何を欲しがっているか知っていますか」を英語にしてください。",
+        answers: ["Do you know what she wants?", "Do you know what she wants"],
+      },
+      {
+        prompt: "I don't know where (is he / he is). 正しい語順を答えてください。",
+        answers: ["he is"],
+      },
     ],
     hint: "疑問詞節の中では疑問文の倒置をしません。",
     summary: ["疑問詞節は文の目的語になれる。", "節の内部は平叙文語順。"],
@@ -284,11 +572,21 @@ const advancedStructures: EnglishLesson[] = [
     title: "動詞 + 人 + 動詞原形の文構造を捉える",
     description: "help / let などで、目的語の後ろに動詞原形が続く基本構造を学びます。",
     goals: ["人 + 動詞原形が続く構造を読める。", "to不定詞を使う構造との違いを整理できる。"],
-    points: ["Let me try. では me が try する人です。", "help me carry the box のように、helpの後ろで動詞原形が続く用法もあります。"],
+    points: [
+      "Let me try. では me が try する人です。",
+      "help me carry the box のように、helpの後ろで動詞原形が続く用法もあります。",
+    ],
     example: "「私にやらせてください」を英語で表す。",
-    analysis: [["Let", "許可・働きかけを表す動詞。"], ["me", "行動する人。"], ["Let me try.", "動詞原形tryを続けます。"]],
+    analysis: [
+      ["Let", "許可・働きかけを表す動詞。"],
+      ["me", "行動する人。"],
+      ["Let me try.", "動詞原形tryを続けます。"],
+    ],
     practice: [
-      { prompt: "「私がその箱を運ぶのを手伝ってください」を英語にしてください。", answers: ["Please help me carry the box.", "Please help me carry the box"] },
+      {
+        prompt: "「私がその箱を運ぶのを手伝ってください」を英語にしてください。",
+        answers: ["Please help me carry the box.", "Please help me carry the box"],
+      },
       { prompt: "Let him (to go / go). 正しい形を答えてください。", answers: ["go"] },
     ],
     hint: "この構造では人の後ろにtoを置かず動詞原形を続けます。",
@@ -299,26 +597,53 @@ const advancedStructures: EnglishLesson[] = [
     title: "If I were ... / I wish ... で現実と異なる想像を表す",
     description: "基本的な仮定法を使い、現実と異なる願い・仮定を表します。",
     goals: ["If I were ... を使った基本文を理解できる。", "I wish + 過去形で現在の願いを表せる。"],
-    points: ["If I were you, I would ... は「もし私があなたなら」という現実と異なる仮定です。", "I wish I had more time. は「もっと時間があればよいのに」と現在の事実と異なる願いを表します。"],
+    points: [
+      "If I were you, I would ... は「もし私があなたなら」という現実と異なる仮定です。",
+      "I wish I had more time. は「もっと時間があればよいのに」と現在の事実と異なる願いを表します。",
+    ],
     example: "「もし私があなたなら、先生に相談します」を英語で表す。",
-    analysis: [["If I were you", "現実と異なる仮定。"], ["I would ask", "結果側はwould + 動詞原形。"], ["If I were you, I would ask the teacher.", "助言の内容を続けます。"]],
+    analysis: [
+      ["If I were you", "現実と異なる仮定。"],
+      ["I would ask", "結果側はwould + 動詞原形。"],
+      ["If I were you, I would ask the teacher.", "助言の内容を続けます。"],
+    ],
     practice: [
-      { prompt: "「もっと時間があればよいのに」を英語にしてください。", answers: ["I wish I had more time.", "I wish I had more time"] },
-      { prompt: "If I (was / were) you, I would wait. 基本的な仮定法として正しい語を答えてください。", answers: ["were"] },
+      {
+        prompt: "「もっと時間があればよいのに」を英語にしてください。",
+        answers: ["I wish I had more time.", "I wish I had more time"],
+      },
+      {
+        prompt:
+          "If I (was / were) you, I would wait. 基本的な仮定法として正しい語を答えてください。",
+        answers: ["were"],
+      },
     ],
     hint: "現実の過去ではなく、現在と距離を置く過去形だと考えます。",
-    summary: ["基本的な仮定法は現実と異なる想像・願いを表す。", "If I were ... / I wish + 過去形を文脈で理解する。"],
+    summary: [
+      "基本的な仮定法は現実と異なる想像・願いを表す。",
+      "If I were ... / I wish + 過去形を文脈で理解する。",
+    ],
   }),
   lesson({
     key: "exclamatory-or-question",
     title: "感嘆文とorを含む疑問文を使う",
     description: "What / Howの基本的な感嘆文と、選択を尋ねるor疑問文を学びます。",
     goals: ["基本的な感嘆文を読める。", "A or Bの選択疑問文を作れる。"],
-    points: ["What a beautiful day! / How beautiful! のように強い感情を表せます。", "Do you want tea or coffee? のようにorで選択肢を示せます。"],
+    points: [
+      "What a beautiful day! / How beautiful! のように強い感情を表せます。",
+      "Do you want tea or coffee? のようにorで選択肢を示せます。",
+    ],
     example: "「なんて美しい景色なのでしょう」を英語で表す。",
-    analysis: [["What", "名詞を中心に感嘆する形。"], ["a beautiful view", "冠詞 + 形容詞 + 名詞。"], ["What a beautiful view!", "感嘆符で結びます。"]],
+    analysis: [
+      ["What", "名詞を中心に感嘆する形。"],
+      ["a beautiful view", "冠詞 + 形容詞 + 名詞。"],
+      ["What a beautiful view!", "感嘆符で結びます。"],
+    ],
     practice: [
-      { prompt: "「あなたは犬と猫のどちらが好きですか」を英語にしてください。", answers: ["Do you like dogs or cats?", "Do you like dogs or cats"] },
+      {
+        prompt: "「あなたは犬と猫のどちらが好きですか」を英語にしてください。",
+        answers: ["Do you like dogs or cats?", "Do you like dogs or cats"],
+      },
       { prompt: "(What / How) a nice idea! 正しい語を答えてください。", answers: ["What"] },
     ],
     hint: "名詞を含むWhat型か、形容詞・副詞中心のHow型かを見ます。",
@@ -329,16 +654,45 @@ const advancedStructures: EnglishLesson[] = [
     title: "中学英語の文法を統合して意見を伝える",
     description: "完了形・受け身・名詞修飾・複文を組み合わせ、短い説明や意見を読み書きします。",
     goals: ["複数の文法事項を目的に応じて選べる。", "根拠を含む5〜7文程度の短い文章を構成できる。"],
-    points: ["文法は一文ずつ孤立して使うのではなく、時・焦点・名詞説明・理由などの役割に応じて選びます。", "because / if / that節や関係節を使うと、情報同士の関係を明確にできます。"],
-    passage: { title: "A Small Change at School", paragraphs: ["Our school library has been used for many years. Last month, students suggested a new reading corner. The chairs that were chosen are light and easy to move. I am glad that many students now stay there after class. If I had more free time, I would read there every day."] },
+    points: [
+      "文法は一文ずつ孤立して使うのではなく、時・焦点・名詞説明・理由などの役割に応じて選びます。",
+      "because / if / that節や関係節を使うと、情報同士の関係を明確にできます。",
+    ],
+    passage: {
+      title: "A Small Change at School",
+      paragraphs: [
+        "Our school library has been used for many years. Last month, students suggested a new reading corner. The chairs that were chosen are light and easy to move. I am glad that many students now stay there after class. If I had more free time, I would read there every day.",
+      ],
+    },
     example: "学校の改善について、事実・理由・感想をつなげる。",
-    analysis: [["has been used", "現在完了 + 受け身で継続する状況。"], ["chairs that were chosen", "関係節で名詞を説明。"], ["I am glad that ...", "感想の内容をthat節で示します。"]],
+    analysis: [
+      ["has been used", "現在完了 + 受け身で継続する状況。"],
+      ["chairs that were chosen", "関係節で名詞を説明。"],
+      ["I am glad that ...", "感想の内容をthat節で示します。"],
+    ],
     practice: [
-      { prompt: "「私たちの学校には去年作られた庭があります」を英語にしてください。", answers: ["Our school has a garden that was made last year.", "Our school has a garden that was made last year", "Our school has a garden which was made last year.", "Our school has a garden which was made last year"] },
-      { prompt: "「もっと時間があれば、そこで本を読むのに」を英語にしてください。", answers: ["If I had more time, I would read a book there.", "If I had more time, I would read a book there"] },
+      {
+        prompt: "「私たちの学校には去年作られた庭があります」を英語にしてください。",
+        answers: [
+          "Our school has a garden that was made last year.",
+          "Our school has a garden that was made last year",
+          "Our school has a garden which was made last year.",
+          "Our school has a garden which was made last year",
+        ],
+      },
+      {
+        prompt: "「もっと時間があれば、そこで本を読むのに」を英語にしてください。",
+        answers: [
+          "If I had more time, I would read a book there.",
+          "If I had more time, I would read a book there",
+        ],
+      },
     ],
     hint: "まず伝えたい関係を、時・受け身・名詞説明・理由・仮定に分けます。",
-    summary: ["中学英語の文法を情報整理の道具として統合する。", "短い説明・意見では根拠と文同士の関係を示す。"],
+    summary: [
+      "中学英語の文法を情報整理の道具として統合する。",
+      "短い説明・意見では根拠と文同士の関係を示す。",
+    ],
   }),
 ];
 
@@ -346,11 +700,29 @@ export const middleEnglish3Areas: EnglishArea[] = [
   {
     key: "integrated-grammar",
     title: "中学英語の統合",
-    description: "現在完了・受け身、関係代名詞・分詞、発展的な文構造と基本仮定法を使い、説明・意見へつなげます。",
+    description:
+      "現在完了・受け身、関係代名詞・分詞、発展的な文構造と基本仮定法を使い、説明・意見へつなげます。",
     units: [
-      { key: "perfect-and-passive", title: "現在完了・現在完了進行・受け身", description: "経験・継続・完了、動作の継続、現在・過去の受け身を7技能で整理します。", lessons: perfectAndPassive },
-      { key: "relatives-and-participles", title: "関係代名詞と分詞", description: "who / which / that、目的格、現在分詞・過去分詞による名詞修飾を6技能で学びます。", lessons: relativesAndParticiples },
-      { key: "advanced-structures", title: "発展文構造と表現", description: "人 + to不定詞、形式主語、that節、疑問詞節、原形不定詞、基本仮定法、感嘆・選択疑問、統合表現を9技能で学びます。", lessons: advancedStructures },
+      {
+        key: "perfect-and-passive",
+        title: "現在完了・現在完了進行・受け身",
+        description: "経験・継続・完了、動作の継続、現在・過去の受け身を7技能で整理します。",
+        lessons: perfectAndPassive,
+      },
+      {
+        key: "relatives-and-participles",
+        title: "関係代名詞と分詞",
+        description:
+          "who / which / that、目的格、現在分詞・過去分詞による名詞修飾を6技能で学びます。",
+        lessons: relativesAndParticiples,
+      },
+      {
+        key: "advanced-structures",
+        title: "発展文構造と表現",
+        description:
+          "人 + to不定詞、形式主語、that節、疑問詞節、原形不定詞、基本仮定法、感嘆・選択疑問、統合表現を9技能で学びます。",
+        lessons: advancedStructures,
+      },
     ],
   },
 ];
