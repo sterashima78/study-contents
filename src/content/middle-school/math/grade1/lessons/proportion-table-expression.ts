@@ -14,8 +14,18 @@ export const proportionTableExpressionLesson: MathLesson = {
       body: [
         "y が x に比例するとき、0でない x に対する y/x の値はいつも一定です。この一定の数を比例定数といいます。",
         "比例定数を a とすると、比例の関係は y = ax と表せます。",
+        "表では、同じ列にある y を x で割った値を比べます。どの列でも同じ値になれば、その値が比例定数です。",
       ],
       formulas: ["y = ax", "a = y/x（x ≠ 0）"],
+      table: {
+        caption: "y = 3x の対応表と y/x の値",
+        headers: ["1列目", "2列目", "3列目"],
+        rows: [
+          { header: "x", cells: ["1", "2", "3"] },
+          { header: "y", cells: ["3", "6", "9"] },
+          { header: "y/x", cells: ["3", "3", "3"] },
+        ],
+      },
     },
   ],
   example: {
