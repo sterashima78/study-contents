@@ -58,9 +58,7 @@ const _listeningText = _course.routeBase.startsWith("middle-school/english/")
   ? _lesson.example.steps.at(-1)?.expression
   : undefined;
 const _publicDomainSource =
-  _lesson.rights === "public-domain"
-    ? getApprovedPublicDomainSource(_lesson.sourceId)
-    : undefined;
+  _lesson.rights === "public-domain" ? getApprovedPublicDomainSource(_lesson.sourceId) : undefined;
 const _passageDescription = _publicDomainSource
   ? "掲載英文は権利台帳で確認済みの作品です。作品名・著者・取得元を本文の下に表示します。"
   : "掲載英文はこの教材向けに作成したオリジナルです。";
