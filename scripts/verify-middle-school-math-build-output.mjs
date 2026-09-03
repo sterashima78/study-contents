@@ -4,7 +4,15 @@ import { fileURLToPath } from "node:url";
 const checks = [
   {
     path: new URL("../dist/index.html", import.meta.url),
-    markers: ["中学校", "middle-school/"],
+    markers: [
+      "中学校",
+      "中学数学",
+      "middle-school/math/",
+      "中学理科",
+      "middle-school/science/",
+      "中学英語",
+      "middle-school/english/",
+    ],
   },
   {
     path: new URL("../dist/middle-school/index.html", import.meta.url),
@@ -82,9 +90,11 @@ for (const check of checks) {
   const filePath = fileURLToPath(check.path);
   for (const marker of check.markers) {
     if (!html.includes(marker)) {
-      throw new Error(`${filePath} に期待する中学数学教材表示がありません: ${marker}`);
+      throw new Error(`${filePath} に期待する中学校教材表示がありません: ${marker}`);
     }
   }
 }
 
-console.log("Generated HTML rendering checks passed for middle school math grades 1-3.");
+console.log(
+  "Generated HTML rendering checks passed for middle school navigation and math grades 1-3.",
+);
