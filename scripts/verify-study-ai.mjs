@@ -14,10 +14,8 @@ const [packageJson, studyPage, chat, context, engine, modelConfig, worker, promp
     readText("src/lib/ai/system-prompt.ts"),
   ]);
 
-if (packageJson.dependencies?.["@mlc-ai/web-llm"] !== "0.2.82") {
-  issues.push(
-    "package.json: Android互換性A/Bテストでは @mlc-ai/web-llm 0.2.82 を完全固定してください。",
-  );
+if (packageJson.dependencies?.["@mlc-ai/web-llm"] !== "0.2.84") {
+  issues.push("package.json: ADR 0094に従い @mlc-ai/web-llm 0.2.84 を完全固定してください。");
 }
 if (packageJson.dependencies?.["@huggingface/transformers"]) {
   issues.push(
@@ -79,13 +77,11 @@ if (!context.includes("uniqueContexts([practiceText, focusText")) {
     "study-context.ts: 練習問題コンテキストをviewport・一般検索より先に選択してください。",
   );
 }
-if (!modelConfig.includes('STUDY_AI_RUNTIME_VERSION = "0.2.82"')) {
-  issues.push("model-config.ts: WebLLM runtime versionを0.2.82へ固定してください。");
+if (!modelConfig.includes('STUDY_AI_RUNTIME_VERSION = "0.2.84"')) {
+  issues.push("model-config.ts: WebLLM runtime versionを0.2.84へ固定してください。");
 }
 if (!modelConfig.includes('"Llama-3.2-1B-Instruct-q4f16_1-MLC"')) {
-  issues.push(
-    "model-config.ts: Androidのモデルアーキテクチャ比較ではLlama 3.2 1B q4f16モデルを固定してください。",
-  );
+  issues.push("model-config.ts: 端末内AIではLlama 3.2 1B q4f16モデルを固定してください。");
 }
 if (!modelConfig.includes("STUDY_AI_CONTEXT_WINDOW_SIZE = 2048")) {
   issues.push("model-config.ts: Android向けcontext windowを2048に固定してください。");

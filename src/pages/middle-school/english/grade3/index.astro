@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import EnglishCourseHome from "../../../../components/EnglishCourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleEnglish3Course } from "../../../../content/english/course";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleEnglish3Areas } from "../../../../content/middle-school/english/grade3/catalog";
+---
+
+<EnglishCourseHome
+  course={middleEnglish3Course}
+  areas={middleEnglish3Areas}
+  description="中学3年英語を、現在完了・現在完了進行・受け身、関係代名詞・分詞、発展文構造・基本仮定法へ広げ、説明や意見に統合します。"
+  metaDescription="中学3年英語の学習コンテンツ。現在完了、現在完了進行、受け身、関係代名詞、分詞、発展文構造、基本的な仮定法を22教材で学びます。"
+  footerDescription="中学校外国語の言語材料を3学年へ段階配置するサイト独自の学習順序として、中3の統合文法22教材を収録しています。"
+/>

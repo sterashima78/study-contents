@@ -19,13 +19,13 @@ const _base = import.meta.env.BASE_URL;
 
 <StudyPage
   title="中学校 | 学習コンテンツ"
-  description="中学1〜3年の学習コンテンツです。数学・理科は3学年を公開済みで、英語は中学1年の基本文から公開しています。"
+  description="中学1〜3年の学習コンテンツです。数学・理科・英語の3教科を3学年まで公開しています。"
   width="wide"
 >
   <ContentHero
     kicker="LOWER SECONDARY"
     title="中学校"
-    description="中学1〜3年の内容を、1ページ1技能の短い教材で学べるように整備します。数学・理科は3学年を公開済みで、英語は中学1年の基本文から公開を開始しています。"
+    description="中学1〜3年の内容を、1ページ1技能の短い教材で学べるように整備しています。数学・理科・英語の3教科を3学年まで公開しています。"
     variant="display"
   />
 
@@ -34,7 +34,7 @@ const _base = import.meta.env.BASE_URL;
       label="SUBJECTS"
       title="教科からはじめる"
       id="subjects-title"
-      description="中学数学と中学理科は1〜3年を公開済みです。中学英語はbe動詞・一般動詞の基本文から、読む・書く・やり取りへつなげる教材を公開しています。"
+      description="中学数学・中学理科・中学英語はいずれも1〜3年を公開しています。"
     />
     <ContentIndex
       items={[
@@ -58,8 +58,8 @@ const _base = import.meta.env.BASE_URL;
           marker: "03",
           title: "英語",
           href: `${_base}middle-school/english/`,
-          description: "語順や文法を、身近なことを伝える・尋ねる・読む・書くための英語として段階的に学びます。",
-          tags: ["中1 公開開始", "オリジナル英文", "自動採点"],
+          description: "基本文から現在完了・受け身・関係代名詞・基本仮定法まで、伝える・尋ねる・読む・書くための英語として段階的に学びます。",
+          tags: ["1〜3年・79教材", "オリジナル英文", "自動採点"],
           action: "中学英語へ →",
         },
       ]}
@@ -73,7 +73,7 @@ const _base = import.meta.env.BASE_URL;
       items={[
         "中学数学: 1〜3年のA 数と式、B 図形、C 関数、D データの活用を公開済み。",
         "中学理科: 1〜3年のエネルギー・粒子・生命・地球を公開済み。中3は科学技術と自然環境を関連付け、持続可能な社会まで扱う。",
-        "中学英語: 中学1年のbe動詞・一般動詞の基本文から公開開始。学年別の文法配当はサイト独自の段階配置として扱う。",
+        "中学英語: 1〜3年を全79教材で公開。学年別の文法配当はサイト独自の段階配置とし、中学校外国語の言語材料を3学年全体で扱う。",
       ]}
     />
   </ContentSection>

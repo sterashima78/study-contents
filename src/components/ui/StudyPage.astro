@@ -1,5 +1,5 @@
 ---
-import { getCurriculumReference } from "../../content/curriculum-references.js";
+import { getCurriculumReference } from "../../content/curriculum-reference-resolver.js";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import StudyAIChat from "../ai/StudyAIChat.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
@@ -195,44 +195,6 @@ const _curriculumReference = getCurriculumReference(_explicitCurriculumKey ?? _c
     .brand:hover,
     .site-nav a:hover {
       color: var(--color-link);
-    }
-  }
-
-  @media (max-width: 760px) {
-    .site-header-inner {
-      min-height: 3.25rem;
-      gap: 1rem;
-    }
-
-    .brand {
-      font-size: 0.86rem;
-    }
-
-    .site-nav {
-      gap: 0.8rem;
-      font-size: 0.72rem;
-    }
-
-    .site-nav a:last-child {
-      display: none;
-    }
-
-    .study-page,
-    .study-page.is-wide {
-      padding-top: 1.65rem;
-      padding-bottom: 2.5rem;
-    }
-  }
-
-  @media (max-width: 520px) {
-    .site-nav a:first-child {
-      display: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    :global(html) {
-      scroll-behavior: auto;
     }
   }
 </style>

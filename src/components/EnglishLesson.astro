@@ -11,6 +11,8 @@ import EnglishPassage from "./EnglishPassage.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import MiddleEnglishExerciseSet from "./MiddleEnglishExerciseSet.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import MiddleEnglishListeningPractice from "./MiddleEnglishListeningPractice.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ConceptCard from "./ui/ConceptCard.astro";
@@ -51,6 +53,9 @@ const _lessonHref = (lessonKey: string) => `${_unitHref}${lessonKey}/`;
 const _scopeLabel = _course.scopeLabel ?? "高校英語";
 const _curriculumKey = _course.curriculumKey ?? _course.key;
 const _practiceSteps = designPracticeSteps("english", _lesson.practice.steps);
+const _listeningText = _course.routeBase.startsWith("middle-school/english/")
+  ? _lesson.example.steps.at(-1)?.expression
+  : undefined;
 ---
 
 <StudyPage
@@ -110,6 +115,7 @@ const _practiceSteps = designPracticeSteps("english", _lesson.practice.steps);
       problem={_lesson.example.problem}
       steps={_lesson.example.steps.map((step) => ({ expression: step.expression, note: step.note }))}
     />
+    {_listeningText && <MiddleEnglishListeningPractice text={_listeningText} />}
     <GuidedPractice
       title={_lesson.practice.title}
       problem={_lesson.practice.problem}

@@ -2,16 +2,16 @@
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import EnglishLesson from "../../../../../../components/EnglishLesson.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
-import { middleEnglish1Course } from "../../../../../../content/english/course";
+import { middleEnglish2Course } from "../../../../../../content/english/course";
 import type {
   EnglishArea,
   EnglishLesson as EnglishLessonData,
   EnglishUnit,
 } from "../../../../../../content/english/types";
-import { middleEnglish1CompleteAreas } from "../../../../../../content/middle-school/english/grade1/catalog-complete";
+import { middleEnglish2Areas } from "../../../../../../content/middle-school/english/grade2/catalog";
 
 export function getStaticPaths() {
-  return middleEnglish1CompleteAreas.flatMap((area) =>
+  return middleEnglish2Areas.flatMap((area) =>
     area.units.flatMap((unit) =>
       unit.lessons.map((lesson) => ({
         params: { area: area.key, unit: unit.key, lesson: lesson.key },
@@ -25,4 +25,4 @@ type Props = { area: EnglishArea; unit: EnglishUnit; lesson: EnglishLessonData }
 const { area: _area, unit: _unit, lesson: _lesson } = Astro.props;
 ---
 
-<EnglishLesson area={_area} unit={_unit} lesson={_lesson} course={middleEnglish1Course} />
+<EnglishLesson area={_area} unit={_unit} lesson={_lesson} course={middleEnglish2Course} />

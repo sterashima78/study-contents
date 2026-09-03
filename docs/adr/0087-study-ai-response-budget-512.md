@@ -1,6 +1,7 @@
 # ADR 0087: 端末内AIの回答予算を512トークンへ広げる
 
-- Status: Accepted
+- Status: Superseded
+- Superseded by: ADR 0094
 - Date: 2026-09-01
 - Related: ADR 0005, ADR 0049, ADR 0067, ADR 0072
 

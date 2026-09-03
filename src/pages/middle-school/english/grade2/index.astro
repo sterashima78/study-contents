@@ -1,0 +1,16 @@
+---
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import EnglishCourseHome from "../../../../components/EnglishCourseHome.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleEnglish2Course } from "../../../../content/english/course";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import { middleEnglish2Areas } from "../../../../content/middle-school/english/grade2/catalog";
+---
+
+<EnglishCourseHome
+  course={middleEnglish2Course}
+  areas={middleEnglish2Areas}
+  description="中学2年英語を、未来・助動詞、不定詞・動名詞・比較、文構造・複文へ広げ、予定・理由・考えを短い文脈で伝えられるように学びます。"
+  metaDescription="中学2年英語の学習コンテンツ。未来表現、助動詞、不定詞、動名詞、比較、過去進行形、There is / are、SVOO・SVOC、複文を21教材で学びます。"
+  footerDescription="中学校外国語の言語材料を3学年へ段階配置するサイト独自の学習順序として、中2の発展文法21教材を収録しています。"
+/>

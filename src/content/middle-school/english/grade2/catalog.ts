@@ -1,0 +1,639 @@
+import type { EnglishArea, EnglishLesson } from "../../../english/types";
+import { middleEnglishLesson as lesson } from "../lesson-factory";
+
+const futureAndModals: EnglishLesson[] = [
+  lesson({
+    key: "will-future",
+    title: "will + 動詞原形で未来を表す",
+    description: "その場の判断や予測など、これからのことをwillで表します。",
+    goals: [
+      "will + 動詞原形で未来文を作れる。",
+      "現在形・過去形と未来表現を時の手掛かりで区別できる。",
+    ],
+    points: [
+      "will の後ろは主語に関係なく動詞原形です。",
+      "tomorrow、next week など未来を示す語句と組み合わせて使えます。",
+    ],
+    example: "「私は明日あなたに電話します」を英語で表す。",
+    analysis: [
+      ["I", "主語。"],
+      ["will call", "will + 動詞原形。"],
+      ["I will call you tomorrow.", "目的語と未来の時を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「彼は来週東京を訪れるでしょう」を英語にしてください。",
+        answers: ["He will visit Tokyo next week.", "He will visit Tokyo next week"],
+      },
+      {
+        prompt: "She will (studies / study) tonight. 正しい語を答えてください。",
+        answers: ["study"],
+      },
+    ],
+    hint: "will の後ろは必ず動詞原形です。",
+    summary: ["will + 動詞原形で未来を表す。", "未来を示す語句と合わせて時を明確にする。"],
+  }),
+  lesson({
+    key: "will-negative-question",
+    title: "will の否定・疑問を作る",
+    description: "will not / won't と Will + 主語を使い、未来の否定や質問を表します。",
+    goals: ["willの否定文を作れる。", "Will + 主語で疑問文を作り短く答えられる。"],
+    points: [
+      "否定は will not / won't、疑問は Will + 主語 + 動詞原形 ...? です。",
+      "短い答えは Yes, ... will. / No, ... won't. です。",
+    ],
+    example: "You will join us. を疑問文にする。",
+    analysis: [
+      ["will", "助動詞を確認します。"],
+      ["Will you join", "will を主語の前へ。"],
+      ["Will you join us?", "残りを続けます。"],
+    ],
+    practice: [
+      {
+        prompt: "I will go. を否定文にしてください。",
+        answers: ["I will not go.", "I will not go", "I won't go.", "I won't go"],
+      },
+      {
+        prompt: "Will Ken come tomorrow? に肯定で答えてください。",
+        answers: ["Yes, he will.", "Yes, he will"],
+      },
+    ],
+    hint: "助動詞 will 自体を否定・移動します。",
+    summary: ["will の否定は won't。", "疑問は Will + 主語 + 動詞原形。"],
+  }),
+  lesson({
+    key: "be-going-to",
+    title: "be going to + 動詞原形で予定を表す",
+    description: "前もって考えている予定や意図をbe going toで伝えます。",
+    goals: ["be going toの形を主語に合わせられる。", "予定を短い文で伝えられる。"],
+    points: [
+      "am / is / are going to + 動詞原形の形です。",
+      "be動詞を使うため、否定・疑問はbe動詞の規則で作ります。",
+    ],
+    example: "「私は今夜勉強する予定です」を英語で表す。",
+    analysis: [
+      ["I am", "I に合うbe動詞。"],
+      ["going to study", "going to + 動詞原形。"],
+      ["I am going to study tonight.", "時を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「彼女は来週旅行する予定です」を英語にしてください。",
+        answers: ["She is going to travel next week.", "She is going to travel next week"],
+      },
+      {
+        prompt: "They are going to (play / played) soccer. 正しい語を答えてください。",
+        answers: ["play"],
+      },
+    ],
+    hint: "主語に合うbe動詞 + going to + 動詞原形。",
+    summary: ["予定は be going to + 動詞原形で表せる。", "否定・疑問ではbe動詞を操作する。"],
+  }),
+  lesson({
+    key: "must-have-to",
+    title: "must / have to で必要・義務を表す",
+    description: "しなければならないことをmustやhave toで表します。",
+    goals: ["must + 動詞原形を使える。", "have toの形を主語・時制に合わせられる。"],
+    points: [
+      "must の後ろは動詞原形です。",
+      "have to は一般動詞を含む表現で、he has to、過去なら had to のように変化します。",
+    ],
+    example: "「私は今日宿題を終えなければなりません」を英語で表す。",
+    analysis: [
+      ["I", "主語。"],
+      ["must finish", "must + 動詞原形。"],
+      ["I must finish my homework today.", "目的語と時を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「彼は早く起きなければなりません」を英語にしてください。",
+        answers: [
+          "He has to get up early.",
+          "He has to get up early",
+          "He must get up early.",
+          "He must get up early",
+        ],
+      },
+      { prompt: "You must (wears / wear) a helmet. 正しい語を答えてください。", answers: ["wear"] },
+    ],
+    hint: "must の後ろは原形。have to は主語でhave/hasを変えます。",
+    summary: ["must / have toで必要・義務。", "助動詞と一般動詞を含む表現の形の違いに注意する。"],
+  }),
+  lesson({
+    key: "mustnt-dont-have-to",
+    title: "mustn't と don't have to を区別する",
+    description: "禁止と「する必要がない」を意味で区別します。",
+    goals: ["mustn'tで禁止を表せる。", "don't have toで不要を表し、意味の違いを説明できる。"],
+    points: [
+      "mustn't は「してはいけない」という禁止です。",
+      "don't have to は「する必要はない」であり、禁止ではありません。",
+    ],
+    example: "図書館で「大声で話してはいけない」を表す。",
+    analysis: [
+      ["You", "聞き手を主語にします。"],
+      ["mustn't speak", "禁止なので mustn't。"],
+      ["You mustn't speak loudly here.", "場所・様子を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「あなたは今日来る必要はありません」を英語にしてください。",
+        answers: ["You don't have to come today.", "You don't have to come today"],
+      },
+      {
+        prompt:
+          "You (mustn't / don't have to) touch this machine. 「触ってはいけない」なら正しい表現を答えてください。",
+        answers: ["mustn't", "must not"],
+      },
+    ],
+    hint: "禁止か、不要かを日本語の意味から先に判断します。",
+    summary: ["mustn'tはしてはいけない。", "don't have toはする必要がない。"],
+  }),
+  lesson({
+    key: "should-advice",
+    title: "should + 動詞原形で助言する",
+    description: "相手にとって望ましい行動をshouldで提案します。",
+    goals: ["shouldで助言を表せる。", "mustとの強さの違いを文脈で捉えられる。"],
+    points: [
+      "should + 動詞原形で「〜した方がよい」を表します。",
+      "must よりも助言・推奨として使われることが多い表現です。",
+    ],
+    example: "「あなたはもっと休んだ方がよい」を英語で表す。",
+    analysis: [
+      ["You", "助言の相手。"],
+      ["should rest", "should + 動詞原形。"],
+      ["You should rest more.", "程度を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「あなたは先生に尋ねた方がよい」を英語にしてください。",
+        answers: ["You should ask your teacher.", "You should ask your teacher"],
+      },
+      { prompt: "He should (goes / go) home. 正しい語を答えてください。", answers: ["go"] },
+    ],
+    hint: "should の後ろも動詞原形です。",
+    summary: ["should + 動詞原形で助言。", "義務ではなく、望ましい行動を示す文脈で使う。"],
+  }),
+  lesson({
+    key: "may-permission",
+    title: "may で許可・可能性を表す",
+    description: "mayを使い、許可を求めたり可能性を控えめに述べたりします。",
+    goals: ["May I ...? で許可を求められる。", "may + 動詞原形で可能性を表せる。"],
+    points: [
+      "May I ...? は丁寧に許可を求める表現です。",
+      "It may rain. のように「〜かもしれない」という可能性も表します。",
+    ],
+    example: "「窓を開けてもよいですか」を英語で尋ねる。",
+    analysis: [
+      ["May", "助動詞を文頭へ。"],
+      ["I open", "主語 + 動詞原形。"],
+      ["May I open the window?", "目的語を続けます。"],
+    ],
+    practice: [
+      {
+        prompt: "「ここに座ってもよいですか」を英語にしてください。",
+        answers: ["May I sit here?", "May I sit here"],
+      },
+      {
+        prompt: "「明日は雪かもしれません」を英語にしてください。",
+        answers: ["It may snow tomorrow.", "It may snow tomorrow"],
+      },
+    ],
+    hint: "may の後ろは動詞原形です。",
+    summary: ["May I ...? で許可を求める。", "may は可能性も表せる。"],
+  }),
+];
+
+const infinitiveGerundComparison: EnglishLesson[] = [
+  lesson({
+    key: "infinitive-noun",
+    title: "to + 動詞原形を「〜すること」として使う",
+    description: "to不定詞を目的語などに置き、したいこと・好きなことを表します。",
+    goals: ["to不定詞の名詞的な働きを使える。", "want to / like to などのまとまりを作れる。"],
+    points: [
+      "to + 動詞原形は文中で「〜すること」に相当する働きをします。",
+      "want to study、like to read のように動詞の後ろへ置けます。",
+    ],
+    example: "「私は英語を勉強したい」を英語で表す。",
+    analysis: [
+      ["I want", "wantを置きます。"],
+      ["to study", "したい内容をto不定詞で。"],
+      ["I want to study English.", "目的語を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「彼女は本を読みたいです」を英語にしてください。",
+        answers: ["She wants to read a book.", "She wants to read a book"],
+      },
+      {
+        prompt: "I hope (visit / to visit) Kyoto. 正しい形を答えてください。",
+        answers: ["to visit"],
+      },
+    ],
+    hint: "to の後ろは動詞原形です。",
+    summary: ["to不定詞は「〜すること」として目的語になれる。", "to + 動詞原形の形を保つ。"],
+  }),
+  lesson({
+    key: "infinitive-adverb",
+    title: "to不定詞で目的を表す",
+    description: "「〜するために」という行動の目的をto不定詞で加えます。",
+    goals: ["to不定詞で目的を表せる。", "主文の動作と目的の関係を説明できる。"],
+    points: [
+      "I went to the library to study. の to study は「勉強するために」です。",
+      "移動・行動の後ろに目的を付けると文の意味が詳しくなります。",
+    ],
+    example: "「私は本を借りるために図書館へ行きました」を英語で表す。",
+    analysis: [
+      ["I went to the library", "主な行動。"],
+      ["to borrow", "目的をto不定詞で。"],
+      ["I went to the library to borrow a book.", "目的語を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「私は友達に会うために駅へ行きました」を英語にしてください。",
+        answers: [
+          "I went to the station to meet my friend.",
+          "I went to the station to meet my friend",
+        ],
+      },
+      {
+        prompt: "She studies every day (to pass / passing) the test. 正しい形を答えてください。",
+        answers: ["to pass"],
+      },
+    ],
+    hint: "「何のために？」に答える部分を to + 動詞原形にします。",
+    summary: ["to不定詞は行動の目的を表せる。", "主な動作と目的を区別して読む。"],
+  }),
+  lesson({
+    key: "infinitive-adjective",
+    title: "to不定詞で名詞の内容を説明する",
+    description: "something to eat のように、名詞の後ろから「〜するための／〜すべき」を補います。",
+    goals: ["名詞 + to不定詞の語順を使える。", "前から訳すだけでなく修飾関係を捉えられる。"],
+    points: [
+      "I have homework to do. の to do は homework の内容を後ろから説明します。",
+      "英語では長い説明を名詞の後ろへ置くことがあります。",
+    ],
+    example: "「私は読む本があります」を英語で表す。",
+    analysis: [
+      ["I have a book", "まず名詞まで置きます。"],
+      ["to read", "bookを後ろから説明。"],
+      ["I have a book to read.", "名詞 + to不定詞を作ります。"],
+    ],
+    practice: [
+      {
+        prompt: "「何か飲むものがほしいです」を英語にしてください。",
+        answers: ["I want something to drink.", "I want something to drink"],
+      },
+      {
+        prompt: "We have many things (to do / doing). 正しい形を答えてください。",
+        answers: ["to do"],
+      },
+    ],
+    hint: "説明される名詞の直後にto不定詞を置きます。",
+    summary: ["to不定詞は名詞を後ろから説明できる。", "名詞とto不定詞の意味関係を確認する。"],
+  }),
+  lesson({
+    key: "gerund",
+    title: "動名詞 -ing を「〜すること」として使う",
+    description: "動詞-ingを名詞のように使い、好きなこと・続けている活動などを表します。",
+    goals: ["動名詞を目的語として使える。", "進行形の-ingと動名詞の役割を区別できる。"],
+    points: [
+      "I enjoy reading. の reading は「読むこと」という名詞的な働きです。",
+      "be動詞 + -ing の進行形とは、文の中での役割が異なります。",
+    ],
+    example: "「私は音楽を聞くことを楽しみます」を英語で表す。",
+    analysis: [
+      ["I enjoy", "enjoyを置きます。"],
+      ["listening", "目的語を動名詞で。"],
+      ["I enjoy listening to music.", "必要な前置詞と名詞を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「彼はサッカーをすることが好きです」を英語にしてください。",
+        answers: ["He likes playing soccer.", "He likes playing soccer"],
+      },
+      {
+        prompt: "She finished (clean / cleaning) her room. 正しい形を答えてください。",
+        answers: ["cleaning"],
+      },
+    ],
+    hint: "動詞を「こと」として扱う -ing かを確認します。",
+    summary: ["動名詞は -ing 形を名詞のように使う。", "進行形との役割の違いを文構造で判断する。"],
+  }),
+  lesson({
+    key: "comparative",
+    title: "比較級 + than で二つを比べる",
+    description: "形容詞・副詞の比較級を使い、二つのものの違いを表します。",
+    goals: ["-er / more を使った比較級を作れる。", "thanの後ろに比較対象を置ける。"],
+    points: [
+      "短い形容詞は taller のように -er、長めの語は more useful のように more を使うものがあります。",
+      "A is taller than B. のように than で比較対象を示します。",
+    ],
+    example: "「この本はあの本より新しい」を英語で表す。",
+    analysis: [
+      ["This book is", "主語とbe動詞。"],
+      ["newer", "newの比較級。"],
+      ["This book is newer than that one.", "thanで比較対象を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「東京はこの町より大きい」を英語にしてください。",
+        answers: ["Tokyo is bigger than this town.", "Tokyo is bigger than this town"],
+      },
+      {
+        prompt:
+          "This problem is (more difficult / difficulter) than that one. 正しい形を答えてください。",
+        answers: ["more difficult"],
+      },
+    ],
+    hint: "比較級の形とthanの比較対象を確認します。",
+    summary: ["比較級 + thanで二つを比べる。", "語によって -er / more を使い分ける。"],
+  }),
+  lesson({
+    key: "superlative",
+    title: "最上級で三つ以上の中の最も〜を表す",
+    description: "the + 最上級を使い、集団の中で最も程度が高いものを表します。",
+    goals: ["the + -est / most の最上級を使える。", "in / of で範囲を示せる。"],
+    points: [
+      "the tallest、the most interesting のように最上級の前には基本的にtheを置きます。",
+      "in my class、of the three などで比べる範囲を示します。",
+    ],
+    example: "「富士山は日本で最も高い山です」を英語で表す。",
+    analysis: [
+      ["Mt. Fuji is", "主語とbe動詞。"],
+      ["the highest mountain", "highの最上級。"],
+      ["Mt. Fuji is the highest mountain in Japan.", "範囲をinで示します。"],
+    ],
+    practice: [
+      {
+        prompt: "「彼はクラスで一番背が高い」を英語にしてください。",
+        answers: ["He is the tallest in his class.", "He is the tallest in his class"],
+      },
+      {
+        prompt:
+          "This is the (most beautiful / more beautiful) park in the city. 正しい形を答えてください。",
+        answers: ["most beautiful"],
+      },
+    ],
+    hint: "最上級の前のtheと、比較範囲を確認します。",
+    summary: ["the + 最上級で「最も〜」。", "in / of で比較する範囲を示す。"],
+  }),
+  lesson({
+    key: "as-as",
+    title: "as ... as で同じ程度を表す",
+    description: "二つが同じ程度であること、または同じほどではないことを表します。",
+    goals: ["as + 原級 + asを使える。", "比較級との意味の違いを説明できる。"],
+    points: [
+      "A is as tall as B. で「AはBと同じくらい背が高い」です。",
+      "not as ... as で「〜ほど…ではない」を表せます。",
+    ],
+    example: "「この箱はあの箱と同じくらい重い」を英語で表す。",
+    analysis: [
+      ["This box is", "主語とbe動詞。"],
+      ["as heavy as", "原級heavyをasで挟みます。"],
+      ["This box is as heavy as that one.", "比較対象を続けます。"],
+    ],
+    practice: [
+      {
+        prompt: "「私は兄と同じくらい速く走れます」を英語にしてください。",
+        answers: ["I can run as fast as my brother.", "I can run as fast as my brother"],
+      },
+      {
+        prompt:
+          "This book is not as (interesting / more interesting) as that one. 正しい形を答えてください。",
+        answers: ["interesting"],
+      },
+    ],
+    hint: "asの間は比較級ではなく原級です。",
+    summary: ["as + 原級 + asで同じ程度。", "not as ... asで程度が及ばないことを表す。"],
+  }),
+];
+
+const structuresAndClauses: EnglishLesson[] = [
+  lesson({
+    key: "past-progressive",
+    title: "was / were + -ing で過去の途中を表す",
+    description: "過去のある時点で進行中だった動作を過去進行形で表します。",
+    goals: ["過去進行形を作れる。", "単純過去との違いを時間の見方で説明できる。"],
+    points: [
+      "過去進行形は was / were + 動詞-ing です。",
+      "at eight last night など過去のある時点で途中だった動作を表します。",
+    ],
+    example: "「私は昨夜8時に勉強していました」を英語で表す。",
+    analysis: [
+      ["I was", "Iに対応する過去のbe動詞。"],
+      ["studying", "動詞-ing。"],
+      ["I was studying at eight last night.", "過去の時点を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「彼らはその時サッカーをしていました」を英語にしてください。",
+        answers: ["They were playing soccer then.", "They were playing soccer then"],
+      },
+      {
+        prompt: "She was (cook / cooking) dinner. 正しい形を答えてください。",
+        answers: ["cooking"],
+      },
+    ],
+    hint: "過去のbe動詞 + -ing。",
+    summary: [
+      "過去進行形は was / were + -ing。",
+      "終わった出来事の過去形と、途中の動作を区別する。",
+    ],
+  }),
+  lesson({
+    key: "there-be",
+    title: "There is / are で存在を表す",
+    description: "話題に初めて出す人やものが「ある・いる」ことを伝えます。",
+    goals: ["There is / areの語順を作れる。", "後ろの名詞の数に合わせてis / areを選べる。"],
+    points: [
+      "There is a park near my school. のように存在を導入します。",
+      "後ろが複数なら There are ... を使います。",
+    ],
+    example: "「机の上に本が一冊あります」を英語で表す。",
+    analysis: [
+      ["There is", "単数の存在を導入。"],
+      ["a book", "存在するもの。"],
+      ["There is a book on the desk.", "場所を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「公園に二人の子どもがいます」を英語にしてください。",
+        answers: ["There are two children in the park.", "There are two children in the park"],
+      },
+      {
+        prompt: "There (is / are) a station near here. 正しい語を答えてください。",
+        answers: ["is"],
+      },
+    ],
+    hint: "後ろの名詞が単数か複数かを見ます。",
+    summary: ["There is / areで存在を導入する。", "後ろの名詞の数にbe動詞を合わせる。"],
+  }),
+  lesson({
+    key: "svoc",
+    title: "S + V + O + C で目的語の状態を説明する",
+    description: "call A B、make A happy など、目的語と補語の関係を捉えます。",
+    goals: ["目的語と補語が同じ対象を説明すると分かる。", "基本的なSVOCを作れる。"],
+    points: [
+      "We call the dog Pochi. では the dog = Pochi の関係です。",
+      "The news made me happy. では me が happy になる関係です。",
+    ],
+    example: "「私たちはその犬をポチと呼びます」を英語で表す。",
+    analysis: [
+      ["We call", "主語と動詞。"],
+      ["the dog", "目的語。"],
+      ["We call the dog Pochi.", "補語Pochiが目的語を説明します。"],
+    ],
+    practice: [
+      {
+        prompt: "「その知らせは私を幸せにしました」を英語にしてください。",
+        answers: ["The news made me happy.", "The news made me happy"],
+      },
+      { prompt: "We call (he / him) Ken. 正しい語を答えてください。", answers: ["him"] },
+    ],
+    hint: "目的語と最後の語が「同じもの・状態」を表すか確認します。",
+    summary: ["SVOCではOとCが同じ対象を説明する。", "目的語には目的格を使う。"],
+  }),
+  lesson({
+    key: "svoo",
+    title: "S + V + 人 + もの で「人にものを」を表す",
+    description: "give、show、tellなどで間接目的語と直接目的語を並べます。",
+    goals: ["SVOOの語順を作れる。", "人とものの二つの目的語を区別できる。"],
+    points: [
+      "She gave me a book. では me が受け手、a book が渡すものです。",
+      "show / tell / teach などでも人 + 内容の語順を使えます。",
+    ],
+    example: "「彼は私に写真を見せました」を英語で表す。",
+    analysis: [
+      ["He showed", "動詞showの過去形。"],
+      ["me", "受け手。"],
+      ["He showed me a picture.", "見せるものを続けます。"],
+    ],
+    practice: [
+      {
+        prompt: "「母は私に新しい自転車をくれました」を英語にしてください。",
+        answers: ["My mother gave me a new bike.", "My mother gave me a new bike"],
+      },
+      { prompt: "Please tell (I / me) the answer. 正しい語を答えてください。", answers: ["me"] },
+    ],
+    hint: "動詞の後ろに「人 → もの・内容」の順です。",
+    summary: ["SVOOで「人にものを」。", "受け手と内容の役割を分けて読む。"],
+  }),
+  lesson({
+    key: "how-to",
+    title: "how to + 動詞原形で方法を表す",
+    description: "疑問詞 + to不定詞を使い、「どのように〜するか」を一まとまりで表します。",
+    goals: ["how to + 動詞原形を使える。", "know / tell / showなどの目的語として置ける。"],
+    points: [
+      "I know how to use it. の how to use it は「それの使い方」を表します。",
+      "what to、where toなども同じ考え方で使えます。",
+    ],
+    example: "「私はこの機械の使い方を知っています」を英語で表す。",
+    analysis: [
+      ["I know", "主節。"],
+      ["how to use", "方法をhow toで。"],
+      ["I know how to use this machine.", "対象を加えます。"],
+    ],
+    practice: [
+      {
+        prompt: "「駅への行き方を教えてください」を英語にしてください。",
+        answers: [
+          "Please tell me how to get to the station.",
+          "Please tell me how to get to the station",
+        ],
+      },
+      {
+        prompt: "I don't know (what to do / what do). 正しい形を答えてください。",
+        answers: ["what to do"],
+      },
+    ],
+    hint: "疑問詞 + to + 動詞原形を一まとまりで扱います。",
+    summary: ["how toで方法を表す。", "what / whereなどにも広げられる。"],
+  }),
+  lesson({
+    key: "because-when-if",
+    title: "because / when / if で理由・時・条件を表す",
+    description: "従属節を使い、文と文の論理関係をより詳しく示します。",
+    goals: ["because / when / ifで複文を作れる。", "主節と従属節の関係を説明できる。"],
+    points: [
+      "becauseは理由、whenは時、ifは条件を表します。",
+      "接続詞の後ろにも主語 + 動詞を持つ文が続きます。",
+    ],
+    example: "「雨だったので私は家にいました」を英語で表す。",
+    analysis: [
+      ["I stayed home", "主な内容。"],
+      ["because", "理由を導きます。"],
+      ["I stayed home because it was raining.", "理由の節を続けます。"],
+    ],
+    practice: [
+      {
+        prompt: "「暇なら私に電話してください」を英語にしてください。",
+        answers: ["Please call me if you are free.", "Please call me if you are free"],
+      },
+      {
+        prompt:
+          "I was happy (because / when) I passed the test. 「合格したので」なら正しい語を答えてください。",
+        answers: ["because"],
+      },
+    ],
+    hint: "理由・時・条件のどれを示したいか決めます。",
+    summary: ["接続詞で複文を作る。", "接続詞の後ろにも主語と動詞が必要。"],
+  }),
+  lesson({
+    key: "that-clause",
+    title: "that節を動詞の目的語にする",
+    description: "think、know、hopeなどの後ろにthat + 文を置き、考えや情報の内容を表します。",
+    goals: ["that + 主語 + 動詞を目的語として使える。", "主節と内容節を区切って読める。"],
+    points: [
+      "I think that English is useful. では that 以下が think の内容です。",
+      "会話ではthatが省略されることもありますが、文構造を理解するときは境界を意識します。",
+    ],
+    example: "「私は彼が親切だと思います」を英語で表す。",
+    analysis: [
+      ["I think", "主節。"],
+      ["that", "内容を導きます。"],
+      ["I think that he is kind.", "that以下を一つの内容として続けます。"],
+    ],
+    practice: [
+      {
+        prompt: "「私は彼女が来ることを知っています」を英語にしてください。",
+        answers: ["I know that she will come.", "I know that she will come"],
+      },
+      {
+        prompt: "We hope (that / to) the weather will be good. 正しい語を答えてください。",
+        answers: ["that"],
+      },
+    ],
+    hint: "thatの後ろは主語 + 動詞を持つ文です。",
+    summary: ["that節は考え・知識などの内容になる。", "主節とthat節を分けて読む。"],
+  }),
+];
+
+export const middleEnglish2Areas: EnglishArea[] = [
+  {
+    key: "expanding-expression",
+    title: "表現を広げる文法",
+    description:
+      "未来・助動詞、不定詞・動名詞・比較を使い、予定・理由・考えをより具体的に伝えます。",
+    units: [
+      {
+        key: "future-and-modals",
+        title: "未来表現と助動詞",
+        description: "will、be going to、must、should、mayなどを7技能で使い分けます。",
+        lessons: futureAndModals,
+      },
+      {
+        key: "infinitive-gerund-comparison",
+        title: "不定詞・動名詞・比較",
+        description: "to不定詞の3つの働き、動名詞、比較表現を7技能で学びます。",
+        lessons: infinitiveGerundComparison,
+      },
+      {
+        key: "structures-and-clauses",
+        title: "文構造と複文",
+        description:
+          "過去進行形、There is / are、SVOO・SVOC、疑問詞 + to、接続詞、that節を7技能で学びます。",
+        lessons: structuresAndClauses,
+      },
+    ],
+  },
+];
