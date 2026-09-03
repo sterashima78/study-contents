@@ -95,4 +95,6 @@ for (const check of checks) {
   }
 }
 
-console.log("Generated HTML rendering checks passed for middle school navigation and math grades 1-3.");
+console.log(
+  "Generated HTML rendering checks passed for middle school navigation and math grades 1-3.",
+);
