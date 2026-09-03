@@ -8,7 +8,12 @@ const checks = [
   },
   {
     path: new URL("../dist/english/index.html", import.meta.url),
-    markers: ["英語", "学習する4つの領域", "全16小教材", "オリジナル英文で学ぶ"],
+    markers: [
+      "英語",
+      "学習する4つの領域",
+      "全17小教材",
+      "オリジナル英文と権利確認済み文章で学ぶ",
+    ],
   },
   {
     path: new URL(
@@ -16,6 +21,19 @@ const checks = [
       import.meta.url,
     ),
     markers: ["SVOCで文の骨格をつかむ", "The news made the students nervous", "直後の練習"],
+  },
+  {
+    path: new URL(
+      "../dist/english/interpretation/classic-english/bacon-of-studies/index.html",
+      import.meta.url,
+    ),
+    markers: [
+      "Bacon の対比表現を読む",
+      "Read not to contradict and confute",
+      "Francis Bacon",
+      "Project Gutenberg",
+      "ADR 0073 権利確認済み",
+    ],
   },
   {
     path: new URL(
