@@ -134,17 +134,42 @@ function createAbsoluteValueNumberLineScene(): DiagramScene {
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       ...createNumberLineElements(min, max, left, right, y),
-      { kind: "segment", from: point(negativeX, distanceY), to: point(zeroX, distanceY), color: BLUE },
-      { kind: "segment", from: point(negativeX, distanceY - 7), to: point(negativeX, distanceY + 7), color: BLUE },
-      { kind: "segment", from: point(zeroX, distanceY - 7), to: point(zeroX, distanceY + 7), color: BLUE },
+      {
+        kind: "segment",
+        from: point(negativeX, distanceY),
+        to: point(zeroX, distanceY),
+        color: BLUE,
+      },
+      {
+        kind: "segment",
+        from: point(negativeX, distanceY - 7),
+        to: point(negativeX, distanceY + 7),
+        color: BLUE,
+      },
+      {
+        kind: "segment",
+        from: point(zeroX, distanceY - 7),
+        to: point(zeroX, distanceY + 7),
+        color: BLUE,
+      },
       {
         kind: "label",
         at: point((negativeX + zeroX) / 2, 53),
         text: "0からの距離 5",
         color: BLUE,
       },
-      { kind: "segment", from: point(zeroX, distanceY), to: point(positiveX, distanceY), color: ORANGE },
-      { kind: "segment", from: point(positiveX, distanceY - 7), to: point(positiveX, distanceY + 7), color: ORANGE },
+      {
+        kind: "segment",
+        from: point(zeroX, distanceY),
+        to: point(positiveX, distanceY),
+        color: ORANGE,
+      },
+      {
+        kind: "segment",
+        from: point(positiveX, distanceY - 7),
+        to: point(positiveX, distanceY + 7),
+        color: ORANGE,
+      },
       {
         kind: "label",
         at: point((zeroX + positiveX) / 2, 53),
@@ -177,9 +202,24 @@ function createAbsoluteValueExampleScene(): DiagramScene {
     responsive: { minWidth: 440, allowHorizontalScroll: true },
     elements: [
       ...createNumberLineElements(min, max, left, right, y),
-      { kind: "segment", from: point(negativeX, distanceY), to: point(zeroX, distanceY), color: ORANGE },
-      { kind: "segment", from: point(negativeX, distanceY - 8), to: point(negativeX, distanceY + 8), color: ORANGE },
-      { kind: "segment", from: point(zeroX, distanceY - 8), to: point(zeroX, distanceY + 8), color: ORANGE },
+      {
+        kind: "segment",
+        from: point(negativeX, distanceY),
+        to: point(zeroX, distanceY),
+        color: ORANGE,
+      },
+      {
+        kind: "segment",
+        from: point(negativeX, distanceY - 8),
+        to: point(negativeX, distanceY + 8),
+        color: ORANGE,
+      },
+      {
+        kind: "segment",
+        from: point(zeroX, distanceY - 8),
+        to: point(zeroX, distanceY + 8),
+        color: ORANGE,
+      },
       {
         kind: "label",
         at: point((negativeX + zeroX) / 2, 55),
