@@ -46,15 +46,15 @@ export const englishPublicDomainUnits: EnglishUnit[] = [
               note: "but の後ろで、内容を吟味し考える読み方へ転換しています。",
             },
             {
-              expression: "Read to examine ideas rather than merely oppose, accept, or repeat them.",
+              expression:
+                "Read to examine ideas rather than merely oppose, accept, or repeat them.",
               note: "列挙された具体表現を一段抽象化すると、筆者の主張を短くまとめられます。",
             },
           ],
         },
         practice: {
           title: "練習: 同じ対比構造を読む",
-          problem:
-            "Read not only to collect facts, but to connect them and decide what they mean.",
+          problem: "Read not only to collect facts, but to connect them and decide what they mean.",
           steps: [
             {
               prompt: "退けている読み方を英語で入力してください。",
