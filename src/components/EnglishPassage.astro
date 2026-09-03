@@ -1,10 +1,18 @@
 ---
+type PassageSource = {
+  title: string;
+  author: string;
+  provider: string;
+  url: string;
+};
+
 type Props = {
   title: string;
   paragraphs: string[];
+  source?: PassageSource;
 };
 
-const { title: _title, paragraphs: _paragraphs } = Astro.props as Props;
+const { title: _title, paragraphs: _paragraphs, source: _source } = Astro.props as Props;
 ---
 
 <article class="english-passage" lang="en">
@@ -12,6 +20,17 @@ const { title: _title, paragraphs: _paragraphs } = Astro.props as Props;
   <div class="body">
     {_paragraphs.map((paragraph) => <p>{paragraph}</p>)}
   </div>
+  {
+    _source && (
+      <footer class="source-note" lang="ja">
+        <span>
+          出典: {_source.author}「{_source.title}」
+        </span>
+        <a href={_source.url}>{_source.provider}</a>
+        <span>ADR 0073 権利確認済み</span>
+      </footer>
+    )
+  }
 </article>
 
 <style>
@@ -39,5 +58,21 @@ const { title: _title, paragraphs: _paragraphs } = Astro.props as Props;
     font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(1.05rem, 2.5vw, 1.2rem);
     line-height: 1.9;
+  }
+
+  .source-note {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+    margin-top: 1.2rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--color-border-soft);
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .source-note a {
+    color: inherit;
   }
 </style>
