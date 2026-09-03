@@ -49,7 +49,9 @@ const _hasRowHeaders = _table?.rows.some((row) => row.header !== undefined) ?? f
           {_table.headers && _table.headers.length > 0 && (
             <thead>
               <tr>
-                {_hasRowHeaders && <th class="corner-cell" scope="col" aria-label="行見出し" />}
+                {_hasRowHeaders && (
+                  <th class="corner-cell" scope="col" aria-label="行見出し"></th>
+                )}
                 {_table.headers.map((header) => (
                   <th scope="col">
                     {hasFragileMathGlyphs(header) ? (
