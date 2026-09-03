@@ -1,4 +1,5 @@
 ---
+import type { ConceptTable } from "../../content/concept-table";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import { hasFragileMathGlyphs, toPortableMathText } from "../../lib/math-display";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
@@ -9,9 +10,17 @@ type Props = {
   body: string[];
   formulas?: string[];
   points?: string[];
+  table?: ConceptTable;
 };
 
-const { title: _title, body: _body, formulas: _formulas, points: _points } = Astro.props;
+const {
+  title: _title,
+  body: _body,
+  formulas: _formulas,
+  points: _points,
+  table: _table,
+} = Astro.props;
+const _hasRowHeaders = _table?.rows.some((row) => row.header !== undefined) ?? false;
 ---
 
 <article class="concept-card">
@@ -29,6 +38,57 @@ const { title: _title, body: _body, formulas: _formulas, points: _points } = Ast
             <p class="formula-plain">{formula}</p>
           ),
         )}
+      </div>
+    )
+  }
+  {
+    _table && _table.rows.length > 0 && (
+      <div class="concept-table-shell">
+        <table class="concept-table">
+          {_table.caption && <caption>{toPortableMathText(_table.caption)}</caption>}
+          {_table.headers && _table.headers.length > 0 && (
+            <thead>
+              <tr>
+                {_hasRowHeaders && <th class="corner-cell" scope="col" aria-label="行見出し" />}
+                {_table.headers.map((header) => (
+                  <th scope="col">
+                    {hasFragileMathGlyphs(header) ? (
+                      <StaticMath value={header} />
+                    ) : (
+                      toPortableMathText(header)
+                    )}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+          )}
+          <tbody>
+            {_table.rows.map((row) => (
+              <tr>
+                {_hasRowHeaders && (
+                  <th scope="row" class:list={{ "empty-row-header": row.header === undefined }}>
+                    {row.header === undefined ? (
+                      <span class="visually-hidden">見出しなし</span>
+                    ) : hasFragileMathGlyphs(row.header) ? (
+                      <StaticMath value={row.header} />
+                    ) : (
+                      toPortableMathText(row.header)
+                    )}
+                  </th>
+                )}
+                {row.cells.map((cell) => (
+                  <td>
+                    {hasFragileMathGlyphs(cell) ? (
+                      <StaticMath value={cell} />
+                    ) : (
+                      toPortableMathText(cell)
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     )
   }
@@ -101,6 +161,74 @@ const { title: _title, body: _body, formulas: _formulas, points: _points } = Ast
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
+  }
+
+  .concept-table-shell {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 1.15rem;
+    overflow-x: auto;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 0.25rem;
+  }
+
+  .concept-table {
+    width: 100%;
+    min-width: max-content;
+    border-collapse: collapse;
+    color: var(--color-text-strong);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .concept-table caption {
+    padding: 0.75rem 0.9rem;
+    border-bottom: 1px solid var(--color-border-soft);
+    color: var(--color-muted-strong);
+    font-size: 0.92rem;
+    font-weight: 650;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .concept-table th,
+  .concept-table td {
+    padding: 0.72rem 0.9rem;
+    border-right: 1px solid var(--color-border-soft);
+    border-bottom: 1px solid var(--color-border-soft);
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .concept-table th {
+    font-weight: 700;
+  }
+
+  .concept-table th:last-child,
+  .concept-table td:last-child {
+    border-right: 0;
+  }
+
+  .concept-table tbody tr:last-child th,
+  .concept-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .corner-cell,
+  .empty-row-header {
+    min-width: 2.5rem;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .points {
