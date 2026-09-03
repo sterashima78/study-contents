@@ -1,6 +1,7 @@
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 
 const registryUrl = new URL("../src/content/text-sources/public-domain.json", import.meta.url);
+const englishContentUrl = new URL("../src/content/english/", import.meta.url);
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const allowedLanguages = new Set(["ja", "en"]);
@@ -81,6 +82,8 @@ if (!Array.isArray(registry.sources)) {
       requireNonEmptyString(source.rejectionReason, `${location}.rejectionReason`);
     }
   }
+
+  await validateEnglishPublicDomainReferences();
 }
 
 if (issues.length > 0) {
@@ -95,6 +98,43 @@ if (issues.length > 0) {
   console.log(
     `Public-domain source verification passed: ${total} source(s), ${approved} approved.`,
   );
+}
+
+async function validateEnglishPublicDomainReferences() {
+  let entries;
+  try {
+    entries = await readdir(englishContentUrl, { withFileTypes: true });
+  } catch (error) {
+    issues.push(`高校英語コンテンツを読み込めません: ${error.message}`);
+    return;
+  }
+
+  for (const entry of entries) {
+    if (!entry.isFile() || !entry.name.endsWith(".ts")) continue;
+
+    const content = await readFile(new URL(entry.name, englishContentUrl), "utf8");
+    const publicDomainCount = (content.match(/rights:\s*"public-domain",/g) ?? []).length;
+    const sourceIds = [...content.matchAll(/sourceId:\s*"([^"]+)"/g)].map((match) => match[1]);
+
+    if (publicDomainCount !== sourceIds.length) {
+      issues.push(
+        `src/content/english/${entry.name}: public-domain 教材には sourceId を1件ずつ設定してください。`,
+      );
+    }
+
+    for (const sourceId of sourceIds) {
+      const source = registry.sources.find((candidate) => candidate.id === sourceId);
+      if (!source) {
+        issues.push(
+          `src/content/english/${entry.name}: sourceId「${sourceId}」は権利台帳に存在しません。`,
+        );
+      } else if (source.reviewStatus !== "approved") {
+        issues.push(
+          `src/content/english/${entry.name}: sourceId「${sourceId}」は approved ではありません。`,
+        );
+      }
+    }
+  }
 }
 
 function validateApprovedSource(source, location) {

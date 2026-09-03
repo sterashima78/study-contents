@@ -6,6 +6,7 @@ import type {
   EnglishLesson as EnglishLessonData,
   EnglishUnit,
 } from "../content/english/types";
+import { getApprovedPublicDomainSource } from "../content/text-sources/registry";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import EnglishPassage from "./EnglishPassage.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
@@ -56,11 +57,24 @@ const _practiceSteps = designPracticeSteps("english", _lesson.practice.steps);
 const _listeningText = _course.routeBase.startsWith("middle-school/english/")
   ? _lesson.example.steps.at(-1)?.expression
   : undefined;
+const _publicDomainSource =
+  _lesson.rights === "public-domain" ? getApprovedPublicDomainSource(_lesson.sourceId) : undefined;
+const _passageDescription = _publicDomainSource
+  ? "掲載英文は権利台帳で確認済みの作品です。作品名・著者・取得元を本文の下に表示します。"
+  : "掲載英文はこの教材向けに作成したオリジナルです。";
+const _passageSource = _publicDomainSource
+  ? {
+      title: _publicDomainSource.title,
+      author: _publicDomainSource.author,
+      provider: _publicDomainSource.sourceProvider,
+      url: _publicDomainSource.sourceUrl,
+    }
+  : undefined;
 ---
 
 <StudyPage
   title={`${_lesson.title} | ${_unit.title} | ${_course.title}`}
-  description={`${_scopeLabel}「${_lesson.title}」の教材。要点、オリジナル英文、分析、直後の練習、まとめで学習します。`}
+  description={`${_scopeLabel}「${_lesson.title}」の教材。要点、英文、分析、直後の練習、まとめで学習します。`}
   curriculumKey={_curriculumKey}
 >
   <BreadcrumbTrail
@@ -102,9 +116,13 @@ const _listeningText = _course.routeBase.startsWith("middle-school/english/")
           label="PASSAGE"
           title="英文を読む"
           id="passage-title"
-          description="掲載英文はこの教材向けに作成したオリジナルです。"
+          description={_passageDescription}
         />
-        <EnglishPassage title={_lesson.passage.title} paragraphs={_lesson.passage.paragraphs} />
+        <EnglishPassage
+          title={_lesson.passage.title}
+          paragraphs={_lesson.passage.paragraphs}
+          source={_passageSource}
+        />
       </ContentSection>
     )
   }

@@ -30,9 +30,9 @@ const {
   description:
     _description = "文法事項を単独で暗記するだけでなく、英文の構造を読み、情報を取り出し、論理的に表現するところまでを一続きで学びます。",
   metaDescription:
-    _metaDescription = "高校英語の学習コンテンツ。英語基礎、英文解釈、長文読解、論理・表現をオリジナル英文で学べます。",
+    _metaDescription = "高校英語の学習コンテンツ。英語基礎、英文解釈、長文読解、論理・表現を、オリジナル英文と権利確認済みの公開作品で学べます。",
   footerDescription:
-    _footerDescription = "英語基礎・英文解釈・長文読解・論理／表現を16小教材で学習できます。",
+    _footerDescription = "英語基礎・英文解釈・長文読解・論理／表現を1ページ1技能で学習できます。",
 } = Astro.props as Props;
 const _base = import.meta.env.BASE_URL;
 const _scopeLabel = _course.scopeLabel ?? "高校英語";
@@ -81,8 +81,8 @@ const _totalLessonCount = _areas.reduce(
 
   <ActionPanel
     label="RIGHTS"
-    title="オリジナル英文で学ぶ"
-    description="この英語コースに収録する英文・例文・設問・解説は、このリポジトリ向けに作成したオリジナル教材です。教科書、市販問題集、入試問題、記事本文の転載は行いません。"
+    title="オリジナル英文と権利確認済み文章で学ぶ"
+    description="英文・例文・設問・解説はオリジナルを原則とします。第三者作品を扱う場合はADR 0073の権利台帳で approved と確認された本文だけを使い、作品名・著者・取得元を教材ページに表示します。教科書、市販問題集、入試問題、記事本文の無断転載は行いません。"
   />
 
   <PageFooter items={[_scopeLabel, _footerDescription]} homeHref={_base} />

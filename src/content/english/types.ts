@@ -17,11 +17,10 @@ export type EnglishPassage = {
   paragraphs: string[];
 };
 
-export type EnglishLesson = {
+type EnglishLessonBase = {
   key: string;
   title: string;
   description: string;
-  rights: "original";
   goals: string[];
   concepts: EnglishConcept[];
   passage?: EnglishPassage;
@@ -38,6 +37,17 @@ export type EnglishLesson = {
   };
   summary: string[];
 };
+
+export type EnglishLesson =
+  | (EnglishLessonBase & {
+      rights: "original";
+      sourceId?: never;
+    })
+  | (EnglishLessonBase & {
+      rights: "public-domain";
+      sourceId: string;
+      passage: EnglishPassage;
+    });
 
 export type EnglishUnit = {
   key: string;

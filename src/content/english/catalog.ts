@@ -1,6 +1,7 @@
 import { englishExpressionUnits } from "./expression";
 import { englishFoundationUnits } from "./foundations";
 import { englishInterpretationUnits } from "./interpretation";
+import { englishPublicDomainUnits } from "./public-domain";
 import { englishReadingUnits } from "./reading";
 import type { EnglishArea } from "./types";
 
@@ -15,7 +16,7 @@ export const englishAreas: EnglishArea[] = [
     key: "interpretation",
     title: "英文解釈",
     description: "節の境界、長い文要素、論理関係、指示語を手掛かりに、英文の構造を崩さず読みます。",
-    units: englishInterpretationUnits,
+    units: [...englishInterpretationUnits, ...englishPublicDomainUnits],
   },
   {
     key: "reading",
