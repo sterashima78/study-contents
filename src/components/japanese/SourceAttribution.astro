@@ -1,0 +1,61 @@
+---
+import type { JapaneseTextSource } from "../../content/japanese/types";
+
+type Props = {
+  source: JapaneseTextSource;
+};
+
+const { source: _source } = Astro.props as Props;
+---
+
+<aside class="source-attribution" aria-label="本文の出典">
+  <p class="label">SOURCE</p>
+  <p class="source-line">
+    <span>{_source.author}「{_source.title}」</span>
+    <span>出典: <a href={_source.sourceUrl}>{_source.sourceProvider}</a></span>
+  </p>
+  <p class="rights-line">権利台帳ID: <code>{_source.id}</code> / 本文は作品からの抜粋です。設問・解説は本教材で独自に作成しています。</p>
+</aside>
+
+<style>
+  .source-attribution {
+    margin-bottom: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-border-soft);
+    border-radius: 0.8rem;
+    background: var(--surface-accent);
+  }
+
+  .label {
+    margin: 0;
+    color: var(--color-accent-strong);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .source-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    margin: 0.45rem 0 0;
+    color: var(--color-text-strong);
+    font-weight: 700;
+    line-height: 1.7;
+  }
+
+  .rights-line {
+    margin: 0.45rem 0 0;
+    color: var(--color-muted-strong);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  a {
+    color: var(--color-link);
+  }
+
+  code {
+    font-size: 0.85em;
+  }
+</style>
