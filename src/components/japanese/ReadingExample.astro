@@ -6,16 +6,21 @@ import ReadingPassage from "./ReadingPassage.astro";
 type Props = {
   example: JapaneseExample;
   classical?: boolean;
+  passageLabel?: string;
 };
 
-const { example: _example, classical: _classical = false } = Astro.props;
+const {
+  example: _example,
+  classical: _classical = false,
+  passageLabel: _passageLabel = "例文",
+} = Astro.props as Props;
 ---
 
 <article class="reading-example">
   <h3>例題</h3>
   {
     _example.passage && (
-      <ReadingPassage text={_example.passage} label="例文" classical={_classical} />
+      <ReadingPassage text={_example.passage} label={_passageLabel} classical={_classical} />
     )
   }
   <p class="prompt">{_example.prompt}</p>

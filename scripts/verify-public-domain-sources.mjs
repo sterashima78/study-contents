@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 
 const registryUrl = new URL("../src/content/text-sources/public-domain.json", import.meta.url);
 const englishContentUrl = new URL("../src/content/english/", import.meta.url);
+const japaneseContentUrl = new URL("../src/content/japanese/", import.meta.url);
 const datePattern = /^\d{4}-\d{2}-\d{2}$/;
 const idPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const allowedLanguages = new Set(["ja", "en"]);
@@ -84,6 +85,7 @@ if (!Array.isArray(registry.sources)) {
   }
 
   await validateEnglishPublicDomainReferences();
+  await validateJapanesePublicDomainReferences();
 }
 
 if (issues.length > 0) {
@@ -123,17 +125,49 @@ async function validateEnglishPublicDomainReferences() {
     }
 
     for (const sourceId of sourceIds) {
-      const source = registry.sources.find((candidate) => candidate.id === sourceId);
-      if (!source) {
-        issues.push(
-          `src/content/english/${entry.name}: sourceId「${sourceId}」は権利台帳に存在しません。`,
-        );
-      } else if (source.reviewStatus !== "approved") {
-        issues.push(
-          `src/content/english/${entry.name}: sourceId「${sourceId}」は approved ではありません。`,
-        );
-      }
+      validateReferencedSource(sourceId, `src/content/english/${entry.name}`, "en");
     }
+  }
+}
+
+async function validateJapanesePublicDomainReferences() {
+  let entries;
+  try {
+    entries = await readdir(japaneseContentUrl, { withFileTypes: true });
+  } catch (error) {
+    issues.push(`高校国語コンテンツを読み込めません: ${error.message}`);
+    return;
+  }
+
+  for (const entry of entries) {
+    if (!entry.isFile() || !entry.name.endsWith(".ts")) continue;
+
+    const content = await readFile(new URL(entry.name, japaneseContentUrl), "utf8");
+    const sourceIds = [
+      ...content.matchAll(/resolveApprovedPublicDomainSource\(\s*"([^"]+)"\s*\)/g),
+    ].map((match) => match[1]);
+
+    for (const sourceId of sourceIds) {
+      validateReferencedSource(sourceId, `src/content/japanese/${entry.name}`, "ja");
+    }
+  }
+}
+
+function validateReferencedSource(sourceId, location, expectedLanguage) {
+  const source = registry.sources.find((candidate) => candidate.id === sourceId);
+  if (!source) {
+    issues.push(`${location}: sourceId「${sourceId}」は権利台帳に存在しません。`);
+    return;
+  }
+
+  if (source.reviewStatus !== "approved") {
+    issues.push(`${location}: sourceId「${sourceId}」は approved ではありません。`);
+  }
+
+  if (source.language !== expectedLanguage) {
+    issues.push(
+      `${location}: sourceId「${sourceId}」の言語は ${expectedLanguage} である必要があります。`,
+    );
   }
 }
 

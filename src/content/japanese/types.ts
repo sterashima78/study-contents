@@ -12,12 +12,21 @@ export type JapaneseExample = {
   reasoning: string[];
 };
 
+export type JapaneseTextSource = {
+  id: string;
+  title: string;
+  author: string;
+  sourceProvider: string;
+  sourceUrl: string;
+};
+
 export type JapaneseLesson = {
   key: string;
   title: string;
   goal: string;
   overview: string[];
   points: string[];
+  source?: JapaneseTextSource;
   example: JapaneseExample;
   practice: JapanesePractice;
   summary: string[];

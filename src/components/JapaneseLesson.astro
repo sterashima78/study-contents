@@ -11,6 +11,8 @@ import PracticeQuestion from "./japanese/PracticeQuestion.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ReadingExample from "./japanese/ReadingExample.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
+import SourceAttribution from "./japanese/SourceAttribution.astro";
+// biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import BreadcrumbTrail from "./ui/BreadcrumbTrail.astro";
 // biome-ignore lint/correctness/noUnusedImports: Astro template usage is not detected by Biome.
 import ContentHero from "./ui/ContentHero.astro";
@@ -84,7 +86,12 @@ const _classical = _area.key !== "gendai";
       id="example-title"
       description="答えだけでなく、本文や文法のどこを根拠に判断するかを順に確認します。"
     />
-    <ReadingExample example={_lesson.example} classical={_classical} />
+    {_lesson.source && <SourceAttribution source={_lesson.source} />}
+    <ReadingExample
+      example={_lesson.example}
+      classical={_classical}
+      passageLabel={_lesson.source ? "本文" : "例文"}
+    />
   </ContentSection>
 
   <ContentSection labelledby="practice-title" compact>
