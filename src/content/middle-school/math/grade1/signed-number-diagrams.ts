@@ -75,7 +75,7 @@ function createMultiplicationScene(): DiagramScene {
     {
       kind: "label",
       at: { x: width / 2, y: 220 },
-      text: "(+3)×(−2) = (−2)+(−2)+(−2) = −6",
+      text: "(−2)×(+3) = (−2)+(−2)+(−2) = −6",
       color: ORANGE,
     },
   );
@@ -84,7 +84,7 @@ function createMultiplicationScene(): DiagramScene {
     width,
     height,
     ariaLabel:
-      "数直線で0から左へ2ずつ3回進み、マイナス6に着く。プラス3かけるマイナス2を、マイナス2を3回足すこととして表した図。",
+      "数直線で0から左へ2ずつ3回進み、マイナス6に着く。マイナス2かけるプラス3を、マイナス2を3回足すこととして表した図。",
     responsive: { minWidth: 480, allowHorizontalScroll: true },
     elements,
   };
