@@ -1,4 +1,4 @@
-# One-time branch-only refresh after packageManager synchronization.
+# One-time branch-only refresh after the Study AI compatibility validation completed.
 name: Refresh middle English completion
 
 on:
@@ -29,7 +29,7 @@ jobs:
           install: false
           cache: false
 
-      - name: Update pinned dependency versions
+      - name: Synchronize pinned dependency versions
         run: |
           node <<'NODE'
           const fs = require('node:fs');
@@ -56,6 +56,7 @@ jobs:
           scripts/verify-curriculum-references.mjs
           scripts/verify-curriculum-build-output.mjs
           scripts/verify-english-build-output.mjs
+          scripts/verify-study-ai.mjs
           src/components/EnglishLesson.astro
           src/components/MiddleEnglishExerciseSet.astro
           src/components/MiddleEnglishListeningPractice.astro
@@ -63,6 +64,7 @@ jobs:
           src/content/curriculum-reference-resolver.js
           src/content/english/course.ts
           src/content/middle-school/english
+          src/lib/ai/model-config.ts
           src/pages/middle-school/english
           src/pages/middle-school/index.astro
 
