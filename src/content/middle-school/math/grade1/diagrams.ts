@@ -15,6 +15,229 @@ const ORANGE = "#c2410c";
 
 const point = (x: number, y: number): DiagramPoint => ({ x, y });
 
+function numberLineX(value: number, min: number, max: number, left: number, right: number) {
+  if (!(max > min)) throw new Error("number line scale requires max > min");
+  return left + ((value - min) / (max - min)) * (right - left);
+}
+
+function createNumberLineElements(
+  min: number,
+  max: number,
+  left: number,
+  right: number,
+  y: number,
+): DiagramElement[] {
+  const elements: DiagramElement[] = [
+    { kind: "segment", from: point(left, y), to: point(right, y), color: AXIS_COLOR },
+    { kind: "segment", from: point(left, y), to: point(left + 10, y - 6), color: AXIS_COLOR },
+    { kind: "segment", from: point(left, y), to: point(left + 10, y + 6), color: AXIS_COLOR },
+    { kind: "segment", from: point(right, y), to: point(right - 10, y - 6), color: AXIS_COLOR },
+    { kind: "segment", from: point(right, y), to: point(right - 10, y + 6), color: AXIS_COLOR },
+  ];
+
+  for (let value = min; value <= max; value += 1) {
+    const x = numberLineX(value, min, max, left, right);
+    elements.push(
+      {
+        kind: "segment",
+        from: point(x, y - 6),
+        to: point(x, y + 6),
+        color: AXIS_COLOR,
+      },
+      {
+        kind: "label",
+        at: point(x, y + 25),
+        text: String(value).replace("-", "−"),
+        color: AXIS_COLOR,
+      },
+    );
+  }
+
+  return elements;
+}
+
+function createSignedNumberLineScene(): DiagramScene {
+  const width = 520;
+  const height = 230;
+  const min = -5;
+  const max = 5;
+  const left = 55;
+  const right = 465;
+  const y = 130;
+  const negativeX = numberLineX(-3, min, max, left, right);
+  const zeroX = numberLineX(0, min, max, left, right);
+  const positiveX = numberLineX(3, min, max, left, right);
+
+  return {
+    width,
+    height,
+    ariaLabel:
+      "0を基準に、左側へ負の数、右側へ正の数が並ぶ数直線。マイナス3は0の左、プラス3は0の右にある。",
+    responsive: { minWidth: 440, allowHorizontalScroll: true },
+    elements: [
+      ...createNumberLineElements(min, max, left, right, y),
+      { kind: "point", x: negativeX, y, radius: 5, color: BLUE },
+      { kind: "point", x: zeroX, y, radius: 5, color: AXIS_COLOR },
+      { kind: "point", x: positiveX, y, radius: 5, color: ORANGE },
+      {
+        kind: "label",
+        at: point(145, 54),
+        text: "負の数",
+        color: BLUE,
+      },
+      {
+        kind: "label",
+        at: point(zeroX, 78),
+        text: "0を基準",
+        color: AXIS_COLOR,
+      },
+      {
+        kind: "label",
+        at: point(375, 54),
+        text: "正の数",
+        color: ORANGE,
+      },
+      {
+        kind: "label",
+        at: point(145, 82),
+        text: "← 小さい数",
+        color: AXIS_COLOR,
+      },
+      {
+        kind: "label",
+        at: point(375, 82),
+        text: "大きい数 →",
+        color: AXIS_COLOR,
+      },
+    ],
+  };
+}
+
+function createAbsoluteValueNumberLineScene(): DiagramScene {
+  const width = 520;
+  const height = 235;
+  const min = -6;
+  const max = 6;
+  const left = 45;
+  const right = 475;
+  const y = 150;
+  const distanceY = 78;
+  const negativeX = numberLineX(-5, min, max, left, right);
+  const zeroX = numberLineX(0, min, max, left, right);
+  const positiveX = numberLineX(5, min, max, left, right);
+
+  return {
+    width,
+    height,
+    ariaLabel:
+      "数直線上でマイナス5とプラス5を示し、どちらも0からの距離が5であることを示す。右にある数ほど大きい。",
+    responsive: { minWidth: 440, allowHorizontalScroll: true },
+    elements: [
+      ...createNumberLineElements(min, max, left, right, y),
+      {
+        kind: "segment",
+        from: point(negativeX, distanceY),
+        to: point(zeroX, distanceY),
+        color: BLUE,
+      },
+      {
+        kind: "segment",
+        from: point(negativeX, distanceY - 7),
+        to: point(negativeX, distanceY + 7),
+        color: BLUE,
+      },
+      {
+        kind: "segment",
+        from: point(zeroX, distanceY - 7),
+        to: point(zeroX, distanceY + 7),
+        color: BLUE,
+      },
+      {
+        kind: "label",
+        at: point((negativeX + zeroX) / 2, 53),
+        text: "0からの距離 5",
+        color: BLUE,
+      },
+      {
+        kind: "segment",
+        from: point(zeroX, distanceY),
+        to: point(positiveX, distanceY),
+        color: ORANGE,
+      },
+      {
+        kind: "segment",
+        from: point(positiveX, distanceY - 7),
+        to: point(positiveX, distanceY + 7),
+        color: ORANGE,
+      },
+      {
+        kind: "label",
+        at: point((zeroX + positiveX) / 2, 53),
+        text: "0からの距離 5",
+        color: ORANGE,
+      },
+      { kind: "point", x: negativeX, y, radius: 5, color: BLUE },
+      { kind: "point", x: zeroX, y, radius: 5, color: AXIS_COLOR },
+      { kind: "point", x: positiveX, y, radius: 5, color: ORANGE },
+    ],
+  };
+}
+
+function createAbsoluteValueExampleScene(): DiagramScene {
+  const width = 520;
+  const height = 235;
+  const min = -7;
+  const max = 2;
+  const left = 50;
+  const right = 470;
+  const y = 150;
+  const distanceY = 82;
+  const negativeX = numberLineX(-6, min, max, left, right);
+  const zeroX = numberLineX(0, min, max, left, right);
+
+  return {
+    width,
+    height,
+    ariaLabel: "数直線上のマイナス6と0の間の距離が6なので、マイナス6の絶対値は6である。",
+    responsive: { minWidth: 440, allowHorizontalScroll: true },
+    elements: [
+      ...createNumberLineElements(min, max, left, right, y),
+      {
+        kind: "segment",
+        from: point(negativeX, distanceY),
+        to: point(zeroX, distanceY),
+        color: ORANGE,
+      },
+      {
+        kind: "segment",
+        from: point(negativeX, distanceY - 8),
+        to: point(negativeX, distanceY + 8),
+        color: ORANGE,
+      },
+      {
+        kind: "segment",
+        from: point(zeroX, distanceY - 8),
+        to: point(zeroX, distanceY + 8),
+        color: ORANGE,
+      },
+      {
+        kind: "label",
+        at: point((negativeX + zeroX) / 2, 55),
+        text: "0からの距離 6",
+        color: ORANGE,
+      },
+      {
+        kind: "label",
+        at: point((negativeX + zeroX) / 2, 28),
+        text: "|−6| = 6",
+        color: AXIS_COLOR,
+      },
+      { kind: "point", x: negativeX, y, radius: 5, color: ORANGE },
+      { kind: "point", x: zeroX, y, radius: 5, color: AXIS_COLOR },
+    ],
+  };
+}
+
 function createAxes(
   transform: CartesianTransform,
   xTicks: number[],
@@ -274,6 +497,11 @@ function createApplicationScene(): DiagramScene {
 }
 
 const diagrams: Record<string, MathLessonDiagrams> = {
+  "positive-negative-meaning": { rule: createSignedNumberLineScene() },
+  "number-line-absolute-value": {
+    rule: createAbsoluteValueNumberLineScene(),
+    example: createAbsoluteValueExampleScene(),
+  },
   coordinates: { rule: createCoordinatesScene() },
   "proportion-graph": { rule: createProportionScene(), example: createProportionScene() },
   "inverse-proportion-graph": {
