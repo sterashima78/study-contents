@@ -50,6 +50,13 @@ const checks = [
   },
   {
     path: new URL(
+      "../dist/middle-school/math/grade1/functions/proportion-inverse-proportion/proportion-table-expression/index.html",
+      import.meta.url,
+    ),
+    markers: ["y = 3x の対応表と y/x の値", "concept-table", "y/x"],
+  },
+  {
+    path: new URL(
       "../dist/middle-school/math/grade2/functions/linear-functions/linear-function-meaning/index.html",
       import.meta.url,
     ),

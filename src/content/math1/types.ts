@@ -1,7 +1,13 @@
+import type { ConceptTable } from "../concept-table";
 import type { PracticeStep } from "../practice";
 import type { AlgebraUnit, Lesson } from "./algebra";
 
-export type MathLesson = Omit<Lesson, "practice"> & {
+export type MathConceptBlock = Lesson["concepts"][number] & {
+  table?: ConceptTable;
+};
+
+export type MathLesson = Omit<Lesson, "concepts" | "practice"> & {
+  concepts: MathConceptBlock[];
   practice: Omit<Lesson["practice"], "steps"> & {
     steps: PracticeStep[];
   };
