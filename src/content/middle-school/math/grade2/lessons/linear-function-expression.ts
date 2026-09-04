@@ -15,8 +15,17 @@ export const linearFunctionExpressionLesson: MathLesson = {
       body: [
         "まず表の二つの組から変化の割合aを求めます。次にx=0の列があれば、そのときのyがそのままbです。",
         "x=0の列がない場合でも、求めたaと一組のx,yを y=ax+b に代入すればbを求められます。",
+        "表では、列どうしの x と y の増加量を対応させて a を求め、x=0 の列から b を読むと、二つの役割を分けて確認できます。",
       ],
       formulas: ["y = ax + b", "a = yの増加量 / xの増加量"],
+      table: {
+        caption: "y = 3x − 1 の対応表",
+        headers: ["1列目", "2列目", "3列目"],
+        rows: [
+          { header: "x", cells: ["0", "2", "5"] },
+          { header: "y", cells: ["−1", "5", "14"] },
+        ],
+      },
     },
   ],
   example: {
