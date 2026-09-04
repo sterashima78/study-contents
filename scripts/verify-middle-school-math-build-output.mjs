@@ -57,10 +57,38 @@ const checks = [
   },
   {
     path: new URL(
+      "../dist/middle-school/math/grade1/functions/proportion-inverse-proportion/inverse-proportion-table-expression/index.html",
+      import.meta.url,
+    ),
+    markers: ["y = 12/x の対応表と xy の値", "concept-table", "xy"],
+  },
+  {
+    path: new URL(
+      "../dist/middle-school/math/grade1/data/data-distribution/frequency-distribution-range/index.html",
+      import.meta.url,
+    ),
+    markers: ["記録を5秒ごとの階級に整理した度数分布表", "concept-table", "25以上30未満"],
+  },
+  {
+    path: new URL(
+      "../dist/middle-school/math/grade1/data/data-distribution/cumulative-frequency/index.html",
+      import.meta.url,
+    ),
+    markers: ["待ち時間20人の度数・累積度数・累積相対度数", "concept-table", "1.00"],
+  },
+  {
+    path: new URL(
       "../dist/middle-school/math/grade2/functions/linear-functions/linear-function-meaning/index.html",
       import.meta.url,
     ),
     markers: ["理解を確認する3問"],
+  },
+  {
+    path: new URL(
+      "../dist/middle-school/math/grade2/functions/linear-functions/linear-function-expression/index.html",
+      import.meta.url,
+    ),
+    markers: ["の対応表", "concept-table", "1列目", "14"],
   },
   {
     path: new URL(
@@ -74,7 +102,14 @@ const checks = [
       "../dist/middle-school/math/grade3/functions/quadratic-functions/quadratic-function-meaning/index.html",
       import.meta.url,
     ),
-    markers: ["理解を確認する3問"],
+    markers: ["対応表と", "concept-table", "x²", "18"],
+  },
+  {
+    path: new URL(
+      "../dist/middle-school/math/grade3/functions/quadratic-functions/quadratic-function-representations/index.html",
+      import.meta.url,
+    ),
+    markers: ["1列目", "concept-table", "表・式・グラフを相互に関連付ける"],
   },
   {
     path: new URL(

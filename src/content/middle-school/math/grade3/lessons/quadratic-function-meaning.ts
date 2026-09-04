@@ -11,8 +11,19 @@ export const quadraticFunctionMeaningLesson: MathLesson = {
       body: [
         "xの値を決めるとyがただ一つ決まり、y/x²が一定になるとき、yはxの2乗に比例します。",
         "比例定数をaとするとy=ax²と表せます。aは0ではない実数として扱います。",
+        "表では x² の行を作って y を x² で割ると、比例とは異なる2乗比例の一定値を確認しやすくなります。",
       ],
       formulas: ["y=ax²", "y/x²=a"],
+      table: {
+        caption: "y = 2x² の対応表と y/x² の値",
+        headers: ["1列目", "2列目", "3列目"],
+        rows: [
+          { header: "x", cells: ["1", "2", "3"] },
+          { header: "y", cells: ["2", "8", "18"] },
+          { header: "x²", cells: ["1", "4", "9"] },
+          { header: "y/x²", cells: ["2", "2", "2"] },
+        ],
+      },
     },
   ],
   example: {

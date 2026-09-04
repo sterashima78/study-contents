@@ -11,8 +11,18 @@ export const quadraticFunctionRepresentationsLesson: MathLesson = {
       body: [
         "表ではy/x²が一定、式ではその一定値がa、グラフではaの符号と絶対値が形に現れます。",
         "一つの表現だけでなく、問題に合う表現を選ぶことが関数の考察では重要です。",
+        "表の各列で同じ a が得られることを確かめてから式へ移すと、グラフの向きや開きと同じ係数を使っていることが分かります。",
       ],
       formulas: ["表 y/x²=a ↔ 式 y=ax² ↔ 放物線"],
+      table: {
+        caption: "y = −2x² の表と y/x² の値",
+        headers: ["1列目", "2列目"],
+        rows: [
+          { header: "x", cells: ["1", "2"] },
+          { header: "y", cells: ["−2", "−8"] },
+          { header: "y/x²", cells: ["−2", "−2"] },
+        ],
+      },
     },
   ],
   example: {
