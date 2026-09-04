@@ -26,12 +26,12 @@ export const frequencyDistributionRangeLesson: MathLesson = {
       ],
       table: {
         caption: "記録を5秒ごとの階級に整理した度数分布表",
-        headers: ["階級", "度数"],
+        headers: ["度数"],
         rows: [
-          { cells: ["10以上15未満", "2"] },
-          { cells: ["15以上20未満", "4"] },
-          { cells: ["20以上25未満", "2"] },
-          { cells: ["25以上30未満", "2"] },
+          { header: "10以上15未満", cells: ["2"] },
+          { header: "15以上20未満", cells: ["4"] },
+          { header: "20以上25未満", cells: ["2"] },
+          { header: "25以上30未満", cells: ["2"] },
         ],
       },
     },
