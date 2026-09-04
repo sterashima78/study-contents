@@ -14,8 +14,18 @@ export const inverseProportionTableExpressionLesson: MathLesson = {
       body: [
         "y が x に反比例するとき、対応する x と y の積 xy はいつも一定です。この一定の数を比例定数といいます。",
         "比例定数を a とすると、反比例の関係は y = a/x と表せます。x = 0 では割ることができないので、x は0以外です。",
+        "表では、同じ列の x と y を掛けた値を比べます。どの列でも同じ値になれば、その値が比例定数です。",
       ],
       formulas: ["y = a/x", "a = xy（x ≠ 0）"],
+      table: {
+        caption: "y = 12/x の対応表と xy の値",
+        headers: ["1列目", "2列目", "3列目", "4列目"],
+        rows: [
+          { header: "x", cells: ["1", "2", "3", "4"] },
+          { header: "y", cells: ["12", "6", "4", "3"] },
+          { header: "xy", cells: ["12", "12", "12", "12"] },
+        ],
+      },
     },
   ],
   example: {
