@@ -16,11 +16,11 @@ export const quadraticFunctionRepresentationsLesson: MathLesson = {
       formulas: ["表 y/x²=a ↔ 式 y=ax² ↔ 放物線"],
       table: {
         caption: "y = −2x² の表と y/x² の値",
-        headers: ["1列目", "2列目", "3列目", "4列目"],
+        headers: ["1列目", "2列目"],
         rows: [
-          { header: "x", cells: ["−2", "−1", "1", "2"] },
-          { header: "y", cells: ["−8", "−2", "−2", "−8"] },
-          { header: "y/x²", cells: ["−2", "−2", "−2", "−2"] },
+          { header: "x", cells: ["1", "2"] },
+          { header: "y", cells: ["−2", "−8"] },
+          { header: "y/x²", cells: ["−2", "−2"] },
         ],
       },
     },
